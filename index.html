@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>CySuite Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="assets/css/theme.min.css" rel="stylesheet">
+    <link class="js-stylesheet" href="assets/css/light.css" rel="stylesheet">
+</head>
+
+<body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-behavior="sticky">
+    <div class="wrapper">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-content js-simplebar">
+                <a class="sidebar-brand" href="index.html"><span class="align-middle me-3">CySuite</span></a>
+                <ul class="sidebar-nav">
+
+                    <li class="sidebar-header">Pages</li>
+                    <li class="sidebar-item active">
+                        <a data-bs-target="#dashboards" class="sidebar-link">
+                            <i class="align-middle" data-feather="home"></i> <span class="align-middle">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="pages/projects.html">
+                            <i class="align-middle" data-feather="book"></i> <span class="align-middle">Projects</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="pages/req_tamperer.html">
+                            <i class="align-middle" data-feather="layout"></i> <span class="align-middle">Tamper Requests</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="pages/notes.html">
+                            <i class="align-middle" data-feather="book-open"></i> <span
+                                class="align-middle">Notes</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-header">Recon and Exploitation</li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link">
+                            <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Subdomain
+                                Enumeration</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link">
+                            <i class="align-middle" data-feather="link-2"></i> <span class="align-middle">Directory
+                                Enumeration</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link">
+                            <i class="align-middle" data-feather="check-square"></i> <span
+                                class="align-middle">Vulnerability Analysis</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link">
+                            <i class="align-middle" data-feather="key"></i> <span class="align-middle">Run
+                                Exploits</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-header">Tools</li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link">
+                            <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Wordlist
+                                Generator</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link">
+                            <i class="align-middle" data-feather="tool"></i> <span class="align-middle">Decoders, Hash
+                                IDs, WP</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link">
+                            <i class="align-middle" data-feather="upload"></i> <span class="align-middle">File
+                                uploads/Shells</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="main">
+            <nav class="navbar navbar-expand navbar-light navbar-bg">
+                <a class="sidebar-toggle">
+                    <i class="hamburger align-self-center"></i>
+                </a>
+                <form class="d-none d-sm-inline-block">
+                    <div class="input-group input-group-navbar">
+                        <input type="text" class="form-control" placeholder="Search projects…" aria-label="Search">
+                        <button class="btn" type="button">
+                            <i class="align-middle" data-feather="search"></i>
+                        </button>
+                    </div>
+                </form>
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav navbar-align">
+                        <li class="nav-item dropdown">
+                            <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#"
+                                data-bs-toggle="dropdown">
+                                <i class="align-middle" data-feather="settings"></i>
+                            </a>
+
+                            <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#"
+                                data-bs-toggle="dropdown">
+                                <img src="assets/img/profile/profile.jpg" class="avatar img-fluid rounded-circle me-1"
+                                    alt="Mark Gacoka" /> <span class="text-dark">Mark Gacoka</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item" href="#">Exit</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <main class="content">
+                <div class="container-fluid p-0">
+                    <div class="row mb-2 mb-xl-3">
+                        <div class="col-auto d-none d-sm-block">
+                            <h3>Dashboard</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-xxl d-flex">
+                            <div class="card illustration flex-fill">
+                                <div class="card-body p-0 d-flex flex-fill">
+                                    <div class="row g-0 w-100">
+                                        <div class="col-6">
+                                            <div class="illustration-text p-3 m-1">
+                                                <h4 class="illustration-text">Welcome Back, Mark!</h4>
+                                                <p class="mb-0">CySuite Dashboard</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 align-self-end text-end">
+                                            <img src="assets/img/illustrations/customer-support.png"
+                                                alt="Customer Support" class="img-fluid illustration-img">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-xxl d-flex">
+                            <div class="card flex-fill">
+                                <div class="card-body py-4">
+                                    <div class="d-flex align-items-start">
+                                        <div class="flex-grow-1">
+                                            <h3 class="mb-2">0</h3>
+                                            <p class="mb-2">Assets Analyzed</p>
+                                            <div class="mb-0">
+                                                <span class="badge badge-soft-success me-2"> <i
+                                                        class="mdi mdi-arrow-bottom-right"></i> 0.00% </span>
+                                                <span class="text-muted">Since last week</span>
+                                            </div>
+                                        </div>
+                                        <div class="d-inline-block ms-3">
+                                            <div class="stat">
+                                                <i class="align-middle text-success" data-feather="server"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-xxl d-flex">
+                            <div class="card flex-fill">
+                                <div class="card-body py-4">
+                                    <div class="d-flex align-items-start">
+                                        <div class="flex-grow-1">
+                                            <h3 class="mb-2">0</h3>
+                                            <p class="mb-2">Vulnerabilities Found</p>
+                                            <div class="mb-0">
+                                                <span class="badge badge-soft-danger me-2"> <i
+                                                        class="mdi mdi-arrow-bottom-right"></i> 0.00% </span>
+                                                <span class="text-muted">Since last week</span>
+                                            </div>
+                                        </div>
+                                        <div class="d-inline-block ms-3">
+                                            <div class="stat">
+                                                <i class="align-middle text-danger" data-feather="shield"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-xxl d-flex">
+                            <div class="card flex-fill">
+                                <div class="card-body py-4">
+                                    <div class="d-flex align-items-start">
+                                        <div class="flex-grow-1">
+                                            <h3 class="mb-2">$ 0</h3>
+                                            <p class="mb-2">Awarded in Bounties</p>
+                                            <div class="mb-0">
+                                                <span class="badge badge-soft-success me-2"> <i
+                                                        class="mdi mdi-arrow-bottom-right"></i> 0.00% </span>
+                                                <span class="text-muted">Since last week</span>
+                                            </div>
+                                        </div>
+                                        <div class="d-inline-block ms-3">
+                                            <div class="stat">
+                                                <i class="align-middle text-info" data-feather="dollar-sign"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gx-2 gx-lg-3">
+                        <div class="col-lg-5 mb-3 mb-lg-5">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h3 class="card-header-title">Most Recent Projects</h3>
+                                </div>
+                                <div class="card-body">
+                                    <p>These are the most recent assets analyzed by the software. They include all the
+                                        relevant information regarding to the enumeration, vulnerability assessment and
+                                        exploitation of the asset.</p>
+
+                                    <ul class="list-group list-group-flush list-group-no-gutters">
+                                        <li class="list-group-item py-3">
+                                            <h5 class="modal-title">From latest:</h5>
+                                        </li>
+                                        <li class="list-group-item py-3">
+                                            <div class="media">
+                                                <div class="mt-1 mr-3">
+                                                    <img class="avatar avatar-xs avatar-4by3"
+                                                        src="assets/img/icons/capsule.svg" alt="Image Description">
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="row align-items-center">
+                                                        <div class="col">
+                                                            <h5 class="mb-0">Starbucks</h5>
+                                                            <span class="d-block font-size-sm">Hackerone</span>
+                                                        </div>
+
+                                                        <div class="col-auto">
+                                                            <a class="btn btn-sm btn-primary" href="#"
+                                                                title="Launch importer" target="_blank">
+                                                                Open <span
+                                                                    class="d-none d-sm-inline-block">Report</span>
+                                                                <i class="tio-open-in-new ml-1"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item py-3">
+                                            <div class="media">
+                                                <div class="mt-1 mr-3">
+                                                    <img class="avatar avatar-xs avatar-4by3"
+                                                        src="assets/img/icons/mailchimp.svg" alt="Image Description">
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="row align-items-center">
+                                                        <div class="col">
+                                                            <h5 class="mb-0">Mailchimp</h5>
+                                                            <span class="d-block font-size-sm">Hackerone</span>
+                                                        </div>
+
+                                                        <div class="col-auto">
+                                                            <a class="btn btn-sm btn-primary" href="#"
+                                                                title="Launch importer" target="_blank">
+                                                                Open <span
+                                                                    class="d-none d-sm-inline-block">Report</span>
+                                                                <i class="tio-open-in-new ml-1"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item py-3">
+                                            <div class="media">
+                                                <div class="mt-1 mr-3">
+                                                    <img class="avatar avatar-xs avatar-4by3"
+                                                        src="assets/img/icons/google-webdev.svg">
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="row align-items-center">
+                                                        <div class="col">
+                                                            <h5 class="mb-0">Coda.io</h5>
+                                                            <span class="d-block font-size-sm">Hackerone</span>
+                                                        </div>
+
+                                                        <div class="col-auto">
+                                                            <a class="btn btn-sm btn-primary" href="#"
+                                                                title="Launch importer" target="_blank">
+                                                                Open <span
+                                                                    class="d-none d-sm-inline-block">Report</span>
+                                                                <i class="tio-open-in-new ml-1"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item"><small>Open the <a href="pages/projects.html">Projects</a> tab to see
+                                                the other projects.</small></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-7 mb-3 mb-lg-5">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h4 class="card-header-title">Latest Vulnerability Detections</h4>
+                                </div>
+                                <div class="card-body card-body-height">
+                                    <ul class="list-group list-group-flush list-group-no-gutters">
+                                        <li class="list-group-item">
+                                            <div class="media">
+                                                <div class="avatar avatar-sm avatar-soft-dark avatar-circle mr-3">
+                                                    <span class="avatar-initials">✓</span>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="row">
+                                                        <div class="col-7 col-md-5 order-md-1">
+                                                            <h5 class="mb-0">Starbucks</h5>
+                                                            <span class="font-size-sm">Cross-site-scripting</span>
+                                                        </div>
+                                                        <div class="col-5 col-md-4 order-md-3 text-right mt-2 mt-md-0">
+                                                            <h5 class="mb-0">3 Counts</h5>
+                                                            <span class="font-size-sm">15 May, 2021</span>
+                                                        </div>
+                                                        <div class="col-auto col-md-3 order-md-2">
+                                                            <span class="badge badge-soft-warning badge-pill">Mid
+                                                                severity</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="media">
+                                                <div class="avatar avatar-sm avatar-soft-dark avatar-circle mr-3">
+                                                    <span class="avatar-initials">✓</span>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="row">
+                                                        <div class="col-7 col-md-5 order-md-1">
+                                                            <h5 class="mb-0">Slack</h5>
+                                                            <span class="font-size-sm">Captcha bypass</span>
+                                                        </div>
+                                                        <div class="col-5 col-md-4 order-md-3 text-right mt-2 mt-md-0">
+                                                            <h5 class="mb-0">5 Counts</h5>
+                                                            <span class="font-size-sm">12 May, 2021</span>
+                                                        </div>
+                                                        <div class="col-auto col-md-3 order-md-2">
+                                                            <span class="badge badge-soft-success badge-pill">Low
+                                                                severity</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="media">
+                                                <div class="avatar avatar-sm avatar-soft-dark avatar-circle mr-3">
+                                                    <span class="avatar-initials">✓</span>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="row">
+                                                        <div class="col-7 col-md-5 order-md-1">
+                                                            <h5 class="mb-0">Bank of America</h5>
+                                                            <span class="font-size-sm">DOM XSS</span>
+                                                        </div>
+                                                        <div class="col-5 col-md-4 order-md-3 text-right mt-2 mt-md-0">
+                                                            <h5 class="mb-0">4 Counts</h5>
+                                                            <span class="font-size-sm">10 June, 2021</span>
+                                                        </div>
+                                                        <div class="col-auto col-md-3 order-md-2">
+                                                            <span class="badge badge-soft-success badge-pill">Low
+                                                                severity</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="media">
+                                                <div class="avatar avatar-sm avatar-soft-dark avatar-circle mr-3">
+                                                    <span class="avatar-initials">✓</span>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="row">
+                                                        <div class="col-7 col-md-5 order-md-1">
+                                                            <h5 class="mb-0">Spotify</h5>
+                                                            <span class="font-size-sm">Account Takeover</span>
+                                                        </div>
+                                                        <div class="col-5 col-md-4 order-md-3 text-right mt-2 mt-md-0">
+                                                            <h5 class="mb-0">1 Count</h5>
+                                                            <span class="font-size-sm">12 July, 2021</span>
+                                                        </div>
+                                                        <div class="col-auto col-md-3 order-md-2">
+                                                            <span class="badge badge-soft-danger badge-pill">High
+                                                                severity</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="media">
+                                                <div class="avatar avatar-sm avatar-soft-dark avatar-circle mr-3">
+                                                    <span class="avatar-initials">✓</span>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="row">
+                                                        <div class="col-7 col-md-5 order-md-1">
+                                                            <h5 class="mb-0">Hackerone</h5>
+                                                            <span class="font-size-sm">Reflected XSS</span>
+                                                        </div>
+                                                        <div class="col-5 col-md-4 order-md-3 text-right mt-2 mt-md-0">
+                                                            <h5 class="mb-0">2 Counts</h5>
+                                                            <span class="font-size-sm">28 July, 2021</span>
+                                                        </div>
+                                                        <div class="col-auto col-md-3 order-md-2">
+                                                            <span class="badge badge-soft-success badge-pill">Low
+                                                                severity</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="media">
+                                                <div class="avatar avatar-sm avatar-soft-dark avatar-circle mr-3">
+                                                    <span class="avatar-initials">✓</span>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="row">
+                                                        <div class="col-7 col-md-5 order-md-1">
+                                                            <h5 class="mb-0">Amazon</h5>
+                                                            <span class="font-size-sm">Open Redirect</span>
+                                                        </div>
+                                                        <div class="col-5 col-md-4 order-md-3 text-right mt-2 mt-md-0">
+                                                            <h5 class="mb-0">3 Counts</h5>
+                                                            <span class="font-size-sm">01 August, 2021</span>
+                                                        </div>
+                                                        <div class="col-auto col-md-3 order-md-2">
+                                                            <span class="badge badge-soft-success badge-pill">Low
+                                                                severity</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card flex-fill">
+                            <div class="card-header">
+                                <h4 class="card-title mb-0">Latest Notifications</h4>
+                            </div>
+                            <table id="datatables-dashboard-projects" class="table table-striped my-0">
+                                <thead>
+                                    <tr>
+                                        <th>Message</th>
+                                        <th class="d-none d-xl-table-cell">Date</th>
+                                        <th class="d-none d-xl-table-cell">Time</th>
+                                        <th>Status</th>
+                                        <th class="d-none d-md-table-cell">Platform</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Potential subdomain takeover on blog.teavana.com</td>
+                                        <td class="d-none d-xl-table-cell">05/09/2021</td>
+                                        <td class="d-none d-xl-table-cell">21:20:05</td>
+                                        <td><span class="badge bg-success">Sent</span></td>
+                                        <td class="d-none d-md-table-cell">Telegram</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Asset starbucks.com added to scope</td>
+                                        <td class="d-none d-xl-table-cell">01/07/2021</td>
+                                        <td class="d-none d-xl-table-cell">21:20:05</td>
+                                        <td><span class="badge bg-danger">Failed</span></td>
+                                        <td class="d-none d-md-table-cell">Telegram</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Blind XSS found on starbucks.com</td>
+                                        <td class="d-none d-xl-table-cell">05/09/2021</td>
+                                        <td class="d-none d-xl-table-cell">21:20:05</td>
+                                        <td><span class="badge bg-success">Sent</span></td>
+                                        <td class="d-none d-md-table-cell">XSS Hunter</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Gobuster scan finished</td>
+                                        <td class="d-none d-xl-table-cell">05/09/2021</td>
+                                        <td class="d-none d-xl-table-cell">21:20:05</td>
+                                        <td><span class="badge bg-danger">Failed</span></td>
+                                        <td class="d-none d-md-table-cell">Slack</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Parameter discovery finished</td>
+                                        <td class="d-none d-xl-table-cell">05/09/2021</td>
+                                        <td class="d-none d-xl-table-cell">21:20:05</td>
+                                        <td><span class="badge bg-success">Sent</span></td>
+                                        <td class="d-none d-md-table-cell">Telegram</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+            </main>
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row text-muted">
+                        <div class="col-6 text-start">
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="#">Blog</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-6 text-end">
+                            <p class="mb-0">
+                                &copy; 2021 - <a href="" class="text-muted">CySuite</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="assets/js/app.js"></script>
+    <script>
+		document.addEventListener("DOMContentLoaded", function() {
+			$("#datatables-dashboard-projects").DataTable({
+				pageLength: 6,
+				lengthChange: false,
+				bFilter: false,
+				autoWidth: false
+			});
+		});
+	</script>
+</body>
+
+</html>
