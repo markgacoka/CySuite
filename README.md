@@ -1,2 +1,2 @@
 # CySuite
-An all-in-one security testing tool
+An all-in-one cybersecurity testing tool
