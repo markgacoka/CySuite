@@ -4586,8 +4586,8 @@ fieldset:disabled .btn {
 }
 
 .card-header {
-    padding-top: 40px;
-    padding-bottom: 5px;
+    padding-top: 30px;
+    padding-bottom: 15px;
     margin-bottom: 0;
     background-color: #fff;
     border-bottom: 0 solid transparent
@@ -23316,7 +23316,6 @@ div.dataTables_wrapper div.dataTables_length label {
 }
 
 div.dataTables_wrapper div.dataTables_length select {
-    width: auto;
     display: inline-block
 }
 
