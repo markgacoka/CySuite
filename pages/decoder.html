@@ -115,7 +115,86 @@
 			</div>
 		</nav>
 		<main class="content">
-			
+			<div class="row" style="padding: 0 10px 0 10px;">
+                <h2 class="h3 mb-3">Decoder</h2>
+                <div class="card" style="width: 100%">
+                    <div class="card-header">
+						<h4>Identify hash</h4>
+					</div>
+                    <div class="card-body" style="padding: 0 1.5rem 1rem 1.5rem;">
+						<textarea class="form-control"
+						id="floatingTextarea1" style="min-height: 100px"></textarea>
+                    </div>
+					<div class="card-body" style="padding: 0 1.5rem 0 1.5rem;">
+						<div class="alert alert-primary alert-dismissible" role="alert">
+							<div class="alert-message">
+								<strong>Hash :</strong> SHA-256 <a href="https://md5decrypt.net/en/Sha256/">Try decrypting.</a></div>
+						</div>
+					</div>
+                </div>
+            </div>
+			<div class="resizer" style="float:left; width: 49%;">
+                <div class="card" style="width: 100%">
+                    <div class="card-header">
+						<h4 class="card-title">Encode string</h4>
+                    </div>
+					<div class="row" style="padding: 0 1.25rem 1rem 1.25rem">
+						<div style="float: left; width: 80%; padding: 0 10px 0 10px;">
+							<select class="form-control select-dropdown">
+							<option selected>None</option>
+							<option>URL</option>
+							<option>Hex</option>
+							<option>Base64</option>
+							</select>
+						</div>
+						<div style="float: left; width: 20%; padding: 0 10px 0 10px;">
+							<select class="form-control select-dropdown">
+							<option selected>0</option>
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							</select>
+						</div>			
+					</div>				
+				</select>
+                    <div class="card-body" style="padding: 0 1.25rem 1rem 1.25rem;">
+                        <div class="form-floating">
+                            <textarea class="form-control" type="text" style="min-height: 300px;"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			<div class="resizer" style="float:right; width: 49%;">
+                <div class="card" style="width: 100%">
+                    <div class="card-header">
+						<h4 class="card-title">Decode string</h4>
+                    </div>
+					<div class="row" style="padding: 0 1.25rem 1rem 1.25rem">
+						<div style="float: left; width: 80%; padding: 0 10px 0 10px;">
+							<select class="form-control select-dropdown">
+							<option selected>None</option>
+							<option>URL</option>
+							<option>Hex</option>
+							<option>Base64</option>
+							</select>
+						</div>
+						<div style="float: left; width: 20%; padding: 0 10px 0 10px;">
+							<select class="form-control select-dropdown">
+							<option selected>0</option>
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							</select>
+						</div>			
+					</div>				
+				</select>
+                    <div class="card-body" style="padding: 0 1.25rem 1rem 1.25rem;">
+                        <div class="form-floating">
+                            <textarea class="form-control" type="text" style="min-height: 300px;"></textarea>
+                        </div>
+                    </div>
+                </div>
+		</div>
 		</main>
 		<footer class="footer" style="position: relative; bottom: 0; width: 100%;">
 			<div class="container-fluid">

@@ -31031,7 +31031,7 @@ div.dataTables_wrapper span.select-item {
 .course {
 	background-color: #fff;
 	border-radius: 10px;
-	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 0 2rem 0 rgb(41 48 66 / 10%);
 	display: flex;
 	max-width: 100%;
 	margin: 20px;
@@ -31328,4 +31328,18 @@ div.dataTables_wrapper span.select-item {
     width: 100%;
     display: block;
     padding-right: 20px;
+}
+
+.select-dropdown {
+    background-color: #fff;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23020202' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right .7rem center;
+    background-size: 16px 12px;
+}
+
+@media (max-width: 786px) {
+    .resizer {
+        width: 100% !important;
+    }
 }
