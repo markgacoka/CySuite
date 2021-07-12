@@ -3,11 +3,11 @@
   <br>
 </h1>
 
-
-
-[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/projectdiscovery/nuclei/issues)
-[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/badges/graphs/commit-activity)
+<p align="center">
+  <img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat" />
+  <img src="https://badges.frapsoft.com/os/v1/open-source.svg?v=103" />
+  <img src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
+</p>
 
 CySuite is a web-security automation tool designed to ease recon and vulnerability assessment in web targets. This tool is suited for bug bounty hunters, penetration testers and cybersecurity enthusiasts with interest in security automation. 
 
