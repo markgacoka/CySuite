@@ -31338,8 +31338,31 @@ div.dataTables_wrapper span.select-item {
     background-size: 16px 12px;
 }
 
+.input-resizer {
+    float: left; 
+    width: 90%; 
+    padding-right: 0.5rem;
+}
+
+.button-resizer {
+    float: right; 
+    width: 10%;
+}
+
 @media (max-width: 786px) {
     .resizer {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 1290px) {
+    .button-resizer {
+        width: 20% !important;
+        max-width: 2rem;
+        margin-top: 1rem;
+    }
+
+    .input-resizer {
         width: 100% !important;
     }
 }
