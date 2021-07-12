@@ -3,3 +3,4 @@ CySuite is a web-security automation tool designed to ease recon and vulnerabili
 
 CySuite is designed to scan and test for all classic vulnerabilities in the OWASP Top 10 list. It starts with passive and active reconnaissance, stores the result to a database, then scans for attack vectors in which a potential vulnerability might lie. It also offers a myriad of tools for vulnerability assessment such as request manipulators, wordlist generators, code injectors and various encoders/decoders.
 
+Please make sure to read the CONTRIBUTIONS and CODE OF CONDUCT pages before joining the community or contributing.
