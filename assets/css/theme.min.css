@@ -2727,29 +2727,29 @@ fieldset:disabled a.btn {
 
 .btn-primary {
     color: #fff;
-    background-color: #377dff;
-    border-color: #377dff
+    background-color: #3E4261;
+    border-color: #3E4261
 }
 
 .btn-primary:hover {
     color: #fff;
-    background-color: #1164ff;
-    border-color: #045cff
+    background-color: #3E4261;
+    border-color: #3E4261
 }
 
 .btn-primary.focus,
 .btn-primary:focus {
     color: #fff;
-    background-color: #1164ff;
-    border-color: #045cff;
+    background-color: #3E4261;
+    border-color: #3E4261;
     box-shadow: 0 0 0 .2rem rgba(85, 145, 255, .5)
 }
 
 .btn-primary.disabled,
 .btn-primary:disabled {
     color: #fff;
-    background-color: #377dff;
-    border-color: #377dff
+    background-color: #3E4261;
+    border-color: #3E4261
 }
 
 .btn-secondary {
@@ -18291,8 +18291,8 @@ screen and (-ms-high-contrast:none) {
 
 .g-0,
 .gx-0 {
-    margin-left: --.0625rem;
-    margin-right: --.0625rem
+    margin-left: -.0625rem;
+    margin-right: -.0625rem
 }
 
 .g-0>*,
@@ -18436,8 +18436,8 @@ screen and (-ms-high-contrast:none) {
 @media (min-width:576px) {
     .g-sm-0,
     .gx-sm-0 {
-        margin-left: --.0625rem;
-        margin-right: --.0625rem
+        margin-left: -.0625rem;
+        margin-right: -.0625rem
     }
     .g-sm-0>*,
     .gx-sm-0>* {
@@ -18559,8 +18559,8 @@ screen and (-ms-high-contrast:none) {
 @media (min-width:768px) {
     .g-md-0,
     .gx-md-0 {
-        margin-left: --.0625rem;
-        margin-right: --.0625rem
+        margin-left: -.0625rem;
+        margin-right: -.0625rem
     }
     .g-md-0>*,
     .gx-md-0>* {
@@ -18682,8 +18682,8 @@ screen and (-ms-high-contrast:none) {
 @media (min-width:992px) {
     .g-lg-0,
     .gx-lg-0 {
-        margin-left: --.0625rem;
-        margin-right: --.0625rem
+        margin-left: -.0625rem;
+        margin-right: -.0625rem
     }
     .g-lg-0>*,
     .gx-lg-0>* {
@@ -18805,8 +18805,8 @@ screen and (-ms-high-contrast:none) {
 @media (min-width:1200px) {
     .g-xl-0,
     .gx-xl-0 {
-        margin-left: --.0625rem;
-        margin-right: --.0625rem
+        margin-left: -.0625rem;
+        margin-right: -.0625rem
     }
     .g-xl-0>*,
     .gx-xl-0>* {
@@ -18928,8 +18928,8 @@ screen and (-ms-high-contrast:none) {
 @media (min-width:1400px) {
     .g-xxl-0,
     .gx-xxl-0 {
-        margin-left: --.0625rem;
-        margin-right: --.0625rem
+        margin-left: -.0625rem;
+        margin-right: -.0625rem
     }
     .g-xxl-0>*,
     .gx-xxl-0>* {
