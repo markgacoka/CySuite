@@ -4702,7 +4702,6 @@ a.badge-dark:focus {
 .alert {
     position: relative;
     padding: .75rem 1.25rem;
-    margin-bottom: 1rem;
     border: .0625rem solid transparent;
     border-radius: .3125rem
 }
@@ -14492,7 +14491,7 @@ label.btn {
     -ms-flex-align: center;
     align-items: center;
     -ms-flex-pack: justify;
-    justify-content: space-between;
+    
     padding-top: 1rem;
     padding-bottom: 1rem
 }
