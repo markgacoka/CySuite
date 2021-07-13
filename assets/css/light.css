@@ -2846,7 +2846,6 @@ textarea.form-control-lg {
     background-color: transparent;
     border: 1px solid transparent;
     padding: .25rem .7rem;
-    font-size: 1rem;
     border-radius: .2rem;
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out
 }
@@ -4966,7 +4965,6 @@ fieldset:disabled .btn {
 .alert {
     position: relative;
     padding: .95rem;
-    margin-bottom: 1rem;
     border: 0 solid transparent;
     border-radius: .2rem
 }
@@ -12166,8 +12164,6 @@ fieldset:disabled .btn {
 .alert-outline .alert-message {
     border-top-right-radius: .2rem;
     border-bottom-right-radius: .2rem;
-    border-top-left-radius: .2rem;
-    border-bottom-left-radius: .2rem;
     border: 1px solid #ced4da
 }
 
@@ -12187,7 +12183,7 @@ fieldset:disabled .btn {
 
 .alert-outline-coloured.alert-primary .alert-icon,
 .alert-outline.alert-primary .alert-icon {
-    background-color: #3f80ea
+    background-color: #3E4261
 }
 
 .alert-outline-coloured.alert-secondary .alert-icon,

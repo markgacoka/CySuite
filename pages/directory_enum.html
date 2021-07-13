@@ -3,8 +3,9 @@
 
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>File Uploads | CySuite</title>
+	<title>Directory Enumeration | CySuite</title>
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 	<link href="../assets/css/theme.min.css" rel="stylesheet">
 	<link href="../assets/css/light.css" rel="stylesheet">
 </head>
@@ -47,8 +48,8 @@
 								Enumeration</span>
 						</a>
 					</li>
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="directory_enum.html">
+					<li class="sidebar-item active">
+						<a class="sidebar-link" href="">
 							<i class="align-middle" data-feather="link-2"></i> <span class="align-middle">Directory
 								Enumeration</span>
 						</a>
@@ -79,8 +80,8 @@
 								IDs, WP</span>
 						</a>
 					</li>
-					<li class="sidebar-item active">
-						<a class="sidebar-link" href="">
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="file_upload.html">
 							<i class="align-middle" data-feather="upload"></i> <span class="align-middle">File
 								uploads/Shells</span>
 						</a>
@@ -123,49 +124,35 @@
 				</div>
 			</nav>
 			<main class="content">
-				<div class="tab-pane" id="password" role="tabpanel">
-					<h3>Code Injection</h3>
-					<div class="card">
-						<div class="card-body">
-							<h6 class="card-title">Payload:</h6>
-							<form>
-								<div class="mb-3" style="padding-left: 10px;">
-									<div class="row">
-									<div class="input-resizer">
-										<input type="password" class="form-control" id="inputPasswordNew2">
-										<small><code>Example: &lt;?php system("cat /etc/passwd");?&gt;</code></small>
-										<div class="mb-3">
-											<span>Download: <a href="">shell.php.png</a></span>
-										</div>
-										<button type="submit" class="btn btn-primary"
-											style="margin-right: 2rem;">Upload</button>
-									</div>
-									<div class="button-resizer">
-										<button type="submit" class="btn btn-primary" style="min-height: 40px; max-height: 40px; line-height: 2rem;">Inject payload</button>
-									</div>
-									<div class="row">
-								</div>
-							</form>
-
+				<h1>Enumerate Directories</h1>
+				<div class="alert alert-warning alert-dismissible" role="alert">
+					<div class="alert-message">
+						<p class="mb-0"><strong>No project chosen!</strong> Start one from the <a
+								href="projects.html">Projects</a> tab and scan directories to see the list.</p>
+					</div>
+				</div>
+				<div class="card">
+					<div class="card-header pb-0">
+						<div class="alert alert-primary alert-outline alert-dismissible" style="margin-right: 2rem;">
+							<div class="alert-icon">
+								<i class="fa fa-globe"></i>
+							</div>
+							<input class="alert-message" placeholder="subdomain1.site.com"></input>
+						</div>
+						<button class="btn btn-primary" style="margin-right: 2rem; min-height: 54px; width: auto;" type="button"><i class="fa fa-bug"></i>&emsp;Active (Crawl)</button>
+						<button class="btn btn-primary" style="margin-right: 2rem; min-height: 54px; width: auto;" type="button"><i class="fa fa-archive"></i>&emsp;Passive (Archives)</button>
+						<button class="btn btn-primary" style="min-height: 54px; width: auto;" type="button"><i class="fa fa-cog"></i>&emsp;Bruteforce</button>
+					</div>
+					<div class="card-body">
+						<div class="form-floating">
+							<textarea class="form-control" type="text" style="min-height: 300px;" readonly></textarea>
+							<label for="floatingInput1" style="font-size: 1rem;">[200] https://site.com/</label>
 						</div>
 					</div>
 				</div>
-
-				<div class="card">
-					<div class="card-body">
-						<table class="table table-sm my-2">
-							<tbody>
-								<tr>
-									<th>Your IP</th>
-									<td>176.232.11.2</td>
-								</tr>
-								<tr>
-									<th>Status</th>
-									<td><span class="badge bg-success">Uploaded</span></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+				<div class="input-group mb-3">
+					<input class="form-select flex-grow-1">
+					<button class="btn btn-primary" type="button">Search</button>
 				</div>
 			</main>
 			<footer class="footer" style="position: relative; bottom: 0; width: 100%;">
