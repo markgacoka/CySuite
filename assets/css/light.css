@@ -2914,8 +2914,8 @@ fieldset:disabled .btn {
 .btn-primary.disabled,
 .btn-primary:disabled {
     color: #fff;
-    background-color: #3f80ea;
-    border-color: #3f80ea
+    background-color: #3E4261;
+    border-color: #3E4261;
 }
 
 .btn-secondary {
@@ -16234,34 +16234,8 @@ button.bg-primary-light:hover {
     }
 }
 
-.fa-rotate-90 {
-    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
-    transform: rotate(90deg)
-}
-
-.fa-rotate-180 {
-    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
-    transform: rotate(180deg)
-}
-
-.fa-rotate-270 {
-    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
-    transform: rotate(270deg)
-}
-
-.fa-flip-horizontal {
-    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)";
-    transform: scaleX(-1)
-}
-
 .fa-flip-vertical {
     transform: scaleY(-1)
-}
-
-.fa-flip-both,
-.fa-flip-horizontal.fa-flip-vertical,
-.fa-flip-vertical {
-    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)"
 }
 
 .fa-flip-both,
@@ -22610,7 +22584,6 @@ button.bg-primary-light:hover {
 .svg_select_points {
     fill: #efefef;
     stroke: #333;
-    rx: 2
 }
 
 .apexcharts-svg.apexcharts-zoomable.hovering-zoom {
@@ -24058,7 +24031,6 @@ table.dataTable.fixedHeader-locked {
     -moz-user-select: none;
     user-select: none;
     font-family: fcicons !important;
-    speak: none;
     font-style: normal;
     font-weight: 400;
     font-variant: normal;
@@ -25846,7 +25818,6 @@ text {
     border: none;
     cursor: pointer;
     display: inline-block;
-    float: left;
     height: 24px;
     padding: 3px 5px;
     width: 28px
@@ -26047,7 +26018,6 @@ text {
 .ql-bubble .ql-picker {
     color: #ccc;
     display: inline-block;
-    float: left;
     font-size: 14px;
     font-weight: 500;
     height: 24px;
@@ -26941,7 +26911,6 @@ text {
 
 .ql-snow.ql-toolbar button svg,
 .ql-snow .ql-toolbar button svg {
-    float: left;
     height: 100%
 }
 
@@ -27213,7 +27182,6 @@ text {
 .ql-snow .ql-picker {
     color: #444;
     display: inline-block;
-    float: left;
     font-size: 14px;
     font-weight: 500;
     height: 24px;
@@ -31086,7 +31054,6 @@ div.dataTables_wrapper span.select-item {
 .progress::after {
 	border-radius: 3px;
 	background-color: #2A265F;
-	content: '';
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -31098,10 +31065,6 @@ div.dataTables_wrapper span.select-item {
 	font-size: 10px;
 	opacity: 0.6;
 	letter-spacing: 1px;
-}
-
-.courses-container {
-	
 }
 
 .project-btn {
@@ -31294,11 +31257,21 @@ div.dataTables_wrapper span.select-item {
 
 @media (max-width: 1200px) {
     .project-column {
-       width: 100% !important;
-  }
-  .asset-btn {
-      width: 35%;
-  }
+        width: 100% !important;
+    }
+    .asset-btn {
+        width: 35%;
+    }
+    .btn-width {
+        min-width: 150px !important;
+    }
+}
+
+@media (max-width: 750px) {
+    .btn-width {
+        min-width: max-content !important;
+        border-radius: 0;
+    }
 }
 
 @media (max-width: 500px) {
@@ -31344,6 +31317,28 @@ div.dataTables_wrapper span.select-item {
     width: 10%;
 }
 
+.dropdown-icon {
+    -moz-padding-start: calc(.7rem - 3px);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23020202' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3E%3C/svg%3E");
+    background-position: right .7rem center;
+    background-repeat: no-repeat;
+    background-size: 16px 12px;
+    border: 1px solid #ced4da;
+    border-radius: .2rem;
+    color: #495057;
+    display: block;
+    font-size: .825rem;
+    font-weight: 400;
+    line-height: 1.625;
+    padding: .25rem 2.1rem .25rem .7rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    width: 100%;
+}
+
 @media (max-width: 786px) {
     .resizer {
         width: 100% !important;
@@ -31361,3 +31356,16 @@ div.dataTables_wrapper span.select-item {
         width: 100% !important;
     }
 }
+
+@media (min-width: 1200px) and (max-width: 1750px) {
+    .btn-width {
+        border-radius: 0;
+    }
+}
+
+
+@media (min-width: 1750px) {
+    .btn-width {
+        min-width: 150px !important;
+    }
+ }

@@ -3,8 +3,9 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Subdomain Enumeration | CySuite</title>
+    <title>Projects | CySuite</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
     <link href="../assets/css/theme.min.css" rel="stylesheet">
     <link href="../assets/css/light.css" rel="stylesheet">
 </head>
@@ -41,8 +42,8 @@
                     </li>
 
                     <li class="sidebar-header">Recon and Exploitation</li>
-                    <li class="sidebar-item active">
-                        <a class="sidebar-link" href="">
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="subdomain_enum.html">
                             <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Subdomain
                                 Enumeration</span>
                         </a>
@@ -53,8 +54,8 @@
                                 Enumeration</span>
                         </a>
                     </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="vuln_analysis.html">
+                    <li class="sidebar-item active">
+                        <a class="sidebar-link" href="">
                             <i class="align-middle" data-feather="check-square"></i> <span
                                 class="align-middle">Vulnerability Analysis</span>
                         </a>
@@ -123,96 +124,52 @@
                 </div>
             </nav>
             <main class="content">
-                <div class="container-fluid p-0">
-                    <div class="alert alert-warning alert-dismissible mb-3" role="alert">
-                        <div class="alert-message">
-                            <p class="mb-0"><strong>No project chosen!</strong> Start one from the <a
-                                    href="projects.html">Projects</a> tab and scan subdomains to see the list.</p>
+                <div class="row">
+                <div class="col-12 col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="mb-0">Vulnerability analysis scan</h2>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5 class="card-title">Enumerate Subdomains</h5>
-                                </div>
-                                <div class="card-body">
-                                    <table id="datatables-column-search-text-inputs" class="table table-striped" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th>Subdomain</th>
-                                                <th>Status Code</th>
-                                                <th>Screenshot</th>
-                                                <th>Internet Protocol (IPv4)</th>
-                                                <th>Web Application Firewall</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><a href="directory_enum/subdomain1-site.html">subdomain1.site.com</a></td>
-                                                <td>200</td>
-                                                <td><a>Open</a></td>
-                                                <td>139.43.6.21</td>
-                                                <td>Absent</td>
-                                            </tr>
-                                            <tr>
-                                                <td>subdomain2.site.com</td>
-                                                <td>404</td>
-                                                <td>None</td>
-                                                <td>102.343.26.11</td>
-                                                <td>Present [Microsoft Azure]</td>
-                                            </tr>
-                                            <tr>
-                                                <td>subdomain3.site.com</td>
-                                                <td>200</td>
-                                                <td><a>Open</a></td>
-                                                <td>143.323.6.11</td>
-                                                <td>Present [Cloudflare]</td>
-                                            </tr>
-                                            <tr>
-                                                <td>subdomain4.site.com</td>
-                                                <td>403</td>
-                                                <td><a>Open</a></td>
-                                                <td>10.3.326.11</td>
-                                                <td>Present [Cloudflare]</td>
-                                            </tr>
-                                            <tr>
-                                                <td>subdomain5.site.com</td>
-                                                <td>200</td>
-                                                <td><a>Open</a></td>
-                                                <td>102.343.26.11</td>
-                                                <td>Present [Cloudflare]</td>
-                                            </tr>
-                                            <tr>
-                                                <td>subdomain6.site.com</td>
-                                                <td>500</td>
-                                                <td>None</td>
-                                                <td>102.343.26.11</td>
-                                                <td>Present [Cloudflare]</td>
-                                            </tr>
-                                            <tr>
-                                                <td>subdomain7.site.com</td>
-                                                <td>500</td>
-                                                <td>None</td>
-                                                <td>154.34.2.221</td>
-                                                <td>Present [Cloudflare]</td>
-                                            </tr>
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Office</th>
-                                                <th>Age</th>
-                                                <th>Salary</th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
+                        <div class="card-body">
+                            <h4>Select Project</h4>
+                            <div class="input-group mb-4">
+                                <select class="dropdown-icon flex-grow-1">
+                                    <option>Select...</option>
+                                    <option>One</option>
+                                    <option>Two</option>
+                                    <option>Three</option>
+                                </select>
                             </div>
+                            <div class="input-group mb-4">
+                                <h4>Select subdomain</h4>
+                                <select class="dropdown-icon flex-grow-1">
+                                    <option>Select...</option>
+                                    <option>One</option>
+                                    <option>Two</option>
+                                    <option>Three</option>
+                                </select>
+                            </div>
+                            <div class="input-group mb-4">
+                                <h4>Scan method</h4>
+                                <select class="dropdown-icon flex-grow-1">
+                                    <option>Select...</option>
+                                    <option>One</option>
+                                    <option>Two</option>
+                                    <option>Three</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary" style="float:right;"><i class="fa fa-search"></i>&emsp;Scan</button>
                         </div>
                     </div>
                 </div>
+                <div class="col-12 col-lg-6" style="height: auto;">
+                    <div class="card">
+                        <div class="card-header">
+                            <textarea class="form-control" type="text" style="min-height: 345px;" readonly></textarea>
+                            </div>
+                    </div>
+                </div>
+            </div>
             </main>
             <footer class="footer" style="position: relative; bottom: 0; width: 100%;">
                 <div class="container-fluid">
@@ -220,7 +177,7 @@
                         <div class="col-6 text-start">
                             <ul class="list-inline">
                                 <li class="list-inline-item">
-                                    <a class="text-muted" href="notes.html">Blog</a>
+                                    <a class="text-muted" href="pages/notes.html">Blog</a>
                                 </li>
                             </ul>
                         </div>
@@ -235,29 +192,6 @@
         </div>
     </div>
     <script src="../assets/js/app.js"></script>
-    <script>
-        // DataTables with Column Search by Text Inputs
-        document.addEventListener("DOMContentLoaded", function () {
-            // Setup - add a text input to each footer cell
-            $('#datatables-column-search-text-inputs tfoot th').each(function () {
-                var title = $(this).text();
-                $(this).html('<input type="text" class="form-control" placeholder="Search ' + 'column' +
-                    '" />');
-            });
-            // DataTables
-            var table = $('#datatables-column-search-text-inputs').DataTable();
-            // Apply the search
-            table.columns().every(function () {
-                var that = this;
-                $('input', this.footer()).on('keyup change clear', function () {
-                    if (that.search() !== this.value) {
-                        that
-                            .search(this.value)
-                            .draw();
-                    }
-                });
-            });
-        });
-    </script>
     </body>
+
 </html>
