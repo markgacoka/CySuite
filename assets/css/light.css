@@ -31317,6 +31317,18 @@ div.dataTables_wrapper span.select-item {
     width: 10%;
 }
 
+.scan-btn {
+    min-height: 54px; 
+    width: 100px; 
+    margin-right: 0; 
+    margin-left:auto; 
+    display:block;
+}
+
+.square-border {
+    border-radius: 0 !important;
+}
+
 .dropdown-icon {
     -moz-padding-start: calc(.7rem - 3px);
     -webkit-appearance: none;
