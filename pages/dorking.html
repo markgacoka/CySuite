@@ -3,8 +3,8 @@
 
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>Decoder | CySuite</title>
-	<link rel="icon" href="../assets/img/icons/favicon.ico" type="image/x-icon" />
+	<title>Dorking | CySuite</title>
+    <link rel="icon" href="../assets/img/icons/favicon.ico" type="image/x-icon" />
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 	<link href="../assets/css/theme.min.css" rel="stylesheet">
 	<link href="../assets/css/light.css" rel="stylesheet">
@@ -26,6 +26,11 @@
 					<li class="sidebar-item">
 						<a class="sidebar-link" href="projects.html">
 							<i class="align-middle" data-feather="book"></i> <span class="align-middle">Projects</span>
+						</a>
+					</li>
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="req_tamperer.html">
+							<i class="align-middle" data-feather="layout"></i> <span class="align-middle">Tamper Requests</span>
 						</a>
 					</li>
 					<li class="sidebar-item">
@@ -52,8 +57,8 @@
 								class="align-middle">Vulnerability Analysis</span>
 						</a>
 					</li>
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="dorking.html">
+                    <li class="sidebar-item active">
+						<a class="sidebar-link" href="">
 							<i class="align-middle" data-feather="search"></i> <span
 								class="align-middle">Dorking</span>
 						</a>
@@ -66,17 +71,12 @@
 
 					<li class="sidebar-header">Tools</li>
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="req_tamperer.html">
-							<i class="align-middle" data-feather="layout"></i> <span class="align-middle">Tamper Requests</span>
-						</a>
-					</li>
-					<li class="sidebar-item">
 						<a class="sidebar-link" href="wordlist_gen.html">
 							<i class="align-middle" data-feather="settings"></i> <span class="align-middle">Wordlist Generator</span>
 						</a>
 					</li>
-					<li class="sidebar-item active">
-						<a class="sidebar-link" href="">
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="decoder.html">
 							<i class="align-middle" data-feather="tool"></i> <span class="align-middle">Decoders, Hash IDs, WP</span>
 						</a>
 					</li>
@@ -122,86 +122,21 @@
 			</div>
 		</nav>
 		<main class="content">
-			<div class="row" style="padding: 0 10px 0 10px;">
-                <h2 class="h3 mb-3">Decoder</h2>
-                <div class="card" style="width: 100%">
-                    <div class="card-header">
-						<h4>Identify hash</h4>
-					</div>
-                    <div class="card-body" style="padding: 0 1.5rem 1rem 1.5rem;">
-						<textarea class="form-control"
-						id="floatingTextarea1" style="min-height: 100px"></textarea>
+            <h1 class="h3 mb-3">Run a Dork</h1>
+            <div class="card">
+                <div class="card-header pb-0">        
+                    <h5>Github Repos / Subdomain for Information Disclosures</h5>
+                </div>
+                <div class="card-body">
+                    <div class="form-floating mb-3 input-group">
+                        <span class="input-group-text">http://</span>
+                        <input type="email" class="form-control" id="floatingInput1" style="font-size:1.2rem !important;">
+                        <button class="btn btn-primary" style="padding: 0 2rem 0 2rem;">Enter</button>
                     </div>
-					<div class="card-body" style="padding: 0 1.5rem 1rem 1.5rem;">
-						<div class="alert alert-primary alert-dismissible" role="alert">
-							<div class="alert-message">
-								<strong>Hash :</strong> SHA-256 <a href="https://md5decrypt.net/en/Sha256/">Try decrypting.</a></div>
-						</div>
-					</div>
+                    <textarea class="form-control" id="floatingTextarea1" style="min-height: 500px"></textarea>
+                    <label for="floatingTextarea1" style="font-size: 1rem;"></label>
                 </div>
             </div>
-			<div class="resizer" style="float:left; width: 49%;">
-                <div class="card" style="width: 100%">
-                    <div class="card-header">
-						<h4 class="card-title">Encode string</h4>
-                    </div>
-					<div class="row" style="padding: 0 1.25rem 1rem 1.25rem">
-						<div style="float: left; width: 80%; padding: 0 10px 0 10px;">
-							<select class="form-control select-dropdown">
-							<option selected>None</option>
-							<option>URL</option>
-							<option>Hex</option>
-							<option>Base64</option>
-							</select>
-						</div>
-						<div style="float: left; width: 20%; padding: 0 10px 0 10px;">
-							<select class="form-control select-dropdown">
-							<option selected>0</option>
-							<option>1</option>
-							<option>2</option>
-							<option>3</option>
-							</select>
-						</div>			
-					</div>				
-				</select>
-                    <div class="card-body" style="padding: 0 1.25rem 1rem 1.25rem;">
-                        <div class="form-floating">
-                            <textarea class="form-control" type="text" style="min-height: 300px;"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-			<div class="resizer" style="float:right; width: 49%;">
-                <div class="card" style="width: 100%">
-                    <div class="card-header">
-						<h4 class="card-title">Decode string</h4>
-                    </div>
-					<div class="row" style="padding: 0 1.25rem 1rem 1.25rem">
-						<div style="float: left; width: 80%; padding: 0 10px 0 10px;">
-							<select class="form-control select-dropdown">
-							<option selected>None</option>
-							<option>URL</option>
-							<option>Hex</option>
-							<option>Base64</option>
-							</select>
-						</div>
-						<div style="float: left; width: 20%; padding: 0 10px 0 10px;">
-							<select class="form-control select-dropdown">
-							<option selected>0</option>
-							<option>1</option>
-							<option>2</option>
-							<option>3</option>
-							</select>
-						</div>			
-					</div>				
-				</select>
-                    <div class="card-body" style="padding: 0 1.25rem 1rem 1.25rem;">
-                        <div class="form-floating">
-                            <textarea class="form-control" type="text" style="min-height: 300px;"></textarea>
-                        </div>
-                    </div>
-                </div>
-		</div>
 		</main>
 		<footer class="footer" style="position: relative; bottom: 0; width: 100%;">
 			<div class="container-fluid">
