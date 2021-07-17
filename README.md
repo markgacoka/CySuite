@@ -16,3 +16,15 @@ CySuite is designed to scan and test for all classic vulnerabilities in the OWAS
 
 Please make sure to read the [CONTRIBUTING](CONTRIBUTING.md) and [CODE OF CONDUCT](CODE_OF_CONDUCT.md) pages before joining the community or contributing.
 
+## Features
+### Subdomain Enumeration
+The subdomain enumeration section of Cysuite scans for subdomains both passively and actively.
+1. Bruteforce 
+A dataset/wordlist of your choice can be provided to bruteforce possible subdomains.
+    - The number of threads and requests/second can be changed.
+    - The results are saved to the local database for future reference, future intergration and efficient rescans.
+    - Comes with all.txt, commonspeak2 and Seclist's subdomains-top1million-110000.txt wordlists built-in.
+2. Passive archives such as Rapid7 FDNS dataset can be queried for additional subdomains (online version only)
+3. [200 OK] responses can be filtered out for directory enumeration.
+
+**Output**: subdomains, related IP addresses (IPv4), status codes, Web Application Firewall (WAF), Server Type, homepage screenshot (if possible).
