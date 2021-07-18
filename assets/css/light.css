@@ -30985,7 +30985,6 @@ div.dataTables_wrapper span.select-item {
 
 .course {
 	background-color: #fff;
-	border-radius: 10px;
 	box-shadow: 0 0 2rem 0 rgb(41 48 66 / 10%);
 	display: flex;
 	max-width: 100%;
@@ -31062,7 +31061,6 @@ div.dataTables_wrapper span.select-item {
 .project-btn {
 	background-color: #2a2d42;
 	border: 0;
-	border-radius: 50px;
 	color: #fff;
 	font-size: 14px;
 	padding: 12px;
