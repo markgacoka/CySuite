@@ -142,8 +142,31 @@
                             <path fill="#000000" d="M15.898,4.045c-0.271-0.272-0.713-0.272-0.986,0l-4.71,4.711L5.493,4.045c-0.272-0.272-0.714-0.272-0.986,0s-0.272,0.714,0,0.986l4.709,4.711l-4.71,4.711c-0.272,0.271-0.272,0.713,0,0.986c0.136,0.136,0.314,0.203,0.492,0.203c0.179,0,0.357-0.067,0.493-0.203l4.711-4.711l4.71,4.711c0.137,0.136,0.314,0.203,0.494,0.203c0.178,0,0.355-0.067,0.492-0.203c0.273-0.273,0.273-0.715,0-0.986l-4.711-4.711l4.711-4.711C16.172,4.759,16.172,4.317,15.898,4.045z"></path>
                         </svg>
                         </a>
-                        <div class="modal-content">
-                        <h3>Some content here</h3>
+                        <div style="margin: 2rem 2rem 2rem 2rem;">
+                            <h1 class="mb-4">Add a new project</h1>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" style="color: white; background-color: #3E4261; width: 9rem;">Project Name</span>
+                                <input type="text" class="flex-grow-1 form-control" style="height: auto;">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" style="color: white; background-color: #3E4261; width: 9rem;">Program</span>
+                                <select class="form-select flex-grow-1 select-dropdown">
+                                    <option>HackerOne</option>
+                                    <option>BugCrowd</option>
+                                    <option>Intigriti</option>
+                                    <option>Synack</option>
+                                    <option>Custom</option>
+                                </select>
+                            </div>
+                            <h3>In scope domains</h3>
+                            <h6>Add each domain seperated by a new line (*.site.com allowed)</h3>
+                            <textarea style="width: 100%; height: 15rem;"></textarea>
+                            <button class="scan-btn" style="background-color: #3E4261"><i class="fa fa-search"
+                            style="color: white;"></i>&emsp;Scan</button>
+                            <h6>Logs</h6>
+                            <small>Starting.... 0%</small><br/>
+                            <small>Extracting subdomains from ThreatCrowd.... 20%</small><br/>
+                            <small>Extracting subdomains from WaybackMachine.... 35%</small>
                         </div>
                     </div>
                 </div>
