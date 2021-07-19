@@ -32,3 +32,49 @@ Passive archives such as Rapid7 FDNS dataset can be queried for additional subdo
 **Output**: 
 subdomains, related IP addresses (IPv4), status codes, Web Application Firewall (WAF), Server Type, homepage screenshot (if possible).
 
+# Methods
+1. Subdomain bruteforcing
+	- ffuf, gobuster, knock, dnssearch, sudomy, subbrute
+2. DNS walking
+	- ldns-walk, amass
+4. DNS Zone Transfer
+	- dnscan, DNSRecon, dig, amass
+5. Certificate Transparency Logs
+	- censys.io, scans.io (Censys and Project Sonar), cert.sh, san_subdomain_enum.py
+
+6. Subdomain archive datasets and APIs
+	- Rapid7 Project Sonar or https://sonar.omnisint.io/subdomains/google.com [Dataset]
+	- Common Crawl or CCrawlDNS.py [API]
+	- Shodan [API]
+	- AnubisDB or https://jldc.me/anubis/subdomains/sony.com [API]
+	- Chaos [API]
+	- Recon.dev [API]
+	- SecurityTrails or haktrails [API]
+	- bufferover or https://dns.bufferover.run/dns?q=.sony.com FDNS [API]
+	- Crt.sh or https://crt.sh/?q=markgacoka.com
+	- VirusTotal - 'https://www.virustotal.com/vtapi/v2/url/scan'
+	- Censys -  subdomain_enum_censys.py 
+	- VirusTotal API - virustotal_subdomain_enum.py
+
+7. Search Engine Dorking
+	- Google, Yahoo, Bing, Baidu, Ask
+	- Knock
+8, Reverse DNS lookups on identified public IPs
+	- Lepus, amass
+9. Search subdomains in JS files
+	- jsubfinder
+11. Search subdomains using github
+	- github-subdomains.py
+12, DNS subdomain permutation
+	- altdns, amass
+13. DNS record information
+	- https://bgp.he.net/dns/google.com
+14, Subdomains from passive sources:
+	- dnsdumpster.py
+15. NSEC3 hash cracking
+	- nsec3walker, nsec3map
+16. Using cloudflare service
+	- cloudflare_enum.py
+17. Resolving active subdomains
+	- MassDNS
+
