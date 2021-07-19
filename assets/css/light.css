@@ -37,6 +37,22 @@
     }
 }
 
+.modal.active {
+    visibility: visible;
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+}
+.modal.active .modal-content {
+    opacity: 1;
+}
+.modal.active .close-modal {
+    -webkit-transform: translateY(10px);
+            transform: translateY(10px);
+    opacity: 1;
+}
+  
+
 body {
     margin: 0;
     font-family: var(--bs-font-sans-serif);
@@ -31467,21 +31483,7 @@ div.dataTables_wrapper span.select-item {
     -webkit-transition-delay: 0.3s;
             transition-delay: 0.3s;
 }
-.modal.active {
-    visibility: visible;
-    opacity: 1;
-    -webkit-transform: scale(1);
-            transform: scale(1);
-}
-.modal.active .modal-content {
-    opacity: 1;
-}
-.modal.active .close-modal {
-    -webkit-transform: translateY(10px);
-            transform: translateY(10px);
-    opacity: 1;
-}
-  
+
 @media only screen and (max-width: 39.9375em) {
     h1 {
         font-size: 1.5rem;
@@ -31504,3 +31506,36 @@ div.dataTables_wrapper span.select-item {
         right: 20px !important;
     }
 }
+
+.wordlist-table {
+    float: left; 
+    width: 50%; 
+    padding-right: 10px;
+}
+
+.wordlist-output {
+    float: right; 
+    width: 50%; 
+    padding: 40px 0 0 10px;
+}
+
+.wordlist-gen {
+    width: 100%; 
+}
+
+@media (max-width: 1200px) {
+    .wordlist-table,
+    .wordlist-output,
+    .wordlist-gen {
+        width: 100%;
+        padding: 0 1rem 0 1rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .save-btn {
+        float: left !important;
+        margin: 0 0 2rem 20px;
+    }
+}
+
