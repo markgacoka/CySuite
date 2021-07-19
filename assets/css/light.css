@@ -30991,6 +30991,7 @@ div.dataTables_wrapper span.select-item {
 	margin: 20px;
 	overflow: hidden;
     height: 11em;
+    border-radius: 5px;
 }
 
 .course h6 {
