@@ -32,5 +32,5 @@ Passive archives such as Rapid7 FDNS dataset can be queried for additional subdo
 **Output**: 
 subdomains, related IP addresses (IPv4), status codes, Web Application Firewall (WAF), Server Type, homepage screenshot (if possible).
 
-
+For more information on the database models used, check the [API Docs page](scripts/API.md)
 
