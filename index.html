@@ -1,555 +1,375 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Dashboard</title>
-    <link rel="icon" href="assets/img/icons/favicon.ico" type="image/x-icon" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-    <link href="assets/css/theme.min.css" rel="stylesheet">
-    <link class="js-stylesheet" href="assets/css/light.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CySuite</title>
+    <link rel='shortcut icon' type='image/x-icon' href='assets/img/logo/favicon.ico' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
-
-<body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-behavior="sticky">
-    <div class="wrapper">
-        <nav id="sidebar" class="sidebar">
-            <div class="sidebar-content js-simplebar">
-                <a class="sidebar-brand" href=""><span class="align-middle me-3">CySuite</span></a>
-                <ul class="sidebar-nav">
-
-                    <li class="sidebar-header">Pages</li>
-                    <li class="sidebar-item active">
-                        <a data-bs-target="#dashboards" class="sidebar-link" href="">
-                            <i class="align-middle" data-feather="home"></i> <span class="align-middle">Dashboard</span>
+<body data-theme-mode-panel-active data-theme="light" style="font-family: 'Mazzard H';">
+    <div class="site-wrapper overflow-hidden position-relative">
+        <header class="site-header site-header--menu-center dark-mode-texts landing-17-menu site-header--absolute site-header--sticky scrolling">
+            <div class="container">
+                <nav class="navbar site-navbar">
+                    <div class="brand-logo">
+                        <a href="#">
+                            <img src="assets/img/logo/logo.png" alt="" class="light-version-logo logo-resize">
+                            <img src="assets/img/logo/logo.png" alt="" class="dark-version-logo logo-resize">
                         </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages/projects.html">
-                            <i class="align-middle" data-feather="book"></i> <span class="align-middle">Projects</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages/notes.html">
-                            <i class="align-middle" data-feather="book-open"></i> <span
-                                class="align-middle">Notes</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-header">Recon and Exploitation</li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages/subdomain_enum.html">
-                            <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Subdomain
-                                Enumeration</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages/directory_enum.html">
-                            <i class="align-middle" data-feather="link-2"></i> <span class="align-middle">Directory
-                                Enumeration</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages/vuln_analysis.html">
-                            <i class="align-middle" data-feather="check-square"></i> <span
-                                class="align-middle">Vulnerability Analysis</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-						<a class="sidebar-link" href="pages/dorking.html">
-							<i class="align-middle" data-feather="search"></i> <span
-								class="align-middle">Dorking</span>
-						</a>
-					</li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages/exploits.html">
-                            <i class="align-middle" data-feather="key"></i> <span class="align-middle">Run
-                                Exploits</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-header">Tools</li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages/req_tamperer.html">
-                            <i class="align-middle" data-feather="layout"></i> <span class="align-middle">Tamper Requests</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="../pages/wordlist_gen.html">
-                            <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Wordlist
-                                Generator</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages/decoder.html">
-                            <i class="align-middle" data-feather="tool"></i> <span class="align-middle">Decoders, Hash
-                                IDs, WP</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages/file_upload.html">
-                            <i class="align-middle" data-feather="upload"></i> <span class="align-middle">File
-                                uploads/Shells</span>
-                        </a>
-                    </li>
-                </ul>
+                    </div>
+                    <div class="menu-block-wrapper">
+                        <div class="menu-overlay"></div>
+                        <nav class="menu-block" id="append-menu-header">
+                            <div class="mobile-menu-head">
+                                <div class="go-back">
+                                    <i class="fa fa-angle-left"></i>
+                                </div>
+                                <div class="current-menu-title"></div>
+                                <div class="mobile-menu-close">&times;</div>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="header-btns  header-btn-l-17 ms-auto d-none d-xs-inline-flex align-items-center">
+                        <a class="btn sign-in-btn focus-reset" href="pages/auth/login.html">Sign in</a>
+                        <a class="start-trail-btn btn focus-reset" href="pages/auth/register.html">Sign Up</a>
+                    </div>
+                </nav>
             </div>
-        </nav>
-        <div class="main">
-            <nav class="navbar navbar-expand navbar-light navbar-bg">
-                <a class="sidebar-toggle">
-                    <i class="hamburger align-self-center"></i>
-                </a>
-                <form class="d-none d-sm-inline-block">
-                    <div class="input-group input-group-navbar">
-                        <input type="text" class="form-control" placeholder="Search projects…" aria-label="Search">
-                        <button class="btn" type="button">
-                            <i class="align-middle" data-feather="search"></i>
-                        </button>
-                    </div>
-                </form>
-                <div class="navbar-collapse collapse">
-                    <ul class="navbar-nav navbar-align">
-                        <li class="nav-item dropdown">
-                            <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#"
-                                data-bs-toggle="dropdown">
-                                <i class="align-middle" data-feather="settings"></i>
-                            </a>
-                            <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#"
-                                data-bs-toggle="dropdown">
-                                <img src="assets/img/profile/profile.jpg" class="avatar img-fluid rounded-circle me-1"
-                                    alt="Mark Gacoka" /> <span class="text-dark">Mark Gacoka</span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="#">Check for updates</a>
-                                <a class="dropdown-item" href="#">Log Out</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-            <main class="content">
-                <div class="container-fluid p-0">
-                    <div class="row mb-2 mb-xl-3">
-                        <div class="col-auto d-none d-sm-block">
-                            <h3>Dashboard</h3>
+        </header>
+        <div class="hero-area-l-17 position-relative">
+            <div class="container">
+                <div class="row position-relative justify-content-center">
+                    <div class="col-xxl-6 col-xl-7 col-lg-8 col-md-11 order-lg-1 order-1" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
+                        <div class="content text-center">
+                            <h1>Upgrade your security analysis!</h1>
+                            <p>Use our all-in-one tool for security analysis. Perfect for security researchers, bug hunters and hobbyists.</p>
+                            <a href="" class="btn">Request API Access</a>
+                            <span>API on rolling basis</span>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-12 col-sm-6 col-xxl d-flex">
-                            <div class="card illustration flex-fill">
-                                <div class="card-body p-0 d-flex flex-fill">
-                                    <div class="row g-0 w-100">
-                                        <div class="col-6">
-                                            <div class="illustration-text p-3 m-1">
-                                                <h4 class="illustration-text">Welcome Back, Mark!</h4>
-                                                <p class="mb-0">CySuite Dashboard</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 align-self-end text-end">
-                                            <img src="assets/img/illustrations/customer-support.png"
-                                                alt="Customer Support" class="img-fluid illustration-img">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-xxl d-flex">
-                            <div class="card flex-fill">
-                                <div class="card-body py-4">
-                                    <div class="d-flex align-items-start">
-                                        <div class="flex-grow-1">
-                                            <h3 class="mb-2">0</h3>
-                                            <p class="mb-2">Assets Analyzed</p>
-                                            <div class="mb-0">
-                                                <span class="badge badge-soft-success me-2"> <i
-                                                        class="mdi mdi-arrow-bottom-right"></i> 0.00% </span>
-                                                <span class="text-muted">Since last week</span>
-                                            </div>
-                                        </div>
-                                        <div class="d-inline-block ms-3">
-                                            <div class="stat">
-                                                <i class="align-middle text-success" data-feather="server"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-xxl d-flex">
-                            <div class="card flex-fill">
-                                <div class="card-body py-4">
-                                    <div class="d-flex align-items-start">
-                                        <div class="flex-grow-1">
-                                            <h3 class="mb-2">0</h3>
-                                            <p class="mb-2">Vulnerabilities Found</p>
-                                            <div class="mb-0">
-                                                <span class="badge badge-soft-danger me-2"> <i
-                                                        class="mdi mdi-arrow-bottom-right"></i> 0.00% </span>
-                                                <span class="text-muted">Since last week</span>
-                                            </div>
-                                        </div>
-                                        <div class="d-inline-block ms-3">
-                                            <div class="stat">
-                                                <i class="align-middle text-danger" data-feather="shield"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-xxl d-flex">
-                            <div class="card flex-fill">
-                                <div class="card-body py-4">
-                                    <div class="d-flex align-items-start">
-                                        <div class="flex-grow-1">
-                                            <h3 class="mb-2">0</h3>
-                                            <p class="mb-2">Subdomains Scanned</p>
-                                            <div class="mb-0">
-                                                <span class="badge badge-soft-success me-2"> <i
-                                                        class="mdi mdi-arrow-bottom-right"></i> 0.00% </span>
-                                                <span class="text-muted">Since last week</span>
-                                            </div>
-                                        </div>
-                                        <div class="d-inline-block ms-3">
-                                            <div class="stat">
-                                                <i class="align-middle text-info" data-feather="activity"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row gx-2 gx-lg-3">
-                        <div class="col-lg-5 mb-3 mb-lg-5">
-                            <div class="card h-100">
-                                <div class="card-header">
-                                    <h3 class="card-header-title">Most Recent Projects</h3>
-                                </div>
-                                <div class="card-body">
-                                    <p>These are the most recent assets analyzed by the software. They include all the
-                                        relevant information regarding to the enumeration, vulnerability assessment and
-                                        exploitation of the asset.</p>
-
-                                    <ul class="list-group list-group-flush list-group-no-gutters">
-                                        <li class="list-group-item py-3">
-                                            <h5 class="modal-title">From latest:</h5>
-                                        </li>
-                                        <li class="list-group-item py-3">
-                                            <div class="media">
-                                                <div class="mt-1 mr-3">
-                                                    <img class="avatar avatar-xs avatar-4by3"
-                                                        src="assets/img/icons/capsule.svg" alt="Image Description">
-                                                </div>
-                                                <div class="media-body">
-                                                    <div class="row align-items-center">
-                                                        <div class="col">
-                                                            <h5 class="mb-0">Starbucks</h5>
-                                                            <span class="d-block font-size-sm">Hackerone</span>
-                                                        </div>
-
-                                                        <div class="col-auto">
-                                                            <a class="btn btn-sm btn-primary" href="#"
-                                                                title="Launch importer" target="_blank">
-                                                                Open <span
-                                                                    class="d-none d-sm-inline-block">Report</span>
-                                                                <i class="tio-open-in-new ml-1"></i>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item py-3">
-                                            <div class="media">
-                                                <div class="mt-1 mr-3">
-                                                    <img class="avatar avatar-xs avatar-4by3"
-                                                        src="assets/img/icons/mailchimp.svg" alt="Image Description">
-                                                </div>
-                                                <div class="media-body">
-                                                    <div class="row align-items-center">
-                                                        <div class="col">
-                                                            <h5 class="mb-0">Mailchimp</h5>
-                                                            <span class="d-block font-size-sm">Hackerone</span>
-                                                        </div>
-
-                                                        <div class="col-auto">
-                                                            <a class="btn btn-sm btn-primary" href="#"
-                                                                title="Launch importer" target="_blank">
-                                                                Open <span
-                                                                    class="d-none d-sm-inline-block">Report</span>
-                                                                <i class="tio-open-in-new ml-1"></i>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item py-3">
-                                            <div class="media">
-                                                <div class="mt-1 mr-3">
-                                                    <img class="avatar avatar-xs avatar-4by3"
-                                                        src="assets/img/icons/google-webdev.svg">
-                                                </div>
-                                                <div class="media-body">
-                                                    <div class="row align-items-center">
-                                                        <div class="col">
-                                                            <h5 class="mb-0">Coda.io</h5>
-                                                            <span class="d-block font-size-sm">Hackerone</span>
-                                                        </div>
-
-                                                        <div class="col-auto">
-                                                            <a class="btn btn-sm btn-primary" href="#"
-                                                                title="Launch importer" target="_blank">
-                                                                Open <span
-                                                                    class="d-none d-sm-inline-block">Report</span>
-                                                                <i class="tio-open-in-new ml-1"></i>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item"><small>Open the <a href="pages/projects.html">Projects</a> tab to see
-                                                the other projects.</small></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-7 mb-3 mb-lg-5">
-                            <div class="card h-100">
-                                <div class="card-header">
-                                    <h4 class="card-header-title">Latest Vulnerability Detections</h4>
-                                </div>
-                                <div class="card-body card-body-height">
-                                    <ul class="list-group list-group-flush list-group-no-gutters">
-                                        <li class="list-group-item">
-                                            <div class="media">
-                                                <div class="avatar avatar-sm avatar-soft-dark avatar-circle mr-3">
-                                                    <span class="avatar-initials">✓</span>
-                                                </div>
-                                                <div class="media-body">
-                                                    <div class="row">
-                                                        <div class="col-7 col-md-5 order-md-1">
-                                                            <h5 class="mb-0">Starbucks</h5>
-                                                            <span class="font-size-sm">Cross-site-scripting</span>
-                                                        </div>
-                                                        <div class="col-5 col-md-4 order-md-3 text-right mt-2 mt-md-0">
-                                                            <h5 class="mb-0">3 Counts</h5>
-                                                            <span class="font-size-sm">15 May, 2021</span>
-                                                        </div>
-                                                        <div class="col-auto col-md-3 order-md-2">
-                                                            <span class="badge badge-soft-warning badge-pill">Mid
-                                                                severity</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="media">
-                                                <div class="avatar avatar-sm avatar-soft-dark avatar-circle mr-3">
-                                                    <span class="avatar-initials">✓</span>
-                                                </div>
-                                                <div class="media-body">
-                                                    <div class="row">
-                                                        <div class="col-7 col-md-5 order-md-1">
-                                                            <h5 class="mb-0">Slack</h5>
-                                                            <span class="font-size-sm">Captcha bypass</span>
-                                                        </div>
-                                                        <div class="col-5 col-md-4 order-md-3 text-right mt-2 mt-md-0">
-                                                            <h5 class="mb-0">5 Counts</h5>
-                                                            <span class="font-size-sm">12 May, 2021</span>
-                                                        </div>
-                                                        <div class="col-auto col-md-3 order-md-2">
-                                                            <span class="badge badge-soft-success badge-pill">Low
-                                                                severity</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="media">
-                                                <div class="avatar avatar-sm avatar-soft-dark avatar-circle mr-3">
-                                                    <span class="avatar-initials">✓</span>
-                                                </div>
-                                                <div class="media-body">
-                                                    <div class="row">
-                                                        <div class="col-7 col-md-5 order-md-1">
-                                                            <h5 class="mb-0">Bank of America</h5>
-                                                            <span class="font-size-sm">DOM XSS</span>
-                                                        </div>
-                                                        <div class="col-5 col-md-4 order-md-3 text-right mt-2 mt-md-0">
-                                                            <h5 class="mb-0">4 Counts</h5>
-                                                            <span class="font-size-sm">10 June, 2021</span>
-                                                        </div>
-                                                        <div class="col-auto col-md-3 order-md-2">
-                                                            <span class="badge badge-soft-success badge-pill">Low
-                                                                severity</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="media">
-                                                <div class="avatar avatar-sm avatar-soft-dark avatar-circle mr-3">
-                                                    <span class="avatar-initials">✓</span>
-                                                </div>
-                                                <div class="media-body">
-                                                    <div class="row">
-                                                        <div class="col-7 col-md-5 order-md-1">
-                                                            <h5 class="mb-0">Spotify</h5>
-                                                            <span class="font-size-sm">Account Takeover</span>
-                                                        </div>
-                                                        <div class="col-5 col-md-4 order-md-3 text-right mt-2 mt-md-0">
-                                                            <h5 class="mb-0">1 Count</h5>
-                                                            <span class="font-size-sm">12 July, 2021</span>
-                                                        </div>
-                                                        <div class="col-auto col-md-3 order-md-2">
-                                                            <span class="badge badge-soft-danger badge-pill">High
-                                                                severity</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="media">
-                                                <div class="avatar avatar-sm avatar-soft-dark avatar-circle mr-3">
-                                                    <span class="avatar-initials">✓</span>
-                                                </div>
-                                                <div class="media-body">
-                                                    <div class="row">
-                                                        <div class="col-7 col-md-5 order-md-1">
-                                                            <h5 class="mb-0">Hackerone</h5>
-                                                            <span class="font-size-sm">Reflected XSS</span>
-                                                        </div>
-                                                        <div class="col-5 col-md-4 order-md-3 text-right mt-2 mt-md-0">
-                                                            <h5 class="mb-0">2 Counts</h5>
-                                                            <span class="font-size-sm">28 July, 2021</span>
-                                                        </div>
-                                                        <div class="col-auto col-md-3 order-md-2">
-                                                            <span class="badge badge-soft-success badge-pill">Low
-                                                                severity</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="media">
-                                                <div class="avatar avatar-sm avatar-soft-dark avatar-circle mr-3">
-                                                    <span class="avatar-initials">✓</span>
-                                                </div>
-                                                <div class="media-body">
-                                                    <div class="row">
-                                                        <div class="col-7 col-md-5 order-md-1">
-                                                            <h5 class="mb-0">Amazon</h5>
-                                                            <span class="font-size-sm">Open Redirect</span>
-                                                        </div>
-                                                        <div class="col-5 col-md-4 order-md-3 text-right mt-2 mt-md-0">
-                                                            <h5 class="mb-0">3 Counts</h5>
-                                                            <span class="font-size-sm">01 August, 2021</span>
-                                                        </div>
-                                                        <div class="col-auto col-md-3 order-md-2">
-                                                            <span class="badge badge-soft-success badge-pill">Low
-                                                                severity</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card flex-fill">
-                            <div class="card-header">
-                                <h4 class="card-title mb-0">Latest Notifications</h4>
-                            </div>
-                            <table id="datatables-dashboard-projects" class="table table-striped my-0">
-                                <thead>
-                                    <tr>
-                                        <th>Message</th>
-                                        <th class="d-none d-xl-table-cell">Date</th>
-                                        <th class="d-none d-xl-table-cell">Time</th>
-                                        <th>Status</th>
-                                        <th class="d-none d-md-table-cell">Platform</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Potential subdomain takeover on blog.teavana.com</td>
-                                        <td class="d-none d-xl-table-cell">05/09/2021</td>
-                                        <td class="d-none d-xl-table-cell">21:20:05</td>
-                                        <td><span class="badge bg-success">Sent</span></td>
-                                        <td class="d-none d-md-table-cell">Telegram</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Asset starbucks.com added to scope</td>
-                                        <td class="d-none d-xl-table-cell">01/07/2021</td>
-                                        <td class="d-none d-xl-table-cell">21:20:05</td>
-                                        <td><span class="badge bg-danger">Failed</span></td>
-                                        <td class="d-none d-md-table-cell">Telegram</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Blind XSS found on starbucks.com</td>
-                                        <td class="d-none d-xl-table-cell">05/09/2021</td>
-                                        <td class="d-none d-xl-table-cell">21:20:05</td>
-                                        <td><span class="badge bg-success">Sent</span></td>
-                                        <td class="d-none d-md-table-cell">XSS Hunter</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Gobuster scan finished</td>
-                                        <td class="d-none d-xl-table-cell">05/09/2021</td>
-                                        <td class="d-none d-xl-table-cell">21:20:05</td>
-                                        <td><span class="badge bg-danger">Failed</span></td>
-                                        <td class="d-none d-md-table-cell">Slack</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Parameter discovery finished</td>
-                                        <td class="d-none d-xl-table-cell">05/09/2021</td>
-                                        <td class="d-none d-xl-table-cell">21:20:05</td>
-                                        <td><span class="badge bg-success">Sent</span></td>
-                                        <td class="d-none d-md-table-cell">Telegram</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-            </main>
-            <footer class="footer">
-                <div class="container-fluid">
-                    <div class="row text-muted">
-                        <div class="col-6 text-start">
-                            <ul class="list-inline">
-                                <li class="list-inline-item">
-                                    <a class="text-muted" href="pages/notes.html">Blog</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-6 text-end">
-                            <p class="mb-0">
-                                &copy; 2021 - <a href="" class="text-muted">CySuite</a>
-                            </p>
+                    <div class="col-xl-8 col-lg-9 order-lg-1 order-0">
+                        <div class="hero-area-image">
+                            <img src="assets/img/showcase/capture.png" alt="" class="w-100" style="border-radius: 10px;">
                         </div>
                     </div>
                 </div>
-            </footer>
+            </div>
         </div>
+        <div class="feature-area-l-17 position-relative">
+            <div class="container">
+                <div class="row feature-area-l-17-items justify-content-center text-center">
+                    <div class="col-lg-4 col-md-6 col-sm-9">
+                        <div class="single-features single-border position-relative">
+                            <div class="circle-dot-1">
+                                <i class="fas fa-circle"></i>
+                            </div>
+                            <h4>Cybersecurity Documentation</h4>
+                            <p class="desc">CySuite has the largest corpus of cybersecurity information e.g. CVEs, PoC, comprehensive notes and esoteric techniques.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-9">
+                        <div class="single-features single-border position-relative">
+                            <div class="circle-dot-2">
+                                <i class="fas fa-circle"></i>
+                            </div>
+                            <h4>Access to Security Tools</h4>
+                            <p class="desc">Internal tools such as request manipulators, encoder/decoders & wordlist generators for convenient analysis.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-9">
+                        <div class="single-features">
+                            <div class="circle-dot-3">
+                                <i class="fas fa-circle"></i>
+                            </div>
+                            <h4>Automated blackbox testing</h4>
+                            <p class="desc">Enumerate subdomains, directories and files hosted by an asset quickly and efficiently through passive and active methods.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-area-l-17-1">
+            <div class="container">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-xl-10 col-lg-12">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-lg-6 col-md-8" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
+                                <div class="content-img position-relative">
+                                    <div class="image-1">
+                                        <img src="assets/img/showcase/project-management.png" alt="" style="width: 400px; height: auto;">
+                                    </div>
+                                    <div class="image-2">
+                                        <img src="assets/img/showcase/project-management-two.png" alt="" style="width: 400px; height: auto;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="offset-xxl-1 col-xxl-5 col-xl-6 col-lg-6 col-md-8" data-aos="fade-left" data-aos-duration="800" data-aos-once="true">
+                                <div class="content section-heading-11">
+                                    <h2> Manage everything faster from a single place.</h2>
+                                    <p>CySuite provides access to a modern dashboard that organizes the target's data at each step. All the target's site information, vulnerabilities and exploits used are saved in a secure database accessed only through your account.</p>
+                                    <a href="pages/auth/register.html" class="btn focus-reset">Start Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-area-l-17-2">
+            <div class="container">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-xl-10 col-lg-12">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-xxl-5 col-xl-6 col-lg-6 col-md-8 order-lg-1 order-1" data-aos="fade-left" data-aos-duration="800" data-aos-once="true" style="z-index:1;">
+                                <div class="content section-heading-11">
+                                    <h2>Get access to premium security tools and APIs</h2>
+                                    <p>Analyze and manipulate requests, generate custom wordlists and inject payloads. All the features integrated with the target, and right from your dashboard.</p>
+                                    <a href="pages/auth/register.html" class="btn focus-reset">Sign Up</a>
+                                </div>
+                            </div>
+                            <div class="offset-xxl-1 col-xxl-6 col-xl-6 col-lg-6 col-md-8 order-lg-1 order-0" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
+                                <div class="content-img position-relative">
+                                    <div class="image-1">
+                                        <img src="assets/img/showcase/code_injection.png" alt="" style="width: 400px; height: auto;">
+                                    </div>
+                                    <div class="image-2">
+                                        <img src="assets/img/showcase/wordlist_generator.png" alt="" style="width: 400px; height: auto;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="video-area-l-17">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xxl-7 col-xl-8 col-lg-9 col-md-12">
+                        <div class="video-content text-center">
+                            <a data-fancybox="" href=""><i class="fas fa-play font-size-7"></i></a>
+                            <h2>We help you to be successful</h2>
+                            <p>As security researchers ourselves, our mission is to make security analysis more efficient and accessible by providing powerful tools in one central place.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pricing-area-l-17 position-relative overflow-hidden">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-8 text-center" data-aos="fade-down" data-aos-duration="800" data-aos-once="true">
+                        <div class="content section-heading-11">
+                            <h2>Choose a plan to start</h2>
+                            <p>Plans are considerably priced and can be cancelled at any time, no questions asked. Based on your goal, choose the plan that is most valuable to you.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center" id="table-price-value" data-pricing-dynamic data-value-active="monthly">
+                    <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8">
+                        <div class="single-price popular-pricing popular-pricing-3 position-relative" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
+                            <div class="price-top justify-content-between">
+                                <span>Basic</span>
+                            </div>
+                            <div class="main-price">
+                                <div class="price d-flex position-relative ">
+                                    <h2 class="d-inline-block dynamic-value" data-monthly="FREE"><span class="dynamic-value"></span></h2>
+                                </div>
+                            </div>
+                            <p>Perfect for security researchers who want to test out the service.</p>
+                            <div class="price-body pt-8">
+                                <ul class="pricing-list list-unstyled">
+                                    <li> <i class="icon icon-check-2-2"></i> Access to some security tools</li>
+                                    <li> <i class="icon icon-check-2-2"></i> Access to partial cybersecurity notes</li>
+                                    <li><del><i class="icon icon-check-2-2"></i> Access to updated DNS names and CVE database</li>
+                                    <li><del><i class="icon icon-check-2-2"></i> API access for integration with automation workflows</li>
+                                    <li><del><i class="icon icon-check-2-2"></i> Technical Support</li>
+                                </ul>
+                            </div>
+                            <div class="price-btn">
+                                <a class="btn" href="pages/auth/register.html">Sign Up</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8">
+                        <div class="single-price popular-pricing popular-pricing-3 position-relative" data-aos="fade-up" data-aos-duration="800" data-aos-once="true">
+                            <div class="price-top justify-content-between">
+                                <span>Pro</span>
+                            </div>
+                            <div class="main-price">
+                                <div class="price d-flex position-relative">
+                                    <span class="d-inline-block dynamic-value ">$</span>
+                                    <h2 class="d-inline-block dynamic-value" data-monthly="15"> <span class="dynamic-value" data-monthly="/ month"></span></h2>
+                                </div>
+                            </div>
+                            <p>Perfect for researchers who are looking for an online tool for security research.</p>
+                            <div class="price-body">
+                                <ul class="pricing-list list-unstyled">
+                                    <li> <i class="icon icon-check-2-2"></i> Access to all security tools</li>
+                                    <li> <i class="icon icon-check-2-2"></i> Access to comprehensive cybersecurity notes</li>
+                                    <li> <i class="icon icon-check-2-2"></i> Access to updated DNS names and CVE database</li>
+                                    <li> <i class="icon icon-check-2-2"></i> Fast track to API access, testing and usage</li>
+                                    <li> <i class="icon icon-check-2-2"></i> Technical Support</li>
+                                </ul>
+                            </div>
+                            <div class="price-btn">
+                                <a class="btn" href="pages/checkout.html">Choose Plan</a>
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="brand-area-l-17">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xl-9 col-lg-11 col-md-12">
+                        <div class="content text-center">
+                            <p>We are proud to have some big brands as our customer</p>
+                        </div>
+                        <div class="brand-area-l-17-items d-flex justify-content-center justify-content-xl-between align-items-center flex-wrap ">
+                            <div class="single-brand " data-aos="fade-right" data-aos-duration="500" data-aos-once="true">
+                                <img src="assets/img/brands/brand-logo-1.svg" alt="">
+                            </div>
+                            <div class="single-brand " data-aos="fade-right" data-aos-duration="700" data-aos-once="true">
+                                <img src="assets/img/brands/brand-logo-2.svg" alt="">
+                            </div>
+                            <div class="single-brand " data-aos="fade-right" data-aos-duration="900" data-aos-once="true">
+                                <img src="assets/img/brands/brand-logo-3.svg" alt="">
+                            </div>
+                            <div class="single-brand " data-aos="fade-right" data-aos-duration="1000" data-aos-once="true">
+                                <img src="assets/img/brands/brand-logo-4.svgg" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="testimonial-area-l-17">
+            <div class="container">
+                <div class="row justify-content-center no-gutters border-collapse-1">
+                    <div class="col-lg-4 col-md-6 col-sm-9 p-0">
+                        <div class="testimonial-card border h-100">
+                            <img src="assets/img/backgrounds/quote.png" alt="">
+                            <p>
+                                “...”
+                            </p>
+                            <div class="d-flex align-items-center">
+                                <div class="customer-img mr-4">
+                                    <img src="assets/img/profile/profile.jpg" alt="" style="width: 43px; height: 43px; border-radius: 30px;">
+                                </div>
+                                <div class="user-identity">
+                                    <h5>Name</h5>
+                                    <span>Company</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-9 p-0">
+                        <div class="testimonial-card border h-100">
+                            <img src="assets/img/backgrounds/quote.png" alt="" class="mb-12">
+                            <p>
+                                “...”
+                            </p>
+                            <div class="d-flex align-items-center">
+                                <div class="customer-img">
+                                    <img src="assets/img/profile/profile.jpg" alt="" style="width: 43px; height: 43px; border-radius: 30px;">
+                                </div>
+                                <div class="user-identity">
+                                    <h5>Name</h5>
+                                    <span>Company</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-9 p-0">
+                        <div class="testimonial-card border h-100">
+                            <img src="assets/img/backgrounds/quote.png" alt="" class="mb-12">
+                            <p>
+                                “...”
+                            </p>
+                            <div class="d-flex align-items-center">
+                                <div class="customer-img mr-4">
+                                    <img src="assets/img/profile/profile.jpg" alt="" style="width: 43px; height: 43px; border-radius: 30px;">
+                                </div>
+                                <div class="user-identity">
+                                    <h5>Name</h5>
+                                    <span>Company</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cta-area-l-17">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="d-md-flex justify-content-between text-align-lg-start text-center align-items-center">
+                            <h2>Ready to take the step to a more advanced analysis?</h2>
+                            <a href="" class="btn">Request access</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer-area-l-17 position-relative">
+            <div class="footer-shape">
+                <img src="assets/img/backgrounds/footer-shape.svg" alt="">
+            </div>
+            <div class="container pt-lg-23 pt-15 pb-12">
+                <div class="row footer-area-l-17-items justify-content-between" data-aos="fade-left" data-aos-duration="800" data-aos-once="true">
+                    <div class="footer-widget widget4">
+                        <p class="widget-title" style="text-align: center;">Sign up to the newsletter to receive updates</p>
+                        <form id="subscribe-form" class="form-inline" style="justify-content: center;">
+                            <div class="newsletter-form news-icon text-md-center">
+                                <div>
+                                    <span><input type="email" class="form-control" id="email" name="email" size="40" aria-required="true" placeholder="Enter Your Email :" /></span>
+                                    <input type="submit" name="submit" value="Subscribe" id="submit-form" class="email-btn" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright-area-l-17 text-center text-md-start">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-4 col-md-4">
+                            <div class="copyright">
+                                <p> &copy; CySuite 2021 All right reserved. </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-md-6">
+                            <div class="footer-menu">
+                                <ul class="list-unstyled d-flex flex-wrap justify-content-center">
+                                    <li><a href="pages/privacy-policy.html">Privacy Policy</a></li>
+                                    <li> <a href="pages/terms-conditions.html">Terms & Conditions</a> </li>
+                                    <li><a href="mailto:press@cysuite.io"> Press</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-2">
+                            <div class="social-icons text-md-end">
+                                <ul class="pl-0 list-unstyled">
+                                    <li class="d-inline-block"><a href="https://twitter.com/CySuite_"><i class="fab fa-twitter"></i></a></li>
+                                    <li class="d-inline-block"><a href="#"><i class="fab fa-medium"></i></a></li>
+                                    <li class="d-inline-block"><a href="#"><i class="fab fa-github"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
-    <script src="assets/js/app.js"></script>
-    <script>
-		document.addEventListener("DOMContentLoaded", function() {
-			$("#datatables-dashboard-projects").DataTable({
-				pageLength: 6,
-				lengthChange: false,
-				bFilter: false,
-				autoWidth: false
-			});
-		});
-	</script>
+    <script src="assets/js/vendor.min.js"></script>
+    <script src="assets/js/packery.pkgd.min.js"></script>
+    <script src="assets/js/image.loaded.js"></script>
 </body>
-
 </html>
