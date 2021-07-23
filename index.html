@@ -260,7 +260,7 @@
                             </p>
                             <div class="d-flex align-items-center">
                                 <div class="customer-img mr-4">
-                                    <img src="assets/img/profile/profile.jpg" alt="" style="width: 43px; height: 43px; border-radius: 30px;">
+                                    <img src="assets/img/profile/avatar.jpeg" alt="" style="width: 43px; height: 43px; border-radius: 30px;">
                                 </div>
                                 <div class="user-identity">
                                     <h5>Name</h5>
@@ -277,7 +277,7 @@
                             </p>
                             <div class="d-flex align-items-center">
                                 <div class="customer-img">
-                                    <img src="assets/img/profile/profile.jpg" alt="" style="width: 43px; height: 43px; border-radius: 30px;">
+                                    <img src="assets/img/profile/avatar.jpeg" alt="" style="width: 43px; height: 43px; border-radius: 30px;">
                                 </div>
                                 <div class="user-identity">
                                     <h5>Name</h5>
@@ -294,7 +294,7 @@
                             </p>
                             <div class="d-flex align-items-center">
                                 <div class="customer-img mr-4">
-                                    <img src="assets/img/profile/profile.jpg" alt="" style="width: 43px; height: 43px; border-radius: 30px;">
+                                    <img src="assets/img/profile/avatar.jpeg" alt="" style="width: 43px; height: 43px; border-radius: 30px;">
                                 </div>
                                 <div class="user-identity">
                                     <h5>Name</h5>
@@ -368,6 +368,16 @@
             </div>
         </footer>
     </div>
+    <script src="assets/js/app.js"></script>
+    <script>
+    var elements = $('.modal-overlay, .modal');   
+        $('button').click(function(){
+            elements.addClass('active');
+        });
+        $('.close-modal').click(function(){
+            elements.removeClass('active');
+        });
+    </script>
     <script src="assets/js/vendor.min.js"></script>
     <script src="assets/js/packery.pkgd.min.js"></script>
     <script src="assets/js/image.loaded.js"></script>
