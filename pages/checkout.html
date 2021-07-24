@@ -14,7 +14,8 @@
   <main class="page payment-page">
     <section class="payment-form dark">
       <div class="container">
-        <div class="block-heading">
+        <div class="block-heading" style="display: grid;">
+          <a href="../index.html"><img src="../assets/img/logo/cysuite_blue.png" alt="CySuite logo" style="width: 10rem; height: auto; padding-bottom: 2rem;"></a>
           <h2>Upgrade your Account to Pro</h2>
           <p>The subscription will be billed monthly at the time of purchase and can be cancelled from your dashboard.</p>
         </div>
@@ -29,37 +30,16 @@
             <div class="total">Total<span class="price">$17.50</span></div>
           </div>
           <div class="card-details">
-            <h3 class="title">Credit Card Details</h3>
-            <div class="row">
-              <div class="form-group col-sm-7">
-                <label for="card-holder">Card Holder</label>
-                <input id="card-holder" type="text" class="form-control" placeholder="Card Holder" aria-label="Card Holder" aria-describedby="basic-addon1">
-              </div>
-              <div class="form-group col-sm-5">
-                <label for="">Expiration Date</label>
-                <div class="input-group expiration-date">
-                  <input type="text" class="form-control" placeholder="MM" aria-label="MM" aria-describedby="basic-addon1">
-                  <span class="date-separator">/</span>
-                  <input type="text" class="form-control" placeholder="YY" aria-label="YY" aria-describedby="basic-addon1">
-                </div>
-              </div>
-              <div class="form-group col-sm-8">
-                <label for="card-number">Card Number</label>
-                <input id="card-number" type="text" class="form-control" placeholder="Card Number" aria-label="Card Holder" aria-describedby="basic-addon1">
-              </div>
-              <div class="form-group col-sm-4">
-                <label for="cvc">CVC</label>
-                <input id="cvc" type="text" class="form-control" placeholder="CVC" aria-label="Card Holder" aria-describedby="basic-addon1">
-              </div>
-              <div class="form-group col-sm-12">
-                <button type="button" class="btn btn-primary btn-block">Proceed</button>
-              </div>
-            </div>
+              <div id="paypal-btn"></div>
           </div>
         </form>
       </div>
     </section>
   </main>
-</body>
+  <footer style="padding: 0.5rem 0 0.5rem 0;">
+    <p style="text-align: center; flex-direction: column; display: flex; margin-top: 16px;">&copy; CySuite 2021 All right reserved.</p>
+  </footer>
+  <script src="https://www.paypal.com/sdk/js?client-id=test"></script>
+  <script>paypal.Buttons().render('#paypal-btn');</script>
 </body>
 </html>
