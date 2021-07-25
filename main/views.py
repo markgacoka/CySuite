@@ -14,3 +14,6 @@ def register(request):
 
 def forgot_password(request):
     return render(request, 'auth/forgot-password.html')
+
+def dashboard(request):
+    return render(request, 'dashboard.html')
