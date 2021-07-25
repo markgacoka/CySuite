@@ -1,33 +1,35 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Dashboard</title>
-    <link rel="icon" href="assets/img/icons/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="{% static 'img/icons/favicon.ico' %}" type="image/x-icon" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-    <link href="assets/css/theme.min.css" rel="stylesheet">
-    <link class="js-stylesheet" href="assets/css/light.css" rel="stylesheet">
+    <link href="{% static 'css/theme.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/light.css' %}" rel="stylesheet">
 </head>
 
 <body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-behavior="sticky">
     <div class="wrapper">
         <nav id="sidebar" class="sidebar">
             <div class="sidebar-content js-simplebar">
-                <a class="sidebar-brand" href="index.html"><span class="align-middle me-3">CySuite</span></a>
+                <a class="sidebar-brand" href="/"><span class="align-middle me-3">CySuite</span></a>
                 <ul class="sidebar-nav">
                     <li class="sidebar-header">Pages</li>
                     <li class="sidebar-item active">
-                        <a data-bs-target="#dashboards" class="sidebar-link" href="">
+                        <a data-bs-target="#dashboards" class="sidebar-link" href="dashboard/">
                             <i class="align-middle" data-feather="home"></i> <span class="align-middle">Dashboard</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages/projects.html">
+                        <a class="sidebar-link" href="projects/">
                             <i class="align-middle" data-feather="book"></i> <span class="align-middle">Projects</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages/notes.html">
+                        <a class="sidebar-link" href="/notes/">
                             <i class="align-middle" data-feather="book-open"></i> <span
                                 class="align-middle">Notes</span>
                         </a>
@@ -35,31 +37,31 @@
 
                     <li class="sidebar-header">Recon and Exploitation</li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages/subdomain_enum.html">
+                        <a class="sidebar-link" href="subdomain_enum/">
                             <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Subdomain
                                 Enumeration</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages/directory_enum.html">
+                        <a class="sidebar-link" href="/directory_enum/">
                             <i class="align-middle" data-feather="link-2"></i> <span class="align-middle">Directory
                                 Enumeration</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages/vuln_analysis.html">
+                        <a class="sidebar-link" href="vuln_analysis/">
                             <i class="align-middle" data-feather="check-square"></i> <span
                                 class="align-middle">Vulnerability Analysis</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-						<a class="sidebar-link" href="pages/dorking.html">
+						<a class="sidebar-link" href="dorking/">
 							<i class="align-middle" data-feather="search"></i> <span
 								class="align-middle">Dorking</span>
 						</a>
 					</li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages/exploits.html">
+                        <a class="sidebar-link" href="exploits/">
                             <i class="align-middle" data-feather="key"></i> <span class="align-middle">Run
                                 Exploits</span>
                         </a>
@@ -67,24 +69,24 @@
 
                     <li class="sidebar-header">Tools</li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages/req_tamperer.html">
+                        <a class="sidebar-link" href="req_tamperer/">
                             <i class="align-middle" data-feather="layout"></i> <span class="align-middle">Tamper Requests</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="../pages/wordlist_gen.html">
+                        <a class="sidebar-link" href="wordlist_gen/">
                             <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Wordlist
                                 Generator</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages/decoder.html">
+                        <a class="sidebar-link" href="decoder/">
                             <i class="align-middle" data-feather="tool"></i> <span class="align-middle">Decoders, Hash
                                 IDs, WP</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages/file_upload.html">
+                        <a class="sidebar-link" href="file_upload/">
                             <i class="align-middle" data-feather="upload"></i> <span class="align-middle">File
                                 uploads/Shells</span>
                         </a>
@@ -114,12 +116,12 @@
                             </a>
                             <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#"
                                 data-bs-toggle="dropdown">
-                                <img src="assets/img/profile/avatar.jpeg" class="avatar img-fluid rounded-circle me-1"
+                                <img src="{% static 'img/profile/avatar.jpeg' %}" class="avatar img-fluid rounded-circle me-1"
                                     alt="Mark Gacoka" /> <span class="text-dark">Mark Gacoka</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <a class="dropdown-item" href="#">Check for updates</a>
-                                <a class="dropdown-item" href="index.html">Log Out</a>
+                                <a class="dropdown-item" href="/">Log Out</a>
                             </div>
                         </li>
                     </ul>
@@ -144,7 +146,7 @@
                                             </div>
                                         </div>
                                         <div class="col-6 align-self-end text-end">
-                                            <img src="assets/img/illustrations/customer-support.png"
+                                            <img src="{% static 'img/illustrations/customer-support.png' %}"
                                                 alt="Customer Support" class="img-fluid illustration-img">
                                         </div>
                                     </div>
@@ -237,7 +239,7 @@
                                             <div class="media">
                                                 <div class="mt-1 mr-3">
                                                     <img class="avatar avatar-xs avatar-4by3"
-                                                        src="assets/img/icons/capsule.svg" alt="Image Description">
+                                                        src="{% static 'img/icons/capsule.svg' %}" alt="Image Description">
                                                 </div>
                                                 <div class="media-body">
                                                     <div class="row align-items-center">
@@ -262,7 +264,7 @@
                                             <div class="media">
                                                 <div class="mt-1 mr-3">
                                                     <img class="avatar avatar-xs avatar-4by3"
-                                                        src="assets/img/icons/mailchimp.svg" alt="Image Description">
+                                                        src="{% static 'img/icons/mailchimp.svg' %}" alt="Image Description">
                                                 </div>
                                                 <div class="media-body">
                                                     <div class="row align-items-center">
@@ -287,7 +289,7 @@
                                             <div class="media">
                                                 <div class="mt-1 mr-3">
                                                     <img class="avatar avatar-xs avatar-4by3"
-                                                        src="assets/img/icons/google-webdev.svg">
+                                                        src="{% static 'img/icons/google-webdev.svg' %}">
                                                 </div>
                                                 <div class="media-body">
                                                     <div class="row align-items-center">
@@ -452,8 +454,7 @@
                                                             <span class="font-size-sm">01 August, 2021</span>
                                                         </div>
                                                         <div class="col-auto col-md-3 order-md-2">
-                                                            <span class="badge badge-soft-success badge-pill">Low
-                                                                severity</span>
+                                                            <span class="badge badge-soft-success badge-pill">Low severity</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -524,7 +525,7 @@
                         <div class="col-6 text-start">
                             <ul class="list-inline">
                                 <li class="list-inline-item">
-                                    <a class="text-muted" href="pages/notes.html">Blog</a>
+                                    <a class="text-muted" href="notes/">Blog</a>
                                 </li>
                             </ul>
                         </div>
@@ -538,7 +539,7 @@
             </footer>
         </div>
     </div>
-    <script src="assets/js/app.js"></script>
+    <script src="{% static 'js/app.js' %}"></script>
     <script>
 		document.addEventListener("DOMContentLoaded", function() {
 			$("#datatables-dashboard-projects").DataTable({

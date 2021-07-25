@@ -3612,6 +3612,7 @@ input {
     background: rgb(80, 227, 194);
     height: 57px;
     width: 11rem;
+    cursor: pointer;
 }
 
 .newsletter-form input[type=submit]:hover {
