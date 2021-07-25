@@ -1,3 +1,4 @@
+{% load static %}
 
 <!DOCTYPE html>
 <html>
@@ -5,17 +6,17 @@
   <title>Checkout | CySuite</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel='shortcut icon' type='image/x-icon' href='../assets/img/logo/favicon.ico' />
+  <link rel='shortcut icon' type='image/x-icon' href="{% static 'img/logo/favicon.ico' %}" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/terms.css">
+  <link rel="stylesheet" href="{% static 'css/terms.css' %}">
 </head>
 <body>
   <main class="page payment-page">
     <section class="payment-form dark" style="min-height: calc(100vh - 40px);">
       <div class="container">
         <div class="block-heading" style="display: grid;">
-          <a href="../index.html"><img src="../assets/img/logo/cysuite_blue.png" alt="CySuite logo" style="width: 10rem; height: auto; padding-bottom: 2rem;"></a>
+          <a href="/"><img src="{% static 'img/logo/cysuite_blue.png' %}" alt="CySuite logo" style="width: 10rem; height: auto; padding-bottom: 2rem;"></a>
           <h2>Upgrade your Account to Pro</h2>
           <p>The subscription will be billed monthly at the time of purchase and can be cancelled from your dashboard.</p>
         </div>
