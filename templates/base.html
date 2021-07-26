@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Dashboard {% block title%}{% endblock %}</title>
+    <link rel="icon" href="{% static 'img/icons/favicon.ico' %}" type="image/x-icon" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="{% static 'css/theme.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/light.css' %}" rel="stylesheet">
+</head>
+
+<body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-behavior="sticky">
+    <div class="wrapper">
+        {% include 'partials/_sidebar.html' %}
+            <main class="content">
+                {% block content %}
+                {% endblock %}
+            </main>
+        {% include 'partials/_footer.html' %}
+    </div>
+    <script src="{% static 'js/app.js' %}"></script>
+    <script>
+		document.addEventListener("DOMContentLoaded", function() {
+			$("#datatables-dashboard-projects").DataTable({
+				pageLength: 6,
+				lengthChange: false,
+				bFilter: false,
+				autoWidth: false
+			});
+		});
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,116 @@
+{% load static %}
+
+<nav id="sidebar" class="sidebar">
+    <div class="sidebar-content js-simplebar">
+        <a class="sidebar-brand" href="/"><span class="align-middle me-3">CySuite</span></a>
+        <ul class="sidebar-nav">
+            <li class="sidebar-header">Pages</li>
+            <li class="sidebar-item active">
+                <a data-bs-target="#dashboards" class="sidebar-link" href="dashboard/">
+                    <i class="align-middle" data-feather="home"></i> <span class="align-middle">Dashboard</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="projects/">
+                    <i class="align-middle" data-feather="book"></i> <span class="align-middle">Projects</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="/notes/">
+                    <i class="align-middle" data-feather="book-open"></i> <span
+                        class="align-middle">Notes</span>
+                </a>
+            </li>
+
+            <li class="sidebar-header">Recon and Exploitation</li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="subdomain_enum/">
+                    <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Subdomain
+                        Enumeration</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="/directory_enum/">
+                    <i class="align-middle" data-feather="link-2"></i> <span class="align-middle">Directory
+                        Enumeration</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="vuln_analysis/">
+                    <i class="align-middle" data-feather="check-square"></i> <span
+                        class="align-middle">Vulnerability Analysis</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="dorking/">
+                    <i class="align-middle" data-feather="search"></i> <span
+                        class="align-middle">Dorking</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="exploits/">
+                    <i class="align-middle" data-feather="key"></i> <span class="align-middle">Run
+                        Exploits</span>
+                </a>
+            </li>
+
+            <li class="sidebar-header">Tools</li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="req_tamperer/">
+                    <i class="align-middle" data-feather="layout"></i> <span class="align-middle">Tamper Requests</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="wordlist_gen/">
+                    <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Wordlist
+                        Generator</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="decoder/">
+                    <i class="align-middle" data-feather="tool"></i> <span class="align-middle">Decoders, Hash
+                        IDs, WP</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="file_upload/">
+                    <i class="align-middle" data-feather="upload"></i> <span class="align-middle">File
+                        uploads/Shells</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="main">
+    <nav class="navbar navbar-expand navbar-light navbar-bg">
+        <a class="sidebar-toggle">
+            <i class="hamburger align-self-center"></i>
+        </a>
+        <form class="d-none d-sm-inline-block">
+            <div class="input-group input-group-navbar">
+                <input type="text" class="form-control" placeholder="Search projects…" aria-label="Search">
+                <button class="btn" type="button">
+                    <i class="align-middle" data-feather="search"></i>
+                </button>
+            </div>
+        </form>
+        <div class="navbar-collapse collapse">
+            <ul class="navbar-nav navbar-align">
+                <li class="nav-item dropdown">
+                    <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#"
+                        data-bs-toggle="dropdown">
+                        <i class="align-middle" data-feather="settings"></i>
+                    </a>
+                    <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#"
+                        data-bs-toggle="dropdown">
+                        <img src="{% static 'img/profile/avatar.jpeg' %}" class="avatar img-fluid rounded-circle me-1"
+                            alt="Mark Gacoka" /> <span class="text-dark">Mark Gacoka</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item" href="#">Check for updates</a>
+                        <a class="dropdown-item" href="/">Log Out</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>

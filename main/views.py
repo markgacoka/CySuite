@@ -3,6 +3,12 @@ from django.shortcuts import render
 def index(request):
     return render(request, 'index.html')
 
+def privacy_policy(request):
+    return render(request, 'privacy-policy.html')
+
+def terms_conditions(request):
+    return render(request, 'terms-conditions.html')
+
 def checkout(request):
     return render(request, 'pages/checkout.html')
 
