@@ -1,0 +1,62 @@
+{% extends '../base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid p-0">
+	<h1 class="h3 mb-3">Tamper Requests</h1>
+	<div class="card">
+		<div class="card-header pb-0">
+			<h5 class="card-title mb-0">Input</h5>
+		</div>
+		<div class="card-body">
+			<div class="form-floating mb-3 input-group">
+				<input type="email" class="form-control" id="floatingInput1">
+				<label for="floatingInput1" style="font-size: 1rem;">URL to request</label>
+				<select type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Method
+					<option>GET</option>
+					<option>POST</option>
+					<option>OPTIONS</option>
+					<option>TRACE</option>
+					<option>PUT</option>
+					<option>DELETE</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12 col-lg-6" style="padding-bottom: 2rem;">
+			<div class="card">
+				<div class="card-header pb-0">
+					<h5 class="card-title mb-0">Request</h5>
+				</div>
+				<div class="card-body">
+					<div class="form-floating">
+						<textarea class="form-control"
+							id="floatingTextarea1" style="min-height: 300px"></textarea>
+						<label for="floatingTextarea1" style="font-size: 1rem;">POST /reset.php HTTP/2...</label>
+					</div>
+				</div>
+			</div>
+			<div class="send-btn">
+				<button class="btn btn-primary btn-lg"></i>Send</button>
+			</div>
+		</div>
+		<div class="col-12 col-lg-6">
+			<div class="card">
+				<div class="card-header pb-0">
+					<h5 class="card-title mb-0">Response</h5>
+				</div>
+				<div class="card-body">
+					<div class="form-floating">
+						<textarea class="form-control" type="text" placeholder="Readonly input" style="min-height: 300px;" readonly></textarea>
+						<label for="floatingInput1" style="font-size: 1rem;">200 OK...</label>
+					</div>
+				</div>
+			</div>
+			<div class="input-group mb-3">
+				<input class="form-select flex-grow-1">
+				<button class="btn btn-primary" type="button">Filter</button>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

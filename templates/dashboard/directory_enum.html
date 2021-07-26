@@ -1,0 +1,47 @@
+{% extends '../base.html' %}
+{% load static %}
+{% block content %}
+<h1>Enumerate Directories</h1>
+<div class="alert alert-warning" style="margin-bottom: 2rem;">
+	<div class="alert-message">
+		<p class="mb-0"><strong>No project chosen!</strong> Start one from the <a
+				href="projects.html">Projects</a> tab and scan directories to see the list.</p>
+	</div>
+</div>
+<div class="card">
+	<div class="card-header pb-0" style="display: block; width: auto; text-align: center;">
+		<div class="alert alert-primary alert-outline alert-dismissible" style="margin: 0 2rem 2rem 0; width: 100%;">
+			<div class="alert-icon">
+				<i class="fa fa-globe"></i>
+			</div>
+			<input class="alert-message" placeholder="subdomain.site.com"></input>
+		</div>
+		<div class="alert alert-primary alert-outline alert-dismissible" style="margin-right: 2rem; width: 100%;">
+			<div class="alert-icon">
+				<i class="fa fa-book"></i>
+			</div>
+		<select class="dropdown-icon flex-grow-1">
+			<option>Custom</option>
+			<option>Starbucks</option>
+			<option>Amazon</option>
+		</select>
+		</div>
+	</div>
+	<div class="card-body">
+		<div class="form-floating">
+			<textarea class="form-control" type="text" style="min-height: 300px;" readonly></textarea>
+			<label for="floatingInput1" style="font-size: 1rem;">[200] https://site.com/</label>
+		</div>
+	</div>
+	<div style="width:100%; padding-right: 1.25rem; padding-bottom: 1.25rem;">
+		<button class="btn btn-primary" style="margin: 0 0 2rem 20px; min-height: 54px; width: 12rem" type="button"><i class="fa fa-bug"></i>&emsp;Active (Crawl)</button>
+		<button class="btn btn-primary" style="margin: 0 0 2rem 20px; min-height: 54px; width: 12rem;" type="button"><i class="fa fa-archive"></i>&emsp;Passive (Archives)</button>
+		<button class="btn btn-primary" style="margin: 0 0 2rem 20px; min-height: 54px; width: 12rem" type="button"><i class="fa fa-cog"></i>&emsp;Bruteforce</button>
+		<button class="btn btn-primary save-btn" style="min-height: 54px; width: 12rem; float: right;" type="button"><i class="fa fa-save" style="font-size: 20px;"></i>&emsp;Save</button>
+	</div>
+</div>
+<div class="input-group mb-3">
+	<input class="form-select flex-grow-1">
+	<button class="btn btn-primary" type="button">Search</button>
+</div>
+{% endblock %}

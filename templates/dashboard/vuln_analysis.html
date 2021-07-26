@@ -1,0 +1,46 @@
+{% extends '../base.html' %}
+{% load static %}
+{% block content %}
+<div class="row">
+<div class="col-12 col-lg-6">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="mb-0">Vulnerability analysis scan</h2>
+        </div>
+        <div class="card-body">
+            <h4>Select Project</h4>
+            <div class="input-group mb-4">
+                <select class="dropdown-icon flex-grow-1">
+                    <option>Starbucks</option>
+                    <option>Amazon</option>
+                </select>
+            </div>
+            <div class="input-group mb-4">
+                <h4>Select subdomain</h4>
+                <select class="dropdown-icon flex-grow-1">
+                    <option>subdomain1.site.com</option>
+                    <option>subdomain2.site.com</option>
+                    <option>subdomain3.site.com</option>
+                </select>
+            </div>
+            <div class="input-group mb-4">
+                <h4>Scan method</h4>
+                <select class="dropdown-icon flex-grow-1">
+                    <option>Simple</option>
+                    <option>Full</option>
+                    <option>Agressive</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" style="float:right;"><i class="fa fa-search"></i>&emsp;Scan</button>
+        </div>
+    </div>
+</div>
+<div class="col-12 col-lg-6" style="height: auto;">
+    <div class="card">
+        <div class="card-header">
+            <textarea class="form-control" type="text" style="min-height: 345px;" readonly></textarea>
+            </div>
+    </div>
+</div>
+</div>
+{% endblock %}

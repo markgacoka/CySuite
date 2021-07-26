@@ -1,0 +1,112 @@
+{% extends '../base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid p-0">
+    <div class="alert alert-warning alert-dismissible mb-3" role="alert">
+        <div class="alert-message">
+            <p class="mb-0"><strong>No project chosen!</strong> Start one from the <a
+                    href="projects.html">Projects</a> tab and scan subdomains to see the list.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-xxl-8" style="padding-bottom: 2rem;">
+            <div class="card" style="height: 100%;">
+                <div class="card-header">
+                    <h5 class="card-title">Responsive DataTables</h5>
+                </div>
+                <div class="card-body">
+                    <table id="datatables-reponsive" class="table table-striped" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th>Subdomain</th>
+                                <th>Status Code</th>
+                                <th>Screenshot</th>
+                                <th>Internet Protocol (IPv4)</th>
+                                <th>Web Application Firewall</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><a href="">subdomain1.site.com</a></td>
+                                <td><span class="badge badge-soft-success badge-pill">200</span></td>
+                                <td><a>Open</a></td>
+                                <td><code style="font-size: 0.8rem">102.343.26.11</code></td>
+                                <td>Absent</td>
+                            </tr>
+                            <tr>
+                                <td><a href="">subdomain2.site.com</a></td>
+                                <td><span class="badge bg-danger">404</span></td>
+                                <td>None</td>
+                                <td><code style="font-size: 0.8rem">78.3.43.2.2</code></td>
+                                <td>Present [Microsoft Azure]</td>
+                            </tr>
+                            <tr>
+                                <td><a href="">subdomain3.site.com</a></td>
+                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
+                                <td>None</td>
+                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
+                                <td>Present [Cloudflare]</td>
+                            </tr>
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    <div class="col-lg-6 col-xxl-4" style="padding-bottom: 2rem;">
+        <div class="card" style="height:100%;">
+                <div class="card-header" style="padding-bottom: 0 !important;">
+                    <h3 class="mb-0">More Information</h3>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-4 col-xxl-3">Subdomain:</dt>
+                        <dd class="col-8 col-xxl-9">
+                            <code>subdomain1.site.com</code>
+                        </dd>
+                        <dt class="col-4 col-xxl-3">Status Code:</dt>
+                        <dd class="col-8 col-xxl-9">
+                            <span class="badge badge-soft-success badge-pill">200</span>
+                        </dd>
+                        <dt class="col-4 col-xxl-3 mb-0">IP Address:</dt>
+                        <dd class="col-8 col-xxl-9 mb-0">
+                            <code style="font-size: 0.8rem;">143.83.21.2</code>
+                        </dd>
+                    </dl>
+                    <hr>
+                    <div>
+                        <h6 class="card-title" style="margin-bottom: 1rem;">SSL Infomation</h6>
+                    </div>
+                    <dl class="row">
+                        <dt class="col-4 col-xxl-4">Organization</dt>
+                        <dd class="col-8 col-xxl-8">
+                            <p class="mb-1">CloudFlare, Inc.</p>
+                        </dd>
+                        <dt class="col-4 col-xxl-4">Common Name</dt>
+                        <dd class="col-8 col-xxl-8">
+                            <p class="mb-1">sni.cloudflaressl.com</p>
+                        </dd>
+                        <dt class="col-4 col-xxl-4">Serial Number</dt>
+                        <dd class="col-8 col-xxl-8">
+                            <p class="mb-1">04E3283B364E2177BC88F2D7049834C6</p>
+                        </dd>
+                        <dt class="col-4 col-xxl-4 mb-0">Created</dt>
+                        <dd class="col-8 col-xxl-8 mb-0">
+                            <p class="mb-0">Oct 10 00:00:00 2020 GMT</p>
+                        </dd>
+                    </dl>
+                    <hr>
+                    <div>
+                        <h6 class="card-title" style="margin-bottom: 1rem;">Screenshot</h6>
+                        <img src="../assets/img/illustrations/home-bg.jpg" alt="Website screenshot" style="max-width: -webkit-fill-available; height: auto;" onerror="">
+                    </div>
+                    <hr>
+                    <div>
+                        <h6 class="card-title">Header Infomation</h6>
+                    </div>
+                    <textarea class="form-control" style="min-height: 300px; max-width: -webkit-fill-available;" type="text" readonly></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

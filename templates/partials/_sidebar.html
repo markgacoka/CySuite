@@ -5,75 +5,123 @@
         <a class="sidebar-brand" href="/"><span class="align-middle me-3">CySuite</span></a>
         <ul class="sidebar-nav">
             <li class="sidebar-header">Pages</li>
+            {% if request.path == '/dashboard/' %}
             <li class="sidebar-item active">
-                <a data-bs-target="#dashboards" class="sidebar-link" href="dashboard/">
+            {% else %}
+            <li class="sidebar-item">
+            {% endif %}
+                <a data-bs-target="#dashboards" class="sidebar-link" href="/dashboard">
                     <i class="align-middle" data-feather="home"></i> <span class="align-middle">Dashboard</span>
                 </a>
             </li>
+            {% if request.path == '/projects/' %}
+            <li class="sidebar-item active">
+            {% else %}
             <li class="sidebar-item">
-                <a class="sidebar-link" href="projects/">
+            {% endif %}
+                <a class="sidebar-link" href="/projects">
                     <i class="align-middle" data-feather="book"></i> <span class="align-middle">Projects</span>
                 </a>
             </li>
+            {% if request.path == '/notes/' %}
+            <li class="sidebar-item active">
+            {% else %}
             <li class="sidebar-item">
-                <a class="sidebar-link" href="/notes/">
+            {% endif %}
+                <a class="sidebar-link" href="/notes">
                     <i class="align-middle" data-feather="book-open"></i> <span
                         class="align-middle">Notes</span>
                 </a>
             </li>
 
             <li class="sidebar-header">Recon and Exploitation</li>
+            {% if request.path == '/subdomain-enum/' %}
+            <li class="sidebar-item active">
+            {% else %}
             <li class="sidebar-item">
-                <a class="sidebar-link" href="subdomain_enum/">
+            {% endif %}
+                <a class="sidebar-link" href="/subdomain-enum">
                     <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Subdomain
                         Enumeration</span>
                 </a>
             </li>
+            {% if request.path == '/directory-enum/' %}
+            <li class="sidebar-item active">
+            {% else %}
             <li class="sidebar-item">
-                <a class="sidebar-link" href="/directory_enum/">
+            {% endif %}
+                <a class="sidebar-link" href="/directory-enum">
                     <i class="align-middle" data-feather="link-2"></i> <span class="align-middle">Directory
                         Enumeration</span>
                 </a>
             </li>
+            {% if request.path == '/vuln-analysis/' %}
+            <li class="sidebar-item active">
+            {% else %}
             <li class="sidebar-item">
-                <a class="sidebar-link" href="vuln_analysis/">
+            {% endif %}
+                <a class="sidebar-link" href="/vuln-analysis">
                     <i class="align-middle" data-feather="check-square"></i> <span
                         class="align-middle">Vulnerability Analysis</span>
                 </a>
             </li>
+            {% if request.path == '/dorking/' %}
+            <li class="sidebar-item active">
+            {% else %}
             <li class="sidebar-item">
-                <a class="sidebar-link" href="dorking/">
+            {% endif %}
+                <a class="sidebar-link" href="/dorking">
                     <i class="align-middle" data-feather="search"></i> <span
                         class="align-middle">Dorking</span>
                 </a>
             </li>
+            {% if request.path == '/exploit/' %}
+            <li class="sidebar-item active">
+            {% else %}
             <li class="sidebar-item">
-                <a class="sidebar-link" href="exploits/">
+            {% endif %}
+                <a class="sidebar-link" href="/exploit">
                     <i class="align-middle" data-feather="key"></i> <span class="align-middle">Run
                         Exploits</span>
                 </a>
             </li>
 
             <li class="sidebar-header">Tools</li>
+            {% if request.path == '/req-tamperer/' %}
+            <li class="sidebar-item active">
+            {% else %}
             <li class="sidebar-item">
-                <a class="sidebar-link" href="req_tamperer/">
+            {% endif %}
+                <a class="sidebar-link" href="/req-tamperer">
                     <i class="align-middle" data-feather="layout"></i> <span class="align-middle">Tamper Requests</span>
                 </a>
             </li>
+            {% if request.path == '/wordlist-gen/' %}
+            <li class="sidebar-item active">
+            {% else %}
             <li class="sidebar-item">
-                <a class="sidebar-link" href="wordlist_gen/">
+            {% endif %}
+                <a class="sidebar-link" href="/wordlist-gen">
                     <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Wordlist
                         Generator</span>
                 </a>
             </li>
+            {% if request.path == '/decoder/' %}
+            <li class="sidebar-item active">
+            {% else %}
             <li class="sidebar-item">
-                <a class="sidebar-link" href="decoder/">
+            {% endif %}
+                <a class="sidebar-link" href="/decoder">
                     <i class="align-middle" data-feather="tool"></i> <span class="align-middle">Decoders, Hash
                         IDs, WP</span>
                 </a>
             </li>
+            {% if request.path == '/file-upload/' %}
+            <li class="sidebar-item active">
+            {% else %}
             <li class="sidebar-item">
-                <a class="sidebar-link" href="file_upload/">
+            {% endif %}
+                <a class="sidebar-link" href="/file-upload">
                     <i class="align-middle" data-feather="upload"></i> <span class="align-middle">File
                         uploads/Shells</span>
                 </a>
