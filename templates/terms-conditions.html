@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Terms &amp; Conditions </title>
-    <link rel='shortcut icon' type='image/x-icon' href='../assets/img/icons/favicon.ico' />
+    <link rel='shortcut icon' type='image/x-icon' href="{% static 'img/icons/favicon.ico' %}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.css">
-    <link rel="stylesheet" href="../assets/css/terms.css">
+    <link rel="stylesheet" href="{% static 'css/terms.css' %}">
 </head>
 
 <body data-theme-mode-panel-active data-theme="light">
@@ -71,23 +73,24 @@
                         <div class="row">
                             <div class="col-xl-9 col-lg-10 col-md-8">
                                 <div class="content">
-                                    <p>Big, small, online, offline, local. Size doesn't matter. We work on diverse projects for top brands as well as for cool startups. </p>
+                                    <p>The CySuite logo is a trademark of the CySuite company.</p>
+                                    <p>All rights reserved.</p>
                                 </div>
                                 <div class="social-icons">
                                     <ul class="pl-0 list-unstyled d-flex align-items-end ">
                                         <li class="d-flex flex-column justify-content-center"><a href="#"><i
                                             class="fab fa-twitter"></i></a></li>
                                         <li class="d-flex flex-column justify-content-center"><a href="#"><i
-                                            class="fab fa-facebook-f"></i></a></li>
+                                            class="fab fa-medium"></i></a></li>
                                         <li class="d-flex flex-column justify-content-center"><a href="#"><i
-                                            class="fab fa-google"></i></a></li>
+                                            class="fab fa-github"></i></a></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-5 col-sm-9" style="display: flex; align-items: center;">
-                        <img src="../assets/img/logo/logo.png" alt="" style="width: 20rem; height: auto;">
+                        <img src="{% static 'img/logo/cysuite.png' %}" alt="" style="width: 20rem; height: auto;">
                     </div>
                 </div>
             </div>

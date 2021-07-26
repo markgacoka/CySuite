@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="assets/img/icons/cysuite.png" alt="CySuite logo" width="200px"></a>
+  <img src="cysuite/static/img/icons/cysuite.png" alt="CySuite logo" width="200px"></a>
   <br>
 </h1>
 
