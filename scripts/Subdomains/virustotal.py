@@ -1,11 +1,11 @@
-import requests
+import requests, os
 
 def init(domain):
     VT = []
-    VT_API_KEY = '1c8636990364fc0922d77c4d748f5711716aebcc451ce4eca9c50c759374a080'
+    VT_API_KEY = os.environ.get('VT_API_KEY_FREE')
 
     if VT_API_KEY == "":
-        print("  \__", colored("No VirusTotal API key configured", "red"))
+        print("  \__", "No VirusTotal API key configured", "red")
         return []
     else:
         parameters = {"domain": domain, "apikey": VT_API_KEY}

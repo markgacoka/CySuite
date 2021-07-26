@@ -1,11 +1,11 @@
-import re
+import re, os
 import requests
 
 def init(domain):
     C = []
     API_URL = "https://www.censys.io/api/v1"
-    UID = 'c4a9c678-dd3b-4b20-af47-610374f2fe89'
-    SECRET = 'c9ZkXNOkSRK6O06e6EUGhk5vQnEogyo8'
+    UID = os.environ.get('CENSYS_UID')
+    SECRET = os.environ.get('CENSYS_SECRET')
 
     if UID == "" or SECRET == "":
         print("  \__", "No Censys API credentials configured", "red")

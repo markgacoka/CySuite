@@ -1,8 +1,8 @@
-import requests
+import requests, os
 
 def init(domain):
     DT = []
-    DNSTrails_API_KEY = 'FK78Fbzl4m7wdwoyoVigvdcjrCzoI1yZ'
+    DNSTrails_API_KEY = os.environ.get('DNSTRAILS_API_KEY')
 
     if DNSTrails_API_KEY == "":
         print("  \__", "No DNSTrails API key configured")
