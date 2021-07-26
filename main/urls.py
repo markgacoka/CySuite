@@ -24,4 +24,6 @@ urlpatterns = [
     path('wordlist-gen/', views.wordlist_gen, name='wordlist_gen'),
     path('decoder/', views.decoder, name='decoder'),
     path('file-upload/', views.file_upload, name='file_upload'),
+    #notes
+    path('notes/post-1', views.post, name='post'),
 ]

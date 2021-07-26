@@ -1,4 +1,4 @@
-import requests, sys, json
+import requests, sys, json, os
 
 def sorter(subdomains):
     local, final = [], []
@@ -14,7 +14,7 @@ def sorter(subdomains):
 
 def init(domain):
     subdomains, shodan = [], []
-    SHODAN_API = 'sQFwficu775PQ5QSvQCABwr0iTq3acxk'
+    SHODAN_API = os.environ.get('sQFwficu775PQ5QSvQCABwr0iTq3acxk')
     if SHODAN_API == "":
         print("  \__", "No Riddler API credentials configured")
         return []

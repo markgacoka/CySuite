@@ -56,3 +56,7 @@ def decoder(request):
 
 def file_upload(request):
     return render(request, 'dashboard/file_upload.html')
+
+
+def post(request):
+    return render(request, 'posts/post1.html')
