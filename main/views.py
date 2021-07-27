@@ -15,6 +15,9 @@ def terms_conditions(request):
 def dashboard(request):
     return render(request, 'dashboard/dashboard.html')
 
+def profile(request):
+    return render(request, 'dashboard/profile.html')
+
 def projects(request):
     return render(request, 'dashboard/projects.html')
 

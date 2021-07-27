@@ -9,6 +9,7 @@ urlpatterns = [
     path('terms-conditions/', views.terms_conditions, name='terms_conditions'),
     #dashboard
     path('dashboard/', views.dashboard, name='dashboard'),
+    path('profile/', views.profile, name='profile'),
     path('projects/', views.projects, name='projects'),
     path('notes/', views.notes, name='notes'),
     path('subdomain-enum/', views.subdomain_enum, name='subdomain_enum'),
