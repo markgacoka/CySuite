@@ -1,10 +1,63 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate, logout
+from cyauth.forms import RegistrationForm, AccountAuthenticationForm
 
-def login(request):
-    return render(request, 'auth/login.html')
+def index(request):
+    if request.user.is_authenticated == True:
+        return redirect('dashboard')
+    else:
+        return render(request, 'index.html')
 
-def register(request):
-    return render(request, 'auth/register.html')
-
-def forgot_password(request):
+def dashboard(request):
+    if request.user.is_authenticated == True:
+        return render(request, 'dashboard/dashboard.html')
+    else:
+        return redirect('index')
+        
+def reset_password(request):
     return render(request, 'auth/forgot-password.html')
+
+def registration_view(request):
+    context = {}
+    if request.POST:
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            email = form.cleaned_data.get('email')
+            raw_password = form.cleaned_data.get('password1')
+            account = authenticate(email=email, password=raw_password)
+            login(request, account)
+            return redirect('dashboard')
+        else:
+            context['registration_form'] = form
+    else:
+        form = RegistrationForm()
+        context['registration_form'] = form
+    return render(request, 'auth/register.html', context)
+
+def login_view(request):
+    context = {}
+    user = request.user
+    if user.is_authenticated:
+        return redirect('dashboard')
+
+    if request.POST:
+        form = AccountAuthenticationForm(request.POST)
+        if form.is_valid():
+            email = request.POST['email']
+            password = request.POST['password']
+            user = authenticate(email=email, password=password)
+        
+            if user:
+                login(request, user)
+                return redirect('dashboard')
+    else:
+        form = AccountAuthenticationForm()
+
+    context['login_form'] = form
+    return render(request, 'auth/login.html', context)
+
+
+def logout_view(request):
+    logout(request)
+    return redirect("index")
