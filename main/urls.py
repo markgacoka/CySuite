@@ -7,10 +7,6 @@ urlpatterns = [
     path('checkout/', views.checkout, name='checkout'),
     path('privacy-policy/', views.privacy_policy, name='privacy_policy'),
     path('terms-conditions/', views.terms_conditions, name='terms_conditions'),
-    #auth
-    path('login/', views.login, name='login'),
-    path('register/', views.register, name='register'),
-    path('forgot-password/', views.forgot_password, name='forgot_password'),
     #dashboard
     path('dashboard/', views.dashboard, name='dashboard'),
     path('projects/', views.projects, name='projects'),
