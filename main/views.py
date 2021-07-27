@@ -12,15 +12,6 @@ def privacy_policy(request):
 def terms_conditions(request):
     return render(request, 'pages/terms-conditions.html')
 
-def login(request):
-    return render(request, 'auth/login.html')
-
-def register(request):
-    return render(request, 'auth/register.html')
-
-def forgot_password(request):
-    return render(request, 'auth/forgot-password.html')
-
 def dashboard(request):
     return render(request, 'dashboard/dashboard.html')
 
@@ -56,7 +47,6 @@ def decoder(request):
 
 def file_upload(request):
     return render(request, 'dashboard/file_upload.html')
-
 
 def post(request):
     return render(request, 'posts/post1.html')
