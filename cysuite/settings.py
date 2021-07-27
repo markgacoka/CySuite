@@ -28,6 +28,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+ALLOWED_HOSTS = []
+AUTH_USER_MODEL = 'cyauth.Account'
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.AllowAllUsersModelBackend',
+    'cyauth.backends.CaseInsensitiveModelBackend'
+)
+
 
 # Application definition
 
