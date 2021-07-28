@@ -9,7 +9,9 @@
     <title>Sign Up | CySuite</title>
     <link rel="icon" href="{% static 'img/icons/favicon.ico' %}" type="image/x-icon" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="{% static 'css/alert.css' %}" rel="stylesheet">
     <link href="{% static 'css/auth.css' %}" rel="stylesheet">
+    <script src="{% static 'js/app.js' %}"></script>
 </head>
 <body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-behavior="sticky">
     <div class="main d-flex justify-content-center w-100">
@@ -30,6 +32,14 @@
                                     <div class="m-sm-4">
                                         <form method="post">
                                             {% csrf_token %}
+                                            {% if registration_form.non_field_errors %}
+                                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                <div class="alert-message">
+                                                    <strong>{{registration_form.non_field_errors}}</strong>
+                                                </div>
+                                            </div>
+                                            {% endif %}
                                                 <div class="mb-3">
                                                     <label class="form-label">Email</label>
                                                     <input class="form-control form-control-lg" type="email" name="email" placeholder="Email" />
@@ -50,17 +60,17 @@
                                                 {% for field in registration_form %}
                                                 <p>
                                                     {% for error in field.errors %}
-                                                        <p style="color:red;">{{error}}</p>
+                                                        <div class="alert alert-danger alert-dismissible" role="alert">
+                                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                            <div class="alert-message">
+                                                                <strong>{{error}}</strong>
+                                                            </div>
+                                                        </div>
                                                     {% endfor %}
                                                 </p>
-                                                {% endfor %} 
-                                                {% if registration_form.non_field_errors %}
-                                                    <div style="color: red;">
-                                                        <p>{{registration_form.non_field_errors}}</p>
-                                                    </div>
-                                                {% endif %}
+                                                {% endfor %}
                                             </div>
-                                            <div class="text-center mt-3" style="padding: 2rem 0 2rem 0;">
+                                            <div class="text-center mt-3" style="padding: 1rem 0 1rem 0;">
                                                 <button type="submit" class="btn btn-lg btn-primary">Sign up</button>
                                             </div>
                                             <p style="text-align: center;">Already have an account? <a href="/login">Sign In</a></p>

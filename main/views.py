@@ -1,8 +1,5 @@
 from django.shortcuts import render
 
-def index(request):
-    return render(request, 'index.html')
-
 def checkout(request):
     return render(request, 'pages/checkout.html')
 
@@ -11,9 +8,6 @@ def privacy_policy(request):
 
 def terms_conditions(request):
     return render(request, 'pages/terms-conditions.html')
-
-def dashboard(request):
-    return render(request, 'dashboard/dashboard.html')
 
 def profile(request):
     return render(request, 'dashboard/profile.html')

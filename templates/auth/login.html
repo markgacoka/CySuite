@@ -9,7 +9,9 @@
     <title>Sign In | CySuite</title>
     <link rel="icon" href="{% static 'img/icons/favicon.ico' %}" type="image/x-icon" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="{% static 'css/alert.css' %}" rel="stylesheet">
     <link href="{% static 'css/auth.css' %}" rel="stylesheet">
+    <script src="{% static 'js/app.js' %}"></script>
 </head>
 <body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-behavior="sticky">
     <div class="main d-flex justify-content-center w-100">
@@ -31,6 +33,14 @@
                                         </div>
                                         <form method="post">
                                             {% csrf_token %}
+                                            {% if login_form.non_field_errors %}
+                                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                <div class="alert-message">
+                                                    <strong>{{login_form.non_field_errors}}</strong>
+                                                </div>
+                                            </div>
+                                            {% endif %}
                                             <div class="mb-3">
                                                 <label class="form-label">Email</label>
                                                 <input class="form-control form-control-lg" type="email" name="email" placeholder="Enter your email" />
@@ -38,22 +48,23 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Password</label>
                                                 <input class="form-control form-control-lg" type="password" name="password" placeholder="Enter your password" />
+                                                <small><a href="pages-reset-password.html">Forgot password?</a></small>
                                             </div>
-
-                                            {% for field in login_form %}
-                                            <p>
-                                                {% for error in field.errors %}
-                                                    <p style="color:red;">{{error}}</p>
-                                                {% endfor %}
-                                            </p>
-                                            {% endfor %}
-                                            
-                                            {% if login_form.non_field_errors %}
-                                                <div style="color:red;">
-                                                    <p>{{login_form.non_field_errors}}</p>
+                                            {% for error in field.errors %}
+                                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                <div class="alert-message">
+                                                    <strong>{{error}}</strong>
                                                 </div>
-                                            {% endif %}
-                                            <div class="text-center mt-3">
+                                            </div>
+                                            {% endfor %}
+                                           <div>
+                                                <div class="form-check align-items-center">
+                                                    <input id="customControlInline" type="checkbox" class="form-check-input" value="remember-me" name="remember-me" checked>
+                                                    <label class="form-check-label text-small" for="customControlInline">Remember me</label>
+                                                </div>
+                                            </div>
+                                            <div class="text-center mt-3 mb-3">
                                                 <button type="submit" class="btn btn-lg btn-primary">Sign in</button>
                                             </div>
                                             <p style="text-align: center;">Don't have an account? <a href="/register">Sign Up</a></p>
