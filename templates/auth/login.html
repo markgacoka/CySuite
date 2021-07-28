@@ -29,7 +29,8 @@
                                     <div class="m-sm-4">
                                         <div class="text-center">
                                         </div>
-                                        <form>
+                                        <form method="post">
+                                            {% csrf_token %}
                                             <div class="mb-3">
                                                 <label class="form-label">Email</label>
                                                 <input class="form-control form-control-lg" type="email" name="email" placeholder="Enter your email" />
@@ -37,20 +38,25 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Password</label>
                                                 <input class="form-control form-control-lg" type="password" name="password" placeholder="Enter your password" />
-                                                <small><a href="/forgot-password">Forgot password?</a></small>
                                             </div>
-                                            <div>
-                                                <div class="form-check align-items-center">
-                                                    <input id="customControlInline" type="checkbox" class="form-check-input" value="remember-me" name="remember-me" checked>
-                                                    <label class="form-check-label text-small" for="customControlInline">Remember me</label>
+
+                                            {% for field in login_form %}
+                                            <p>
+                                                {% for error in field.errors %}
+                                                    <p style="color:red;">{{error}}</p>
+                                                {% endfor %}
+                                            </p>
+                                            {% endfor %}
+                                            
+                                            {% if login_form.non_field_errors %}
+                                                <div style="color:red;">
+                                                    <p>{{login_form.non_field_errors}}</p>
                                                 </div>
+                                            {% endif %}
+                                            <div class="text-center mt-3">
+                                                <button type="submit" class="btn btn-lg btn-primary">Sign in</button>
                                             </div>
-                                            <div class="text-center mt-2">
-                                                <a href="/dashboard" class="btn btn-lg btn-primary">Sign in</a>
-                                            </div>
-                                            <div style="padding-top: 2rem;">
-                                                <p style="text-align: center;">Don't have an account? &nbsp;<a href="/register">Sign Up</a></p>
-                                            </div>
+                                            <p style="text-align: center;">Don't have an account? <a href="/register">Sign Up</a></p>
                                         </form>
                                     </div>
                                 </div>
