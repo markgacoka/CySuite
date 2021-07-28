@@ -3,12 +3,10 @@ from . import views
 
 urlpatterns = [
     #main-pages
-    path('', views.index, name='index'),
     path('checkout/', views.checkout, name='checkout'),
     path('privacy-policy/', views.privacy_policy, name='privacy_policy'),
     path('terms-conditions/', views.terms_conditions, name='terms_conditions'),
     #dashboard
-    path('dashboard/', views.dashboard, name='dashboard'),
     path('profile/', views.profile, name='profile'),
     path('projects/', views.projects, name='projects'),
     path('notes/', views.notes, name='notes'),

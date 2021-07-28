@@ -9,9 +9,11 @@ from cyauth.views import (
 )
 
 urlpatterns = [
+    path('', views.index, name="index"),
     path('login/', login_view, name="login"),
     path('logout/', logout_view, name="logout"),
     path('register/', registration_view, name="register"),
     path('reset-password/', views.reset_password, name="reset_password"),
     path('account/', account_view, name="account"),
+    path('dashboard/', views.dashboard, name="dashboard"),
 ]
