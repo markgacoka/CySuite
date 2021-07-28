@@ -28,27 +28,42 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="m-sm-4">
-                                        <form>
-                                            <div class="mb-3">
-                                                <label class="form-label">Name</label>
-                                                <input class="form-control form-control-lg" type="text" name="name" placeholder="Enter your name" />
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Company</label>
-                                                <input class="form-control form-control-lg" type="text" name="company" placeholder="Enter your company name" />
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Email</label>
-                                                <input class="form-control form-control-lg" type="email" name="email" placeholder="Enter your email" />
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Password</label>
-                                                <input class="form-control form-control-lg" type="password" name="password" placeholder="Enter password" />
+                                        <form method="post">
+                                            {% csrf_token %}
+                                                <div class="mb-3">
+                                                    <label class="form-label">Email</label>
+                                                    <input class="form-control form-control-lg" type="email" name="email" placeholder="Email" />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Username</label>
+                                                    <input class="form-control form-control-lg" type="text" name="username" placeholder="Username" />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Password</label>
+                                                    <input class="form-control form-control-lg" type="password" name="password1" placeholder="Enter password" />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Confirm Password</label>
+                                                    <input class="form-control form-control-lg" type="password" name="password2" placeholder="Enter password again" />
+                                                </div>
+
+                                                {% for field in registration_form %}
+                                                <p>
+                                                    {% for error in field.errors %}
+                                                        <p style="color:red;">{{error}}</p>
+                                                    {% endfor %}
+                                                </p>
+                                                {% endfor %} 
+                                                {% if registration_form.non_field_errors %}
+                                                    <div style="color: red;">
+                                                        <p>{{registration_form.non_field_errors}}</p>
+                                                    </div>
+                                                {% endif %}
                                             </div>
                                             <div class="text-center mt-3" style="padding: 2rem 0 2rem 0;">
-                                                <a href="/login" class="btn btn-lg btn-primary">Sign up</a>
+                                                <button type="submit" class="btn btn-lg btn-primary">Sign up</button>
                                             </div>
-                                            <p style="text-align: center;"> Already have an account? <a href="/login">Sign in</a></p>
+                                            <p style="text-align: center;">Already have an account? <a href="/login">Sign In</a></p>
                                         </form>
                                     </div>
                                 </div>
