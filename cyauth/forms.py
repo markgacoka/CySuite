@@ -30,23 +30,24 @@ class AccountAuthenticationForm(forms.ModelForm):
 class AccountUpdateForm(forms.ModelForm):
     class Meta:
         model = Account
-        fields = {'email', 'username'}
+        fields = ('email', 'username')
     
     def clean_email(self):
         if self.is_valid():
             email = self.cleaned_data['email']
+            print(email)
             try:
                 account = Account.objects.exclude(pk=self.instance.pk).get(email=email)
             except Account.DoesNotExist:
                 return email
-            raise forms.ValidationError('Email %s is already in use' % 
-            email)
-        
+            raise forms.ValidationError('Email is already in use')   
+
     def clean_username(self):
         if self.is_valid():
             username = self.cleaned_data['username']
+            print(username)
             try:
                 account = Account.objects.exclude(pk=self.instance.pk).get(username=username)
             except Account.DoesNotExist:
                 return username
-            raise forms.ValidationError('Username %s is already in use' % username)
+            raise forms.ValidationError('Username is already in use')

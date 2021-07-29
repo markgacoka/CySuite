@@ -69,6 +69,7 @@ def account_view(request):
     context = {}
     if request.POST:
         form = AccountUpdateForm(request.POST, instance=request.user)
+        print(form)
         if form.is_valid():
             form.initial = {
                 "email": request.POST['email'],
@@ -84,4 +85,4 @@ def account_view(request):
             }
         )
     context['account_form'] = form
-    return render(request, 'account.html', context)
+    return render(request, 'dashboard/profile.html', context)
