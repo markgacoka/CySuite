@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from cyauth.forms import RegistrationForm, AccountAuthenticationForm, AccountUpdateForm
+from cyauth.forms import RegistrationForm, AccountAuthenticationForm, AccountUpdateForm, FeedbackForm
 
 def index(request):
     if request.user.is_authenticated == True:
@@ -68,20 +68,32 @@ def account_view(request):
     
     context = {}
     if request.POST:
-        form = AccountUpdateForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.initial = {
+        print(request.POST)
+        account_form = AccountUpdateForm(request.POST, instance=request.user)
+        feedback_form = FeedbackForm(request.POST, instance=request.user)
+
+        if account_form.is_valid():
+            account_form.initial = {
                 "email": request.POST['email'],
                 "username": request.POST['username']
             }
-            form.save()
+            account_form.save()
             context['success_message'] = 'Updated'
+
+        if feedback_form.is_valid():
+            feedback_form.initial = {
+                "feedback": request.POST['feedback']
+            }
+            feedback_form.save()
+            context['success_message'] = 'Feedback has been received!'
     else:
-        form = AccountUpdateForm(
+        account_form = AccountUpdateForm(
             initial = {
                 "email": request.user.email,
                 "username": request.user.username
             }
         )
-    context['account_form'] = form
+        feedback_form = FeedbackForm(initial = {"feedback": "Enter your feedback here..."})
+    context['account_form'] = account_form
+    context['feedback_form'] = feedback_form
     return render(request, 'dashboard/profile.html', context)
