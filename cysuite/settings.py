@@ -28,6 +28,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    
+
 ALLOWED_HOSTS = []
 AUTH_USER_MODEL = 'cyauth.Account'
 AUTHENTICATION_BACKENDS = (
