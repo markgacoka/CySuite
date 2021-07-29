@@ -68,24 +68,28 @@ def account_view(request):
     
     context = {}
     if request.POST:
-        print(request.POST)
-        account_form = AccountUpdateForm(request.POST, instance=request.user)
-        feedback_form = FeedbackForm(request.POST, instance=request.user)
+        if 'feedback' in request.POST.keys():
+            feedback_form = FeedbackForm(request.POST, instance=request.user)
+            if feedback_form.is_valid():
+                feedback_form.initial = {
+                    "feedback": request.POST['feedback']
+                }
+                feedback_form.save()
+                context['success_message'] = 'Feedback has been received!'
+                context['feedback_form'] = feedback_form
 
-        if account_form.is_valid():
-            account_form.initial = {
-                "email": request.POST['email'],
-                "username": request.POST['username']
-            }
-            account_form.save()
-            context['success_message'] = 'Updated'
-
-        if feedback_form.is_valid():
-            feedback_form.initial = {
-                "feedback": request.POST['feedback']
-            }
-            feedback_form.save()
-            context['success_message'] = 'Feedback has been received!'
+        elif 'email' and 'username' in request.POST.keys():
+            account_form = AccountUpdateForm(request.POST, instance=request.user)
+            if account_form.is_valid():
+                account_form.initial = {
+                    "email": request.POST['email'],
+                    "username": request.POST['username']
+                }
+                account_form.save()
+                context['success_message'] = 'Updated'
+                context['account_form'] = account_form
+        else:
+            pass
     else:
         account_form = AccountUpdateForm(
             initial = {
@@ -93,7 +97,6 @@ def account_view(request):
                 "username": request.user.username
             }
         )
-        feedback_form = FeedbackForm(initial = {"feedback": "Enter your feedback here..."})
-    context['account_form'] = account_form
-    context['feedback_form'] = feedback_form
+        context['account_form'] = account_form
+
     return render(request, 'dashboard/profile.html', context)
