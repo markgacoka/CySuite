@@ -48,21 +48,26 @@ Profile | CySuite
                             <h6>Old Password</h6>
                             <div class="row" style="margin: 0 1.25rem 1rem 0;">
                                 <div class="input-resizer">
-                                    <input type="password" class="form-control">
+                                    <input type="password" class="form-control" name="old_password" placeholder="Old password" id="id_old_password" required="true">
                                 </div>
                             </div>
                             <h6>New Password</h6>
                             <div class="row" style="margin: 0 1.25rem 1rem 0;">
                                 <div class="input-resizer">
-                                    <input type="password" class="form-control">
+                                    <input type="password" class="form-control" name="new_password1" placeholder="New password" id="id_new_password1" required="true">
                                 </div>
                             </div>
                             <h6>Confirm Password</h6>
                             <div class="row" style="margin: 0 1.25rem 1rem 0;">
                                 <div class="input-resizer">
-                                    <input type="password" class="form-control">
+                                    <input type="password" class="form-control" name="new_password2" placeholder="Confirm password" id="id_new_password2" required="true">
                                 </div>
                             </div> 
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <p style="color: red">{{ error }}</p>
+                                {% endfor %}
+                            {% endfor %}
                             <div class="row" style="margin: 0 1.25rem 0 1.25rem;">
                                 <div class="input-resizer">
                                     <div style="float: right;">
