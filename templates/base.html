@@ -32,6 +32,39 @@
 			});
 		});
 	</script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var message = "Success!";
+        var type = document.querySelector("#alert-success").value;
+        var duration = 5000;
+        var ripple = true;
+        var dismissible = true;
+        var positionY = "top";
+        window.notyf.open({type, message, duration, ripple, dismissible, positionY});
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+        document.querySelector("#alert-warning").addEventListener("click", function () {
+            var message = "Warning";
+            var type = document.querySelector("#alert-warning").value;
+            var duration = 5000;
+            var ripple = true;
+            var dismissible = true;
+            var positionY = "top";
+            window.notyf.open({type, message, duration, ripple, dismissible, positionY});
+            });
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+        document.querySelector("#alert-danger").addEventListener("click", function () {
+            var message = "Error!";
+            var type = document.querySelector("#alert-danger").value;
+            var duration = 5000;
+            var ripple = true;
+            var dismissible = true;
+            var positionY = "top";
+            window.notyf.open({type, message, duration, ripple, dismissible, positionY});
+            });
+        });
+    </script>
   </body>
 </body>
 </html>

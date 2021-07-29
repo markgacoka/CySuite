@@ -13,7 +13,7 @@ Profile | CySuite
                 </div>
                 <div class="card-body text-center">
                     <img src="{% static 'img/profile/avatar.jpeg'%}" alt="Stacie Hall" class="img-fluid rounded-circle mb-2" width="128" height="128" />
-                    <h5 class="card-title mb-2">{{request.user.username}}</h5>
+                    <h5 class="card-title mb-2">{{account_form.initial.username}}</h5>
                     <div>
                         <a class="btn btn-primary btn-sm" href="#">Upload</a>
                     </div>
@@ -22,8 +22,8 @@ Profile | CySuite
                 <div class="card-body">
                     <h5 class="h6 card-title">About</h5>
                     <ul class="list-unstyled mb-0">
-                        <li class="mb-1"><span data-feather="home" class="feather-sm me-1"></span><b>Name:</b> &nbsp;{{request.user.username}}</li>
-                        <li class="mb-1"><span data-feather="briefcase" class="feather-sm me-1"></span><b>Email:</b> &nbsp;{{request.user.email}}</li>
+                        <li class="mb-1"><span data-feather="home" class="feather-sm me-1"></span><b>Name:</b> &nbsp;{{account_form.initial.username}}</li>
+                        <li class="mb-1"><span data-feather="briefcase" class="feather-sm me-1"></span><b>Email:</b> &nbsp;{{account_form.initial.email}}</li>
                         <li class="mb-1"><span data-feather="map-pin" class="feather-sm me-1"></span><b>Account Type:</b>&emsp;<span class="badge bg-warning">Free</span></li>
                     </ul>
                 </div>
@@ -85,10 +85,38 @@ Profile | CySuite
                     <div class="h-100">
                         <form method="post">
                         {% csrf_token %}
+                            {% if account_form.errors %}
+                            {% for field in account_form %}
+                                {% for error in field.errors %}
+                                <div class="row" style="margin: 0 1.25rem 1rem 0;">
+                                    <div class="input-resizer">
+                                        <div class="alert alert-danger alert-dismissible" role="alert">
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            <div class="alert-message">
+                                                <strong>{{error}}</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% endfor%}
+                            {% endif %}
+                            {% if account_form.non_field_errors %}
+                            <div class="row" style="margin: 0 1.25rem 1rem 0;">
+                                <div class="input-resizer">
+                                    <div class="alert alert-danger alert-dismissible" role="alert" style="height: 3rem;">
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        <div class="alert-message">
+                                            <strong>{{account_form.non_field_errors}}</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
                             <h6>Change email</h6>
                             <div class="row" style="margin: 0 1.25rem 1rem 0;">
                                 <div class="input-resizer">
-                                    <input class="form-control" type="email" name="email" placeholder="Email" value="{{account_form.initial.email}}">
+                                    <input class="form-control" type="text" name="email" placeholder="Email" value="{{account_form.initial.email}}">
                                 </div>
                             </div>
                             <h6>Change username</h6>
@@ -97,21 +125,8 @@ Profile | CySuite
                                     <input class="form-control" type="text" name="username" placeholder="Username" value="{{account_form.initial.username}}">
                                 </div>
                             </div>
-                            {% for field in account_form %}
-                            <p>
-                                {% for error in field.errors %}
-                                    <p style="color:red;">{{error}}</p>
-                                {% endfor %}
-                            </p>
-                            {% endfor %} 
-                            {% if account_form.non_field_errors %}
-                                <div style="color:red;">
-                                    <p>{{account_form.non_field_errors}}</p>
-                                </div>
-                            {% endif %}
-
                             {% if success_message %}
-                                <p style="color:green;">{{success_message}}<p>
+                                <button style="display: none;" id="alert-success" value="success" message="{{success_message}}">Updated</button>
                             {% endif %}
                             <div class="row" style="margin: 0 1.25rem 0 1.25rem;">
                                 <div class="input-resizer">
