@@ -48,19 +48,19 @@ Profile | CySuite
                             <h6>Old Password</h6>
                             <div class="row" style="margin: 0 1.25rem 1rem 0;">
                                 <div class="input-resizer">
-                                    <input type="password" class="form-control" id="inputPasswordNew2">
+                                    <input type="password" class="form-control">
                                 </div>
                             </div>
                             <h6>New Password</h6>
                             <div class="row" style="margin: 0 1.25rem 1rem 0;">
                                 <div class="input-resizer">
-                                    <input type="password" class="form-control" id="inputPasswordNew2">
+                                    <input type="password" class="form-control">
                                 </div>
                             </div>
                             <h6>Confirm Password</h6>
                             <div class="row" style="margin: 0 1.25rem 1rem 0;">
                                 <div class="input-resizer">
-                                    <input type="password" class="form-control" id="inputPasswordNew2">
+                                    <input type="password" class="form-control">
                                 </div>
                             </div> 
                             <div class="row" style="margin: 0 1.25rem 0 1.25rem;">
@@ -78,19 +78,36 @@ Profile | CySuite
                 <div class="card-body" style="padding: 2rem;">
                     <h5 class="card-title" style="padding-bottom: 1rem;">Change Details</h5>
                     <div class="h-100">
-                        <form>
+                        <form method="post">
+                        {% csrf_token %}
                             <h6>Change email</h6>
                             <div class="row" style="margin: 0 1.25rem 1rem 0;">
                                 <div class="input-resizer">
-                                    <input type="email" class="form-control" id="inputPasswordNew2">
+                                    <input class="form-control" type="email" name="email" placeholder="Email" value="{{account_form.initial.email}}">
                                 </div>
                             </div>
                             <h6>Change username</h6>
                             <div class="row" style="margin: 0 1.25rem 1rem 0;">
                                 <div class="input-resizer">
-                                    <input type="text" class="form-control" id="inputPasswordNew2">
+                                    <input class="form-control" type="text" name="username" placeholder="Username" value="{{account_form.initial.username}}">
                                 </div>
                             </div>
+                            {% for field in account_form %}
+                            <p>
+                                {% for error in field.errors %}
+                                    <p style="color:red;">{{error}}</p>
+                                {% endfor %}
+                            </p>
+                            {% endfor %} 
+                            {% if account_form.non_field_errors %}
+                                <div style="color:red;">
+                                    <p>{{account_form.non_field_errors}}</p>
+                                </div>
+                            {% endif %}
+
+                            {% if success_message %}
+                                <p style="color:green;">{{success_message}}<p>
+                            {% endif %}
                             <div class="row" style="margin: 0 1.25rem 0 1.25rem;">
                                 <div class="input-resizer">
                                     <div style="float: right;">

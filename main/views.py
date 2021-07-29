@@ -9,9 +9,6 @@ def privacy_policy(request):
 def terms_conditions(request):
     return render(request, 'pages/terms-conditions.html')
 
-def profile(request):
-    return render(request, 'dashboard/profile.html')
-
 def projects(request):
     return render(request, 'dashboard/projects.html')
 
