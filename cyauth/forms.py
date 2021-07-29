@@ -45,3 +45,14 @@ class AccountUpdateForm(forms.ModelForm):
             else:
                 return {"email": email, "username": username}
         return None
+
+
+class FeedbackForm(forms.ModelForm):
+    class Meta:
+        model = Account
+        fields = ['feedback']
+
+    def clean(self):
+        if self.is_valid():
+            feedback = self.cleaned_data['feedback']
+            return {"feedback": feedback}

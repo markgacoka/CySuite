@@ -151,10 +151,39 @@ Profile | CySuite
                     <hr style="width: 90%;">
                     <h5 class="card-title mb-0">Leave Feedback</h5>
                     <div style="padding-top: 1.25rem">
-                        <form>
+                        <form method="post">
+                            {% csrf_token %}
+                            {% if feedback_form.errors %}
+                            {% for field in feedback_form %}
+                                {% for error in field.errors %}
+                                <div class="row" style="margin: 0 1.25rem 1rem 0;">
+                                    <div class="input-resizer">
+                                        <div class="alert alert-danger alert-dismissible" role="alert">
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            <div class="alert-message">
+                                                <strong>{{error}}</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% endfor%}
+                            {% endif %}
+                            {% if feedback_form.non_field_errors %}
                             <div class="row" style="margin: 0 1.25rem 1rem 0;">
                                 <div class="input-resizer">
-                                    <textarea class="feedback" style="width: 100%; min-height: 200px; border: 1px solid #ced4da; border-radius: .2rem; font-size: 16px; padding: 10px;"></textarea>
+                                    <div class="alert alert-danger alert-dismissible" role="alert" style="height: 3rem;">
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        <div class="alert-message">
+                                            <strong>{{feedback_form.non_field_errors}}</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            <div class="row" style="margin: 0 1.25rem 1rem 0;">
+                                <div class="input-resizer">
+                                    <textarea class="feedback" type="text" name="feedback" placeholder="Enter your feedback here..." value="{{feedback_form.initial.feedback}}" style="width: 100%; min-height: 200px; border: 1px solid #ced4da; border-radius: .2rem; font-size: 16px; padding: 10px;"></textarea>
                                 </div>
                             </div>
                             <div class="row" style="margin: 0 1.25rem 0 1.25rem;">
