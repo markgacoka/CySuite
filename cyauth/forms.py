@@ -5,13 +5,11 @@ from django.contrib.auth import authenticate
 from cyauth.models import Account
 
 class RegistrationForm(UserCreationForm):
-    email = forms.EmailField(
-        max_length=60, 
-        help_text="Required. Add a valid email address"
-    )
+    email = forms.EmailField(max_length=60, widget=forms.EmailInput)
+
     class Meta:
         model = Account
-        fields = {"email", "username", "password1", "password2"}
+        fields = ("email", "username", "password1", "password2")
 
 class AccountAuthenticationForm(forms.ModelForm):
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
@@ -45,7 +43,6 @@ class AccountUpdateForm(forms.ModelForm):
             else:
                 return {"email": email, "username": username}
         return None
-
 
 class FeedbackForm(forms.ModelForm):
     class Meta:
