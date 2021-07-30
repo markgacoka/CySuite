@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
+from django.contrib.auth.hashers import make_password, check_password
 
 from cyauth.models import Account
 
@@ -12,7 +13,7 @@ class RegistrationForm(UserCreationForm):
         fields = ("email", "username", "password1", "password2")
 
 class AccountAuthenticationForm(forms.ModelForm):
-    password = forms.CharField(label='Password', widget=forms.PasswordInput)
+    password = forms.CharField(widget=forms.PasswordInput)
 
     class Meta:
         model = Account
@@ -53,3 +54,25 @@ class FeedbackForm(forms.ModelForm):
         if self.is_valid():
             feedback = self.cleaned_data['feedback']
             return {"feedback": feedback}
+
+class PasswordUpdateForm(forms.ModelForm):
+    old_password = forms.CharField(widget=forms.PasswordInput)
+    password_confirmation = forms.CharField(widget=forms.PasswordInput)
+
+    class Meta:
+        model = Account
+        fields = ['password']
+
+    def clean(self):
+        if self.is_valid():
+            old_password = self.cleaned_data['old_password']
+            password = self.cleaned_data.get('password')
+            password_confirmation = self.cleaned_data.get('password_confirmation')
+
+            if password != password_confirmation:
+                raise forms.ValidationError('The new password(s) should match!')
+            elif not Account.objects.get(username=self.instance.username).check_password(old_password):
+                raise forms.ValidationError('The previous password entered is incorrect!')
+            else:
+                return {"password": make_password(password)}
+            
