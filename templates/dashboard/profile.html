@@ -43,31 +43,61 @@ Profile | CySuite
             <div class="card">
                 <div class="card-body" style="padding: 2rem;">
                 <h5 class="card-title" style="padding-bottom: 1rem;">Reset Password</h6>
-                    <form>
+                    <form method="post">
+                    {% csrf_token %}
+                        {% if password_form.errors %}
+                        {% for field in password_form %}
+                            {% for error in field.errors %}
+                            <div class="row" style="margin: 0 1.25rem 1rem 0;">
+                                <div class="input-resizer">
+                                    <div class="alert alert-danger alert-dismissible" role="alert">
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        <div class="alert-message">
+                                            <strong>{{error}}</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% endfor%}
+                        {% endif %}
+                        {% if password_form.non_field_errors %}
+                        <div class="row" style="margin: 0 1.25rem 1rem 0;">
+                            <div class="input-resizer">
+                                <div class="alert alert-danger alert-dismissible" role="alert" style="height: 3rem;">
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    <div class="alert-message">
+                                        <strong>{{password_form.non_field_errors}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
                         <div>
                             <h6>Old Password</h6>
                             <div class="row" style="margin: 0 1.25rem 1rem 0;">
                                 <div class="input-resizer">
-                                    <input type="password" class="form-control" name="old_password" placeholder="Old password" id="id_old_password" required="true">
+                                    <input type="password" class="form-control" name="old_password" placeholder="Old password">
                                 </div>
                             </div>
                             <h6>New Password</h6>
                             <div class="row" style="margin: 0 1.25rem 1rem 0;">
                                 <div class="input-resizer">
-                                    <input type="password" class="form-control" name="new_password1" placeholder="New password" id="id_new_password1" required="true">
+                                    <input type="password" class="form-control" name="password" placeholder="New password">
                                 </div>
                             </div>
                             <h6>Confirm Password</h6>
                             <div class="row" style="margin: 0 1.25rem 1rem 0;">
                                 <div class="input-resizer">
-                                    <input type="password" class="form-control" name="new_password2" placeholder="Confirm password" id="id_new_password2" required="true">
+                                    <input type="password" class="form-control" name="password_confirmation" placeholder="Confirm password">
                                 </div>
                             </div> 
-                            {% for field in form %}
-                                {% for error in field.errors %}
-                                    <p style="color: red">{{ error }}</p>
-                                {% endfor %}
-                            {% endfor %}
+                            {% if success_message %}
+                                <button style="display: none;" class="alert-popup" id="alert-success" name="{{success_message}}" value="success"></button>
+                            {% endif %}
+                            {% if error_message %}
+                                <button style="display: none;" class="alert-popup" id="alert-danger" name="{{error_message}}" value="danger"></button>
+                            {% endif %}
                             <div class="row" style="margin: 0 1.25rem 0 1.25rem;">
                                 <div class="input-resizer">
                                     <div style="float: right;">
@@ -128,6 +158,9 @@ Profile | CySuite
                             {% if success_message %}
                                 <button style="display: none;" class="alert-popup" id="alert-success" name="{{success_message}}" value="success"></button>
                             {% endif %}
+                            {% if error_message %}
+                                <button style="display: none;" class="alert-popup" id="alert-danger" name="{{error_message}}" value="danger"></button>
+                            {% endif %}
                             <div class="row" style="margin: 0 1.25rem 0 1.25rem;">
                                 <div class="input-resizer">
                                     <div style="float: right;">
@@ -186,6 +219,12 @@ Profile | CySuite
                                     <textarea class="feedback" type="text" name="feedback" placeholder="Enter your feedback here..." style="width: 100%; min-height: 200px; border: 1px solid #ced4da; border-radius: .2rem; font-size: 16px; padding: 10px;"></textarea>
                                 </div>
                             </div>
+                            {% if success_message %}
+                                <button style="display: none;" class="alert-popup" id="alert-success" name="{{success_message}}" value="success"></button>
+                            {% endif %}
+                            {% if error_message %}
+                                <button style="display: none;" class="alert-popup" id="alert-danger" name="{{error_message}}" value="danger"></button>
+                            {% endif %}
                             <div class="row" style="margin: 0 1.25rem 0 1.25rem;">
                                 <div class="input-resizer">
                                     <div style="float: right;">

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from cyauth.forms import RegistrationForm, AccountAuthenticationForm, AccountUpdateForm, FeedbackForm
+from cyauth.forms import RegistrationForm, AccountAuthenticationForm, AccountUpdateForm, FeedbackForm, PasswordUpdateForm
 
 def index(request):
     if request.user.is_authenticated == True:
@@ -32,7 +32,7 @@ def registration_view(request):
             context['registration_form'] = form
     else:
         form = RegistrationForm()
-        context['registration_form'] = form
+    context['registration_form'] = form
     return render(request, 'auth/register.html', context)
 
 def login_view(request):
@@ -76,9 +76,9 @@ def account_view(request):
                 }
                 feedback_form.save()
                 context['success_message'] = 'Feedback has been received!'
-                context['feedback_form'] = feedback_form
             else:
-                context['success_message'] = 'An error occurred!'
+                context['error_message'] = 'An error occurred!'
+            context['feedback_form'] = feedback_form
 
         elif 'email' and 'username' in request.POST.keys():
             account_form = AccountUpdateForm(request.POST, instance=request.user)
@@ -89,7 +89,18 @@ def account_view(request):
                 }
                 account_form.save()
                 context['success_message'] = 'Updated'
-                context['account_form'] = account_form
+            else:
+                context['error_message'] = 'An error occurred!'
+            context['account_form'] = account_form
+
+        elif 'old_password' in request.POST.keys():
+            password_form = PasswordUpdateForm(request.POST, instance=request.user)
+            if password_form.is_valid():
+                password_form.save()
+                context['success_message'] = 'Password Changed!'
+            else:
+                context['error_message'] = 'An error occurred!'
+            context['password_form'] = password_form
         else:
             pass
     else:
