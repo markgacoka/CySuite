@@ -4,9 +4,9 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 class MyAccountManager(BaseUserManager):
     def create_user(self, email, username, password=None):
         if not email:
-            raise ValueError("Users must have an email")
+            raise ValueError("You must have a email to continue!")
         if not username:
-            raise ValueError("Users must have an username")
+            raise ValueError("You must have a username to continue!")
         user = self.model(
             email=self.normalize_email(email),
             username=username
@@ -41,8 +41,8 @@ class Account(AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     hide_email = models.BooleanField(default=True)
-    feedback = models.CharField(max_length= 1200, default= "", unique=False)
-
+    feedback = models.CharField(max_length= 1200, default= "", unique=False, null=True, blank=True)
+    
     objects = MyAccountManager()
 
     USERNAME_FIELD = 'email'
@@ -56,3 +56,4 @@ class Account(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
+    

@@ -19,9 +19,9 @@ def reset_password(request):
 
 def registration_view(request):
     context = {}
+    form = RegistrationForm(request.POST or None)
     if request.POST:
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
+        if form.is_valid():    
             form.save()
             email = form.cleaned_data.get('email')
             raw_password = form.cleaned_data.get('password1')
@@ -77,6 +77,8 @@ def account_view(request):
                 feedback_form.save()
                 context['success_message'] = 'Feedback has been received!'
                 context['feedback_form'] = feedback_form
+            else:
+                context['success_message'] = 'An error occurred!'
 
         elif 'email' and 'username' in request.POST.keys():
             account_form = AccountUpdateForm(request.POST, instance=request.user)
