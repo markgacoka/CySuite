@@ -1,7 +1,10 @@
+import os
 from django.shortcuts import render
 
 def checkout(request):
-    return render(request, 'pages/checkout.html')
+    return render(request, 'pages/checkout.html', context={
+        'PAYPAL_CLIENT_ID': os.environ.get('PAYPAL_CLIENT_ID'),
+    })
 
 def privacy_policy(request):
     return render(request, 'pages/privacy-policy.html')
