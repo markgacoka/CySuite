@@ -1,8 +1,14 @@
 from django.urls import path
+from django.conf.urls import url
 from . import views
+
+from main.views import (
+    update_transaction
+)
 
 urlpatterns = [
     #main-pages
+    url(r'^transaction/', update_transaction, name='transaction'),
     path('checkout/', views.checkout, name='checkout'),
     path('privacy-policy/', views.privacy_policy, name='privacy_policy'),
     path('terms-conditions/', views.terms_conditions, name='terms_conditions'),
