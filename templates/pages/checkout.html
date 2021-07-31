@@ -9,6 +9,7 @@
   <link rel='shortcut icon' type='image/x-icon' href="{% static 'img/logo/favicon.ico' %}" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <link href="{% static 'css/light.css' %}" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/terms.css' %}">
 </head>
 <body>
@@ -40,7 +41,41 @@
   <footer style="padding: 0.5rem 0 0.5rem 0;">
     <p style="text-align: center; flex-direction: column; display: flex; margin-top: 16px;">&copy; CySuite 2021 All right reserved.</p>
   </footer>
-  <script src="https://www.paypal.com/sdk/js?client-id=test"></script>
-  <script>paypal.Buttons().render('#paypal-btn');</script>
+  <script src="{% static 'js/app.js' %}"></script>
+  <script src="https://www.paypal.com/sdk/js?client-id={{PAYPAL_CLIENT_ID}}&currency=USD"></script>
+  <script>
+        paypal.Buttons({
+          style: {
+            fundingicons: 'true',
+            tagline: 'false'
+          },
+          funding: {
+            disallowed: [ paypal.FUNDING.CREDIT ]
+          },
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '17.50'
+                        }
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(orderData) {
+                    console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                    var transaction = orderData.purchase_units[0].payments.captures[0];
+                    
+                    var message = transaction.status + '! Transaction No: ' + transaction.id;
+                    var type = "success";
+                    var duration = 5000;
+                    var ripple = true;
+                    var dismissible = true;
+                    var positionY = "top";
+                    window.notyf.open({type, message, duration, ripple, dismissible, positionY});
+                });
+            }
+        }).render('#paypal-btn');
+    </script>
 </body>
 </html>
