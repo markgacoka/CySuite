@@ -32,7 +32,7 @@
             <div class="total">Total<span class="price">$17.50</span></div>
           </div>
           <div class="card-details">
-              <div id="paypal-btn"></div>
+              <div id="paypal-button-container-P-6JN07684HC767750WMECUFJA"></div>
           </div>
         </form>
       </div>
@@ -44,38 +44,47 @@
   <script src="{% static 'js/app.js' %}"></script>
   <script src="https://www.paypal.com/sdk/js?client-id={{PAYPAL_CLIENT_ID}}&currency=USD"></script>
   <script>
-        paypal.Buttons({
-          style: {
-            fundingicons: 'true',
-            tagline: 'false'
+      paypal.Buttons({
+        style: {
+          fundingicons: 'true',
+          tagline: 'false'
+        },
+        funding: {
+          disallowed: [ paypal.FUNDING.CREDIT ]
+        },
+          createOrder: function(data, actions) {
+              return actions.order.create({
+                  purchase_units: [{
+                      amount: {
+                          value: '17.50'
+                      }
+                  }]
+              });
           },
-          funding: {
-            disallowed: [ paypal.FUNDING.CREDIT ]
-          },
-            createOrder: function(data, actions) {
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                            value: '17.50'
-                        }
-                    }]
-                });
-            },
-            onApprove: function(data, actions) {
-                return actions.order.capture().then(function(orderData) {
-                    console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-                    var transaction = orderData.purchase_units[0].payments.captures[0];
-                    
-                    var message = transaction.status + '! Transaction No: ' + transaction.id;
-                    var type = "success";
-                    var duration = 5000;
-                    var ripple = true;
-                    var dismissible = true;
-                    var positionY = "top";
-                    window.notyf.open({type, message, duration, ripple, dismissible, positionY});
-                });
-            }
-        }).render('#paypal-btn');
-    </script>
+          onApprove: function(data, actions) {
+              return actions.order.capture().then(function(orderData) {
+                  var transaction = orderData.purchase_units[0].payments.captures[0];
+                  var token = '{{csrf_token}}';
+
+                  $.ajax({
+                    headers: { "X-CSRFToken": token },
+                    url: '{% url 'transaction' %}',
+                    data: JSON.stringify(orderData),
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                  })
+                  
+                  var message = transaction.status + '! Transaction No: ' + transaction.id;
+                  var type = "success";
+                  var duration = 5000;
+                  var ripple = true;
+                  var dismissible = true;
+                  var positionY = "top";
+                  window.notyf.open({type, message, duration, ripple, dismissible, positionY});
+              });
+          }
+      }).render('#paypal-btn');
+  </script>
 </body>
 </html>

@@ -1,95 +1,59 @@
-[
-  {
-    "create_time": "2021-07-31T03:56:44Z",
-    "update_time": "2021-07-31T03:57:05Z",
-    "id": "3K272726S1578273U",
-    "intent": "CAPTURE",
-    "status": "COMPLETED",
-    "payer": {
-      "email_address": "markgacoka@gmail.com",
-      "payer_id": "QF54GVKW3WJDU",
-      "address": {
-        "country_code": "US"
+{
+  "id": "3PG73011KP6597118",
+  "intent": "CAPTURE",
+  "status": "COMPLETED",
+  "purchase_units": [
+    {
+      "reference_id": "default",
+      "amount": { "currency_code": "USD", "value": "17.50" },
+      "payee": {
+        "email_address": "cysuite@gmail.com",
+        "merchant_id": "UMYZNKD3D267A"
       },
-      "name": {
-        "given_name": "Test",
-        "surname": "Account"
-      }
-    },
-    "purchase_units": [
-      {
-        "reference_id": "default",
-        "amount": {
-          "value": "17.50",
-          "currency_code": "USD"
-        },
-        "payee": {
-          "email_address": "cysuite@gmail.com",
-          "merchant_id": "UMYZNKD3D267A"
-        },
-        "shipping": {
-          "name": {
-            "full_name": "Test Account"
-          },
-          "address": {
-            "address_line_1": "1 Main St",
-            "admin_area_2": "San Jose",
-            "admin_area_1": "CA",
-            "postal_code": "95131",
-            "country_code": "US"
-          }
-        },
-        "payments": {
-          "captures": [
-            {
-              "status": "COMPLETED",
-              "id": "3A451760EN775710V",
-              "final_capture": true,
-              "create_time": "2021-07-31T03:57:05Z",
-              "update_time": "2021-07-31T03:57:05Z",
-              "amount": {
-                "value": "17.50",
-                "currency_code": "USD"
-              },
-              "seller_protection": {
-                "status": "ELIGIBLE",
-                "dispute_categories": [
-                  "ITEM_NOT_RECEIVED",
-                  "UNAUTHORIZED_TRANSACTION"
-                ]
-              },
-              "links": [
-                {
-                  "href": "https://api.sandbox.paypal.com/v2/payments/captures/3A451760EN775710V",
-                  "rel": "self",
-                  "method": "GET",
-                  "title": "GET"
-                },
-                {
-                  "href": "https://api.sandbox.paypal.com/v2/payments/captures/3A451760EN775710V/refund",
-                  "rel": "refund",
-                  "method": "POST",
-                  "title": "POST"
-                },
-                {
-                  "href": "https://api.sandbox.paypal.com/v2/checkout/orders/3K272726S1578273U",
-                  "rel": "up",
-                  "method": "GET",
-                  "title": "GET"
-                }
-              ]
-            }
-          ]
+      "shipping": {
+        "name": { "full_name": "Test Account" },
+        "address": {
+          "address_line_1": "1 Main St",
+          "admin_area_2": "San Jose",
+          "admin_area_1": "CA",
+          "postal_code": "95131",
+          "country_code": "US"
         }
+      },
+      "payments": {
+        "captures": [
+          {
+            "id": "3DE29386MA0255323",
+            "status": "COMPLETED",
+            "amount": { "currency_code": "USD", "value": "17.50" },
+            "final_capture": "True",
+            "seller_protection": {
+              "status": "ELIGIBLE",
+              "dispute_categories": [
+                "ITEM_NOT_RECEIVED",
+                "UNAUTHORIZED_TRANSACTION"
+              ]
+            },
+            "create_time": "2021-07-31T09: 43: 55Z",
+            "update_time": "2021-07-31T09: 43: 55Z"
+          }
+        ]
       }
-    ],
-    "links": [
-      {
-        "href": "https://api.sandbox.paypal.com/v2/checkout/orders/3K272726S1578273U",
-        "rel": "self",
-        "method": "GET",
-        "title": "GET"
-      }
-    ]
-  }
-]
+    }
+  ],
+  "payer": {
+    "name": { "given_name": "Test", "surname": "Account" },
+    "email_address": "markgacoka@gmail.com",
+    "payer_id": "QF54GVKW3WJDU",
+    "address": { "country_code": "US" }
+  },
+  "create_time": "2021-07-31T09: 43: 24Z",
+  "update_time": "2021-07-31T09: 43: 55Z",
+  "links": [
+    {
+      "href": "https: //api.sandbox.paypal.com/v2/checkout/orders/3PG73011KP6597118",
+      "rel": "self",
+      "method": "GET"
+    }
+  ]
+}
