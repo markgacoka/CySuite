@@ -32,7 +32,7 @@
             <div class="total">Total<span class="price">$17.50</span></div>
           </div>
           <div class="card-details">
-              <div id="paypal-button-container-P-6JN07684HC767750WMECUFJA"></div>
+              <div id="paypal-btn"></div>
           </div>
         </form>
       </div>
@@ -42,7 +42,7 @@
     <p style="text-align: center; flex-direction: column; display: flex; margin-top: 16px;">&copy; CySuite 2021 All right reserved.</p>
   </footer>
   <script src="{% static 'js/app.js' %}"></script>
-  <script src="https://www.paypal.com/sdk/js?client-id={{PAYPAL_CLIENT_ID}}&currency=USD"></script>
+  <script src="https://www.paypal.com/sdk/js?client-id={{PAYPAL_CLIENT_ID}}&currency=USD&disable-funding=credit"></script>
   <script>
       paypal.Buttons({
         style: {
