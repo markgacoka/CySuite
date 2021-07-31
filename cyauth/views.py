@@ -98,6 +98,7 @@ def account_view(request):
             if password_form.is_valid():
                 password_form.save()
                 context['success_message'] = 'Password Changed!'
+                return redirect('login')
             else:
                 context['error_message'] = 'An error occurred!'
             context['password_form'] = password_form
