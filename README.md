@@ -26,7 +26,6 @@ A dataset/wordlist of your choice can be provided to bruteforce possible subdoma
     - The results are saved to the local database for future reference, future intergration and efficient rescans.
     - Comes with all.txt, commonspeak2 and Seclist's subdomains-top1million-110000.txt wordlists built-in.
 
-#### Passive Scan
 **Passive archives**
 - Rapid7 FDNS dataset
 - The Wayback Machine
