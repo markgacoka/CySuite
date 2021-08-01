@@ -1,0 +1,50 @@
+#### BUSINESS ####
+Business: ARYBPlZQF5YGzRy3ayAzUD7uMnUl1R7C3IBi1WFJclviYR7YhGHWoZ30tvMxkbcGr9bSzQ0Pm2Mgnf4o
+
+<div id="paypal-button-container-P-6JN07684HC767750WMECUFJA"></div>
+<script src="https://www.paypal.com/sdk/js?client-id=ARYBPlZQF5YGzRy3ayAzUD7uMnUl1R7C3IBi1WFJclviYR7YhGHWoZ30tvMxkbcGr9bSzQ0Pm2Mgnf4o&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
+<script>
+  paypal.Buttons({
+      style: {
+          shape: 'rect',
+          color: 'gold',
+          layout: 'vertical',
+          label: 'subscribe'
+      },
+      createSubscription: function(data, actions) {
+        return actions.subscription.create({
+          /* Creates the subscription */
+          plan_id: 'P-6JN07684HC767750WMECUFJA'
+        });
+      },
+      onApprove: function(data, actions) {
+        alert(data.subscriptionID); // You can add optional success message for the subscriber here
+      }
+  }).render('#paypal-button-container-P-6JN07684HC767750WMECUFJA'); // Renders the PayPal button
+</script>
+
+#### SANDBOX ####
+Sandbox: Ae4u1UKOFWOgxCt9syz8Qp5_iF3g98NIstoW_xq_vxMy2U4KNht7FbwGsaNBn1AePMDuf317Lb9HAZgl
+
+
+<div id="paypal-button-container-P-1N816671SV7240625MECU5IQ"></div>
+<script src="https://www.paypal.com/sdk/js?client-id=Ae4u1UKOFWOgxCt9syz8Qp5_iF3g98NIstoW_xq_vxMy2U4KNht7FbwGsaNBn1AePMDuf317Lb9HAZgl&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
+<script>
+  paypal.Buttons({
+      style: {
+          shape: 'rect',
+          color: 'gold',
+          layout: 'vertical',
+          label: 'subscribe'
+      },
+      createSubscription: function(data, actions) {
+        return actions.subscription.create({
+          /* Creates the subscription */
+          plan_id: 'P-1N816671SV7240625MECU5IQ'
+        });
+      },
+      onApprove: function(data, actions) {
+        alert(data.subscriptionID); // You can add optional success message for the subscriber here
+      }
+  }).render('#paypal-button-container-P-1N816671SV7240625MECU5IQ'); // Renders the PayPal button
+</script>
