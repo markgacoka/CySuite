@@ -27,7 +27,40 @@ A dataset/wordlist of your choice can be provided to bruteforce possible subdoma
     - Comes with all.txt, commonspeak2 and Seclist's subdomains-top1million-110000.txt wordlists built-in.
 
 #### Passive Scan
-Passive archives such as Rapid7 FDNS dataset can be queried for additional subdomains (online version only)
+**Passive archives**
+- Rapid7 FDNS dataset
+- The Wayback Machine
+- CommonCrawl
+
+**Search engines**
+- Google
+- Bing
+- Ask
+- Baidu
+- Netcraft
+- Yahoo
+- DNSDumpster
+
+**Certificate Authorities** 
+- Certspotter
+- Google transparency logs
+- Entrust certificates
+- Crt.sh
+
+**DNS infrastructure**
+- DNSDB
+- DNSTrails
+- PassiveDNS
+
+**Threat detection APIs**
+- OpenThreat
+- PassiveTotal
+- VirusTotal
+- Threatcrowd
+- Censys
+- Shodan
+- F-Secure Riddler
+- HackerTarget
 
 **Output**: 
 subdomains, related IP addresses (IPv4), status codes, Web Application Firewall (WAF), Server Type, homepage screenshot (if possible).
