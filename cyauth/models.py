@@ -24,6 +24,7 @@ class MyAccountManager(BaseUserManager):
         user.is_admin = True
         user.is_staff = True
         user.is_superuser = True
+        user.is_premium = True
         user.save(using=self._db)
         return user
 
@@ -40,6 +41,7 @@ class Account(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+    is_premium = models.BooleanField(default=False)
     hide_email = models.BooleanField(default=True)
     feedback = models.CharField(max_length= 1200, default= "", unique=False, null=True, blank=True)
     
