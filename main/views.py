@@ -1,4 +1,4 @@
-import os, json
+import os, json, base64
 from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import TransactionForm
@@ -66,7 +66,32 @@ def wordlist_gen(request):
     return render(request, 'dashboard/wordlist_gen.html')
 
 def decoder(request):
-    return render(request, 'dashboard/decoder.html')
+    context = {}
+    if request.method == 'POST':
+        print(request.POST)
+        if 'decode' in request.POST:
+            if 'clear-decode' in request.POST:
+                context['decode_output'] = ''
+                context['encode_output'] = str(request.POST.get('encode-string'))
+            if request.POST.get('decoder') == 'Base64':
+                input_str = str(request.POST.get('decode-string'))
+                decoded_str = base64.b64decode(input_str).decode('utf-8')
+                context['decode_output'] = decoded_str
+                context['encode_output'] = str(request.POST.get('encode-string'))
+        elif 'encode' in request.POST:
+            if 'clear-encode' in request.POST:
+                context['encode_output'] = ''
+                context['decode_output'] = str(request.POST.get('decode-string'))
+            if request.POST.get('encoder') == 'Base64':
+                input_str = str(request.POST.get('encode-string'))
+                encoded_str = base64.b64encode(input_str.encode('utf-8')).decode('utf-8')
+                context['encode_output'] = encoded_str
+                context['decode_output'] = str(request.POST.get('decode-string'))
+        else:
+            pass
+    else:
+        pass
+    return render(request, 'dashboard/decoder.html', context)
 
 def file_upload(request):
     return render(request, 'dashboard/file_upload.html')
