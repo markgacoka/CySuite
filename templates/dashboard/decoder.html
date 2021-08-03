@@ -22,74 +22,77 @@ Decoder | CySuite
 		</div>
 	</div>
 </div>
-<div class="resizer" style="float:left; width: 49%;">
-	<div class="card" style="width: 100%">
-		<div class="card-header">
-			<h4 class="card-title">Encode string</h4>
-		</div>
-		<div class="row" style="padding: 0 1.25rem 1rem 1.25rem">
-			<div style="float: left; width: 80%; padding: 0 10px 0 10px;">
-				<select class="form-control select-dropdown">
-				<option selected>None</option>
-				<option>URL</option>
-				<option>Hex</option>
-				<option>Base64</option>
-				<option>HTML</option>
-				<option>Unicode</option>
-				</select>
+<form method="post" action=''>
+	{% csrf_token %}
+	<div class="resizer" style="float:left; width: 49%;">
+		<div class="card" style="width: 100%">
+			<div class="card-header">
+				<h4 class="card-title">Encode string</h4>
 			</div>
-			<div style="float: left; width: 20%; padding: 0 10px 0 10px;">
-				<input class="form-control" placeholder="0"></input>
-			</div>			
-		</div>
-		<div class="card-body" style="padding: 0 1.25rem 1rem 1.25rem;">
-			<div class="form-floating">
-				<textarea class="form-control" type="text" style="min-height: 300px;"></textarea>
-			</div>
-		</div>
-		<div style="width:100%;">
-			<div style="float:left; width: 50%; padding: 0 10px 20px 20px;">
-				<button type="submit" class="btn btn-primary btn-lg">Clear</button>
-			</div>
-			<div style="float:right; width: 50%; padding: 0 20px 20px 10px;">
-				<button type="submit" class="btn btn-primary btn-lg">Encode</button>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="resizer" style="float:right; width: 49%;">
-	<div class="card" style="width: 100%">
-		<div class="card-header">
-			<h4 class="card-title">Decode string</h4>
-		</div>
-		<div class="row" style="padding: 0 1.25rem 1rem 1.25rem">
-			<div style="float: left; width: 80%; padding: 0 10px 0 10px;">
-				<select class="form-control select-dropdown">
-				<option selected>None</option>
-				<option>URL</option>
-				<option>Hex</option>
-				<option>Base64</option>
-				<option>HTML</option>
-				<option>Unicode</option>
-				</select>
-			</div>
-			<div style="float: left; width: 20%; padding: 0 10px 0 10px;">
-				<input class="form-control" placeholder="0"></input>
-			</div>			
-		</div>
-		<div class="card-body" style="padding: 0 1.25rem 1rem 1.25rem;">
-			<div class="form-floating">
-				<textarea class="form-control" type="text" style="min-height: 300px;"></textarea>
-			</div>
-		</div>
-		<div style="width:100%;">
-			<div style="float:left; width: 50%; padding: 0 10px 20px 20px;">
-				<button type="submit" class="btn btn-primary btn-lg">Clear</button>
-			</div>
-			<div style="float:right; width: 50%; padding: 0 20px 20px 10px;">
-				<button type="submit" class="btn btn-primary btn-lg">Decode</button>
-			</div>
+				<div class="row" style="padding: 0 1.25rem 1rem 1.25rem">
+					<div style="float: left; width: 80%; padding: 0 10px 0 10px;">
+						<select class="form-control select-dropdown" name="encoder">
+						<option selected>None</option>
+						<option>URL</option>
+						<option>Hex</option>
+						<option>Base64</option>
+						<option>HTML</option>
+						<option>Unicode</option>
+						</select>
+					</div>
+					<div style="float: left; width: 20%; padding: 0 10px 0 10px;">
+						<input class="form-control" placeholder="0" name="encode-times"></input>
+					</div>			
+				</div>
+				<div class="card-body" style="padding: 0 1.25rem 1rem 1.25rem;">
+					<div class="form-floating">
+						<textarea class="form-control" type="text" style="min-height: 300px;" name="encode-string">{{encode_output}}</textarea>
+					</div>
+				</div>
+				<div style="width:100%;">
+					<div style="float:left; width: 50%; padding: 0 10px 20px 20px;">
+						<button type="submit" class="btn btn-primary btn-lg" name="clear-encoder">Clear</button>
+					</div>
+					<div style="float:right; width: 50%; padding: 0 20px 20px 10px;">
+						<button type="submit" class="btn btn-primary btn-lg" name="encode">Encode</button>
+					</div>
+				</div>
 		</div>
 	</div>
-</div>
+	<div class="resizer" style="float:right; width: 49%;">
+		<div class="card" style="width: 100%">
+			<div class="card-header">
+				<h4 class="card-title">Decode string</h4>
+			</div>
+				<div class="row" style="padding: 0 1.25rem 1rem 1.25rem">
+					<div style="float: left; width: 80%; padding: 0 10px 0 10px;">
+						<select class="form-control select-dropdown" name="decoder">
+						<option selected>None</option>
+						<option>URL</option>
+						<option>Hex</option>
+						<option>Base64</option>
+						<option>HTML</option>
+						<option>Unicode</option>
+						</select>
+					</div>
+					<div style="float: left; width: 20%; padding: 0 10px 0 10px;">
+						<input class="form-control" placeholder="0" name="decode-times"></input>
+					</div>			
+				</div>
+				<div class="card-body" style="padding: 0 1.25rem 1rem 1.25rem;">
+					<div class="form-floating">
+						<textarea class="form-control" type="text" style="min-height: 300px;" name="decode-string">{{decode_output}}</textarea>
+					</div>
+				</div>
+				<div style="width:100%;">
+					<div style="float:left; width: 50%; padding: 0 10px 20px 20px;">
+						<button type="submit" class="btn btn-primary btn-lg" name="clear-decoder">Clear</button>
+					</div>
+					<div style="float:right; width: 50%; padding: 0 20px 20px 10px;">
+						<button type="submit" class="btn btn-primary btn-lg" name="decode">Decode</button>
+					</div>
+				</div>
+		</div>
+	</div>
+</form>
 {% endblock %}
