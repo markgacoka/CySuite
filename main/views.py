@@ -80,6 +80,9 @@ def decoder(request):
             elif request.POST.get('decoder') == 'HTML':
                 decoded_str = unescape(input_str)
                 context['decode_output'] = decoded_str
+            elif request.POST.get('decoder') == 'Hex':
+                decoded_str = bytes.fromhex(input_str).decode('utf-8')
+                context['decode_output'] = decoded_str
             context['encode_output'] = str(request.POST.get('encode-string'))
         elif 'encode' in request.POST:
             input_str = str(request.POST.get('encode-string'))
@@ -90,6 +93,9 @@ def decoder(request):
                 context['encode_output'] = encoded_str
             elif request.POST.get('encoder') == 'HTML':
                 encoded_str = escape(input_str)
+                context['encode_output'] = encoded_str
+            elif request.POST.get('encoder') == 'Hex':
+                encoded_str = input_str.encode("utf-8").hex()
                 context['encode_output'] = encoded_str
             context['decode_output'] = str(request.POST.get('decode-string'))
         elif 'clear-encoder' in request.POST:
