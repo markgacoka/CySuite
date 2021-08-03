@@ -1,4 +1,5 @@
 import os, json, base64
+from html import escape, unescape
 from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import TransactionForm
@@ -70,23 +71,33 @@ def decoder(request):
     if request.method == 'POST':
         print(request.POST)
         if 'decode' in request.POST:
-            if 'clear-decode' in request.POST:
-                context['decode_output'] = ''
-                context['encode_output'] = str(request.POST.get('encode-string'))
-            if request.POST.get('decoder') == 'Base64':
-                input_str = str(request.POST.get('decode-string'))
+            input_str = str(request.POST.get('decode-string'))
+            if request.POST.get('decoder') == 'None':
+                context['decode_output'] = input_str
+            elif request.POST.get('decoder') == 'Base64':
                 decoded_str = base64.b64decode(input_str).decode('utf-8')
                 context['decode_output'] = decoded_str
-                context['encode_output'] = str(request.POST.get('encode-string'))
+            elif request.POST.get('decoder') == 'HTML':
+                decoded_str = unescape(input_str)
+                context['decode_output'] = decoded_str
+            context['encode_output'] = str(request.POST.get('encode-string'))
         elif 'encode' in request.POST:
-            if 'clear-encode' in request.POST:
-                context['encode_output'] = ''
-                context['decode_output'] = str(request.POST.get('decode-string'))
-            if request.POST.get('encoder') == 'Base64':
-                input_str = str(request.POST.get('encode-string'))
+            input_str = str(request.POST.get('encode-string'))
+            if request.POST.get('encoder') == 'None':
+                context['encode_output'] = input_str
+            elif request.POST.get('encoder') == 'Base64':
                 encoded_str = base64.b64encode(input_str.encode('utf-8')).decode('utf-8')
                 context['encode_output'] = encoded_str
-                context['decode_output'] = str(request.POST.get('decode-string'))
+            elif request.POST.get('encoder') == 'HTML':
+                encoded_str = escape(input_str)
+                context['encode_output'] = encoded_str
+            context['decode_output'] = str(request.POST.get('decode-string'))
+        elif 'clear-encoder' in request.POST:
+            context['encode_output'] = ''
+            context['decode_output'] = str(request.POST.get('decode-string'))
+        elif 'clear-decoder' in request.POST:
+            context['decode_output'] = ''
+            context['encode_output'] = str(request.POST.get('encode-string'))
         else:
             pass
     else:
