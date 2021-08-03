@@ -1,4 +1,5 @@
 import os, json, base64
+import urllib.parse
 from html import escape, unescape
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -69,7 +70,6 @@ def wordlist_gen(request):
 def decoder(request):
     context = {}
     if request.method == 'POST':
-        print(request.POST)
         if 'decode' in request.POST:
             input_str = str(request.POST.get('decode-string'))
             if request.POST.get('decoder') == 'None':
@@ -83,6 +83,11 @@ def decoder(request):
             elif request.POST.get('decoder') == 'Hex':
                 decoded_str = bytes.fromhex(input_str).decode('utf-8')
                 context['decode_output'] = decoded_str
+            elif request.POST.get('decoder') == 'URL':
+                decoded_str = urllib.parse.unquote_plus(input_str)
+                context['decode_output'] = decoded_str
+            else:
+                context['decode_output'] = input_str
             context['encode_output'] = str(request.POST.get('encode-string'))
         elif 'encode' in request.POST:
             input_str = str(request.POST.get('encode-string'))
@@ -97,6 +102,11 @@ def decoder(request):
             elif request.POST.get('encoder') == 'Hex':
                 encoded_str = input_str.encode("utf-8").hex()
                 context['encode_output'] = encoded_str
+            elif request.POST.get('encoder') == 'URL':
+                encoded_str = urllib.parse.quote_plus(input_str)
+                context['encode_output'] = encoded_str
+            else:
+                context['encode_output'] = input_str
             context['decode_output'] = str(request.POST.get('decode-string'))
         elif 'clear-encoder' in request.POST:
             context['encode_output'] = ''
