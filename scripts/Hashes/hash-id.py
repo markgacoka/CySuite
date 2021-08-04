@@ -260,263 +260,251 @@ class HashID:
         hs='a106e921284dd69dad06192a4411ec32fce83dbb'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("109100")
-    def Haval160HMAC(hash):
+    def Haval160HMAC(self, hash):
         hs='29206f83edc1d6c3f680ff11276ec20642881243'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("109200")
-    def MySQL5(hash):
+    def MySQL5(self, hash):
         hs='9bb2fb57063821c762cc009f7584ddae9da431ff'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("109040")
-    def MySQL160bit(hash):
+    def MySQL160bit(self, hash):
         hs='*2470c0c06dee42fd1618bb99005adca2ec9d1e19'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==False and hash[0:1].find('*')==0:
             jerar.append("109060")
-    def RipeMD160(hash):
+    def RipeMD160(self, hash):
         hs='dc65552812c66997ea7320ddfb51f5625d74721b'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("109120")
-    def RipeMD160HMAC(hash):
+    def RipeMD160HMAC(self, hash):
         hs='ca28af47653b4f21e96c1235984cb50229331359'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("109180")
-    def SHA1(hash):
+    def SHA1(self, hash):
         hs='4a1d4dbc1e193ec3ab2e9213876ceb8f4db72333'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("109020")
-    def SHA1HMAC(hash):
+    def SHA1HMAC(self, hash):
         hs='6f5daac3fee96ba1382a09b1ba326ca73dccf9e7'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("109140")
-    def SHA1MaNGOS(hash):
+    def SHA1MaNGOS(self, hash):
         hs='a2c0cdb6d1ebd1b9f85c6e25e0f8732e88f02f96'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("109220")
-    def SHA1MaNGOS2(hash):
+    def SHA1MaNGOS2(self, hash):
         hs='644a29679136e09d0bd99dfd9e8c5be84108b5fd'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("109240")
-    def Tiger160(hash):
+    def Tiger160(self, hash):
         hs='c086184486ec6388ff81ec9f235287270429b225'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("109080")
-    def Tiger160HMAC(hash):
+    def Tiger160HMAC(self, hash):
         hs='6603161719da5e56e1866e4f61f79496334e6a10'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("109160")
-    def sha1passsalt(hash):
+    def sha1passsalt(self, hash):
         hs='f006a1863663c21c541c8d600355abfeeaadb5e4'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("109260")
-    def sha1saltpass(hash):
+    def sha1saltpass(self, hash):
         hs='299c3d65a0dcab1fc38421783d64d0ecf4113448'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("109280")
-    def sha1saltmd5pass(hash):
+    def sha1saltmd5pass(self, hash):
         hs='860465ede0625deebb4fbbedcb0db9dc65faec30'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("109300")
-    def sha1saltmd5passsalt(hash):
+    def sha1saltmd5passsalt(self, hash):
         hs='6716d047c98c25a9c2cc54ee6134c73e6315a0ff'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("109320")
-    def sha1saltsha1pass(hash):
+    def sha1saltsha1pass(self, hash):
         hs='58714327f9407097c64032a2fd5bff3a260cb85f'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("109340")
-    def sha1saltsha1saltsha1pass(hash):
+    def sha1saltsha1saltsha1pass(self, hash):
         hs='cc600a2903130c945aa178396910135cc7f93c63'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("109360")
-    def sha1usernamepass(hash):
+    def sha1usernamepass(self, hash):
         hs='3de3d8093bf04b8eb5f595bc2da3f37358522c9f'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("109380")
-    def sha1usernamepasssalt(hash):
+    def sha1usernamepasssalt(self, hash):
         hs='00025111b3c4d0ac1635558ce2393f77e94770c5'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("109400")
-    def sha1md5pass(hash):
+    def sha1md5pass(self, hash):
         hs='fa960056c0dea57de94776d3759fb555a15cae87'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("1094202")
-    def sha1md5passsalt(hash):
+    def sha1md5passsalt(self, hash):
         hs='1dad2b71432d83312e61d25aeb627593295bcc9a'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("109440")
-    def sha1md5sha1pass(hash):
+    def sha1md5sha1pass(self, hash):
         hs='8bceaeed74c17571c15cdb9494e992db3c263695'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("109460")
-    def sha1sha1pass(hash):
+    def sha1sha1pass(self, hash):
         hs='3109b810188fcde0900f9907d2ebcaa10277d10e'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("109480")
-    def sha1sha1passsalt(hash):
+    def sha1sha1passsalt(self, hash):
         hs='780d43fa11693b61875321b6b54905ee488d7760'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("109500")
-    def sha1sha1passsubstrpass03(hash):
+    def sha1sha1passsubstrpass03(self, hash):
         hs='5ed6bc680b59c580db4a38df307bd4621759324e'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("109520")
-    def sha1sha1saltpass(hash):
+    def sha1sha1saltpass(self, hash):
         hs='70506bac605485b4143ca114cbd4a3580d76a413'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("109540")
-    def sha1sha1sha1pass(hash):
+    def sha1sha1sha1pass(self, hash):
         hs='3328ee2a3b4bf41805bd6aab8e894a992fa91549'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("109560")
-    def sha1strtolowerusernamepass(hash):
+    def sha1strtolowerusernamepass(self, hash):
         hs='79f575543061e158c2da3799f999eb7c95261f07'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("109580")
-
-    def Haval192(hash):
+    def Haval192(self, hash):
         hs='cd3a90a3bebd3fa6b6797eba5dab8441f16a7dfa96c6e641'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("110040")
-    def Haval192HMAC(hash):
+    def Haval192HMAC(self, hash):
         hs='39b4d8ecf70534e2fd86bb04a877d01dbf9387e640366029'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("110080")
-    def Tiger192(hash):
+    def Tiger192(self, hash):
         hs='c086184486ec6388ff81ec9f235287270429b2253b248a70'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("110020")
-    def Tiger192HMAC(hash):
+    def Tiger192HMAC(self, hash):
         hs='8e914bb64353d4d29ab680e693272d0bd38023afa3943a41'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("110060")
-
-    def MD5passsaltjoomla1(hash):
+    def MD5passsaltjoomla1(self, hash):
         hs='35d1c0d69a2df62be2df13b087343dc9:BeKMviAfcXeTPTlX'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==False and hash[32:33].find(':')==0:
             jerar.append("112020")
-
-    def SHA1Django(hash):
+    def SHA1Django(self, hash):
         hs='sha1$Zion3R$299c3d65a0dcab1fc38421783d64d0ecf4113448'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==False and hash[0:5].find('sha1$')==0:
             jerar.append("113020")
-
-    def Haval224(hash):
+    def Haval224(self, hash):
         hs='f65d3c0ef6c56f4c74ea884815414c24dbf0195635b550f47eac651a'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("114040")
-    def Haval224HMAC(hash):
+    def Haval224HMAC(self, hash):
         hs='f10de2518a9f7aed5cf09b455112114d18487f0c894e349c3c76a681'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("114080")
-    def SHA224(hash):
+    def SHA224(self, hash):
         hs='e301f414993d5ec2bd1d780688d37fe41512f8b57f6923d054ef8e59'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("114020")
-    def SHA224HMAC(hash):
+    def SHA224HMAC(self, hash):
         hs='c15ff86a859892b5e95cdfd50af17d05268824a6c9caaa54e4bf1514'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("114060")
-
-    def SHA256(hash):
+    def SHA256(self, hash):
         hs='2c740d20dab7f14ec30510a11f8fd78b82bc3a711abe8a993acdb323e78e6d5e'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("115020")
-    def SHA256HMAC(hash):
+    def SHA256HMAC(self, hash):
         hs='d3dd251b7668b8b6c12e639c681e88f2c9b81105ef41caccb25fcde7673a1132'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("115120")
-    def Haval256(hash):
+    def Haval256(self, hash):
         hs='7169ecae19a5cd729f6e9574228b8b3c91699175324e6222dec569d4281d4a4a'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("115040")
-    def Haval256HMAC(hash):
+    def Haval256HMAC(self, hash):
         hs='6aa856a2cfd349fb4ee781749d2d92a1ba2d38866e337a4a1db907654d4d4d7a'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("115140")
-    def GOSTR341194(hash):
+    def GOSTR341194(self, hash):
         hs='ab709d384cce5fda0793becd3da0cb6a926c86a8f3460efb471adddee1c63793'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("115060")
-    def RipeMD256(hash):
+    def RipeMD256(self, hash):
         hs='5fcbe06df20ce8ee16e92542e591bdea706fbdc2442aecbf42c223f4461a12af'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("115080")
-    def RipeMD256HMAC(hash):
+    def RipeMD256HMAC(self, hash):
         hs='43227322be1b8d743e004c628e0042184f1288f27c13155412f08beeee0e54bf'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("115160")
-    def SNEFRU256(hash):
+    def SNEFRU256(self, hash):
         hs='3a654de48e8d6b669258b2d33fe6fb179356083eed6ff67e27c5ebfa4d9732bb'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("115100")
-    def SNEFRU256HMAC(hash):
+    def SNEFRU256HMAC(self, hash):
         hs='4e9418436e301a488f675c9508a2d518d8f8f99e966136f2dd7e308b194d74f9'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("115180")
-    def SHA256md5pass(hash):
+    def SHA256md5pass(self, hash):
         hs='b419557099cfa18a86d1d693e2b3b3e979e7a5aba361d9c4ec585a1a70c7bde4'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("115200")
-    def SHA256sha1pass(hash):
+    def SHA256sha1pass(self, hash):
         hs='afbed6e0c79338dbfe0000efe6b8e74e3b7121fe73c383ae22f5b505cb39c886'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("115220")
-
-    def MD5passsaltjoomla2(hash):
+    def MD5passsaltjoomla2(self, hash):
         hs='fb33e01e4f8787dc8beb93dac4107209:fxJUXVjYRafVauT77Cze8XwFrWaeAYB2'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==False and hash[32:33].find(':')==0:
             jerar.append("116020")
-    def SAM(hash):
+    def SAM(self, hash):
         hs='4318B176C3D8E3DEAAD3B435B51404EE:B7C899154197E8A2A33121D76A240AB5'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==False and hash.islower()==False and hash[32:33].find(':')==0:
             jerar.append("116040")
-
-    def SHA256Django(hash):
+    def SHA256Django(self, hash):
         hs='sha256$Zion3R$9e1a08aa28a22dfff722fad7517bae68a55444bb5e2f909d340767cec9acf2c3'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==False and hash[0:6].find('sha256')==0:
             jerar.append("117020")
-
-    def RipeMD320(hash):
+    def RipeMD320(self, hash):
         hs='b4f7c8993a389eac4f421b9b3b2bfb3a241d05949324a8dab1286069a18de69aaf5ecc3c2009d8ef'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("118020")
-    def RipeMD320HMAC(hash):
+    def RipeMD320HMAC(self, hash):
         hs='244516688f8ad7dd625836c0d0bfc3a888854f7c0161f01de81351f61e98807dcd55b39ffe5d7a78'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("118040")
-
-    def SHA384(hash):
+    def SHA384(self, hash):
         hs='3b21c44f8d830fa55ee9328a7713c6aad548fe6d7a4a438723a0da67c48c485220081a2fbc3e8c17fd9bd65f8d4b4e6b'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("119020")
-    def SHA384HMAC(hash):
+    def SHA384HMAC(self, hash):
         hs='bef0dd791e814d28b4115eb6924a10beb53da47d463171fe8e63f68207521a4171219bb91d0580bca37b0f96fddeeb8b'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("119040")
-
-    def SHA256s(hash):
+    def SHA256s(self, hash):
         hs='$6$g4TpUQzk$OmsZBJFwvy6MwZckPvVYfDnwsgktm2CckOlNJGy9HNwHSuHFvywGIuwkJ6Bjn3kKbB6zoyEjIYNMpHWBNxJ6g.'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==False and hash[0:3].find('$6$')==0:
             jerar.append("120020")
-
-    def SHA384Django(hash):
+    def SHA384Django(self, hash):
         hs='sha384$Zion3R$88cfd5bc332a4af9f09aa33a1593f24eddc01de00b84395765193c3887f4deac46dc723ac14ddeb4d3a9b958816b7bba'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==False and hash[0:6].find('sha384')==0:
             jerar.append("121020")
-
-    def SHA512(hash):
+    def SHA512(self, hash):
         hs='ea8e6f0935b34e2e6573b89c0856c81b831ef2cadfdee9f44eb9aa0955155ba5e8dd97f85c73f030666846773c91404fb0e12fb38936c56f8cf38a33ac89a24e'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("122020")
-    def SHA512HMAC(hash):
+    def SHA512HMAC(self, hash):
         hs='dd0ada8693250b31d9f44f3ec2d4a106003a6ce67eaa92e384b356d1b4ef6d66a818d47c1f3a2c6e8a9a9b9bdbd28d485e06161ccd0f528c8bbb5541c3fef36f'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("122060")
-    def Whirlpool(hash):
+    def Whirlpool(self, hash):
         hs='76df96157e632410998ad7f823d82930f79a96578acc8ac5ce1bfc34346cf64b4610aefa8a549da3f0c1da36dad314927cebf8ca6f3fcd0649d363c5a370dddb'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("122040")
-    def WhirlpoolHMAC(hash):
+    def WhirlpoolHMAC(self, hash):
         hs='77996016cf6111e97d6ad31484bab1bf7de7b7ee64aebbc243e650a75a2f9256cef104e504d3cf29405888fca5a231fcac85d36cd614b1d52fce850b53ddf7f9'
         if len(hash)==len(hs) and hash.isdigit()==False and hash.isalpha()==False and hash.isalnum()==True:
             jerar.append("122080")
@@ -527,7 +515,7 @@ class HashID:
         ADLER32(h); CRC16(h); CRC16CCITT(h); CRC32(h); CRC32B(h); DESUnix(h); DomainCachedCredentials(h); FCS16(h); GHash323(h); GHash325(h); GOSTR341194(h); Haval128(h); Haval128HMAC(h); Haval160(h); Haval160HMAC(h); Haval192(h); Haval192HMAC(h); Haval224(h); Haval224HMAC(h); Haval256(h); Haval256HMAC(h); LineageIIC4(h); MD2(h); MD2HMAC(h); MD4(h); MD4HMAC(h); MD5(h); MD5APR(h); MD5HMAC(h); MD5HMACWordpress(h); MD5phpBB3(h); MD5Unix(h); MD5Wordpress(h); MD5Half(h); MD5Middle(h); MD5passsaltjoomla1(h); MD5passsaltjoomla2(h); MySQL(h); MySQL5(h); MySQL160bit(h); NTLM(h); RAdminv2x(h); RipeMD128(h); RipeMD128HMAC(h); RipeMD160(h); RipeMD160HMAC(h); RipeMD256(h); RipeMD256HMAC(h); RipeMD320(h); RipeMD320HMAC(h); SAM(h); SHA1(h); SHA1Django(h); SHA1HMAC(h); SHA1MaNGOS(h); SHA1MaNGOS2(h); SHA224(h); SHA224HMAC(h); SHA256(h); SHA256s(h); SHA256Django(h); SHA256HMAC(h); SHA256md5pass(h); SHA256sha1pass(h); SHA384(h); SHA384Django(h); SHA384HMAC(h); SHA512(h); SHA512HMAC(h); SNEFRU128(h); SNEFRU128HMAC(h); SNEFRU256(h); SNEFRU256HMAC(h); Tiger128(h); Tiger128HMAC(h); Tiger160(h); Tiger160HMAC(h); Tiger192(h); Tiger192HMAC(h); Whirlpool(h); WhirlpoolHMAC(h); XOR32(h); md5passsalt(h); md5saltmd5pass(h); md5saltpass(h); md5saltpasssalt(h); md5saltpassusername(h); md5saltmd5pass(h); md5saltmd5passsalt(h); md5saltmd5passsalt(h); md5saltmd5saltpass(h); md5saltmd5md5passsalt(h); md5username0pass(h); md5usernameLFpass(h); md5usernamemd5passsalt(h); md5md5pass(h); md5md5passsalt(h); md5md5passmd5salt(h); md5md5saltpass(h); md5md5saltmd5pass(h); md5md5usernamepasssalt(h); md5md5md5pass(h); md5md5md5md5pass(h); md5md5md5md5md5pass(h); md5sha1pass(h); md5sha1md5pass(h); md5sha1md5sha1pass(h); md5strtouppermd5pass(h); sha1passsalt(h); sha1saltpass(h); sha1saltmd5pass(h); sha1saltmd5passsalt(h); sha1saltsha1pass(h); sha1saltsha1saltsha1pass(h); sha1usernamepass(h); sha1usernamepasssalt(h); sha1md5pass(h); sha1md5passsalt(h); sha1md5sha1pass(h); sha1sha1pass(h); sha1sha1passsalt(h); sha1sha1passsubstrpass03(h); sha1sha1saltpass(h); sha1sha1sha1pass(h); sha1strtolowerusernamepass(h)
 
         if len(jerar)==0:
-            return None
+            return []
         elif len(jerar)>2:
             jerar.sort()
             return jerar[:2]
