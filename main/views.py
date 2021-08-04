@@ -4,6 +4,7 @@ from html import escape, unescape
 from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import TransactionForm
+from scripts.Hashes.hashid import HashID
 
 def checkout(request):
     return render(request, 'pages/checkout.html', context={
@@ -114,6 +115,16 @@ def decoder(request):
         elif 'clear-decoder' in request.POST:
             context['decode_output'] = ''
             context['encode_output'] = str(request.POST.get('encode-string'))
+        elif 'hash' in request.POST.keys():
+            hash_str = str(request.POST.get('hash'))
+            hash_inst = HashID(hash_str).get_hash()
+
+            if hash_inst:
+                result = "[ ", hash_inst[0], " ]"
+                return HttpResponse(result)
+            else:
+                result = 'Could not identify hash type'
+                return HttpResponse(result)
         else:
             pass
     else:

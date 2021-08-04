@@ -12,12 +12,12 @@ Decoder | CySuite
 		</div>
 		<div class="card-body" style="padding: 0 1.5rem 1rem 1.5rem;">
 			<textarea class="form-control"
-			id="floatingTextarea1" style="min-height: 100px"></textarea>
+			id="hash" style="min-height: 100px"></textarea>
 		</div>
 		<div class="card-body" style="padding: 0 1.5rem 1rem 1.5rem;">
 			<div class="alert alert-primary alert-dismissible" role="alert">
 				<div class="alert-message">
-					<strong>Hash :</strong> SHA-256 <a href="https://md5decrypt.net/en/Sha256/">Try decrypting.</a></div>
+					<strong>Hash :</strong> <span class="hash_type"></span></div>
 			</div>
 		</div>
 	</div>
@@ -93,4 +93,24 @@ Decoder | CySuite
 		</div>
 	</div>
 </form>
+{% block js %}
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#hash').on('input',function(e){
+			var input = $(this);
+			var hash_str = input.val();
+			var token = '{{csrf_token}}';
+
+			$.ajax({
+				headers: { "X-CSRFToken": token },
+				url: '{% url 'decoder' %}',
+				data: {"hash": hash_str},
+				type: 'POST',
+			}).done(function( responseMsg ) {
+				$('.hash_type').text(responseMsg.replace(/(\r\n|\n|\r)/gm, ""));
+			});
+		});
+	});
+</script>
+{% endblock %}
 {% endblock %}
