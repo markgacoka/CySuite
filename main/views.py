@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import TransactionForm
 from scripts.Hashes.hashid import HashID
+from scripts.WordlistGen.generator import extract_wordlist
 
 def checkout(request):
     return render(request, 'pages/checkout.html', context={
@@ -66,7 +67,12 @@ def req_tamperer(request):
     return render(request, 'dashboard/req_tamperer.html')
 
 def wordlist_gen(request):
-    return render(request, 'dashboard/wordlist_gen.html')
+    context = {}
+    if request.method == 'POST':
+        wordlist_url = request.POST.get('wordlist_url')
+        wordlist = extract_wordlist(wordlist_url)
+        context['wordlist_output'] = wordlist
+    return render(request, 'dashboard/wordlist_gen.html', context)
 
 def decoder(request):
     context = {}

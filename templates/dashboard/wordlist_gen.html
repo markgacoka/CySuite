@@ -79,22 +79,25 @@ Wordlist Generator | CySuite
 		<h1 class="h3 mb-3">Generate Wordlist from URL</h1>
 		<div class="card" style="width: 100%">
 			<div class="card-header">
-				<h5 class="card-title">Loaded wordlists</h5>
+				<h5 class="card-title">Generate wordlist</h5>
 			</div>
+			<form method="post">
+			{% csrf_token %}
 			<div class="card-body" style="padding: 0 1.5rem 0 1.5rem;">
 				<div class="form-floating mb-3 input-group">
-					<input type="email" class="form-control" id="floatingInput1">
-					<label for="floatingInput1" style="font-size: 1.2rem;">URL to generate wordlist from...</label>
-					<button class="btn btn-primary" style="padding: 0 2rem 0 2rem;" type="button">Go!</button>
-					</select>
+					<input type="url" class="form-control" id="wordlist_input" name="wordlist_url" style="font-size: 1rem; padding-bottom: 0.1rem !important;">
+					<label class="wordlist-label" for="wordlist_input" style="font-size: 1rem;">Enter URL</label>
+					<button class="btn btn-primary" style="padding: 0 2rem 0 2rem;" type="submit">Go!</button>
+					</input>
 				</div>
 			</div>
 			<div class="card-body" style="padding: 0 1.5rem 1rem 1.5rem;">
 				<div class="form-floating">
-					<input class="form-control" type="text" placeholder="Readonly input" style="min-height: 300px;" readonly>
-					<label for="floatingInput1" style="font-size: 0.9rem;">index...</label>
+					<textarea class="form-control" type="text" style="min-height: 300px; font-size: 1rem;" readonly>{% for word in wordlist_output %}
+{{ word }}{% endfor %}</textarea>
 				</div>
 			</div>
+			</form>
 		</div>
 		</div>
 	</div>
