@@ -1,9 +1,10 @@
-import os, json, base64
 import urllib.parse
+import os, json, base64, requests
 from html import escape, unescape
 from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import TransactionForm
+from scripts.Headers.request import send_request
 from scripts.Hashes.hashid import HashID
 from scripts.WordlistGen.generator import extract_wordlist
 
@@ -64,9 +65,14 @@ def exploit(request):
     return render(request, 'dashboard/exploits.html')
 
 def req_tamperer(request):
+    context = {}
     if request.method == 'POST':
-        print(request.POST)
-    return render(request, 'dashboard/req_tamperer.html')
+        url = request.POST.get('req_url')
+        method = request.POST.get('req-method')
+        req_header, resp_header = send_request(request, url, method)
+        context['request_output'] = req_header
+        context['response_output'] = resp_header
+    return render(request, 'dashboard/req_tamperer.html', context)
 
 def wordlist_gen(request):
     context = {}
