@@ -20,7 +20,7 @@ Request Tamperer | CySuite
 						<option>GET</option>
 						<option>POST</option>
 						<option>OPTIONS</option>
-						<option>TRACE</option>
+						<option>HEAD</option>
 						<option>PUT</option>
 						<option>DELETE</option>
 					</select>
@@ -35,9 +35,9 @@ Request Tamperer | CySuite
 					</div>
 					<div class="card-body">
 						<div class="form-floating">
-							<textarea class="form-control"
-								id="floatingTextarea1" style="min-height: 300px"></textarea>
-							<label for="floatingTextarea1" style="font-size: 1rem;">POST /reset.php HTTP/2...</label>
+							<textarea class="form-control" id="req-tamp" style="min-height: 300px; font-size: 1rem;">{% for header, value in request_output.items %}
+{{ header }}:&nbsp;{{ value }}{% endfor %}
+							</textarea>
 						</div>
 					</div>
 				</div>
@@ -52,8 +52,8 @@ Request Tamperer | CySuite
 					</div>
 					<div class="card-body">
 						<div class="form-floating">
-							<textarea class="form-control" type="text" placeholder="Readonly input" style="min-height: 300px;" readonly></textarea>
-							<label for="floatingInput1" style="font-size: 1rem;">200 OK...</label>
+							<textarea class="form-control" id="response" type="text" placeholder="Readonly input" style="min-height: 300px; font-size: 1rem;" readonly>{% for header, value in response_output.items %}
+{{ header }}:&nbsp;{{value}}{% endfor %}</textarea>
 						</div>
 					</div>
 				</div>
