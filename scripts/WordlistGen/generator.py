@@ -8,4 +8,4 @@ def extract_wordlist(url):
     text = soup.get_text().split()
     wordlist = set(filter(lambda x:x, map(lambda x:re.sub(r'[^A-Za-z]', '', x), text)))
 
-    return wordlist
+    return wordlist 
