@@ -64,6 +64,8 @@ def exploit(request):
     return render(request, 'dashboard/exploits.html')
 
 def req_tamperer(request):
+    if request.method == 'POST':
+        print(request.POST)
     return render(request, 'dashboard/req_tamperer.html')
 
 def wordlist_gen(request):
