@@ -27,7 +27,10 @@ body {
     margin: 0
 }
 
-.h1, .h2, h1, h2 {
+.h1,
+.h2,
+h1,
+h2 {
     color: #495057;
     font-weight: 500;
     line-height: 1.2;
@@ -35,11 +38,13 @@ body {
     margin-top: 0
 }
 
-.h1, h1 {
+.h1,
+h1 {
     font-size: 1.65rem
 }
 
-.h2, h2 {
+.h2,
+h2 {
     font-size: 1.44375rem
 }
 
@@ -237,6 +242,7 @@ input {
         -webkit-transition: none;
         transition: none
     }
+
     .form-control::file-selector-button {
         transition: none
     }
@@ -563,4 +569,70 @@ text {
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none
+}
+
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.fa-twitter:before {
+    content: "\f099";
+}
+
+.fa-facebook:before {
+    content: "\f09a";
+}
+
+.fa-google:before {
+    content: "\f1a0";
+}
+
+.flex-c-m {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    -ms-align-items: center;
+    align-items: center;
+    padding-bottom: 2rem;
+}
+
+.bg1 {
+    background-color: #3b5998;
+}
+
+.bg2 {
+    background-color: #1da1f2;
+}
+
+.bg3 {
+    background-color: #ea4335;
+}
+
+.login100-social-item {
+    font-size: 18px;
+    color: #fff;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin: 5px;
+}
+
+.login100-social-item:hover {
+    color: #fff;
+    background-color: #333;
 }

@@ -10,6 +10,7 @@ django-auditlog = "*"
 requests = "*"
 bs4 = "*"
 yarl = "*"
+django-allauth = "*"
 
 [dev-packages]
 

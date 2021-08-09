@@ -1,7 +1,22 @@
-from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+import hashlib
 
-class MyAccountManager(BaseUserManager):
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
+from django.core.mail import send_mail
+from django.db import models
+from django.dispatch import receiver
+from django.utils import timezone
+from six import python_2_unicode_compatible
+from django.utils.http import urlquote
+from django.utils.translation import ugettext_lazy as _
+
+try:
+    from django.utils.encoding import force_text
+except ImportError:
+    from django.utils.encoding import force_unicode as force_text
+from allauth.account.signals import user_signed_up
+
+
+class MyUserManager(UserManager):
     def create_user(self, email, username, password=None):
         if not email:
             raise ValueError("You must have a email to continue!")
@@ -28,12 +43,15 @@ class MyAccountManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-class Account(AbstractBaseUser):
+
+class Account(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         verbose_name='email',
         max_length=60,
         unique=True
     )
+    fname = models.CharField(max_length=30, unique=False, null=True)
+    lname = models.CharField(max_length=30, unique=False, null=True)
     username = models.CharField(max_length=30, unique=True)
     date_joined = models.DateTimeField(verbose_name="date joined", auto_now_add=True)
     last_login = models.DateTimeField(verbose_name="last login", auto_now=True)
@@ -44,18 +62,109 @@ class Account(AbstractBaseUser):
     is_premium = models.BooleanField(default=False)
     hide_email = models.BooleanField(default=True)
     feedback = models.CharField(max_length= 1200, default= "", unique=False, null=True, blank=True)
-    
-    objects = MyAccountManager()
+
+    objects = MyUserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
+    class Meta:
+        verbose_name = _('user')
+        verbose_name_plural = _('users')
+        db_table = 'auth_user'
+        abstract = False
+
+    def get_absolute_url(self):
+        return "/users/%s/" % urlquote(self.email)
+
+    @property
+    def name(self):
+        if self.fname:
+            return self.fname
+        elif self.display_name:
+            return self.display_name
+        return 'You'
+
+    def get_full_name(self):
+        """
+        Returns the first_name plus the last_name, with a space in between.
+        """
+        full_name = '%s %s' % (self.fname, self.lname)
+        return full_name.strip()
+
+    def get_short_name(self):
+        return self.fname
+
+    def guess_display_name(self):
+        """Set a display name, if one isn't already set."""
+        if self.display_name:
+            return
+
+        if self.fname and self.lname:
+            dn = "%s %s" % (self.fname, self.lname[0])  # like "Andrew E"
+        elif self.fname:
+            dn = self.fname
+        else:
+            dn = 'You'
+        self.display_name = dn.strip()
+
+    def email_user(self, subject, message, from_email=None):
+        """
+        Sends an email to this User.
+        """
+        send_mail(subject, message, from_email, [self.email])
+
     def __str__(self):
-        return self.username
+        return self.email
 
-    def has_perm(self, perm, obj=None):
-        return self.is_admin
+    def natural_key(self):
+        return (self.email,)
 
-    def has_module_perms(self, app_label):
-        return True
+
+@python_2_unicode_compatible
+class UserProfile(models.Model):
+    user = models.OneToOneField(Account, primary_key=True, verbose_name='user', related_name='profile',
+                                on_delete=models.CASCADE)
+
+    avatar_url = models.CharField(max_length=256, blank=True, null=True)
+    dob = models.DateField(verbose_name="dob", blank=True, null=True)
+
+    def __str__(self):
+        return force_text(self.user.email)
+
+    class Meta():
+        db_table = 'user_profile'
+
+
+@receiver(user_signed_up)
+def set_initial_user_names(request, user, sociallogin=None, **kwargs):
+    preferred_avatar_size_pixels = 256
+    picture_url = "http://www.gravatar.com/avatar/{0}?s={1}".format(
+        hashlib.md5(user.email.encode('UTF-8')).hexdigest(),
+        preferred_avatar_size_pixels
+    )
+
+    if sociallogin:
+        if sociallogin.account.provider == 'twitter':
+            name = sociallogin.account.extra_data['name']
+            user.fname = name.split()[0]
+            user.lname = name.split()[1]
+
+        if sociallogin.account.provider == 'facebook':
+            user.fname = sociallogin.account.extra_data['first_name']
+            user.lname = sociallogin.account.extra_data['last_name']
+            # verified = sociallogin.account.extra_data['verified']
+            picture_url = "http://graph.facebook.com/{0}/picture?width={1}&height={1}".format(
+                sociallogin.account.uid, preferred_avatar_size_pixels)
+
+        if sociallogin.account.provider == 'google':
+            user.fname = sociallogin.account.extra_data['given_name']
+            user.lname = sociallogin.account.extra_data['family_name']
+            # verified = sociallogin.account.extra_data['verified_email']
+            picture_url = sociallogin.account.extra_data['picture']
+
+    profile = UserProfile(user=user, avatar_url=picture_url)
+    profile.save()
+    user.guess_display_name()
+    user.save()
     
