@@ -1,4 +1,6 @@
 {% load static %}
+{% load account socialaccount %}
+{% get_providers as socialaccount_providers %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -51,6 +53,12 @@
                                                 </div>
                                                 {% endfor %}
                                             {% endfor %}
+                                            <h4 style="text-align:center">Sign in using Social</h4>
+                                            <div class="flex-c-m">
+                                                <a href="#" class="login100-social-item bg1"><i class="fa fa-facebook"></i></a>
+                                                <a href="#" class="login100-social-item bg2"><i class="fa fa-twitter"></i></a>
+                                                <a href="{% provider_login_url 'google' %}" class="login100-social-item bg3"><i class="fa fa-google"></i></a>
+                                            </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Email</label>
                                                 <input class="form-control form-control-lg" type="text" name="email" placeholder="Enter your email" />

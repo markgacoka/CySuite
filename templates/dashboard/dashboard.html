@@ -1,5 +1,7 @@
 {% extends '../base.html' %}
 {% load static %}
+{% load socialaccount %}
+
 {% block title%}
 Dashboard | CySuite
 {% endblock %}
@@ -17,7 +19,7 @@ Dashboard | CySuite
                     <div class="row g-0 w-100">
                         <div class="col-6">
                             <div class="illustration-text p-3 m-1">
-                                <h4 class="illustration-text">Welcome Back, Mark!</h4>
+                                <h4 class="illustration-text">Welcome Back, {{request.user.fname}}!</h4>
                                 <p class="mb-0">CySuite Dashboard</p>
                             </div>
                         </div>
