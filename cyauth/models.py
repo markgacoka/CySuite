@@ -50,8 +50,8 @@ class Account(AbstractBaseUser, PermissionsMixin):
         max_length=60,
         unique=True
     )
-    fname = models.CharField(max_length=30, unique=False, null=True)
-    lname = models.CharField(max_length=30, unique=False, null=True)
+    given_name = models.CharField(max_length=30, unique=False, null=True)
+    family_name = models.CharField(max_length=30, unique=False, null=True)
     username = models.CharField(max_length=30, unique=True)
     date_joined = models.DateTimeField(verbose_name="date joined", auto_now_add=True)
     last_login = models.DateTimeField(verbose_name="last login", auto_now=True)
@@ -79,34 +79,34 @@ class Account(AbstractBaseUser, PermissionsMixin):
 
     @property
     def name(self):
-        if self.fname:
-            return self.fname
-        elif self.display_name:
-            return self.display_name
+        if self.given_name:
+            return self.given_name
+        elif self.name:
+            return self.name
         return 'You'
 
     def get_full_name(self):
         """
-        Returns the first_name plus the last_name, with a space in between.
+        Returns the given_name plus the family_name, with a space in between.
         """
-        full_name = '%s %s' % (self.fname, self.lname)
+        full_name = '%s %s' % (self.given_name, self.family_name)
         return full_name.strip()
 
     def get_short_name(self):
-        return self.fname
+        return self.given_name
 
     def guess_display_name(self):
         """Set a display name, if one isn't already set."""
-        if self.display_name:
+        if self.name:
             return
 
-        if self.fname and self.lname:
-            dn = "%s %s" % (self.fname, self.lname[0])  # like "Andrew E"
-        elif self.fname:
-            dn = self.fname
+        if self.given_name and self.family_name:
+            dn = "%s %s" % (self.given_name, self.family_name[0])  # like "Andrew E"
+        elif self.given_name:
+            dn = self.given_name
         else:
             dn = 'You'
-        self.display_name = dn.strip()
+        self.name = dn.strip()
 
     def email_user(self, subject, message, from_email=None):
         """
@@ -147,19 +147,19 @@ def set_initial_user_names(request, user, sociallogin=None, **kwargs):
     if sociallogin:
         if sociallogin.account.provider == 'twitter':
             name = sociallogin.account.extra_data['name']
-            user.fname = name.split()[0]
-            user.lname = name.split()[1]
+            user.given_name = name.split()[0]
+            user.family_name = name.split()[1]
 
         if sociallogin.account.provider == 'facebook':
-            user.fname = sociallogin.account.extra_data['first_name']
-            user.lname = sociallogin.account.extra_data['last_name']
+            user.given_name = sociallogin.account.extra_data['given_name']
+            user.family_name = sociallogin.account.extra_data['family_name']
             # verified = sociallogin.account.extra_data['verified']
             picture_url = "http://graph.facebook.com/{0}/picture?width={1}&height={1}".format(
                 sociallogin.account.uid, preferred_avatar_size_pixels)
 
         if sociallogin.account.provider == 'google':
-            user.fname = sociallogin.account.extra_data['given_name']
-            user.lname = sociallogin.account.extra_data['family_name']
+            user.given_name = sociallogin.account.extra_data['given_name']
+            user.family_name = sociallogin.account.extra_data['family_name']
             # verified = sociallogin.account.extra_data['verified_email']
             picture_url = sociallogin.account.extra_data['picture']
 

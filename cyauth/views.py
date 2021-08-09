@@ -69,6 +69,7 @@ def account_view(request):
     context = {}
     if request.POST:
         if 'feedback' in request.POST.keys():
+            print(request.user.name)
             feedback_form = FeedbackForm(request.POST, instance=request.user)
             if feedback_form.is_valid():
                 feedback_form.initial = {
