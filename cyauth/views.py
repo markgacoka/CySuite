@@ -1,12 +1,18 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from cyauth.forms import RegistrationForm, AccountAuthenticationForm, AccountUpdateForm, FeedbackForm, PasswordUpdateForm
+from main.forms import NewsletterForm
 
 def index(request):
     if request.user.is_authenticated == True:
         return redirect('dashboard')
     else:
-        return render(request, 'index.html')
+        context = {}
+        newsletter_form = NewsletterForm(request.POST)
+        if request.POST:
+            if newsletter_form.is_valid():
+                newsletter_form.save()
+        return render(request, 'index.html', context)
 
 def dashboard(request):
     if request.user.is_authenticated == True:
