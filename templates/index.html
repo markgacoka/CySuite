@@ -364,11 +364,12 @@
                 <div class="row footer-area-l-17-items justify-content-between" data-aos="fade-left" data-aos-duration="800" data-aos-once="true">
                     <div class="footer-widget widget4">
                         <p class="widget-title" style="text-align: center;">Sign up to the newsletter to receive updates</p>
-                        <form id="subscribe-form" class="form-inline" style="justify-content: center;">
+                        <form class="form-inline" style="justify-content: center;" method="post">
+                        {% csrf_token %}
                             <div class="newsletter-form news-icon text-md-center">
                                 <div>
-                                    <span><input type="email" class="form-control" id="email" name="email" size="40" style="color: black;" aria-required="true" placeholder="Enter Your Email :" /></span>
-                                    <input type="submit" name="submit" value="Subscribe" id="submit-form" class="email-btn" />
+                                    <span><input type="email" class="form-control" id="email" name="subscriber" size="40" style="color: black;" aria-required="true" placeholder="Enter Your Email :" /></span>
+                                    <input type="submit" name="submit" value="Subscribe" class="email-btn" />
                                 </div>
                             </div>
                         </form>

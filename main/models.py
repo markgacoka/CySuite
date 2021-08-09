@@ -10,3 +10,6 @@ class Transaction(models.Model):
     status = models.TextField(max_length=254, blank=True, null=True)
     transaction_code = models.TextField(max_length=50, blank=True, null=True, unique=True)
     payment_date = models.DateTimeField(auto_now_add=True)
+
+class Newsletter(models.Model):
+    subscriber = models.EmailField(max_length=254, blank=True, null=True)

@@ -1,6 +1,7 @@
 from django import forms
 from django.db import models
 from .models import Transaction
+from .models import Newsletter
 
 class TransactionForm(forms.ModelForm):
     class Meta:
@@ -27,3 +28,8 @@ class TransactionForm(forms.ModelForm):
                 "status": status,
                 "transaction_code": transaction_code,
             }
+
+class NewsletterForm(forms.ModelForm):
+    class Meta:
+        model = Newsletter
+        fields = ['subscriber']
