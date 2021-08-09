@@ -283,7 +283,7 @@ input {
     border-radius: .3rem;
     font-size: .95rem;
     min-height: calc(2.24375rem + 2px);
-    padding: .35rem 1rem
+    padding: .35rem 1rem;
 }
 
 .form-control-lg::file-selector-button {

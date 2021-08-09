@@ -77,11 +77,13 @@
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="form-label">Password</label>
-                                                    <input class="form-control form-control-lg" type="password" name="password1" placeholder="Enter password" />
+                                                    <input class="form-control form-control-lg" type="password" name="password1" id="password1" placeholder="Enter password" />
+                                                    <input type="checkbox" onclick="toggle()" style="margin-top: 1rem;">&nbsp;<span style="font-size: 13px; color: darkgrey;">Show Password</span>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="form-label">Confirm Password</label>
-                                                    <input class="form-control form-control-lg" type="password" name="password2" placeholder="Enter password again" />
+                                                    <input class="form-control form-control-lg" type="password" name="password2" id="password2" placeholder="Enter password again" />
+                                                    <input type="checkbox" onclick="toggleConfirm()" style="margin-top: 1rem;">&nbsp;<span style="font-size: 13px; color: darkgrey;">Show Password</span>
                                                 </div>
                                             </div>
                                             <div class="text-center mt-3" style="padding: 1rem 0 1rem 0;">
@@ -99,4 +101,23 @@
         </main>
     </div>
 </body>
+<script type="text/javascript">
+    function toggle() {
+        var x = document.getElementById("password1");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+
+    function toggleConfirm() {
+        var x = document.getElementById("password2");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>
 </html>
