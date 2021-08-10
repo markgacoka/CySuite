@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from cyauth.forms import RegistrationForm, AccountAuthenticationForm, AccountUpdateForm, FeedbackForm, PasswordUpdateForm
+from cyauth.forms import RegistrationForm, AccountAuthenticationForm, AccountUpdateForm, FeedbackForm, PasswordUpdateForm, ProfileUpdateForm
 from main.forms import NewsletterForm
+from .models import UserProfile
 
 def index(request):
     if request.user.is_authenticated == True:
@@ -109,6 +110,12 @@ def account_view(request):
             else:
                 context['error_message'] = 'An error occurred!'
             context['password_form'] = password_form
+        elif len(request.FILES.get('image')) != 0:
+            userprofile = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile) 
+            if userprofile.is_valid():
+                userprofile.save()
+                context['success_message'] = 'Your profile has been updated!'
+                context['profile_account'] = request.user.profile
         else:
             pass
     else:
@@ -119,5 +126,5 @@ def account_view(request):
             }
         )
         context['account_form'] = account_form
-
+        context['profile_account'] = request.user.profile
     return render(request, 'dashboard/profile.html', context)
