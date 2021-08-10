@@ -40,6 +40,8 @@ class MyUserManager(UserManager):
         user.is_staff = True
         user.is_superuser = True
         user.is_premium = True
+        user.given_name = 'Admin'
+        user.family_name = 'Account'
         user.save(using=self._db)
         return user
 
