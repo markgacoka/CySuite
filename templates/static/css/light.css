@@ -564,6 +564,15 @@ progress {
     color: #6c757d
 }
 
+.btn-upload {
+    border: 3px solid #3E4261;
+    border-radius: 5px;
+    padding: 8px;
+    background-color: #3E4261;
+    color: white;
+    opacity: 0.8;
+}
+
 .container,
 .container-fluid,
 .container-lg,

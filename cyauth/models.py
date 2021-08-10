@@ -118,23 +118,21 @@ class Account(AbstractBaseUser, PermissionsMixin):
         return self.email
 
     def natural_key(self):
-        return (self.email,)
+        return (self.email)
 
 
 @python_2_unicode_compatible
 class UserProfile(models.Model):
-    user = models.OneToOneField(Account, primary_key=True, verbose_name='user', related_name='profile',
-                                on_delete=models.CASCADE)
-
-    avatar_url = models.CharField(max_length=256, blank=True, null=True)
-    dob = models.DateField(verbose_name="dob", blank=True, null=True)
-
-    def __str__(self):
-        return force_text(self.user.email)
+    user = models.OneToOneField(Account, primary_key=True, related_name='profile', on_delete=models.CASCADE)
+    image = models.ImageField(default='default.jpg', upload_to='', blank=True, null=True)
 
     class Meta():
         db_table = 'user_profile'
+        verbose_name = _('profile')
+        verbose_name_plural = _('profiles')
 
+    def __str__(self):
+        return self.user.name + 'Profile'
 
 @receiver(user_signed_up)
 def set_initial_user_names(request, user, sociallogin=None, **kwargs):
@@ -163,7 +161,7 @@ def set_initial_user_names(request, user, sociallogin=None, **kwargs):
             # verified = sociallogin.account.extra_data['verified_email']
             picture_url = sociallogin.account.extra_data['picture']
 
-    profile = UserProfile(user=user, avatar_url=picture_url)
+    profile = UserProfile(user=user)
     profile.save()
     user.guess_display_name()
     user.save()

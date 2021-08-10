@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password, check_password
 
 from cyauth.models import Account
+from cyauth.models import UserProfile
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(max_length=60, widget=forms.EmailInput)
@@ -44,6 +45,11 @@ class AccountUpdateForm(forms.ModelForm):
             else:
                 return {"email": email, "username": username}
         return None
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['image']
 
 class FeedbackForm(forms.ModelForm):
     class Meta:
