@@ -49,8 +49,11 @@ def projects(request):
     context = {}
     if request.method == 'POST':
         context['profile_account'] = request.user.profile
-        project_form = ProjectForm(request.POST, instance=request.user.project)
+        project_form = ProjectForm(request.POST)
         if project_form.is_valid():
+            print(project_form.cleaned_data)
+            print(request.user)
+            project_form.project_user = request.user
             project_form.save()
             context['success_message'] = 'Project has been created!'
             context['project_form'] = project_form
