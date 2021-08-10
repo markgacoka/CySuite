@@ -152,7 +152,7 @@
                     </a>
                     <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#"
                         data-bs-toggle="dropdown">
-                        <img src="{% static 'img/profile/avatar.jpeg' %}" class="avatar img-fluid rounded-circle me-1"
+                        <img src="{{profile_account.image.url}}" class="avatar img-fluid rounded-circle me-1"
                             alt="Profile name" /> <span class="text-dark">{% if user.given_name == None and user.given_name %}You{% else %}{{user.given_name}}&nbsp;{{user.family_name}}{% endif %}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end">

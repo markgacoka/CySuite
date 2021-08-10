@@ -17,7 +17,9 @@ def index(request):
 
 def dashboard(request):
     if request.user.is_authenticated == True:
-        return render(request, 'dashboard/dashboard.html')
+        context = {}
+        context['profile_account'] = request.user.profile
+        return render(request, 'dashboard/dashboard.html', context)
     else:
         return redirect('index')
         

@@ -3,11 +3,27 @@
 {% block title%}
 Projects | CySuite
 {% endblock %}
+
 {% block content %}
 <div class="asset-container">
     <button class="asset-btn" style="background-color: #3E4261"><i class="fa fa-plus" style="color: white;"></i>&emsp;Add Asset</button>
 </div>
+{% if success_message %}
+    <button style="display: none;" class="alert-popup" id="alert-success" name="{{success_message}}" value="success"></button>
+{% endif %}
+{% if feedback_form.errors %}
+    {% for field in feedback_form %}
+        {% for error in field.errors %}
+            <button style="display: none;" class="alert-popup" id="alert-danger" name="{{error}}" value="danger"></button>
+        {% endfor %}
+    {% endfor%}
+{% endif %}
+{% if feedback_form.non_field_errors %}
+    <button style="display: none;" class="alert-popup" id="alert-danger" name="{{feedback_form.non_field_errors}}" value="danger"></button>
+{% endif %}
 <div class="modal-overlay">
+    <form method="post">
+    {% csrf_token %}
     <div class="modal">
         <a class="close-modal">
         <svg viewBox="0 0 20 20">
@@ -18,11 +34,11 @@ Projects | CySuite
             <h1 class="mb-4">Add a new project</h1>
             <div class="input-group mb-3">
                 <span class="input-group-text" style="color: white; background-color: #3E4261; width: 9rem;">Project Name</span>
-                <input type="text" class="flex-grow-1 form-control" style="height: auto;">
+                <input type="text" name="project_name" class="flex-grow-1 form-control" style="height: auto;">
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text" style="color: white; background-color: #3E4261; width: 9rem;">Program</span>
-                <select class="form-select flex-grow-1 select-dropdown">
+                <select class="form-select flex-grow-1 select-dropdown" name="program">
                     <option>HackerOne</option>
                     <option>BugCrowd</option>
                     <option>Intigriti</option>
@@ -32,15 +48,17 @@ Projects | CySuite
             </div>
             <h3>In scope domains</h3>
             <h6>Add each domain seperated by a new line (*.site.com allowed)</h3>
-            <textarea style="width: 100%; height: 15rem;"></textarea>
-            <button class="scan-btn" style="background-color: #3E4261"><i class="fa fa-search"
-            style="color: white;"></i>&emsp;Scan</button>
+            <textarea style="width: 100%; height: 15rem;" name="in_scope_domains"></textarea>
+            <button class="scan-btn" type="submit" style="background-color: #3E4261">
+                <i class="fa fa-search" style="color: white;"></i>&nbsp;Scan
+            </button>
             <h6>Logs</h6>
             <small>Starting.... 0%</small><br/>
             <small>Extracting subdomains from ThreatCrowd.... 20%</small><br/>
             <small>Extracting subdomains from WaybackMachine.... 35%</small>
         </div>
     </div>
+    </form>
 </div>
 <div class="project-column" style="display: block; float: right;  width: 50%;">
     <div class="courses-container">
@@ -90,4 +108,15 @@ Projects | CySuite
         </div>
     </div>
 </div>
+{% endblock %}
+{% block js %}
+<script>
+    var elements = $('.modal-overlay, .modal');   
+    $('button').click(function(){
+        elements.addClass('active');
+    });
+    $('.close-modal').click(function(){
+        elements.removeClass('active');
+    });
+</script>
 {% endblock %}

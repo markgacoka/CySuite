@@ -4,6 +4,7 @@ from html import escape, unescape
 from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import TransactionForm
+from .forms import ProjectForm
 from scripts.Headers.request import send_request
 from scripts.Hashes.hashid import HashID
 from scripts.WordlistGen.generator import extract_wordlist
@@ -15,6 +16,7 @@ def checkout(request):
 
 def update_transaction(request):
     if request.method == 'POST':
+        context['profile_account'] = request.user.profile
         resp_obj = json.loads(request.body)
         unclean_res = {
             "user_account": request.user.username if request.user.is_authenticated else 'None',
@@ -44,25 +46,49 @@ def terms_conditions(request):
     return render(request, 'pages/terms-conditions.html')
 
 def projects(request):
-    return render(request, 'dashboard/projects.html')
+    context = {}
+    if request.method == 'POST':
+        context['profile_account'] = request.user.profile
+        project_form = ProjectForm(request.POST, instance=request.user.project)
+        if project_form.is_valid():
+            project_form.save()
+            context['success_message'] = 'Project has been created!'
+            context['project_form'] = project_form
+        else:
+            context['error_message'] = 'An error occurred!'
+    else:
+        context['profile_account'] = request.user.profile
+    return render(request, 'dashboard/projects.html', context)
 
 def notes(request):
-    return render(request, 'dashboard/notes.html')
+    context = {}
+    context['profile_account'] = request.user.profile
+    return render(request, 'dashboard/notes.html', context)
 
 def subdomain_enum(request):
-    return render(request, 'dashboard/subdomain_enum.html')
+    context = {}
+    context['profile_account'] = request.user.profile
+    return render(request, 'dashboard/subdomain_enum.html', context)
 
 def directory_enum(request):
-    return render(request, 'dashboard/directory_enum.html')
+    context = {}
+    context['profile_account'] = request.user.profile
+    return render(request, 'dashboard/directory_enum.html', context)
 
 def vuln_analysis(request):
-    return render(request, 'dashboard/vuln_analysis.html')
+    context = {}
+    context['profile_account'] = request.user.profile
+    return render(request, 'dashboard/vuln_analysis.html', context)
     
 def dorking(request):
-    return render(request, 'dashboard/dorking.html')
+    context = {}
+    context['profile_account'] = request.user.profile
+    return render(request, 'dashboard/dorking.html', context)
 
 def exploit(request):
-    return render(request, 'dashboard/exploits.html')
+    context = {}
+    context['profile_account'] = request.user.profile
+    return render(request, 'dashboard/exploits.html', context)
 
 def req_tamperer(request):
     context = {}
@@ -72,6 +98,9 @@ def req_tamperer(request):
         req_header, resp_header = send_request(request, url, method)
         context['request_output'] = req_header
         context['response_output'] = resp_header
+        context['profile_account'] = request.user.profile
+    else:
+        context['profile_account'] = request.user.profile
     return render(request, 'dashboard/req_tamperer.html', context)
 
 def wordlist_gen(request):
@@ -80,11 +109,15 @@ def wordlist_gen(request):
         wordlist_url = request.POST.get('wordlist_url')
         wordlist = extract_wordlist(wordlist_url)
         context['wordlist_output'] = wordlist
+        context['profile_account'] = request.user.profile
+    else:
+        context['profile_account'] = request.user.profile
     return render(request, 'dashboard/wordlist_gen.html', context)
 
 def decoder(request):
     context = {}
     if request.method == 'POST':
+        context['profile_account'] = request.user.profile
         if 'decode' in request.POST:
             input_str = str(request.POST.get('decode-string'))
             if request.POST.get('decoder') == 'None':
@@ -142,11 +175,13 @@ def decoder(request):
         else:
             pass
     else:
-        pass
+        context['profile_account'] = request.user.profile
     return render(request, 'dashboard/decoder.html', context)
 
 def file_upload(request):
-    return render(request, 'dashboard/file_upload.html')
+    context = {}
+    context['profile_account'] = request.user.profile
+    return render(request, 'dashboard/file_upload.html', context)
 
 def post(request):
     return render(request, 'posts/post1.html')
