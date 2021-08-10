@@ -3,6 +3,7 @@ from django.db import models
 from .models import Transaction
 from .models import Newsletter
 from .models import ProjectModel
+from cyauth.models import Account
 
 class TransactionForm(forms.ModelForm):
     class Meta:
@@ -39,15 +40,3 @@ class ProjectForm(forms.ModelForm):
     class Meta:
         model = ProjectModel
         fields = ['project_name', 'program', 'in_scope_domains']
-
-    def clean(self):
-        if self.is_valid():
-            print('Clean')
-            project_name = self.cleaned_data['project_name']
-            program = self.cleaned_data['program']
-            in_scope_domains = self.cleaned_data['in_scope_domains']
-            return {
-                'project_name': project_name,
-                'program': program,
-                'in_scope_domains': in_scope_domains
-            }
