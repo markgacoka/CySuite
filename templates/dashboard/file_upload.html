@@ -4,46 +4,60 @@
 File Upload | CySuite
 {% endblock %}
 {% block content %}
-<div class="tab-pane" id="password" role="tabpanel">
+<div class="tab-pane" role="tabpanel">
 	<h3>Code Injection</h3>
-	<div class="card">
-		<div class="card-body">
-			<h6 class="card-title">Payload:</h6>
-			<form>
-				<div style="padding-left: 10px;">
-					<div class="row">
-					<div class="input-resizer">
-						<input type="password" class="form-control">
+	<div class="resizer" style="float:left; width: 49%;">
+		<div class="card" style="width: 100%">
+			<div class="card-body">
+				<h6 class="card-title">Payload:</h6>
+				<form>
+					<div style="padding-left: 10px;">
+						<input type="text" class="form-control" style="height: 300px;" />
 						<code>Example: &lt;?php system("cat /etc/passwd");?&gt;</code>
 						<div class="mb-3 mt-2">
 							<h4>Download: <a href="">example.php.png</a></h4>
+						</div>	
+						<div style="width: 100%;">
+							<button type="submit" class="btn btn-primary" style="min-height: 40px; max-height: 40px; line-height: 2rem;">Inject payload</button>
 						</div>
 					</div>
-					<div class="button-resizer">
-						<button type="submit" class="btn btn-primary" style="min-height: 40px; max-height: 40px; line-height: 2rem;">Inject payload</button>
-					</div>
-					<div class="row">
-				</div>
-			</form>
-
-		</div>
+				</form>
+			</div>
+			<div class="card-body">
+				<table class="table table-lg my-2">
+					<tbody>
+						<tr>
+							<th><h4>Your IP</h4></th>
+							<td><code style="font-size: 0.9rem;">{{ipaddress}}</code></td>
+						</tr>
+						<tr>
+							<th><h4>Status</h4></th>
+							<td><span class="badge bg-success">Uploaded</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>					
 	</div>
-</div>
+	</div>
+	<div class="resizer" style="float:right; width: 49%;">
+		<div class="card" style="width: 100%">
+			<div class="card-body">
+				<h6 class="card-title">Hex Viewer</h6>
+				<form>
+					<div style="padding-left: 10px;">
+						<div class="row">
+						<div class="input-resizer" style="width:100%;">
+							<textarea type="password" class="form-control" style="height: 510px;" readonly></textarea>
+						</div>
+						<div style="width: 100%; margin-top: 1rem;">
+							<button type="submit" class="btn btn-primary" style="min-height: 40px; max-height: 40px; width: 5rem; line-height: 2rem; float: right; margin-right: 0.5rem;">Edit</button>
+						</div>
 
-<div class="card">
-	<div class="card-body">
-		<table class="table table-lg my-2">
-			<tbody>
-				<tr>
-					<th><h4>Your IP</h4></th>
-					<td><code style="font-size: 0.9rem;">176.232.11.2</code></td>
-				</tr>
-				<tr>
-					<th><h4>Status</h4></th>
-					<td><span class="badge bg-success">Uploaded</span></td>
-				</tr>
-			</tbody>
-		</table>
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
 </div>
 {% endblock %}
