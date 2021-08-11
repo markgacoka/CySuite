@@ -23,12 +23,14 @@ class ProjectModel(models.Model):
     project_name = models.CharField(max_length=30, unique=True, null=False, blank=True)
     program = models.TextField(max_length=30, unique=False, null=False, blank=False)
     in_scope_domains = ArrayField(models.CharField(max_length=250, blank=True), default=list)
+    progress = models.IntegerField(default=100)
+    subdomains = ArrayField(models.CharField(max_length=250, blank=True), default=list)
 
     class Meta():
         db_table = 'project'
         verbose_name = _('project')
         verbose_name_plural = _('projects')
-        ordering = ("project_user", "project_name", "program", "in_scope_domains")
+        ordering = ("project_user", "project_name", "program", "in_scope_domains", "progress", "subdomains")
 
     def __str__(self):
         return self.project_user.name + 'Project'

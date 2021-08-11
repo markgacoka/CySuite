@@ -39,4 +39,4 @@ class NewsletterForm(forms.ModelForm):
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = ProjectModel
-        fields = ['project_name', 'program', 'in_scope_domains']
+        fields = ['project_name', 'program', 'in_scope_domains', 'progress', 'subdomains']

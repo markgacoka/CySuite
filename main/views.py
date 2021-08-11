@@ -54,6 +54,8 @@ def projects(request):
             print(project_form.cleaned_data)
             print(request.user)
             project_form.project_user = request.user
+            project_form.progress = 100
+            project_form.subdomains = []
             project_form.save()
             context['success_message'] = 'Project has been created!'
             context['project_form'] = project_form
@@ -183,7 +185,20 @@ def decoder(request):
 
 def file_upload(request):
     context = {}
+
+    def get_client_ip(request):
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[-1].strip()
+        elif request.META.get('HTTP_X_REAL_IP'):
+            ip = request.META.get('HTTP_X_REAL_IP')
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        return ip
+
     context['profile_account'] = request.user.profile
+    ip_address = get_client_ip(request)
+    context['ipaddress'] = ip_address
     return render(request, 'dashboard/file_upload.html', context)
 
 def post(request):
