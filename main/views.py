@@ -7,6 +7,7 @@ from .forms import TransactionForm
 from .forms import ProjectForm
 from scripts.Headers.request import send_request
 from scripts.Hashes.hashid import HashID
+from scripts.IPAddress.get_ip import get_client_ip
 from scripts.HexViewer.hexviewer import hex_viewer
 from scripts.WordlistGen.generator import extract_wordlist
 
@@ -187,29 +188,19 @@ def decoder(request):
 def file_upload(request):
     context = {}
 
-    def get_client_ip(request):
-        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            ip = x_forwarded_for.split(',')[-1].strip()
-        elif request.META.get('HTTP_X_REAL_IP'):
-            ip = request.META.get('HTTP_X_REAL_IP')
-        else:
-            ip = request.META.get('REMOTE_ADDR')
-        return ip
-
     out_file = 'media/cynotes.png'
-    hex_dump = hex_viewer2(out_file)
+    hex_dump = hex_viewer(out_file)
     if request.POST:
         ip_address = get_client_ip(request)
         context['ipaddress'] = ip_address
         context['profile_account'] = request.user.profile
-        context['status'] = 'Uploaded'
+        context['status'] = 'Injected successfully'
     else:
         ip_address = get_client_ip(request)
         context['hex_dump'] = hex_dump
         context['ipaddress'] = ip_address
         context['profile_account'] = request.user.profile
-        context['status'] = 'Not uploaded'
+        context['status'] = 'Not injected'
     return render(request, 'dashboard/file_upload.html', context)
 
 def post(request):
