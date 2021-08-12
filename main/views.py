@@ -7,6 +7,7 @@ from .forms import TransactionForm
 from .forms import ProjectForm
 from scripts.Headers.request import send_request
 from scripts.Hashes.hashid import HashID
+from scripts.HexViewer.hexviewer import hex_viewer
 from scripts.WordlistGen.generator import extract_wordlist
 
 def checkout(request):
@@ -196,9 +197,19 @@ def file_upload(request):
             ip = request.META.get('REMOTE_ADDR')
         return ip
 
-    context['profile_account'] = request.user.profile
-    ip_address = get_client_ip(request)
-    context['ipaddress'] = ip_address
+    out_file = 'media/cynotes.png'
+    hex_dump = hex_viewer2(out_file)
+    if request.POST:
+        ip_address = get_client_ip(request)
+        context['ipaddress'] = ip_address
+        context['profile_account'] = request.user.profile
+        context['status'] = 'Uploaded'
+    else:
+        ip_address = get_client_ip(request)
+        context['hex_dump'] = hex_dump
+        context['ipaddress'] = ip_address
+        context['profile_account'] = request.user.profile
+        context['status'] = 'Not uploaded'
     return render(request, 'dashboard/file_upload.html', context)
 
 def post(request):
