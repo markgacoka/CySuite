@@ -30137,7 +30137,7 @@ div.dataTables_wrapper span.select-item {
 .wordlist-output {
     float: right; 
     width: 50%; 
-    padding: 40px 0 0 10px;
+    padding-left: 10px;
 }
 
 .wordlist-gen {
