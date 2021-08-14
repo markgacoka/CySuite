@@ -34,3 +34,15 @@ class ProjectModel(models.Model):
 
     def __str__(self):
         return self.project_user.name + 'Project'
+
+class PayloadModel(models.Model):
+    payload_user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, unique=True, related_name='payloads', on_delete=models.CASCADE)
+    payload_image = models.ImageField(default='', upload_to='payloads/', blank=True, null=True)
+
+    class Meta():
+        db_table = 'payloads'
+        verbose_name = _('payload')
+        verbose_name_plural = _('payloads')
+
+    def __str__(self):
+        return self.payload_user.name + ' Payloads'

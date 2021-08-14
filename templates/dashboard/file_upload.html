@@ -40,6 +40,12 @@ File Upload | CySuite
 								<input class="form-control" type="text" placeholder="file.ext" name="filename" style="font-size: 0.9rem;"></input>
 							</div>
 						</div>
+						{% if success_message %}
+                            <button style="display: none;" class="alert-popup" id="alert-success" name="{{success_message}}" value="success"></button>
+                        {% endif %}
+                        {% if error_message %}
+                            <button style="display: none;" class="alert-popup" id="alert-danger" name="{{error_message}}" value="danger"></button>
+                        {% endif %}
 						<div class="mb-4">
 							<button type="submit" class="btn btn-primary" style="min-height: 43px; max-height: 43px; width: auto; font-size: 0.9rem;">Inject payload</button>
 						</div>
@@ -71,7 +77,7 @@ File Upload | CySuite
 						</tr>
 						<tr>
 							<th><h4>Final file:</h4></th>
-							<td><h5><a href="">Download</a></h5></td>
+							<td><h5><a href="{{download.url}}" download rel="noopener noreferrer" target="_blank">Download</a></h5></td>
 						</tr>
 						<tr>
 							<th><h4>Status</h4></th>
