@@ -1,4 +1,4 @@
-def hex_viewer_full(out_file): 
+def full_hex_viewer(out_file): 
     with open(out_file, 'r+b') as f:
             malicious_image = f.read()
 
@@ -15,4 +15,4 @@ def hex_viewer_full(out_file):
             lines.append("%08x:  %-*s  |%s|" % (c, length*3, hexstr, printable))
 
         return '\n'.join(lines)
-    return(hexdump(malicious_image))
+    yield(hexdump(malicious_image))
