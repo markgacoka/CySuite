@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "16e8c4f031bdd82b476e93ca468a094350309daa931a4b19bcb782a61cd539e3"
+            "sha256": "fbde114b0c5e9b722c373c690f658a7e7e75b5a8743d905b5a04ec47603e3a66"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -16,6 +16,13 @@
         ]
     },
     "default": {
+        "argparse": {
+            "hashes": [
+                "sha256:62b089a55be1d8949cd2bc7e0df0bddb9e028faefc8c32038cc84862aefdd6e4",
+                "sha256:c31647edb69fd3d465a847ea3157d37bed1f95f19760b11a47aa91c04b666314"
+            ],
+            "version": "==1.4.0"
+        },
         "asgiref": {
             "hashes": [
                 "sha256:4ef1ab46b484e3c706329cedeff284a5d40824200638503f5768edb6de7d58e9",
@@ -279,6 +286,14 @@
             "index": "pypi",
             "version": "==2.9.1"
         },
+        "puremagic": {
+            "hashes": [
+                "sha256:3603ac88bfa06689b4a3a2e90ef30f8cc5769df2f269bf546620bfe6b18c06d6",
+                "sha256:6ffea02b80ceec1381f9df513e0120b701a74b6efad92311ea80281c7081b108"
+            ],
+            "index": "pypi",
+            "version": "==1.10"
+        },
         "pycparser": {
             "hashes": [
                 "sha256:2d475327684562c3a96cc71adf7dc8c4f0565175cf86b6d7a404ff4c771f15f0",
@@ -297,6 +312,13 @@
             ],
             "markers": "python_version >= '3.6'",
             "version": "==2.1.0"
+        },
+        "pypng": {
+            "hashes": [
+                "sha256:1032833440c91bafee38a42c38c02d00431b24c42927feb3e63b104d8550170b"
+            ],
+            "index": "pypi",
+            "version": "==0.0.20"
         },
         "python-dateutil": {
             "hashes": [

@@ -12,6 +12,8 @@ bs4 = "*"
 yarl = "*"
 django-allauth = "*"
 pillow = "*"
+pypng = "*"
+puremagic = "*"
 
 [dev-packages]
 

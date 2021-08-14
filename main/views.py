@@ -1,3 +1,4 @@
+import puremagic
 import urllib.parse
 import os, json, base64, requests
 from html import escape, unescape
@@ -9,6 +10,7 @@ from scripts.Headers.request import send_request
 from scripts.Hashes.hashid import HashID
 from scripts.IPAddress.get_ip import get_client_ip
 from scripts.HexViewer.hexviewer import hex_viewer
+from scripts.CodeInjection.injector import Injector
 from scripts.WordlistGen.generator import extract_wordlist
 
 def checkout(request):
@@ -189,17 +191,40 @@ def file_upload(request):
     context = {}
 
     out_file = 'media/cynotes.png'
-    hex_dump = hex_viewer(out_file)
-    if request.POST:
-        ip_address = get_client_ip(request)
-        context['ipaddress'] = ip_address
-        context['profile_account'] = request.user.profile
-        context['status'] = 'Injected successfully'
-    else:
+    if request.method == "POST":
+        payload = request.POST.get('payload').encode()
+        width = int(request.POST.get('width')) if request.POST.get('width') != '' else 0
+        height = int(request.POST.get('height')) if request.POST.get('height') != '' else 0
+        file_type = request.POST.get('file_type')
+        filename = request.POST.get('filename')
+        hex_dump = hex_viewer(filename)
+        
+        injection = Injector(file_type, width, height, payload, filename)
+        filename, dimensions = injection.main()
         ip_address = get_client_ip(request)
         context['hex_dump'] = hex_dump
         context['ipaddress'] = ip_address
         context['profile_account'] = request.user.profile
+        context['dimensions'] = dimensions
+        context['file_type'] = puremagic.magic_file(filename)[0].name 
+        context['file_size'] = os.path.getsize(filename)
+        context['filename'] = filename
+        context['extension'] = puremagic.magic_file(filename)[0].extension
+        context['mime_type'] = puremagic.magic_file(filename)[0].mime_type
+        context['byte_match'] = puremagic.magic_file(filename)[0].byte_match.decode('UTF-8','ignore').strip()
+        context['status'] = 'Injected successfully'
+    else:
+        ip_address = get_client_ip(request)
+        context['hex_dump'] = ''
+        context['ipaddress'] = ip_address
+        context['profile_account'] = request.user.profile
+        context['dimensions'] = '(0, 0)'
+        context['file_type'] = 'None'
+        context['file_size'] = '0kB'
+        context['filename'] = 'None'
+        context['extension'] = 'None'
+        context['mime_type'] = 'None'
+        context['byte_match'] = 'None'
         context['status'] = 'Not injected'
     return render(request, 'dashboard/file_upload.html', context)
 
