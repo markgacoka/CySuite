@@ -229,6 +229,7 @@ def file_upload(request):
             else:
                 new_filename = re.sub(r'^.*?/', '', filename)
                 payload_file = PayloadModel.objects.get(payload_user=request.user)
+                os.remove(payload_file.payload_image.path)
                 payload_file.payload_image = new_filename
                 payload_file.save()
 
