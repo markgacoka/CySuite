@@ -1,7 +1,9 @@
+import re
 import os
 import sys
 import png
 import binascii
+import subprocess
 import puremagic
 from PIL import Image, ImageDraw, ImageFile
 
@@ -55,13 +57,48 @@ class Headers:
     def png_header_data(self):
         # PNG header 
         header = b'\x89\x50\x4e\x47\x0d\x0a\x1a\x0a'    # PNG signature
-        header += b'\x00\x00\x00\x0d\x49\x48\x44\x52\x00\x00\x00\x01\x00\x00\x00\x01\x08\x02\x00\x00\x00\x90\x77\x53\xde'   # Image header
-        header += b'\x00\x00\x00\x0c\x49\x44\x41\x54\x08\xd7\x63\xf8\xcf\xc0\x00\x00\x03\x01\x01\x00\x18\xdd\x8d\xb0'   # Image data
+        header += b'\x00\x00\x00\x0d'                   # Image header
+        header += b'\x49\x48\x44\x52'
+        header += b'\x00\x00\x00\x01\x00\x00\x00\x01'
+        header += b'\x08\x02\x00\x00\x00\x90'
+        header += b'\x77\x53\xde'   
+        header += b'\x00\x00\x00\x0c'                    # Image data
+        header += b'\x49\x44\x41\x54\x08\xd7\x63\xf8\xcf\xc0'
+        header += b'\x00\x00\x03\x01\x01\x00'
+        header += b'\x18\xdd\x8d\xb0'
 
         return header
 
     def png_end(self):
-        header = b'\x00\x00\x00\x00\x49\x45\x4e\x44\xae\x42\x60\x82'   # Image end
+        header = b'\x00\x00\x00\x00'                    # Image end
+        header += b'\x49\x45\x4e\x44\xae\x42\x60\x82'
+        return header
+
+    def jpeg_header_data(self):
+        # JPEG Header
+        header = b'\xff\xd8' # Start of Image
+        header += b'\xff\xe0\x00\x10' # Application Default Header
+        header += b'\x4a\x46\x49\x46' # JFIF
+        header += b'\x00\x01\x01\x01\x00\x48\x00\x48\x00\x00' # Rest of Application Default Header
+        header += b'\xff\xdb\x00\x43\x00' # Quantization Table
+        header += b'\xff\xdb\x00\x43\x01' # Quantization Table
+        header += b'\xff\xc0\x00\x11\x08' # Start of Frame
+        header += b'\x00\x02\x00\x06\x03\x01\x22\x00\x02\x11\x01\x03\x11\x01' # Frame continuation
+        header += b'\xff\xc4\x00\x15\x00\x01\x01\x00\x00\x00\x00' # Define Huffman Table
+        header += b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x09' 
+        header += b'\xff\xc4\x00\x19\x10\x01\x00\x02\x03\x00\x00\x00\x00\x00' # Define Huffman Table
+        header += b'\x00\x00\x00\x00\x00\x00\x00\x00\x06\x08\x38\x88\xb6'
+        header += b'\xff\xc4\x00\x15\x01\x01\x01\x00\x00\x00\x00' # Define Huffman Table
+        header += b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x07\x0a'
+        header += b'\xff\xc4\x00\x1c\x11\x00\x01\x03\x05\x00\x00\x00\x00\x00\x00' # Define Huffman Table
+        header += b'\x00\x00\x00\x00\x00\x00\x08\x00\x07\xb8\x09\x38\x39\x76\x78'
+        header += b'\xff\xda\x00\x0c\x03\x01\x00\x02\x11\x03\x11\x00\x3f\x00' # Start of Scan
+        return header
+
+    def jpeg_end(self):
+        header = b'\x86\xf7\xe7\x1d\xa9\x16\xca\x77\x30\xd0\x14\xf7\x41\xdc\xfa\x8e' # Image data
+        header += b'\xfb\x31\x19\x26\xfd\xc4\x2a\xf4\x5c\x81\x7b\xdb\x06\x84\xa0\x75\x17'
+        header += b'\xff\xd9' # End of Image
         return header
 
 class Injector:
@@ -106,6 +143,16 @@ class Injector:
         return filename
 
     def create_bmp(self, width, height, filename):
+        img = Image.new( 'RGB', (width, height), "black")
+        pixels = img.load()
+        for i in range(img.size[0]):
+            for j in range(img.size[1]):
+                pixels[i,j] = (i, j, 100)
+
+        img.save(filename)
+        return filename
+
+    def create_jpg(self, width, height, filename):
         img = Image.new( 'RGB', (width, height), "black")
         pixels = img.load()
         for i in range(img.size[0]):
@@ -177,5 +224,22 @@ class Injector:
                 width, height = im.size
                 im.close()
                 return final_filename, (width, height)
+        elif self.img_type == 'JPEG':
+            if self.width != 0 and self.height != 0:
+                final_filename = self.create_jpg(self.width, self.height, self.filename)
+                f = open(final_filename, "ab")
+                f.write(b'\x2f\x2f\x2f\x2f\x2f')
+                f.write(self.payload)
+                f.write(b'\x3b')
+                f.write(b'\xff\xd9')
+                f.close()
+                return final_filename, (self.width, self.height)
+            else:            
+                final_filename = self.create_txt(self.filename)
+                jpg_header = Headers().jpeg_header_data()
+                jpg_end = Headers().jpeg_end()
+                self.inject(payload=self.payload, contents=jpg_header, out_file=final_filename, contents_end=jpg_end)
+                image_size = list(map(int, re.findall('(\d+)x(\d+)', subprocess.getoutput("file " + final_filename))[-1]))
+                return final_filename, (image_size[0], image_size[1])
         else:
-            pass
+            return None, None
