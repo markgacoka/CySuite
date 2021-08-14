@@ -204,18 +204,31 @@ def file_upload(request):
             
             injection = Injector(file_type, width, height, payload, filename)
             filename, dimensions = injection.main()
-            hex_dump = hex_viewer(filename)
-            context['hex_dump'] = hex_dump
-            context['ipaddress'] = ip_address
-            context['profile_account'] = request.user.profile
-            context['dimensions'] = dimensions
-            context['file_type'] = puremagic.magic_file(filename)[0].name 
-            context['file_size'] = str(os.path.getsize(filename)) + ' bytes'
-            context['filename'] = filename
-            context['extension'] = puremagic.magic_file(filename)[0].extension
-            context['mime_type'] = puremagic.magic_file(filename)[0].mime_type
-            context['byte_match'] = puremagic.magic_file(filename)[0].byte_match.decode('UTF-8','ignore').strip()
-            context['status'] = 'Injected successfully'
+            if filename == None or dimensions == None:
+                context['hex_dump'] = ''
+                context['ipaddress'] = ip_address
+                context['profile_account'] = request.user.profile
+                context['dimensions'] = '(0, 0)'
+                context['file_type'] = 'None'
+                context['file_size'] = '0 bytes'
+                context['filename'] = 'None'
+                context['extension'] = 'None'
+                context['mime_type'] = 'None'
+                context['byte_match'] = 'None'
+                context['status'] = 'Not injected'
+            else:
+                hex_dump = hex_viewer(filename)
+                context['hex_dump'] = hex_dump
+                context['ipaddress'] = ip_address
+                context['profile_account'] = request.user.profile
+                context['dimensions'] = dimensions
+                context['file_type'] = puremagic.magic_file(filename)[0].name 
+                context['file_size'] = str(os.path.getsize(filename)) + ' bytes'
+                context['filename'] = filename
+                context['extension'] = puremagic.magic_file(filename)[0].extension
+                context['mime_type'] = puremagic.magic_file(filename)[0].mime_type
+                context['byte_match'] = puremagic.magic_file(filename)[0].byte_match.decode('UTF-8','ignore').strip()
+                context['status'] = 'Injected successfully'
     else:
         context['hex_dump'] = ''
         context['ipaddress'] = ip_address
