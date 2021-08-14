@@ -3,6 +3,7 @@ from django.db import models
 from .models import Transaction
 from .models import Newsletter
 from .models import ProjectModel
+from .models import PayloadModel
 from cyauth.models import Account
 
 class TransactionForm(forms.ModelForm):

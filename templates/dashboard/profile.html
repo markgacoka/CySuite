@@ -25,17 +25,19 @@ Profile | CySuite
                         {% csrf_token %}
                         <img src="{{profile_account.image.url}}" alt="Profile image" class="img-fluid rounded-circle mb-2" width="128" height="128" />
                         <h5 class="card-title mb-2">{{user.given_name}}&nbsp;{{user.family_name}}</h5>
-                        <input type="file" name="image" accept="image/*" class=" btn-upload mb-2" style="width: -webkit-fill-available;">
-                        <button class="btn btn-primary btn-sm" type="submit" style="width: -webkit-fill-available;">Upload</button>
+                        <label class="btn btn-primary btn-sm" style="width: 100%; position: relative; color: white; padding: 0.5rem; cursor: pointer;">
+                            <input type="file" name="image" accept="image/*" onchange="form.submit()" hidden />
+                            <i class="fa fa-upload" style="font-size: 0.8rem;"></i>&nbsp;Choose File
+                        </label>
                     </form>
                 </div>
                 <hr class="my-0" />
                 <div class="card-body">
                     <h5 class="h6 card-title">About</h5>
                     <ul class="list-unstyled mb-0">
-                        <li class="mb-1"><span data-feather="home" class="feather-sm me-1"></span><b>Username:</b> &nbsp;{{request.user.username}}</li>
-                        <li class="mb-1"><span data-feather="briefcase" class="feather-sm me-1"></span><b>Email:</b> &nbsp;{{request.user.email}}</li>
-                        <li class="mb-1"><span data-feather="map-pin" class="feather-sm me-1"></span><b>Account Type:</b>&emsp;
+                        <li class="mb-1" style="font-size: 0.9rem;"><span data-feather="home" class="feather-sm me-1"></span><b>Username:</b> &nbsp;{{request.user.username}}</li>
+                        <li class="mb-1" style="font-size: 0.9rem;"><span data-feather="briefcase" class="feather-sm me-1"></span><b>Email:</b> &nbsp;{{request.user.email}}</li>
+                        <li class="mb-1" style="font-size: 0.9rem;"><span data-feather="map-pin" class="feather-sm me-1"></span><b>Account Type:</b>&emsp;
                         {% if request.user.is_premium %}
                         <span class="badge bg-success">Pro</span>
                         {% else %}
@@ -48,10 +50,10 @@ Profile | CySuite
                 <div class="card-body">
                     <h5 class="h6 card-title">Follow us on social media</h5>
                     <ul class="list-unstyled mb-0">
-                        <li class="mb-1"><span class="fas fa-globe fa-fw me-1"></span> <a href="#">cysuite.io</a></li>
-                        <li class="mb-1"><span class="fab fa-twitter fa-fw me-1"></span> <a href="#">Twitter</a></li>
-                        <li class="mb-1"><span class="fab fa-medium fa-fw me-1"></span> <a href="#">Medium</a></li>
-                        <li class="mb-1"><span class="fab fa-github fa-fw me-1"></span> <a href="#">Github</a></li>
+                        <li class="mb-1"><span class="fas fa-globe fa-fw me-1"></span> <a href="https://cysuite.io">cysuite.io</a></li>
+                        <li class="mb-1"><span class="fab fa-twitter fa-fw me-1"></span> <a href="https://twitter.com/CySuite_">Twitter</a></li>
+                        <li class="mb-1"><span class="fab fa-medium fa-fw me-1"></span> <a href="https://cysuite.medium.com/">Medium</a></li>
+                        <li class="mb-1"><span class="fab fa-github fa-fw me-1"></span> <a href="https://github.com/markgacoka">Github</a></li>
                     </ul>
                 </div>
             </div>
