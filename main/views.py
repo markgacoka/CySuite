@@ -189,38 +189,40 @@ def decoder(request):
 
 def file_upload(request):
     context = {}
-
-    out_file = 'media/cynotes.png'
+    ip_address = get_client_ip(request)
     if request.method == "POST":
-        payload = request.POST.get('payload').encode()
-        width = int(request.POST.get('width')) if request.POST.get('width') != '' else 0
-        height = int(request.POST.get('height')) if request.POST.get('height') != '' else 0
-        file_type = request.POST.get('file_type')
-        filename = request.POST.get('filename')
-        hex_dump = hex_viewer(filename)
-        
-        injection = Injector(file_type, width, height, payload, filename)
-        filename, dimensions = injection.main()
-        ip_address = get_client_ip(request)
-        context['hex_dump'] = hex_dump
-        context['ipaddress'] = ip_address
-        context['profile_account'] = request.user.profile
-        context['dimensions'] = dimensions
-        context['file_type'] = puremagic.magic_file(filename)[0].name 
-        context['file_size'] = os.path.getsize(filename)
-        context['filename'] = filename
-        context['extension'] = puremagic.magic_file(filename)[0].extension
-        context['mime_type'] = puremagic.magic_file(filename)[0].mime_type
-        context['byte_match'] = puremagic.magic_file(filename)[0].byte_match.decode('UTF-8','ignore').strip()
-        context['status'] = 'Injected successfully'
+        if 'clear' in request.POST.keys():
+            context['ipaddress'] = ip_address
+            context['hex_dump'] = ''
+            context['profile_account'] = request.user.profile
+        else:
+            payload = request.POST.get('payload').encode()
+            width = int(request.POST.get('width')) if request.POST.get('width') != '' else 0
+            height = int(request.POST.get('height')) if request.POST.get('height') != '' else 0
+            file_type = request.POST.get('file_type')
+            filename = request.POST.get('filename')
+            
+            injection = Injector(file_type, width, height, payload, filename)
+            filename, dimensions = injection.main()
+            hex_dump = hex_viewer(filename)
+            context['hex_dump'] = hex_dump
+            context['ipaddress'] = ip_address
+            context['profile_account'] = request.user.profile
+            context['dimensions'] = dimensions
+            context['file_type'] = puremagic.magic_file(filename)[0].name 
+            context['file_size'] = str(os.path.getsize(filename)) + ' bytes'
+            context['filename'] = filename
+            context['extension'] = puremagic.magic_file(filename)[0].extension
+            context['mime_type'] = puremagic.magic_file(filename)[0].mime_type
+            context['byte_match'] = puremagic.magic_file(filename)[0].byte_match.decode('UTF-8','ignore').strip()
+            context['status'] = 'Injected successfully'
     else:
-        ip_address = get_client_ip(request)
         context['hex_dump'] = ''
         context['ipaddress'] = ip_address
         context['profile_account'] = request.user.profile
         context['dimensions'] = '(0, 0)'
         context['file_type'] = 'None'
-        context['file_size'] = '0kB'
+        context['file_size'] = '0 bytes'
         context['filename'] = 'None'
         context['extension'] = 'None'
         context['mime_type'] = 'None'

@@ -105,6 +105,16 @@ class Injector:
             w.write(f, img)
         return filename
 
+    def create_bmp(self, width, height, filename):
+        img = Image.new( 'RGB', (width, height), "black")
+        pixels = img.load()
+        for i in range(img.size[0]):
+            for j in range(img.size[1]):
+                pixels[i,j] = (i, j, 100)
+
+        img.save(filename)
+        return filename
+
     def inject(self, payload, contents, out_file, contents_end=b''):
         f = open(out_file, "w+b")
         f.write(contents)
@@ -150,3 +160,22 @@ class Injector:
                 width, height = im.size
                 im.close()
                 return final_filename, (width, height)
+        elif self.img_type == 'BMP':
+            if self.width != 0 and self.height != 0:
+                final_filename = self.create_bmp(self.width, self.height, self.filename)
+                f = open(final_filename, "ab")
+                f.write(b'\x2f\x2f\x2f\x2f\x2f')
+                f.write(self.payload)
+                f.write(b'\x3b')
+                f.close()
+                return final_filename, (self.width, self.height)
+            else:            
+                final_filename = self.create_txt(self.filename)
+                bmp_header = Headers().bmp_header_data()
+                self.inject(payload=self.payload, contents=bmp_header, out_file=final_filename)
+                im = Image.open(final_filename)
+                width, height = im.size
+                im.close()
+                return final_filename, (width, height)
+        else:
+            pass
