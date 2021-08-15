@@ -43,6 +43,17 @@
         window.notyf.open({type, message, duration, ripple, dismissible, positionY});
     });
     </script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function (m) {
+        var message = document.querySelector(".alert-popup").name;
+        var type = document.querySelector("#alert-danger").value;
+        var duration = 5000;
+        var ripple = true;
+        var dismissible = true;
+        var positionY = "top";
+        window.notyf.open({type, message, duration, ripple, dismissible, positionY});
+    });
+    </script>
     {% block js %}
     {% endblock %}
 </body>
