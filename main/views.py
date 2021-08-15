@@ -2,6 +2,7 @@ import re
 import subprocess
 import puremagic
 import urllib.parse
+from os import path
 import os, json, base64, requests
 from html import escape, unescape
 from django.shortcuts import render
@@ -202,41 +203,16 @@ def file_upload(request):
         height = int(request.POST.get('height')) if request.POST.get('height') != '' and request.POST.get('width') != None else 0
         file_type = request.POST.get('file_type') if request.POST.get('file_type') != None else None
         filename = 'media/payloads/' + request.POST.get('filename') if request.POST.get('filename') != None else None
-        if request.POST.get('filename') == '':
-            context['ipaddress'] = ip_address
-            context['hex_dump'] = ''
-            context['profile_account'] = request.user.profile
-            context['dimensions'] = '(0, 0)'
-            context['file_type'] = 'None'
-            context['file_size'] = '0 bytes'
-            context['filename'] = 'None'
-            context['extension'] = 'None'
-            context['mime_type'] = 'None'
-            context['byte_match'] = 'None'
-            context['status'] = 'Not injected'
-            context['error_message'] = 'Filename should not be empty'
-            return render(request, 'dashboard/file_upload.html', context)
-        
         injection = Injector(file_type, width, height, payload, filename)
         filename, dimensions = injection.main()
-        if 'clear' in request.POST.keys():
-            context['ipaddress'] = ip_address
-            context['hex_dump'] = ''
-            context['profile_account'] = request.user.profile
-            context['dimensions'] = '(0, 0)'
-            context['file_type'] = 'None'
-            context['file_size'] = '0 bytes'
-            context['filename'] = 'None'
-            context['extension'] = 'None'
-            context['mime_type'] = 'None'
-            context['byte_match'] = 'None'
-            context['status'] = 'Cleared'
-            return render(request, 'dashboard/file_upload.html', context)
-        else:
-            if 'full_hex' in request.POST.keys():
-                from django.template.context_processors import csrf
-                payload_file = PayloadModel.objects.get(payload_user=request.user)
-                filename = payload_file.payload_image.path
+        if request.POST.get('filename') == '':
+            context['status'] = 'Not injected'
+            context['error_message'] = 'Filename should not be empty'
+        elif 'full_hex' in request.POST.keys():
+            from django.template.context_processors import csrf
+            payload_file = PayloadModel.objects.get(payload_user=request.user)
+            filename = payload_file.payload_image.path
+            if path.exists(filename):
                 img = Image.open(filename)
                 width, height = img.size
                 hex_dump = next(full_hex_viewer(filename))
@@ -254,41 +230,47 @@ def file_upload(request):
                 context['status'] = 'Viewing full hex code'
                 context.update(csrf(request))
                 return render(request, 'dashboard/file_upload.html', context)
-            elif filename != None or dimensions != None:
-                new_filename = re.sub(r'^.*?/', '', filename)
-                payload_file = PayloadModel.objects.get(payload_user=request.user)
-                if new_filename != payload_file.payload_image and payload_file.payload_image != 'default.png':
+        elif filename != None or dimensions != None:
+            new_filename = re.sub(r'^.*?/', '', filename)
+            payload_file = PayloadModel.objects.get(payload_user=request.user)
+            if new_filename != payload_file.payload_image and payload_file.payload_image != 'default.png':
+                try:
                     os.remove(payload_file.payload_image.path)
-                payload_file.payload_image = new_filename
-                payload_file.save()
+                except:
+                    print("Tried to remove a non-existent payload image")
+            payload_file.payload_image = new_filename
+            payload_file.save()
 
-                final_filename = re.sub(r'^.*?/', '', new_filename)
-                hex_dump = hex_viewer(filename)
-                context['hex_dump'] = hex_dump
-                context['ipaddress'] = ip_address
-                context['profile_account'] = request.user.profile
-                context['dimensions'] = dimensions
-                context['file_type'] = puremagic.magic_file(filename)[0].name 
-                context['file_size'] = str(os.path.getsize(filename)) + ' bytes'
-                context['filename'] = final_filename
-                context['extension'] = puremagic.magic_file(filename)[0].extension
-                context['mime_type'] = puremagic.magic_file(filename)[0].mime_type
-                context['byte_match'] = puremagic.magic_file(filename)[0].byte_match.decode('UTF-8','ignore').strip()
-                context['download'] = PayloadModel.objects.get(payload_user=request.user).payload_image
-                context['status'] = 'Injected successfully'
-                context['success_message'] = 'Your payload has been injected successfully!'
-            else:
-                context['hex_dump'] = ''
-                context['ipaddress'] = ip_address
-                context['profile_account'] = request.user.profile
-                context['dimensions'] = '(0, 0)'
-                context['file_type'] = 'None'
-                context['file_size'] = '0 bytes'
-                context['filename'] = 'None'
-                context['extension'] = 'None'
-                context['mime_type'] = 'None'
-                context['byte_match'] = 'None'
-                context['status'] = 'Not injected'
+            final_filename = re.sub(r'^.*?/', '', new_filename)
+            hex_dump = hex_viewer(filename)
+            context['hex_dump'] = hex_dump
+            context['ipaddress'] = ip_address
+            context['profile_account'] = request.user.profile
+            context['dimensions'] = dimensions
+            context['file_type'] = puremagic.magic_file(filename)[0].name 
+            context['file_size'] = str(os.path.getsize(filename)) + ' bytes'
+            context['filename'] = final_filename
+            context['extension'] = puremagic.magic_file(filename)[0].extension
+            context['mime_type'] = puremagic.magic_file(filename)[0].mime_type
+            context['byte_match'] = puremagic.magic_file(filename)[0].byte_match.decode('UTF-8','ignore').strip()
+            context['download'] = PayloadModel.objects.get(payload_user=request.user).payload_image
+            context['status'] = 'Injected successfully'
+            context['success_message'] = 'Your payload has been injected successfully!'
+            return render(request, 'dashboard/file_upload.html', context)
+        elif 'clear' in request.POST.keys():
+            context['status'] = 'Cleared'
+        else:
+            context['status'] = 'Not injected'
+        context['ipaddress'] = ip_address
+        context['hex_dump'] = ''
+        context['profile_account'] = request.user.profile
+        context['dimensions'] = '(0, 0)'
+        context['file_type'] = 'None'
+        context['file_size'] = '0 bytes'
+        context['filename'] = 'None'
+        context['extension'] = 'None'
+        context['mime_type'] = 'None'
+        context['byte_match'] = 'None'
         return render(request, 'dashboard/file_upload.html', context)
     else:
         context['hex_dump'] = ''
