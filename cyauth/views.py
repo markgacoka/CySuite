@@ -30,7 +30,7 @@ def reset_password(request):
 def registration_view(request):
     context = {}
     form = RegistrationForm(request.POST or None)
-    if request.POST:
+    if request.method == "POST":
         if form.is_valid():    
             form.save()
             email = form.cleaned_data.get('email')
