@@ -1,3 +1,5 @@
+import os
+
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from cyauth.forms import RegistrationForm, AccountAuthenticationForm, AccountUpdateForm, FeedbackForm, PasswordUpdateForm, ProfileUpdateForm
@@ -31,7 +33,7 @@ def registration_view(request):
     context = {}
     form = RegistrationForm(request.POST or None)
     if request.method == "POST":
-        if form.is_valid():    
+        if form.is_valid():
             form.save()
             email = form.cleaned_data.get('email')
             raw_password = form.cleaned_data.get('password1')
@@ -117,8 +119,14 @@ def account_view(request):
             Account.objects.filter(username__iexact=request.user.username).delete()
             return redirect('index')
         elif len(request.FILES.get('image')) != 0:
-            userprofile = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile) 
+            userprofile = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
             if userprofile.is_valid():
+                filename = request.FILES['image'].name
+                if UserProfile.objects.get(username=request.user).image != 'default.jpg':
+                    try:
+                        os.remove(UserProfile.objects.get(username=request.user).image.path)
+                    except:
+                        print("Tried to remove a non-existent profile image")
                 userprofile.save()
                 context['success_message'] = 'Your profile has been updated!'
                 context['profile_account'] = request.user.profile
