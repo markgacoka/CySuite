@@ -3,6 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from cyauth.forms import RegistrationForm, AccountAuthenticationForm, AccountUpdateForm, FeedbackForm, PasswordUpdateForm, ProfileUpdateForm
 from main.forms import NewsletterForm
 from .models import UserProfile
+from .models import Account
 
 def index(request):
     if request.user.is_authenticated == True:
@@ -76,7 +77,7 @@ def account_view(request):
         return redirect('login')
     
     context = {}
-    if request.POST:
+    if request.method == 'POST':
         if 'feedback' in request.POST.keys():
             print(request.user.name)
             feedback_form = FeedbackForm(request.POST, instance=request.user)
@@ -112,6 +113,9 @@ def account_view(request):
             else:
                 context['error_message'] = 'An error occurred!'
             context['password_form'] = password_form
+        elif 'delete' in request.POST.keys():
+            Account.objects.filter(username__iexact=request.user.username).delete()
+            return redirect('index')
         elif len(request.FILES.get('image')) != 0:
             userprofile = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile) 
             if userprofile.is_valid():

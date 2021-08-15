@@ -36,8 +36,8 @@ class ProjectModel(models.Model):
         return self.project_user.name + 'Project'
 
 class PayloadModel(models.Model):
-    payload_user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, unique=True, related_name='payloads', on_delete=models.CASCADE)
-    payload_image = models.ImageField(default='', upload_to='payloads/', blank=True, null=True)
+    payload_user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, unique=True, related_name='payload', on_delete=models.CASCADE)
+    payload_image = models.ImageField(default='default.png', upload_to='payloads/', blank=True, null=True)
 
     class Meta():
         db_table = 'payloads'

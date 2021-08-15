@@ -6,9 +6,9 @@ from cyauth.models import UserProfile
 
 
 class AccountAdmin(UserAdmin):
-    list_display = ('email', 'username', 'date_joined', 'last_login', 'is_admin', 'is_staff')
+    list_display = ('email', 'username', 'given_name', 'family_name', 'date_joined', 'last_login', 'is_admin', 'is_staff')
     search_fields = ('email', 'username')
-    readonly_fields = ('id', 'date_joined', 'last_login')
+    readonly_fields = ('user_id', 'date_joined', 'last_login')
 
     filter_horizontal = ()
     list_filter = ()

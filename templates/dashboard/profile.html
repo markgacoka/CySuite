@@ -196,10 +196,24 @@ Profile | CySuite
                     <h5 class="card-title mb-0">Upgrade to Pro</h5>
                     <div style="padding-top: 1.25rem !important;">
                         <div class="row">
+                            {% if not request.user.is_premium %}
                             <a href="/checkout"><button href="/checkout" class="btn btn-primary" style="min-height: 40px; width: max-content; float: left; margin: 0 10px 0 10px;">Upgrade</button></a>
+                            {% else %}
                             <button onclick="window.location.href='checkout'" class="btn btn-primary" style="min-height: 40px; width: max-content; float: right;">Cancel Subscription</button>
+                            {% endif %}
                         </div> 
                     </div>
+                    <hr style="width: 90%;">
+                    <h5 class="card-title mb-0">Danger Zone</h5>
+                    <form method="post">
+                    {% csrf_token %}
+                    <div style="padding-top: 1.25rem !important;">
+                        <div class="row">
+                            <input name="delete" hidden />
+                            <button class="btn btn-primary" type="submit" style="min-height: 40px; width: max-content; margin: 0 10px 0 10px;">Delete Account</button>
+                        </div> 
+                    </div>
+                    </form>
                     <hr style="width: 90%;">
                     <h5 class="card-title mb-0">Leave Feedback</h5>
                     <div style="padding-top: 1.25rem">

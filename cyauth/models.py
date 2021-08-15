@@ -1,4 +1,5 @@
 import hashlib
+import uuid
 
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
 from django.core.mail import send_mail
@@ -47,14 +48,15 @@ class MyUserManager(UserManager):
 
 
 class Account(AbstractBaseUser, PermissionsMixin):
+    user_id = models.UUIDField(primary_key=True, blank=False, unique=True, default=uuid.uuid4, db_index=True, editable=False)
+    username = models.CharField(max_length=64, unique=True)
     email = models.EmailField(
         verbose_name='email',
         max_length=60,
         unique=True
     )
     given_name = models.CharField(max_length=30, unique=False, null=True)
-    family_name = models.CharField(max_length=30, unique=False, null=True)
-    username = models.CharField(max_length=30, unique=True)
+    family_name = models.CharField(max_length=30, unique=False, null=True)    
     date_joined = models.DateTimeField(verbose_name="date joined", auto_now_add=True)
     last_login = models.DateTimeField(verbose_name="last login", auto_now=True)
     is_admin = models.BooleanField(default=False)
@@ -125,7 +127,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
 
 @python_2_unicode_compatible
 class UserProfile(models.Model):
-    user = models.OneToOneField(Account, primary_key=True, related_name='profile', on_delete=models.CASCADE)
+    username = models.OneToOneField(Account, primary_key=True, related_name='profile', db_column="user_id", on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to='profiles/', blank=True, null=True)
 
     class Meta():
