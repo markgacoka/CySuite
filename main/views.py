@@ -257,8 +257,7 @@ def file_upload(request):
             elif filename != None or dimensions != None:
                 new_filename = re.sub(r'^.*?/', '', filename)
                 payload_file = PayloadModel.objects.get(payload_user=request.user)
-                print(payload_file.payload_image.path)
-                if new_filename != payload_file.payload_image.path or not(payload_file.payload_image != 'default.png'):
+                if new_filename != payload_file.payload_image and payload_file.payload_image != 'default.png':
                     os.remove(payload_file.payload_image.path)
                 payload_file.payload_image = new_filename
                 payload_file.save()
