@@ -75,7 +75,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
-        db_table = 'auth_user'
+        db_table = 'people'
         abstract = False
 
     def get_absolute_url(self):
@@ -131,7 +131,7 @@ class UserProfile(models.Model):
     image = models.ImageField(default='default.jpg', upload_to='profiles/', blank=True, null=True)
 
     class Meta():
-        db_table = 'user_profile'
+        db_table = 'profile'
         verbose_name = _('profile')
         verbose_name_plural = _('profiles')
 

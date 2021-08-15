@@ -15,6 +15,9 @@ class Transaction(models.Model):
     transaction_code = models.TextField(max_length=50, blank=True, null=True, unique=True)
     payment_date = models.DateTimeField(auto_now_add=True)
 
+    class Meta():
+        db_table = 'payments'
+
 class Newsletter(models.Model):
     subscriber = models.EmailField(max_length=254, blank=True, null=True)
 
@@ -40,7 +43,7 @@ class PayloadModel(models.Model):
     payload_image = models.ImageField(default='default.png', upload_to='payloads/', blank=True, null=True)
 
     class Meta():
-        db_table = 'payloads'
+        db_table = 'payload'
         verbose_name = _('payload')
         verbose_name_plural = _('payloads')
 
