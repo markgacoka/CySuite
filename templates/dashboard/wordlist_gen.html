@@ -103,7 +103,8 @@ Wordlist Generator | CySuite
 			</div>
 			<div class="card-body" style="padding: 0 1.5rem 1rem 1.5rem;">
 				<div class="form-floating">
-					<textarea class="form-control" type="text" style="min-height: 420px; font-size: 1rem;" readonly>{% for word in wordlist_output %}{{ word }}{% endfor %}</textarea>
+					<textarea class="form-control" type="text" style="min-height: 420px; font-size: 1rem;" readonly>{% for word in wordlist_output %}
+{{ word }}{% endfor %}</textarea>
 				</div>
 			</div>
 			</form>
@@ -121,7 +122,7 @@ Wordlist Generator | CySuite
 						</div>
 					</div>
 				</div>
-				<span class="h1 d-inline-block mt-1 mb-4">0</span>
+				<span class="h1 d-inline-block mt-1 mb-4">{{wordlist_len}}</span>
 			</div>
 			<hr style="margin:0;" />
 			<div class="card-body">
@@ -135,7 +136,13 @@ Wordlist Generator | CySuite
 						</div>
 					</div>
 				</div>
-				<span class="badge badge-soft-success me-2" style="font-size: 1rem;">200 OK</span>
+				{% if url_status == '200 OK' %}
+				<span class="badge badge-soft-success me-2" style="font-size: 1rem;">{{url_status}}</span>
+				{% elif url_status == 'N/A' %}
+				<span class="badge badge-soft-success me-2" style="font-size: 1rem; background-color: grey; color: white;">{{url_status}}</span>
+				{% else %}
+				<span class="badge badge-soft-warning me-2" style="font-size: 1rem;">{{url_status}}</span>
+				{% endif %}
 			</div>
 			<hr />
 			<div class="card-body" style="padding-top: 16rem;">
