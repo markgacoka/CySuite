@@ -149,8 +149,7 @@ Wordlist Generator | CySuite
 			{% csrf_token%}
 			<div class="card-body" style="padding-top: 14rem;">
 				<div class="row">
-					<input name='clear' hidden />
-					<button class="btn btn-primary mb-2" type="submit" style="height: 40px; max-height: 40px; width: 100%; bottom: 0;">Clear</button>
+					<button class="btn btn-primary mb-2" onclick='clearScreen()' style="height: 40px; max-height: 40px; width: 100%; bottom: 0;">Clear</button>
 					<button class="btn btn-primary" style="height: 40px; max-height: 40px; width: 100%; bottom: 0;">Download</button>
 				</div>
 			</div>
@@ -159,4 +158,18 @@ Wordlist Generator | CySuite
 	</div>
 	</div>
 </div>
+<script>
+	function clearScreen (){
+		var token = '{{csrf_token}}';
+		$.ajax({
+			url: '{% url 'wordlist_gen' %}',
+			headers: { "X-CSRFToken": token },
+			type: 'POST',
+			data: {"clear": "true"},
+			success: function(){
+				console.log("Success!")
+			}
+		});
+	}
+</script>
 {% endblock %}

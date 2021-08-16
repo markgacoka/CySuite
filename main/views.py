@@ -122,18 +122,19 @@ def req_tamperer(request):
 def wordlist_gen(request):
     context = {}
     if request.method == 'POST':
-        if 'clear' in request.POST.keys():
-            context['url_status'] = 'N/A'
-            context['wordlist_len'] = 0
-            context['wordlist_output'] = ''
-            context['profile_account'] = request.user.profile
-        else:
+        print(request.POST)
+        if 'wordlist_url' in request.POST.keys():
             wordlist_url = request.POST.get('wordlist_url')
             wordlist, length = extract_wordlist(wordlist_url)
             status = url_status(wordlist_url)
             context['url_status'] = status
             context['wordlist_len'] = length
             context['wordlist_output'] = wordlist
+            context['profile_account'] = request.user.profile
+        else:
+            context['url_status'] = 'N/A'
+            context['wordlist_len'] = 0
+            context['wordlist_output'] = ''
             context['profile_account'] = request.user.profile
     else:
         context['wordlist_len'] = 0
