@@ -7,5 +7,6 @@ def extract_wordlist(url):
     soup = BeautifulSoup(html, features="html.parser")
     text = soup.get_text().split()
     wordlist = set(filter(lambda x:x, map(lambda x:re.sub(r'[^A-Za-z]', '', x), text)))
+    length = len(wordlist)
 
-    return wordlist 
+    return wordlist, length

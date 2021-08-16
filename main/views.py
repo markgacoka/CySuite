@@ -11,6 +11,7 @@ from .forms import TransactionForm
 from .forms import ProjectForm
 from .models import PayloadModel
 from PIL import Image
+from scripts.WordlistGen.status import url_status
 from scripts.Headers.request import send_request
 from scripts.Hashes.hashid import HashID
 from scripts.IPAddress.get_ip import get_client_ip
@@ -122,10 +123,16 @@ def wordlist_gen(request):
     context = {}
     if request.method == 'POST':
         wordlist_url = request.POST.get('wordlist_url')
-        wordlist = extract_wordlist(wordlist_url)
+        wordlist, length = extract_wordlist(wordlist_url)
+        status = url_status(wordlist_url)
+        context['url_status'] = status
+        context['wordlist_len'] = length
         context['wordlist_output'] = wordlist
         context['profile_account'] = request.user.profile
     else:
+        context['wordlist_len'] = 0
+        context['wordlist_output'] = ''
+        context['url_status'] = 'N/A'
         context['profile_account'] = request.user.profile
     return render(request, 'dashboard/wordlist_gen.html', context)
 
