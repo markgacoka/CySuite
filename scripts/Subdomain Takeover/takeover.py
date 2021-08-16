@@ -707,7 +707,7 @@ def massTakeOver(targets, threads):
 
 
 def init(resolved_hosts, threads=100):
-	results = massTakeOverF(resolved_hosts, threads)
+	results = massTakeOver(resolved_hosts, threads)
 	results_json = {}
 	for result in results:
 		if result:

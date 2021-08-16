@@ -1,4 +1,5 @@
 import re
+import io
 import subprocess
 import puremagic
 import urllib.parse
@@ -11,6 +12,8 @@ from .forms import TransactionForm
 from .forms import ProjectForm
 from .models import PayloadModel
 from PIL import Image
+from django.core.files import File
+from django.http import FileResponse
 from scripts.WordlistGen.status import url_status
 from scripts.Headers.request import send_request
 from scripts.Hashes.hashid import HashID
@@ -122,15 +125,25 @@ def req_tamperer(request):
 def wordlist_gen(request):
     context = {}
     if request.method == 'POST':
-        print(request.POST)
         if 'wordlist_url' in request.POST.keys():
             wordlist_url = request.POST.get('wordlist_url')
-            wordlist, length = extract_wordlist(wordlist_url)
+            wordlist = next(extract_wordlist(wordlist_url))
+            length = len(wordlist)
             status = url_status(wordlist_url)
             context['url_status'] = status
             context['wordlist_len'] = length
             context['wordlist_output'] = wordlist
             context['profile_account'] = request.user.profile
+        elif 'download' in request.POST.keys():
+            buffer = io.StringIO()
+            wordlist_file = File(buffer, 'w')
+            wordlist = request.POST.get('download')
+            for word in wordlist.split(','):
+                print(word)
+                wordlist_file.write(word.replace("{", "").replace("}", "").replace("'", "").replace(" ", "") + '\n')
+            response = HttpResponse(buffer.getvalue(), content_type="text/plain")
+            response['Content-Disposition'] = 'attachment; filename=filename.txt'
+            return response
         else:
             context['url_status'] = 'N/A'
             context['wordlist_len'] = 0
