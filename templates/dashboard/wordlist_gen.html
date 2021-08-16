@@ -13,7 +13,7 @@ Wordlist Generator | CySuite
 			<div class="card" style="min-height: 500px">
 				<div class="card-header" style="display: block;">
 					<div class="row">
-						<div style="float: left; width: 33.33%;">
+						<div style="float: left; width: 33.33%; padding-left: 1rem;">
 							<h3 style="padding-right: 1rem;">Loaded wordlists</h3>
 							<small style="margin: 0;">Max upload size: 10MB</small><br/>
 							<small style="margin: 0;">Total size: 130MB</small>
@@ -87,7 +87,7 @@ Wordlist Generator | CySuite
 	<div class="row">
 	<div class="wordlist-gen">
 		<h1 class="h3 mb-3">Generate Wordlist from URL</h1>
-		<div class="card" style="width: 100%">
+		<div class="card" style="width: 79%; float: left;">
 			<div class="card-header">
 				<h5 class="card-title">Generate wordlist</h5>
 			</div>
@@ -103,13 +103,48 @@ Wordlist Generator | CySuite
 			</div>
 			<div class="card-body" style="padding: 0 1.5rem 1rem 1.5rem;">
 				<div class="form-floating">
-					<textarea class="form-control" type="text" style="min-height: 300px; font-size: 1rem;" readonly>{% for word in wordlist_output %}
-{{ word }}{% endfor %}</textarea>
+					<textarea class="form-control" type="text" style="min-height: 420px; font-size: 1rem;" readonly>{% for word in wordlist_output %}{{ word }}{% endfor %}</textarea>
 				</div>
 			</div>
 			</form>
 		</div>
+		<div class="card" style="width: 20%; float: right;">
+			<div class="card-body" style="padding-bottom:0;">
+				<div class="row">
+					<div class="col mt-0">
+						<h5 class="card-title">Wordlist Length</h5>
+					</div>
+
+					<div class="col-auto" style="position: relative; text-align: center;">
+						<div class="stat stat-sm">
+							<i class="fa fa-list-ol"></i>
+						</div>
+					</div>
+				</div>
+				<span class="h1 d-inline-block mt-1 mb-4">0</span>
+			</div>
+			<hr style="margin:0;" />
+			<div class="card-body">
+				<div class="row">
+					<div class="col mt-0">
+						<h5 class="card-title">Website Status</h5>
+					</div>
+					<div class="col-auto" style="position: relative; text-align: center;">
+						<div class="stat stat-sm">
+							<i class="fa fa-globe"></i>
+						</div>
+					</div>
+				</div>
+				<span class="badge badge-soft-success me-2" style="font-size: 1rem;">200 OK</span>
+			</div>
+			<hr />
+			<div class="card-body" style="padding-top: 16rem;">
+				<div class="row">
+					<button class="btn btn-primary" style="height: 40px; max-height: 40px; width: 100%; bottom: 0;">Download</button>
+				</div>
+			</div>
 		</div>
+	</div>
 	</div>
 </div>
 {% endblock %}
