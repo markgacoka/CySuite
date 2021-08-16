@@ -103,7 +103,7 @@ Wordlist Generator | CySuite
 			</div>
 			<div class="card-body" style="padding: 0 1.5rem 1rem 1.5rem;">
 				<div class="form-floating">
-					<textarea class="form-control" type="text" style="min-height: 420px; font-size: 1rem;" readonly>{% for word in wordlist_output %}
+					<textarea class="form-control" type="text" style="min-height: 435px; font-size: 1rem;" readonly>{% for word in wordlist_output %}
 {{ word }}{% endfor %}</textarea>
 				</div>
 			</div>
@@ -145,11 +145,16 @@ Wordlist Generator | CySuite
 				{% endif %}
 			</div>
 			<hr />
-			<div class="card-body" style="padding-top: 16rem;">
+			<form method="post">
+			{% csrf_token%}
+			<div class="card-body" style="padding-top: 14rem;">
 				<div class="row">
+					<input name='clear' hidden />
+					<button class="btn btn-primary mb-2" type="submit" style="height: 40px; max-height: 40px; width: 100%; bottom: 0;">Clear</button>
 					<button class="btn btn-primary" style="height: 40px; max-height: 40px; width: 100%; bottom: 0;">Download</button>
 				</div>
 			</div>
+			</form>
 		</div>
 	</div>
 	</div>
