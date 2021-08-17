@@ -65,3 +65,6 @@ class WordlistModel(models.Model):
 
     def __str__(self):
         return self.wordlist_user.name + ' Wordlists'
+
+    def return_db_values(self):
+        return [self.wordlist_file_3, self.wordlist_file_4, self.wordlist_file_5]

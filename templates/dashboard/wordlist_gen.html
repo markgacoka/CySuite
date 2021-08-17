@@ -21,7 +21,28 @@ Wordlist Generator | CySuite
 						<div style="float: left; width: 33.33%;">
 						</div>
 						<div style="float: left;width: 33.33%; position: relative;">
-							<button class="btn btn-primary" style="max-height: 3rem; width: 100%; position: absolute; bottom: 0;" type="button"><i class="fa fa-upload"></i>&nbsp;Upload</button>
+						{% if messages %}
+							{% for message in messages %}
+								{% if message.message == 'The wordlist file has been uploaded successfully!' %}
+									<button style="display: none;" class="alert-popup" id="alert-success" name="{{message}}" value="success"></button>
+								{% else %}
+									<button style="display: none;" class="alert-popup" id="alert-warning" name="{{message}}" value="warning"></button>
+								{% endif %}
+							{% endfor %}
+						{% endif %}
+						{% if success_message %}
+                            <button style="display: none;" class="alert-popup" id="alert-success" name="{{success_message}}" value="success"></button>
+                        {% endif %}
+                        {% if error_message %}
+                            <button style="display: none;" class="alert-popup" id="alert-danger" name="{{error_message}}" value="danger"></button>
+                        {% endif %}
+						<form method="POST">
+                        {% csrf_token %}
+							<label class="btn btn-primary btn-sm" style="font-size: 0.9rem; max-height: 3rem; width: 100%; position: absolute; bottom: 0; margin-bottom: 0;">
+							<input type="file" accept="text/plain" name="wordlist" onchange="form.submit()" hidden />
+								<i class="fa fa-upload"></i>&nbsp;Upload
+							</label>
+						</form>
 						</div>
 					</div>
 				</div>
@@ -40,10 +61,10 @@ Wordlist Generator | CySuite
 							<td>Kaggle</td>
 							<td class="d-none d-md-table-cell">Password list</td>
 							<td class="table-action" style="text-align:center">
-							<form method="post" id="form_id">
+							<form method="post" id="rockyou_txt">
 							{% csrf_token %}
 								<input type="text" name="preview" value="/media/rockyou.txt" hidden />
-								<a href="javascript:$('#form_id').submit();"><i class="align-middle" data-feather="eye"></i></a>
+								<a href="javascript:$('#rockyou_txt').submit();"><i class="align-middle" data-feather="eye"></i></a>
 							</form>
 							</td>
 						</tr>
@@ -52,19 +73,29 @@ Wordlist Generator | CySuite
 							<td>JHaddix</td>
 							<td class="d-none d-md-table-cell">Directory list</td>
 							<td class="table-action" style="text-align:center">
-								<a href="javascript:$('#form_id').submit();"><i class="align-middle" data-feather="eye"></i></a>
+							<form method="post" id="all_txt">
+							{% csrf_token %}
+								<input type="text" name="preview" value="/media/all.txt" hidden />
+								<a href="javascript:$('#all_txt').submit();"><i class="align-middle" data-feather="eye"></i></a>
+							</form>
 							</td>
 						</tr>
-						{% for wordlist in wordlist_list %}
+						{% for key, value in wordlist_list.items %}
+						{% if value != None %}
 						<tr>
-							<td><a href="{{model.url}}" target="_blank">{{wordlist_name}}</td>
+							<td><a href="{{value}}" target="_blank">{{key}}</td>
 							<td>Custom</td>
 							<td class="d-none d-md-table-cell">Wordlist</td>
 							<td class="table-action">
-								<a href="#"><i class="align-middle" data-feather="eye"></i></a>
+							<form method="post" id="new_txt">
+							{% csrf_token %}
+								<input type="text" name="preview_new" value="{{model.url}}" hidden />
+								<a href="javascript:$('#new_txt').submit();"><i class="align-middle" data-feather="eye"></i></a>
 								<a href="#"><i class="align-middle" data-feather="trash"></i></a>
+							</form>
 							</td>
 						</tr>
+						{% endif %}
 						{% endfor %}
 					</tbody>
 				</table>
