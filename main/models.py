@@ -49,3 +49,19 @@ class PayloadModel(models.Model):
 
     def __str__(self):
         return self.payload_user.name + ' Payloads'
+
+class WordlistModel(models.Model):
+    wordlist_user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, unique=True, related_name='wordlist', on_delete=models.CASCADE)
+    wordlist_file_1 = models.FileField(default='media/rockyou.txt', editable="False")
+    wordlist_file_2 = models.FileField(default='media/all.txt', editable="False")
+    wordlist_file_3 = models.FileField(default=None, upload_to='wordlists/', blank=True, null=True)
+    wordlist_file_4 = models.FileField(default=None, upload_to='wordlists/', blank=True, null=True)
+    wordlist_file_5 = models.FileField(default=None, upload_to='wordlists/', blank=True, null=True)
+
+    class Meta():
+        db_table = 'wordlist'
+        verbose_name = _('wordlist')
+        verbose_name_plural = _('wordlists')
+
+    def __str__(self):
+        return self.wordlist_user.name + ' Wordlists'
