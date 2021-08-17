@@ -14,6 +14,7 @@ from .models import PayloadModel
 from PIL import Image
 from django.core.files import File
 from django.http import FileResponse
+from scripts.WordlistGen.wordlist import print_wordlist
 from scripts.WordlistGen.status import url_status
 from scripts.Headers.request import send_request
 from scripts.Hashes.hashid import HashID
@@ -125,7 +126,12 @@ def req_tamperer(request):
 def wordlist_gen(request):
     context = {}
     if request.method == 'POST':
-        if 'wordlist_url' in request.POST.keys():
+        print(request.POST)
+        if 'see_wordlist' in request.POST.keys():
+            with open("datafile") as myfile:
+                head = [next(myfile) for x in range(20)]
+            context['preview_wordlist'] = head
+        elif 'wordlist_url' in request.POST.keys():
             wordlist_url = request.POST.get('wordlist_url')
             wordlist = next(extract_wordlist(wordlist_url))
             length = len(wordlist)
@@ -139,11 +145,16 @@ def wordlist_gen(request):
             wordlist_file = File(buffer, 'w')
             wordlist = request.POST.get('download')
             for word in wordlist.split(','):
-                print(word)
                 wordlist_file.write(word.replace("{", "").replace("}", "").replace("'", "").replace(" ", "") + '\n')
             response = HttpResponse(buffer.getvalue(), content_type="text/plain")
             response['Content-Disposition'] = 'attachment; filename=filename.txt'
             return response
+        elif 'preview' in request.POST.keys():
+            context['preview_wordlist'] = next(print_wordlist(request.POST.get('preview')[1:], 20))
+            context['url_status'] = 'N/A'
+            context['wordlist_len'] = 0
+            context['wordlist_output'] = ''
+            context['profile_account'] = request.user.profile
         else:
             context['url_status'] = 'N/A'
             context['wordlist_len'] = 0

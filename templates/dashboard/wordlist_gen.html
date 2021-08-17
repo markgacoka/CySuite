@@ -36,39 +36,36 @@ Wordlist Generator | CySuite
 					</thead>
 					<tbody>
 						<tr>
-							<td>rockyou.txt</td>
+							<td><a href="/media/rockyou.txt" target="_blank">rockyou.txt</a></td>
 							<td>Kaggle</td>
 							<td class="d-none d-md-table-cell">Password list</td>
 							<td class="table-action" style="text-align:center">
-								<a href="#"><i class="align-middle" data-feather="eye"></i></a>
+							<form method="post" id="form_id">
+							{% csrf_token %}
+								<input type="text" name="preview" value="/media/rockyou.txt" hidden />
+								<a href="javascript:$('#form_id').submit();"><i class="align-middle" data-feather="eye"></i></a>
+							</form>
 							</td>
 						</tr>
 						<tr>
-							<td>all.txt</td>
+							<td><a href="/media/all.txt" target="_blank">all.txt</a></td>
 							<td>JHaddix</td>
 							<td class="d-none d-md-table-cell">Directory list</td>
 							<td class="table-action" style="text-align:center">
-								<a href="#"><i class="align-middle" data-feather="eye"></i></a>
+								<a href="javascript:$('#form_id').submit();"><i class="align-middle" data-feather="eye"></i></a>
 							</td>
 						</tr>
+						{% for wordlist in wordlist_list %}
 						<tr>
-							<td>alexa-top-1m</td>
-							<td>reimersoftware</td>
-							<td class="d-none d-md-table-cell">API directory list</td>
+							<td><a href="{{model.url}}" target="_blank">{{wordlist_name}}</td>
+							<td>Custom</td>
+							<td class="d-none d-md-table-cell">Wordlist</td>
 							<td class="table-action">
 								<a href="#"><i class="align-middle" data-feather="eye"></i></a>
 								<a href="#"><i class="align-middle" data-feather="trash"></i></a>
 							</td>
 						</tr>
-						<tr>
-							<td>directory-list-2.3-big.txt</td>
-							<td>dirbuster-lists</td>
-							<td class="d-none d-md-table-cell">Directory list</td>
-							<td class="table-action">
-								<a href="#"><i class="align-middle" data-feather="eye"></i></a>
-								<a href="#"><i class="align-middle" data-feather="trash"></i></a>
-							</td>
-						</tr>
+						{% endfor %}
 					</tbody>
 				</table>
 			</div>
@@ -77,8 +74,7 @@ Wordlist Generator | CySuite
 			<div class="card">
 				<div class="card-body" style="padding: 1.5 1.5rem 1.5rem 1.5rem;">
 					<div class="form-floating">
-						<input class="form-control" type="text" placeholder="Readonly input" style="min-height: 460px;" readonly>
-						<label for="floatingInput1" style="font-size: 0.9rem;">index...</label>
+						<textarea class="form-control" type="text" style="min-height: 460px; font-size: 0.9rem;" readonly>{% for word in preview_wordlist %}{{word}}{% endfor %}</textarea>
 					</div>
 				</div>
 			</div>
