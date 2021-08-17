@@ -216,7 +216,6 @@ def wordlist_gen(request):
                 if i.name is not None:
                     wordlist_result[i.name] = wordlist_result.get(i, i)
             context['wordlist_list'] = wordlist_result
-        print(wordlist_result)
         context['wordlist_len'] = 0
         context['wordlist_output'] = ''
         context['url_status'] = 'N/A'
