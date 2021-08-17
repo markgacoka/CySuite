@@ -2,16 +2,20 @@ import re
 import io
 import subprocess
 import puremagic
+import urllib
 import urllib.parse
 from os import path
 import os, json, base64, requests
 from html import escape, unescape
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .forms import TransactionForm
 from .forms import ProjectForm
+from .forms import WordlistForm
 from .models import PayloadModel
+from .models import WordlistModel
 from PIL import Image
+from django.contrib import messages
 from django.core.files import File
 from django.http import FileResponse
 from scripts.WordlistGen.wordlist import print_wordlist
@@ -126,11 +130,45 @@ def req_tamperer(request):
 def wordlist_gen(request):
     context = {}
     if request.method == 'POST':
-        print(request.POST)
-        if 'see_wordlist' in request.POST.keys():
-            with open("datafile") as myfile:
-                head = [next(myfile) for x in range(20)]
-            context['preview_wordlist'] = head
+        names = WordlistModel.objects.get(wordlist_user=request.user)
+        wordlist_values = names.return_db_values()
+        isNone = all(v.name is None for v in wordlist_values)
+        wordlist_result = {}
+        if isNone:
+            context['wordlist_list'] = ''
+        else:
+            for i in wordlist_values:
+                if i.name is not None:
+                    wordlist_result[i.name[17:]] = wordlist_result.get(i.name, i)
+        context['wordlist_list'] = wordlist_result
+
+        if 'preview' in request.POST.keys():
+            context['preview_wordlist'] = next(print_wordlist(request.POST.get('preview')[1:], 20))
+            context['url_status'] = 'N/A'
+            context['wordlist_len'] = 0
+            context['wordlist_output'] = ''
+            context['profile_account'] = request.user.profile
+        elif 'wordlist' in request.POST.keys():
+            try:
+                filename = next(iter(request.FILES))
+            except StopIteration:
+                filename = request.POST.get('wordlist')
+            wordlist_form = WordlistForm(request.POST, request.FILES, instance=request.user)
+            current_user = WordlistModel.objects.get(wordlist_user=request.user)
+            current_object = WordlistModel.objects
+            if wordlist_form.is_valid():
+                if not current_user.wordlist_file_3:
+                    current_object.filter(wordlist_user=request.user).update(wordlist_file_3='/media/wordlists/' + filename)
+                    messages.success(request,"The wordlist file has been uploaded successfully!")
+                elif not current_user.wordlist_file_4:
+                    current_object.filter(wordlist_user=request.user).update(wordlist_file_4='/media/wordlists/' + filename)
+                    messages.success(request,"The wordlist file has been uploaded successfully!")
+                elif not current_user.wordlist_file_5:
+                    current_object.filter(wordlist_user=request.user).update(wordlist_file_5='/media/wordlists/' + filename)
+                    messages.success(request,"The wordlist file has been uploaded successfully!")
+                else:
+                    messages.success(request,'The number of allowed uploads has been exceeded')
+            return redirect('wordlist_gen')
         elif 'wordlist_url' in request.POST.keys():
             wordlist_url = request.POST.get('wordlist_url')
             wordlist = next(extract_wordlist(wordlist_url))
@@ -149,8 +187,11 @@ def wordlist_gen(request):
             response = HttpResponse(buffer.getvalue(), content_type="text/plain")
             response['Content-Disposition'] = 'attachment; filename=filename.txt'
             return response
-        elif 'preview' in request.POST.keys():
-            context['preview_wordlist'] = next(print_wordlist(request.POST.get('preview')[1:], 20))
+        elif 'preview_new' in request.POST.keys():
+            model_elements = WordlistModel.objects.filter(wordlist_user=request.user)
+            print(model_elements.wordlist_file_1)
+            context['wordlist_name'] = None
+            context['preview_wordlist'] = None
             context['url_status'] = 'N/A'
             context['wordlist_len'] = 0
             context['wordlist_output'] = ''
@@ -161,6 +202,18 @@ def wordlist_gen(request):
             context['wordlist_output'] = ''
             context['profile_account'] = request.user.profile
     else:
+        names = WordlistModel.objects.get(wordlist_user=request.user)
+        wordlist_values = names.return_db_values()
+        isNone = all(v.name is None for v in wordlist_values)
+        if isNone:
+            context['wordlist_list'] = ''
+        else:
+            wordlist_result = {}
+            for i in wordlist_values:
+                if i.name is not None:
+                    wordlist_result[i.name[17:]] = wordlist_result.get(i.name, i)
+            context['wordlist_list'] = wordlist_result
+        
         context['wordlist_len'] = 0
         context['wordlist_output'] = ''
         context['url_status'] = 'N/A'

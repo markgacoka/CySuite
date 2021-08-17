@@ -136,7 +136,7 @@ class UserProfile(models.Model):
         verbose_name_plural = _('profiles')
 
     def __str__(self):
-        return self.user.name + 'Profile'
+        return self.username.name + 'Profile'
 
 @receiver(user_signed_up)
 def set_initial_user_names(request, user, sociallogin=None, **kwargs):

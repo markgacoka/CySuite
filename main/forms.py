@@ -4,6 +4,7 @@ from .models import Transaction
 from .models import Newsletter
 from .models import ProjectModel
 from .models import PayloadModel
+from .models import WordlistModel
 from cyauth.models import Account
 
 class TransactionForm(forms.ModelForm):
@@ -41,3 +42,8 @@ class ProjectForm(forms.ModelForm):
     class Meta:
         model = ProjectModel
         fields = ['project_name', 'program', 'in_scope_domains', 'progress', 'subdomains']
+
+class WordlistForm(forms.ModelForm):
+    class Meta:
+        model = WordlistModel
+        fields = ['wordlist_file_3', 'wordlist_file_4', 'wordlist_file_5']
