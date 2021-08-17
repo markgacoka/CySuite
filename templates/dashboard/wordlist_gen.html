@@ -36,7 +36,7 @@ Wordlist Generator | CySuite
                         {% if error_message %}
                             <button style="display: none;" class="alert-popup" id="alert-danger" name="{{error_message}}" value="danger"></button>
                         {% endif %}
-						<form method="POST">
+						<form method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
 							<label class="btn btn-primary btn-sm" style="font-size: 0.9rem; max-height: 3rem; width: 100%; position: absolute; bottom: 0; margin-bottom: 0;">
 							<input type="file" accept="text/plain" name="wordlist" onchange="form.submit()" hidden />
@@ -83,7 +83,7 @@ Wordlist Generator | CySuite
 						{% for key, value in wordlist_list.items %}
 						{% if value != None %}
 						<tr>
-							<td><a href="{{value}}" target="_blank">{{key}}</td>
+							<td><a href="{{value.url}}" target="_blank">{{key}}</td>
 							<td>Custom</td>
 							<td class="d-none d-md-table-cell">Wordlist</td>
 							<td class="table-action">

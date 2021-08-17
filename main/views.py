@@ -15,9 +15,11 @@ from .forms import WordlistForm
 from .models import PayloadModel
 from .models import WordlistModel
 from PIL import Image
+from django.conf import settings
 from django.contrib import messages
 from django.core.files import File
 from django.http import FileResponse
+from django.core.files.storage import default_storage
 from scripts.WordlistGen.wordlist import print_wordlist
 from scripts.WordlistGen.status import url_status
 from scripts.Headers.request import send_request
@@ -139,7 +141,7 @@ def wordlist_gen(request):
         else:
             for i in wordlist_values:
                 if i.name is not None:
-                    wordlist_result[i.name[17:]] = wordlist_result.get(i.name, i)
+                    wordlist_result[i.name] = wordlist_result.get(i, i)
         context['wordlist_list'] = wordlist_result
 
         if 'preview' in request.POST.keys():
@@ -148,26 +150,27 @@ def wordlist_gen(request):
             context['wordlist_len'] = 0
             context['wordlist_output'] = ''
             context['profile_account'] = request.user.profile
-        elif 'wordlist' in request.POST.keys():
-            try:
-                filename = next(iter(request.FILES))
-            except StopIteration:
-                filename = request.POST.get('wordlist')
+        elif 'wordlist' in request.FILES.keys():
             wordlist_form = WordlistForm(request.POST, request.FILES, instance=request.user)
             current_user = WordlistModel.objects.get(wordlist_user=request.user)
             current_object = WordlistModel.objects
+            file_data = request.FILES['wordlist']
+            filename = 'wordlists/' + file_data.name
+            with open('media/wordlists/' + file_data.name, 'wb') as file_a:
+                file_a.write(file_data.read())
             if wordlist_form.is_valid():
                 if not current_user.wordlist_file_3:
-                    current_object.filter(wordlist_user=request.user).update(wordlist_file_3='/media/wordlists/' + filename)
+                    current_object.filter(wordlist_user=request.user).update(wordlist_file_3=filename)
                     messages.success(request,"The wordlist file has been uploaded successfully!")
                 elif not current_user.wordlist_file_4:
-                    current_object.filter(wordlist_user=request.user).update(wordlist_file_4='/media/wordlists/' + filename)
+                    current_object.filter(wordlist_user=request.user).update(wordlist_file_4=filename)
                     messages.success(request,"The wordlist file has been uploaded successfully!")
                 elif not current_user.wordlist_file_5:
-                    current_object.filter(wordlist_user=request.user).update(wordlist_file_5='/media/wordlists/' + filename)
+                    current_object.filter(wordlist_user=request.user).update(wordlist_file_5=filename)
                     messages.success(request,"The wordlist file has been uploaded successfully!")
                 else:
                     messages.success(request,'The number of allowed uploads has been exceeded')
+                wordlist_form.save()
             return redirect('wordlist_gen')
         elif 'wordlist_url' in request.POST.keys():
             wordlist_url = request.POST.get('wordlist_url')
@@ -211,9 +214,8 @@ def wordlist_gen(request):
             wordlist_result = {}
             for i in wordlist_values:
                 if i.name is not None:
-                    wordlist_result[i.name[17:]] = wordlist_result.get(i.name, i)
+                    wordlist_result[i.name] = wordlist_result.get(i, i)
             context['wordlist_list'] = wordlist_result
-        
         context['wordlist_len'] = 0
         context['wordlist_output'] = ''
         context['url_status'] = 'N/A'
