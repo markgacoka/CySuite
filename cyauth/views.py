@@ -12,11 +12,14 @@ def index(request):
         return redirect('dashboard')
     else:
         context = {}
-        newsletter_form = NewsletterForm(request.POST)
         if request.POST:
-            if newsletter_form.is_valid():
-                newsletter_form.save()
-            return redirect('thank_you')
+            if request.POST['subscriber'] == '' or request.POST['subscriber'] == None:
+                pass
+            else:
+                newsletter_form = NewsletterForm(request.POST)
+                if newsletter_form.is_valid():
+                    newsletter_form.save()
+                return redirect('thank_you')
     return render(request, 'index.html', context)
 
 def thank_you(request):
