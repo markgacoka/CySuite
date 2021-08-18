@@ -1,0 +1,29 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CySuite</title>
+    <link rel="icon" href="{% static 'img/icons/favicon.ico' %}" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.css">
+    <link rel="stylesheet" href="{% static 'css/light.css' %}" >
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" >
+</head>
+<body>
+    <div class="jumbotron text-center" style="padding-top: 20vh;">
+    <h1 class="display-3">Thank You!</h1>
+        <p style="font-size: calc(1vw+2vh);" class="lead"><strong>You are now subscribed</strong> to our newsletter. You will occasional feature and news updates.</p>
+        <a href="{% url 'index' %}" style="margin-bottom: 45vh; background-color: #50E3C2; font-weight: 500;" class="btn">Go back home</a>
+        <hr />
+        <p>
+            Having trouble? <a href="mailto:info@cysuite.io">Contact us</a>
+        </p>
+    </div>
+</body>
+<footer style="padding: 0.5rem 0 0.5rem 0;">
+    <p style="text-align: center; flex-direction: column; display: flex; margin-top: 16px;">&copy; CySuite 2021 All right reserved.</p>
+</footer>
+</html>
