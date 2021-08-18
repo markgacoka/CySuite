@@ -16,6 +16,7 @@ from .forms import WordlistForm
 from .models import PayloadModel
 from .models import WordlistModel
 from PIL import Image
+from django.template.context_processors import csrf
 from django.conf import settings
 from django.contrib import messages
 from django.core.files import File
@@ -133,6 +134,7 @@ def req_tamperer(request):
 def wordlist_gen(request):
     context = {}
     if request.method == 'POST':
+        print(request.POST)
         names = WordlistModel.objects.get(wordlist_user=request.user)
         wordlist_values = names.return_db_values()
         isNone = all(v.name is None for v in wordlist_values)
@@ -156,16 +158,17 @@ def wordlist_gen(request):
             current_user = WordlistModel.objects.get(wordlist_user=request.user)
             current_object = WordlistModel.objects
             file_data = request.FILES['wordlist']
-            filename = 'wordlists/{}/'.format(request.user.user_id) + file_data.name
+            file_dir = 'wordlists/{}/'.format(request.user.user_id)
+            filename = file_dir + file_data.name
 
             if os.path.isfile('media/' + filename):
                 messages.success(request,"Filename already in use. Please rename your file.")
                 return redirect('wordlist_gen')
 
             BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-            user_path = BASE_DIR + '/media/' + filename
-            if not path.exists(user_path):
-                os.mkdir(BASE_DIR + '/media/' + '/wordlists/{}/'.format(request.user.user_id) )
+            new_dir = BASE_DIR + '/media' + '/wordlists/{}/'.format(request.user.user_id)
+            if not os.path.isdir(new_dir):
+                os.mkdir(new_dir)
 
             with open('media/' + filename, 'wb') as file_a:
                 file_a.write(file_data.read())
@@ -202,14 +205,20 @@ def wordlist_gen(request):
             response['Content-Disposition'] = 'attachment; filename=filename.txt'
             return response
         elif 'preview_new' in request.POST.keys():
-            model_elements = WordlistModel.objects.filter(wordlist_user=request.user)
-            print(model_elements.wordlist_file_1)
-            context['wordlist_name'] = None
-            context['preview_wordlist'] = None
+            queryset = WordlistModel.objects.get(wordlist_user=request.user)
+            url = queryset.return_db_values()[int(request.POST.get('preview_new'))-1]
+            return HttpResponse(next(print_wordlist(url.url[1:], 20)))
+        elif 'new_delete' in request.POST.keys():
+            queryset = WordlistModel.objects.get(wordlist_user=request.user)
+            queryset.return_db_values()[int(request.POST.get('new_delete'))-1].delete()
+            context['preview_wordlist'] = ''
             context['url_status'] = 'N/A'
             context['wordlist_len'] = 0
             context['wordlist_output'] = ''
-            context['profile_account'] = request.user.profile
+            context['success_message'] = 'The file has been deleted successfully!'
+            messages.success(request, 'The file has been deleted successfully!')
+            context.update(csrf(request))
+            return HttpResponse(request)
         else:
             context['url_status'] = 'N/A'
             context['wordlist_len'] = 0
@@ -313,7 +322,6 @@ def file_upload(request):
             context['status'] = 'Not injected'
             context['error_message'] = 'Filename should not be empty'
         elif 'full_hex' in request.POST.keys():
-            from django.template.context_processors import csrf
             payload_file = PayloadModel.objects.get(payload_user=request.user)
             filename = payload_file.payload_image.path
             if path.exists(filename):
