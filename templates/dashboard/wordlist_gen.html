@@ -23,19 +23,13 @@ Wordlist Generator | CySuite
 						<div style="float: left;width: 33.33%; position: relative;">
 						{% if messages %}
 							{% for message in messages %}
-								{% if message.message == 'The wordlist file has been uploaded successfully!' %}
+								{% if 'successfully!' in message.message %}
 									<button style="display: none;" class="alert-popup" id="alert-success" name="{{message}}" value="success"></button>
 								{% else %}
 									<button style="display: none;" class="alert-popup" id="alert-warning" name="{{message}}" value="warning"></button>
 								{% endif %}
 							{% endfor %}
 						{% endif %}
-						{% if success_message %}
-                            <button style="display: none;" class="alert-popup" id="alert-success" name="{{success_message}}" value="success"></button>
-                        {% endif %}
-                        {% if error_message %}
-                            <button style="display: none;" class="alert-popup" id="alert-danger" name="{{error_message}}" value="danger"></button>
-                        {% endif %}
 						<form method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
 							<label class="btn btn-primary btn-sm" style="font-size: 0.9rem; max-height: 3rem; width: 100%; position: absolute; bottom: 0; margin-bottom: 0;">
@@ -56,6 +50,9 @@ Wordlist Generator | CySuite
 						</tr>
 					</thead>
 					<tbody>
+					{% if success_message %}
+						<button style="display: none;" class="alert-popup" id="alert-success" name="{{success_message}}" value="success"></button>
+					{% endif %}
 						<tr>
 							<td><a href="/media/rockyou.txt" target="_blank">rockyou.txt</a></td>
 							<td>Kaggle</td>
@@ -81,21 +78,15 @@ Wordlist Generator | CySuite
 							</td>
 						</tr>
 						{% for key, value in wordlist_list.items %}
-						{% if value != None %}
 						<tr>
 							<td><a href="{{value}}" target="_blank">{{key}}</td>
 							<td>Custom</td>
 							<td class="d-none d-md-table-cell">Wordlist</td>
-							<td class="table-action">
-							<form method="post" id="new_txt">
-							{% csrf_token %}
-								<input type="text" name="preview_new" value="{{model.url}}" hidden />
-								<a href="javascript:$('#new_txt').submit();"><i class="align-middle" data-feather="eye"></i></a>
-								<a href="#"><i class="align-middle" data-feather="trash"></i></a>
-							</form>
+							<td class="table-action" style="text-align:center;">
+								<a href="#" onclick="previewWordlist({{forloop.counter}}); return false;"><i class="align-middle" data-feather="eye"></i></a>
+								<a href="" onclick="deleteWordlist({{forloop.counter}});"><i class="align-middle" data-feather="trash"></i></a>
 							</td>
 						</tr>
-						{% endif %}
 						{% endfor %}
 					</tbody>
 				</table>
@@ -105,7 +96,7 @@ Wordlist Generator | CySuite
 			<div class="card">
 				<div class="card-body" style="padding: 1.5 1.5rem 1.5rem 1.5rem;">
 					<div class="form-floating">
-						<textarea class="form-control" type="text" style="min-height: 460px; font-size: 0.9rem;" readonly>{% for word in preview_wordlist %}{{word}}{% endfor %}</textarea>
+						<textarea class="form-control" id="wordlist-preview" type="text" style="min-height: 460px; font-size: 0.9rem;" readonly>{% for word in preview_wordlist %}{{word}}{% endfor %}</textarea>
 					</div>
 				</div>
 			</div>
@@ -187,7 +178,7 @@ Wordlist Generator | CySuite
 	</div>
 </div>
 <script>
-	function clearScreen (){
+	function clearScreen(){
 		var token = '{{csrf_token}}';
 		$.ajax({
 			url: '{% url 'wordlist_gen' %}',
@@ -196,6 +187,33 @@ Wordlist Generator | CySuite
 			data: {"clear": "true"},
 			success: function(){
 				console.log("Success!")
+			}
+		});
+	}
+</script>
+<script>
+	function deleteWordlist(num){
+		var token = '{{csrf_token}}';
+		$.ajax({
+			url: '{% url 'wordlist_gen' %}',
+			headers: { "X-CSRFToken": token },
+			type: 'POST',
+			data: {"new_delete": num},
+			success: function(response){
+				window.location.reload();
+			}
+		});
+	}
+</script>
+<script>
+	function previewWordlist(num){
+		var token = '{{csrf_token}}';
+		$.ajax({
+			headers: { "X-CSRFToken": token },
+			type: 'POST',
+			data: {"preview_new": num},
+			success: function(response){
+				$('#wordlist-preview').text(response);
 			}
 		});
 	}
