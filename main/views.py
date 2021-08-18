@@ -141,8 +141,8 @@ def wordlist_gen(request):
             context['wordlist_list'] = ''
         else:
             for i in wordlist_values:
-                if i.name is not None:
-                    wordlist_result[i.name[10:]] = wordlist_result.get(i.url, i.url)
+                if i.name is not None and i.name != '':
+                    wordlist_result[i.name.split('/')[-1]] = wordlist_result.get(i.url, i.url)
         context['wordlist_list'] = wordlist_result
 
         if 'preview' in request.POST.keys():
@@ -156,19 +156,16 @@ def wordlist_gen(request):
             current_user = WordlistModel.objects.get(wordlist_user=request.user)
             current_object = WordlistModel.objects
             file_data = request.FILES['wordlist']
-            filename = 'wordlists/' + file_data.name
+            filename = 'wordlists/{}/'.format(request.user.user_id) + file_data.name
 
-            # file_clean = True
-            # for filename_key, file_value in wordlist_result.items():
-            #     if file_value != None:
-            #         if filename_key == filename or hashlib.sha256(request.FILES['wordlist'].read()) == hashlib.sha256(file_value.path):
-            #             messages.success(request,"Duplicate file! Please upload a new one.")
-            #             file_clean = False
+            if os.path.isfile('media/' + filename):
+                messages.success(request,"Filename already in use. Please rename your file.")
+                return redirect('wordlist_gen')
 
-            # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-            # user_path = os.path.join(BASE_DIR, 'media/wordlists/{}/'.format(request.user.user_id))
-            # if not path.exists(user_path):
-            #     os.mkdir(user_path)
+            BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            user_path = BASE_DIR + '/media/' + filename
+            if not path.exists(user_path):
+                os.mkdir(BASE_DIR + '/media/' + '/wordlists/{}/'.format(request.user.user_id) )
 
             with open('media/' + filename, 'wb') as file_a:
                 file_a.write(file_data.read())
@@ -227,10 +224,9 @@ def wordlist_gen(request):
             context['wordlist_list'] = ''
         else:
             for i in wordlist_values:
-                if i.name is not None:
-                    wordlist_result[i.name[10:]] = wordlist_result.get(i.url, i.url)
+                if i.name is not None and i.name != '':
+                    wordlist_result[i.name.split('/')[-1]] = wordlist_result.get(i.url, i.url)
             context['wordlist_list'] = wordlist_result
-        print(wordlist_result)
         context['wordlist_len'] = 0
         context['wordlist_output'] = ''
         context['url_status'] = 'N/A'
