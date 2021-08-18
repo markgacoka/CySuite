@@ -3,6 +3,7 @@ import io
 import subprocess
 import puremagic
 import urllib
+import hashlib
 import urllib.parse
 from os import path
 import os, json, base64, requests
@@ -141,7 +142,7 @@ def wordlist_gen(request):
         else:
             for i in wordlist_values:
                 if i.name is not None:
-                    wordlist_result[i.name] = wordlist_result.get(i, i)
+                    wordlist_result[i.name[10:]] = wordlist_result.get(i.url, i.url)
         context['wordlist_list'] = wordlist_result
 
         if 'preview' in request.POST.keys():
@@ -156,7 +157,20 @@ def wordlist_gen(request):
             current_object = WordlistModel.objects
             file_data = request.FILES['wordlist']
             filename = 'wordlists/' + file_data.name
-            with open('media/wordlists/' + file_data.name, 'wb') as file_a:
+
+            # file_clean = True
+            # for filename_key, file_value in wordlist_result.items():
+            #     if file_value != None:
+            #         if filename_key == filename or hashlib.sha256(request.FILES['wordlist'].read()) == hashlib.sha256(file_value.path):
+            #             messages.success(request,"Duplicate file! Please upload a new one.")
+            #             file_clean = False
+
+            # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            # user_path = os.path.join(BASE_DIR, 'media/wordlists/{}/'.format(request.user.user_id))
+            # if not path.exists(user_path):
+            #     os.mkdir(user_path)
+
+            with open('media/' + filename, 'wb') as file_a:
                 file_a.write(file_data.read())
             if wordlist_form.is_valid():
                 if not current_user.wordlist_file_3:
@@ -208,14 +222,15 @@ def wordlist_gen(request):
         names = WordlistModel.objects.get(wordlist_user=request.user)
         wordlist_values = names.return_db_values()
         isNone = all(v.name is None for v in wordlist_values)
+        wordlist_result = {}
         if isNone:
             context['wordlist_list'] = ''
         else:
-            wordlist_result = {}
             for i in wordlist_values:
                 if i.name is not None:
-                    wordlist_result[i.name] = wordlist_result.get(i, i)
+                    wordlist_result[i.name[10:]] = wordlist_result.get(i.url, i.url)
             context['wordlist_list'] = wordlist_result
+        print(wordlist_result)
         context['wordlist_len'] = 0
         context['wordlist_output'] = ''
         context['url_status'] = 'N/A'
