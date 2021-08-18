@@ -13,6 +13,7 @@ from cyauth.views import (
 
 urlpatterns = [
     path('', views.index, name="index"),
+    path('thank-you/', views.thank_you, name="thank_you"),
     path('login/', login_view, name="login"),
     path('logout/', logout_view, name="logout"),
     path('register/', registration_view, name="register"),

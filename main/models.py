@@ -19,7 +19,15 @@ class Transaction(models.Model):
         db_table = 'payments'
 
 class Newsletter(models.Model):
-    subscriber = models.EmailField(max_length=254, blank=True, null=True)
+    subscriber = models.EmailField(max_length=254, blank=True, null=True, unique=True)
+
+    class Meta():
+        db_table = 'periodical'
+        verbose_name = _('periodical')
+        verbose_name_plural = _('periodicals')
+
+    def __str__(self):
+        return self.subscriber + 'Newsletter'
 
 class ProjectModel(models.Model):
     project_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="projects", default=1, on_delete=models.CASCADE)

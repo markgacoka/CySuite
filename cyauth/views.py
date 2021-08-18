@@ -16,7 +16,14 @@ def index(request):
         if request.POST:
             if newsletter_form.is_valid():
                 newsletter_form.save()
-        return render(request, 'index.html', context)
+            return redirect('thank_you')
+    return render(request, 'index.html', context)
+
+def thank_you(request):
+    if request.user.is_authenticated == True:
+        return redirect('dashboard')
+    else:
+        return render(request, 'pages/thankyou.html')
 
 def dashboard(request):
     if request.user.is_authenticated == True:
