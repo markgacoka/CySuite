@@ -1,7 +1,7 @@
 from cfscrape import create_scraper
 from bs4 import BeautifulSoup
 
-def init(domain):
+def dnsdb_script(domain):
     dnsdb = []
     headers = {"user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:52.0) Gecko/20100101 Firefox/52.0"}
     url = "http://www.dnsdb.org/{0}/".format(domain)
@@ -20,7 +20,4 @@ def init(domain):
             pass
 
     dnsdb = set(dnsdb)
-    print("  \__ {0}: {1}".format("Unique subdomains found", len(dnsdb)))
     return dnsdb
-
-print(init('markgacoka.com'))

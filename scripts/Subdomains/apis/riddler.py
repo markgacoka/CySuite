@@ -2,7 +2,7 @@ import requests
 from json import loads
 from urllib.parse import quote
 
-def init(domain):
+def riddler_script(domain):
     riddler = []
     RIDDLER_USERNAME = ''
     RIDDLER_PASSWORD = ''
@@ -33,10 +33,7 @@ def init(domain):
                 riddler.append(item["host"])
 
             riddler = set(riddler)
-            print("  \__ {0}: {1}".format("Unique subdomains found", len(riddler)))
             return riddler
         else:
             print("  \__", "Invalid Riddler API credentials.")
             return []
-
-print(init('markgacoka.com'))

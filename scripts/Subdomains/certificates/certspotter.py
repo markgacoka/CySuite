@@ -6,7 +6,7 @@ def parseResponse(response, domain):
     hosts = findall(hostnameRegex, str(response))
     return [host.lstrip(".") for host in hosts]
 
-def init(domain):
+def certspotter_script(domain):
     CS = []
 
     base_url = "https://api.certspotter.com"
@@ -26,7 +26,4 @@ def init(domain):
             break
 
     CS = set(CS)
-    print("  \__ {0}: {1}".format("Unique subdomains found", len(CS)))
     return CS
-
-print(init('coda.io'))

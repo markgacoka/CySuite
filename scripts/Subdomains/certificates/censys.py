@@ -1,7 +1,7 @@
 import re, os
 import requests
 
-def init(domain):
+def censys_script(domain):
     C = []
     API_URL = "https://www.censys.io/api/v1"
     UID = os.environ.get('CENSYS_UID')
@@ -30,8 +30,4 @@ def init(domain):
             C = C + tempC
 
         C = set(C)
-
-        print("  \__ {0}: {1}".format("Unique subdomains found", len(C)))
         return C
-
-print(init('markgacoka.com'))

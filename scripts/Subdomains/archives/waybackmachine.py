@@ -2,7 +2,7 @@ import requests
 from urllib.parse import quote
 from urllib.parse import urlparse
 
-def init(domain):
+def waybackmachine_script(domain):
     WB = []
     url = "http://web.archive.org/cdx/search/cdx?url=*.{0}&output=json&fl=original&collapse=urlkey".format(quote(domain))
     headers = {"user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:52.0) Gecko/20100101 Firefox/52.0"}
@@ -21,5 +21,3 @@ def init(domain):
     WB = set(WB)
     print("  \__ {0}: {1}".format("Unique subdomains found", len(WB)))
     return WB
-
-print(init('markgacoka.com'))

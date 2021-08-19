@@ -1,7 +1,7 @@
 import json
 import requests
 
-def init(domain):
+def threatcrowd_script(domain):
     TC = []
     result = requests.get("https://www.threatcrowd.org/searchApi/v2/domain/report/", params={"domain": domain})
     try:
@@ -11,11 +11,8 @@ def init(domain):
             for sd in RES["subdomains"]:
                 TC.append(sd)
         TC = set(TC)
-        print("  \__ {0}: {1}".format("Unique subdomains found", len(TC)))
         return TC
 
     except ValueError as errv:
         print("  \__", errv)
         return []
-
-print(init('markgacoka.com'))

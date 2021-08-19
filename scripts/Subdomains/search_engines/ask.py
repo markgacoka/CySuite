@@ -1,5 +1,9 @@
 import re
-from urllib.parse import urlparse
+import os
+import threading
+import multiprocessing
+import requests
+import urllib.parse as urlparse
 from .utils import EnumratorBaseThreaded
 
 class AskEnum(EnumratorBaseThreaded):

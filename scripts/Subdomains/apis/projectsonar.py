@@ -20,7 +20,7 @@ def filterDomain(domain, subdomains):
 
     return filtered
 
-def init(domain):
+def projectsonar_script(domain):
     sonar = []
     url = "http://dns.bufferover.run/dns?q=.{0}".format(domain)
     headers = {"user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:52.0) Gecko/20100101 Firefox/52.0"}
@@ -36,8 +36,4 @@ def init(domain):
             sonar.append(record.split(",")[1])
 
     sonar = filterDomain(domain, uniqueList(sonar))
-
-    print("  \__ {0}: {1}".format("Unique subdomains found", len(sonar)))
     return sonar
-
-print(init('markgacoka.com'))
