@@ -97,13 +97,16 @@ def projects(request):
                 context['error_message'] = 'An error occurred!'
     else:
         projects = ProjectModel.objects.filter(project_user=request.user)
-        project_details = {}
+        project_list = []
         for project in projects:
+            project_details = {}
             project_model_output = project.get_project_details()
             project_details['project'] = project_details.get('project', project_model_output[0])
             project_details['program'] = project_details.get('program', project_model_output[1])
             project_details['progress'] = project_details.get('progress', project_model_output[2])
-        context['project_details'] = project_details
+            project_list.append(project_details)
+        context['project_list'] = project_list
+        context['project_details'] = project_list
         context['profile_account'] = request.user.profile
     return render(request, 'dashboard/projects.html', context)
 
