@@ -97,18 +97,13 @@ def projects(request):
                 context['error_message'] = 'An error occurred!'
     else:
         projects = ProjectModel.objects.filter(project_user=request.user)
+        project_details = {}
         for project in projects:
-            print(project.get_project_details())
-        # wordlist_values = names.return_db_values()
-        # isNone = all(v.name is None for v in wordlist_values)
-        # wordlist_result = {}
-        # if isNone:
-        #     context['wordlist_list'] = ''
-        # else:
-        #     for i in wordlist_values:
-        #         if i.name is not None and i.name != '':
-        #             wordlist_result[i.name.split('/')[-1]] = wordlist_result.get(i.url, i.url)
-        #     context['project_details'] = wordlist_result
+            project_model_output = project.get_project_details()
+            project_details['project'] = project_details.get('project', project_model_output[0])
+            project_details['program'] = project_details.get('program', project_model_output[1])
+            project_details['progress'] = project_details.get('progress', project_model_output[2])
+        context['project_details'] = project_details
         context['profile_account'] = request.user.profile
     return render(request, 'dashboard/projects.html', context)
 
