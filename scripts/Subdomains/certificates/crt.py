@@ -1,7 +1,7 @@
 import json
 import requests
 
-def init(domain):
+def crt_script(domain):
     CRT = []
     parameters = {"q": "%.{0}".format(domain), "output": "json"}
     headers = {"user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:52.0) Gecko/20100101 Firefox/52.0", "content-type": "application/json"}
@@ -14,11 +14,8 @@ def init(domain):
                 CRT.append(d["name_value"])
 
         CRT = set(CRT)
-        print("  \__ {0}: {1}".format("Unique subdomains found", len(CRT)))
         return CRT
 
     else:
         print("  \__", "Something went wrong!")
         return []
-
-print(init('markgacoka.com'))

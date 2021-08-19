@@ -1,6 +1,6 @@
 import requests, os
 
-def init(domain):
+def virustotal_script(domain):
     VT = []
     VT_API_KEY = os.environ.get('VT_API_KEY_FREE')
 
@@ -20,5 +20,3 @@ def init(domain):
         VT = set(VT)
         print("  \__ {0}: {1}".format("Unique subdomains found", len(VT)))
         return VT
-
-print(init('markgacoka.com'))

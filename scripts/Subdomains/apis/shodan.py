@@ -12,9 +12,9 @@ def sorter(subdomains):
         final.append(d_reversed_sub)
     return final
 
-def init(domain):
+def shodan_script(domain):
     subdomains, shodan = [], []
-    SHODAN_API = os.environ.get('sQFwficu775PQ5QSvQCABwr0iTq3acxk')
+    SHODAN_API = os.environ.get('SHODAN_API_KEY')
     if SHODAN_API == "":
         print("  \__", "No Riddler API credentials configured")
         return []
@@ -37,5 +37,3 @@ def init(domain):
                 shodan.append(url)
             shodan = set(shodan)
     return shodan
-
-print(init('markgacoka.com'))

@@ -1,6 +1,6 @@
 import requests
 
-def init(domain):
+def anubis_script(domain):
     anubis = []
     headers = {"user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:52.0) Gecko/20100101 Firefox/52.0", "content-type": "application/json"}
     response = requests.get("https://jldc.me/anubis/subdomains/" + domain, headers=headers)
@@ -13,5 +13,3 @@ def init(domain):
             response = response[:-1]
         anubis.append(response)
     return anubis
-
-print(init('google.com'))

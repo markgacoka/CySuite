@@ -10,7 +10,7 @@ def parseResponse(response, domain):
     except Exception:
         return "null", []
 
-def init(domain):
+def google_transparency_script(domain):
     GTR = []
     baseURL = "https://www.google.com/transparencyreport/api/v3/httpsreport/ct/certsearch"
     headers = {"user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:52.0) Gecko/20100101 Firefox/52.0", "referrer": "https://transparencyreport.google.com/https/certificates"}
@@ -30,7 +30,4 @@ def init(domain):
             break
 
     GTR = set(GTR)
-    print("  \__ {0}: {1}".format("Unique subdomains found", len(GTR)))
     return GTR
-
-print(init('markgacoka.com'))
