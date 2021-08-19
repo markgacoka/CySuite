@@ -361,13 +361,21 @@ def file_upload(request):
         width = int(request.POST.get('width')) if request.POST.get('width') != '' and request.POST.get('width') != None else 0
         height = int(request.POST.get('height')) if request.POST.get('height') != '' and request.POST.get('width') != None else 0
         file_type = request.POST.get('file_type') if request.POST.get('file_type') != None else None
-        filename = 'media/payloads/' + request.POST.get('filename') if request.POST.get('filename') != None else None
-        injection = Injector(file_type, width, height, payload, filename)
-        filename, dimensions = injection.main()
-        if request.POST.get('filename') == '':
+        
+        if request.POST.get('filename') == '' or '.' not in request.POST.get('filename') or request.POST.get('filename') == None:
             context['status'] = 'Not injected'
-            context['error_message'] = 'Filename should not be empty'
-        elif 'full_hex' in request.POST.keys():
+            context['error_message'] = 'Filename does not follow the correct filename pattern'
+            filename, dimensions = None, (None, None)
+        elif type(width) != int or type(height) != int or width < 0 or height < 0:
+            context['status'] = 'Not injected'
+            context['error_message'] = 'Dimension value should be an integer!'
+            filename, dimensions = None, (None, None)
+        else:
+            filename = 'media/payloads/' + request.POST.get('filename')
+            injection = Injector(file_type, width, height, payload, filename)
+            filename, dimensions = injection.main()
+
+        if 'full_hex' in request.POST.keys():
             payload_file = PayloadModel.objects.get(payload_user=request.user)
             filename = payload_file.payload_image.path
             if path.exists(filename):
@@ -388,7 +396,7 @@ def file_upload(request):
                 context['status'] = 'Viewing full hex code'
                 context.update(csrf(request))
                 return render(request, 'dashboard/file_upload.html', context)
-        elif filename != None or dimensions != None:
+        elif filename != None and dimensions != None:
             new_filename = re.sub(r'^.*?/', '', filename)
             payload_file = PayloadModel.objects.get(payload_user=request.user)
             if new_filename != payload_file.payload_image and payload_file.payload_image != 'default.png':
