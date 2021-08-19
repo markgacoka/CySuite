@@ -6,8 +6,9 @@ Projects | CySuite
 {% endblock %}
 
 {% block content %}
-<div class="asset-container">
-    <button class="asset-btn" style="background-color: #3E4261"><i class="fa fa-plus" style="color: white;"></i>&emsp;Add Asset</button>
+<div class="card" style="padding: 1.5rem 20px 1.5rem 20px; width: 100%;">
+    <h2 style="float: left; width: 40%; padding: 0; margin: 0;">Add a new project</h2>
+    <button class="asset-btn" style="background-color: #3E4261; float: left; width: 20%; min-width: max-content; position: absolute; right: 0; top: 20%; margin-right: 20px;"><i class="fa fa-plus" style="color: white;"></i>&emsp;Add Asset</button>
 </div>
 {% if success_message %}
     <button style="display: none;" class="alert-popup" id="alert-success" name="{{success_message}}" value="success"></button>
