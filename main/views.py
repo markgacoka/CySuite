@@ -82,53 +82,44 @@ def projects(request):
         project_list.append(project_details)
 
     if request.method == 'POST':
-        tempdict = request.POST.copy()
-        tempdict['in_scope_domains'] = tempdict['in_scope_domains'].split('\r\n')
-        request.POST = tempdict
-        context['profile_account'] = request.user.profile
-        if ProjectModel.objects.filter(project_name__iexact=request.POST.get('project_name')).filter(project_user=request.user).exists():
-            context['project_list'] = project_list
-            context['error_message'] = 'Project name already exists!'
-        else:
-            project_form = ProjectForm(request.POST)
-            if project_form.is_valid():
-                project_model = ProjectModel.objects.create(
-                    project_name = project_form.cleaned_data['project_name'],
-                    program = project_form.cleaned_data['program'],
-                    in_scope_domains = [],
-                    progress = 0,
-                    subdomains = [],
-                    project_user = request.user)
-                for domain in project_form.cleaned_data['in_scope_domains']:
-                    if domain != None and domain != '':
-                        project_model.in_scope_domains.append(domain.strip())
-                project_model.save()
-                context['success_message'] = 'Project has been created!'
-                context['project_form'] = project_form
-                projects = ProjectModel.objects.filter(project_user=request.user)
-                project_list = []
-                for project in projects:
-                    project_details = {}
-                    project_model_output = project.get_project_details()
-                    project_details['project'] = project_details.get('project', project_model_output[0])
-                    project_details['program'] = project_details.get('program', project_model_output[1])
-                    project_details['progress'] = project_details.get('progress', project_model_output[2])
-                    project_list.append(project_details)
-                    context['project_list'] = project_list
-                return render(request, 'dashboard/projects.html', context)
-            else:
+        if 'delete-project' in request.POST.keys():
+            try:
+                ProjectModel.objects.filter(project_name__iexact=request.POST.get('delete-project')).filter(project_user=request.user).delete()
+                return redirect('projects')
+            except:
                 context['error_message'] = 'An error occurred!'
+            context['project_list'] = project_list
+        elif ('in_scope_domains' and 'project_name' and 'program') in request.POST.keys():
+            tempdict = request.POST.copy()
+            tempdict['in_scope_domains'] = tempdict['in_scope_domains'].split('\r\n')
+            request.POST = tempdict
+            context['profile_account'] = request.user.profile
+            if ProjectModel.objects.filter(project_name__iexact=request.POST.get('project_name')).filter(project_user=request.user).exists():
                 context['project_list'] = project_list
+                context['error_message'] = 'Project name already exists!'
+            else:
+                project_form = ProjectForm(request.POST)
+                if project_form.is_valid():
+                    project_model = ProjectModel.objects.create(
+                        project_name = project_form.cleaned_data['project_name'],
+                        program = project_form.cleaned_data['program'],
+                        in_scope_domains = [],
+                        progress = 0,
+                        subdomains = [],
+                        project_user = request.user)
+                    for domain in project_form.cleaned_data['in_scope_domains']:
+                        if domain != None and domain != '':
+                            project_model.in_scope_domains.append(domain.strip())
+                    project_model.save()
+                    messages.success(request, 'Project has been created successfully!')
+                    return redirect('projects')
+                else:
+                    context['error_message'] = 'An error occurred!'
+                    context['project_list'] = project_list
+        else:
+            context['project_list'] = project_list
+        context['profile_account'] = request.user.profile
     else:
-        projects = ProjectModel.objects.filter(project_user=request.user)
-        project_list = []
-        for project in projects:
-            project_details = {}
-            project_model_output = project.get_project_details()
-            project_details['project'] = project_details.get('project', project_model_output[0])
-            project_details['program'] = project_details.get('program', project_model_output[1])
-            project_details['progress'] = project_details.get('progress', project_model_output[2])
-            project_list.append(project_details)
         context['project_list'] = project_list
         context['project_details'] = project_list
         context['profile_account'] = request.user.profile

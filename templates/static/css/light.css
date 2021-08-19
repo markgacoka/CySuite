@@ -29649,6 +29649,7 @@ div.dataTables_wrapper span.select-item {
 	color: #fff;
 	padding: 30px;
 	max-width: 250px;
+    width: 250px;
 }
 
 .course-preview a {
