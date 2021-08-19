@@ -158,6 +158,7 @@ def exploit(request):
 def req_tamperer(request):
     context = {}
     if request.method == 'POST':
+        print(request.POST)
         if request.POST['req_url'] == '' or request.POST['req_url'] == None:
             pass
         else:

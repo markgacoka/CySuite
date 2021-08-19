@@ -25,14 +25,14 @@ def send_request(request, url, method):
         resp = requests.get(url, headers=headers, params=payload)
     elif method == 'POST':
         resp = requests.post(url, data=data, headers=headers)
-    elif method == 'DELETE':
-        resp = requests.delete(url, headers=headers, params=payload)
+    elif method == 'OPTIONS':
+        resp = requests.options(url, headers=headers, params=payload)
     elif method == 'HEAD':
         resp = requests.head(url, headers=headers, params=payload)
-    elif method =='OPTIONS':
-        resp = requests.options(url, headers=headers, params=payload)
-    elif method == 'PUT':
-        resp = requests.put(url, data=data, headers=headers)
+    elif method =='PUT':
+        resp = requests.put(url, headers=headers, params=payload)
+    elif method == 'DELETE':
+        resp = requests.delete(url, data=data, headers=headers)
     else:
         return (None, None)
 
