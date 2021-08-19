@@ -68,7 +68,7 @@ url = "google.com"
 # pdns.enumerate()
 # print(pdns.subdomains) # y n
 
-print(passivetotal_script(url)) # y y [free] [test-again Retry-After]
+# print(passivetotal_script(url)) # y y [free] [test-again Retry-After]
 
 # Search Engines - All don't work at the moment
 # ask = AskEnum(url)
