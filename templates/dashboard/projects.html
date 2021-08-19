@@ -12,6 +12,9 @@ Projects | CySuite
 {% if success_message %}
     <button style="display: none;" class="alert-popup" id="alert-success" name="{{success_message}}" value="success"></button>
 {% endif %}
+{% if error_message %}
+    <button style="display: none;" class="alert-popup" id="alert-danger" name="{{error_message}}" value="danger"></button>
+{% endif %}
 {% if feedback_form.errors %}
     {% for field in feedback_form %}
         {% for error in field.errors %}
@@ -62,7 +65,7 @@ Projects | CySuite
     </form>
 </div>
 {% for project_ele in project_list %}
-    <div class="project-column" style="display: block; float: right;  width: 50%;">
+    <div class="project-column" style="display: block; float: left;  width: 50%;">
         <div class="courses-container">
             <div class="course">
                 <div class="course-preview" style="background-color: #3E4261">
@@ -75,7 +78,7 @@ Projects | CySuite
                         <div style="float: left; width: 60%;">
                             <p class="mb-2 fw-bold">Progress <span class="float-end">{{project_ele|get_item:"progress"}}%</span></p>
                             <div class="progress progress-sm">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="{{project_ele|get_item:"progress"}}" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: {{project_ele|get_item:"progress"}}%;">
                                 </div>
                             </div>
                         </div>
