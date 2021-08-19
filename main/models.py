@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.conf import settings
 from cyauth.models import Account
@@ -30,12 +31,12 @@ class Newsletter(models.Model):
         return self.subscriber + 'Newsletter'
 
 class ProjectModel(models.Model):
-    project_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="projects", default=1, on_delete=models.CASCADE)
+    project_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="projects", on_delete=models.CASCADE)
     project_name = models.CharField(max_length=30, unique=True, null=False, blank=True)
     program = models.TextField(max_length=30, unique=False, null=False, blank=False)
-    in_scope_domains = ArrayField(models.CharField(max_length=250, blank=True), default=list)
-    progress = models.IntegerField(default=100)
-    subdomains = ArrayField(models.CharField(max_length=250, blank=True), default=list)
+    in_scope_domains = ArrayField(models.CharField(max_length=250, blank=True), blank=True, null=True, default=list)
+    progress = models.IntegerField(default=0, blank=True, null=True)
+    subdomains = ArrayField(models.CharField(max_length=250, blank=True), blank=True, null=True, default=list)
 
     class Meta():
         db_table = 'project'
@@ -45,6 +46,9 @@ class ProjectModel(models.Model):
 
     def __str__(self):
         return self.project_user.name + 'Project'
+
+    def get_project_details(self):
+        return [self.project_name, self.program, self.progress]
 
 class PayloadModel(models.Model):
     payload_user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, unique=True, related_name='payload', on_delete=models.CASCADE)

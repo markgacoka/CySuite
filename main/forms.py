@@ -6,6 +6,7 @@ from .models import ProjectModel
 from .models import PayloadModel
 from .models import WordlistModel
 from cyauth.models import Account
+from django.conf import settings
 
 class TransactionForm(forms.ModelForm):
     class Meta:
@@ -41,7 +42,7 @@ class NewsletterForm(forms.ModelForm):
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = ProjectModel
-        fields = ['project_name', 'program', 'in_scope_domains', 'progress', 'subdomains']
+        fields = ['project_name', 'program', 'in_scope_domains']
 
 class WordlistForm(forms.ModelForm):
     class Meta:

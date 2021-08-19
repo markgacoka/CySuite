@@ -15,6 +15,7 @@ from .forms import ProjectForm
 from .forms import WordlistForm
 from .models import PayloadModel
 from .models import WordlistModel
+from .models import ProjectModel
 from PIL import Image
 from django.template.context_processors import csrf
 from django.conf import settings
@@ -71,20 +72,43 @@ def terms_conditions(request):
 def projects(request):
     context = {}
     if request.method == 'POST':
+        tempdict = request.POST.copy()
+        tempdict['in_scope_domains'] = tempdict['in_scope_domains'].split('\r\n')
+        request.POST = tempdict
         context['profile_account'] = request.user.profile
-        project_form = ProjectForm(request.POST)
-        if project_form.is_valid():
-            print(project_form.cleaned_data)
-            print(request.user)
-            project_form.project_user = request.user
-            project_form.progress = 100
-            project_form.subdomains = []
-            project_form.save()
-            context['success_message'] = 'Project has been created!'
-            context['project_form'] = project_form
+        if ProjectModel.objects.filter(project_name__iexact=request.POST.get('project_name')).filter(project_user=request.user).exists():
+            context['error_message'] = 'Project name already present!'
         else:
-            context['error_message'] = 'An error occurred!'
+            project_form = ProjectForm(request.POST)
+            if project_form.is_valid():
+                project_model = ProjectModel.objects.create(
+                    project_name = project_form.cleaned_data['project_name'],
+                    program = project_form.cleaned_data['program'],
+                    in_scope_domains = [],
+                    progress = 0,
+                    subdomains = [],
+                    project_user = request.user)
+                for domain in project_form.cleaned_data['in_scope_domains']:
+                    project_model.in_scope_domains.append(domain)
+                project_model.save()
+                context['success_message'] = 'Project has been created!'
+                context['project_form'] = project_form
+            else:
+                context['error_message'] = 'An error occurred!'
     else:
+        projects = ProjectModel.objects.filter(project_user=request.user)
+        for project in projects:
+            print(project.get_project_details())
+        # wordlist_values = names.return_db_values()
+        # isNone = all(v.name is None for v in wordlist_values)
+        # wordlist_result = {}
+        # if isNone:
+        #     context['wordlist_list'] = ''
+        # else:
+        #     for i in wordlist_values:
+        #         if i.name is not None and i.name != '':
+        #             wordlist_result[i.name.split('/')[-1]] = wordlist_result.get(i.url, i.url)
+        #     context['project_details'] = wordlist_result
         context['profile_account'] = request.user.profile
     return render(request, 'dashboard/projects.html', context)
 
@@ -121,12 +145,15 @@ def exploit(request):
 def req_tamperer(request):
     context = {}
     if request.method == 'POST':
-        url = request.POST.get('req_url')
-        method = request.POST.get('req-method')
-        req_header, resp_header = send_request(request, url, method)
-        context['request_output'] = req_header
-        context['response_output'] = resp_header
-        context['profile_account'] = request.user.profile
+        if request.POST['req_url'] == '' or request.POST['req_url'] == None:
+            pass
+        else:
+            url = request.POST.get('req_url')
+            method = request.POST.get('req-method')
+            req_header, resp_header = send_request(request, url, method)
+            context['request_output'] = req_header
+            context['response_output'] = resp_header
+            context['profile_account'] = request.user.profile
     else:
         context['profile_account'] = request.user.profile
     return render(request, 'dashboard/req_tamperer.html', context)
@@ -134,7 +161,6 @@ def req_tamperer(request):
 def wordlist_gen(request):
     context = {}
     if request.method == 'POST':
-        print(request.POST)
         names = WordlistModel.objects.get(wordlist_user=request.user)
         wordlist_values = names.return_db_values()
         isNone = all(v.name is None for v in wordlist_values)
@@ -187,14 +213,21 @@ def wordlist_gen(request):
                 wordlist_form.save()
             return redirect('wordlist_gen')
         elif 'wordlist_url' in request.POST.keys():
-            wordlist_url = request.POST.get('wordlist_url')
-            wordlist = next(extract_wordlist(wordlist_url))
-            length = len(wordlist)
-            status = url_status(wordlist_url)
-            context['url_status'] = status
-            context['wordlist_len'] = length
-            context['wordlist_output'] = wordlist
-            context['profile_account'] = request.user.profile
+            if request.POST['wordlist_url'] == '' or request.POST['wordlist_url'] == None:
+                context['wordlist_list'] = wordlist_result
+                context['url_status'] = 'N/A'
+                context['wordlist_len'] = 0
+                context['wordlist_output'] = ''
+                context['profile_account'] = request.user.profile
+            else:
+                wordlist_url = request.POST.get('wordlist_url')
+                wordlist = next(extract_wordlist(wordlist_url))
+                length = len(wordlist)
+                status = url_status(wordlist_url)
+                context['url_status'] = status
+                context['wordlist_len'] = length
+                context['wordlist_output'] = wordlist
+                context['profile_account'] = request.user.profile
         elif 'download' in request.POST.keys():
             buffer = io.StringIO()
             wordlist_file = File(buffer, 'w')

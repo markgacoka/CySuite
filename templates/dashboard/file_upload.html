@@ -37,7 +37,7 @@ File Upload | CySuite
 								</select>
 							</div>
 							<div class="mr-3" style="width: 35%; float: left;">
-								<input class="form-control" type="text" pattern="[a-zA-Z0-9.%]*" placeholder="file.ext" name="filename" style="font-size: 0.9rem;" required></input>
+								<input class="form-control" type="text" pattern="^[a-zA-Z0-9._ -]+$" placeholder="file.ext" name="filename" style="font-size: 0.9rem;" required></input>
 							</div>
 						</div>
 						{% if success_message %}

@@ -48,7 +48,7 @@ Projects | CySuite
             </div>
             <h3>In scope domains</h3>
             <h6>Add each domain seperated by a new line (*.site.com allowed)</h3>
-            <textarea style="width: 100%; height: 15rem;" name="in_scope_domains"></textarea>
+            <textarea style="width: 100%; height: 15rem;" type="text" id="domains" name="in_scope_domains"></textarea>
             <button class="scan-btn" type="submit" style="background-color: #3E4261">
                 <i class="fa fa-search" style="color: white;"></i>&nbsp;Scan
             </button>
@@ -119,4 +119,7 @@ Projects | CySuite
         elements.removeClass('active');
     });
 </script>
+{% comment %} <script>
+    const textareaContent = document.getElementById('domains').value.split('\n');
+</script> {% endcomment %}
 {% endblock %}
