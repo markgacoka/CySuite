@@ -168,6 +168,10 @@ def req_tamperer(request):
             data = [request.POST.get('data-key'), request.POST.get('data-value')]
             auth = [request.POST.get('user'), request.POST.get('pass')]
             header = [request.POST.get('header-name'), request.POST.get('header-value')]
+            if (request.POST.get('req-method') == 'GET' or request.POST.get('req-method') == 'HEAD') and (request.POST.get('data-key') != '' and request.POST.get('data-key') != ''):
+                context['error_message'] = '[GET/HEAD] The data is already passed through the query string.'
+                context['profile_account'] = request.user.profile
+                return render(request, 'dashboard/req_tamperer.html', context)
             req_header, resp_header = send_request(request, url, method, data, auth, header)
             context['request_output'] = req_header
             context['response_output'] = resp_header

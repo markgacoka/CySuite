@@ -4,6 +4,12 @@
 Request Tamperer | CySuite
 {% endblock %}
 {% block content %}
+{% if success_message %}
+	<button style="display: none;" class="alert-popup" id="alert-success" name="{{success_message}}" value="success"></button>
+{% endif %}
+{% if error_message %}
+	<button style="display: none;" class="alert-popup" id="alert-danger" name="{{error_message}}" value="danger"></button>
+{% endif %}
 <form method="post">
 {% csrf_token %}
 	<div class="container-fluid p-0">
