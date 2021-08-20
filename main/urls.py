@@ -23,7 +23,7 @@ urlpatterns = [
     path('req-tamperer/', views.req_tamperer, name='req_tamperer'),
     path('wordlist-gen/', views.wordlist_gen, name='wordlist_gen'),
     path('decoder/', views.decoder, name='decoder'),
-    path('file-upload/', views.file_upload, name='file_upload'),
+    path('injector/', views.injector, name='injector'),
     #notes
     path('notes/post-1', views.post, name='post'),
 ]

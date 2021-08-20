@@ -81,7 +81,7 @@ File Upload | CySuite
 						</tr>
 						<tr>
 							<th><h4>Status</h4></th>
-							{% if status == 'Injected successfully' %}
+							{% if status == 'Injected successfully' or status == 'Viewing full hex code' %}
 							<td><span class="badge bg-success">{{status}}</span></td>
 							{% else %}
 							<td><span class="badge bg-warning">{{status}}</span></td>

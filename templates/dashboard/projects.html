@@ -8,7 +8,7 @@ Projects | CySuite
 {% block content %}
 <div class="card" style="padding: 1.5rem 20px 1.5rem 20px; width: 100%;">
     <h2 style="float: left; width: 40%; padding: 0; margin: 0;">Add a new project</h2>
-    <button class="asset-btn" style="background-color: #3E4261; float: left; width: 20%; min-width: max-content; position: absolute; right: 0; top: 20%; margin-right: 20px;"><i class="fa fa-plus" style="color: white;"></i>&emsp;Add Asset</button>
+    <button class="asset-btn" id="add-project" style="background-color: #3E4261; float: left; width: 20%; min-width: max-content; position: absolute; right: 0; top: 20%; margin-right: 20px;"><i class="fa fa-plus" style="color: white;"></i>&emsp;Add Asset</button>
 </div>
 {% if success_message %}
     <button style="display: none;" class="alert-popup" id="alert-success" name="{{success_message}}" value="success"></button>
@@ -110,8 +110,8 @@ Projects | CySuite
 {% endblock %}
 {% block js %}
 <script>
-    var elements = $('.modal-overlay, .modal');   
-    $('button').click(function(){
+    var elements = $('.modal-overlay, .modal'); 
+    $('.asset-btn').click(function(){
         elements.addClass('active');
     });
     $('.close-modal').click(function(){
