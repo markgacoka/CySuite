@@ -159,7 +159,6 @@ def exploit(request):
 def req_tamperer(request):
     context = {}
     if request.method == 'POST':
-        print(request.POST)
         if request.POST['req_url'] == '' or request.POST['req_url'] == None:
             pass
         else:
@@ -173,6 +172,10 @@ def req_tamperer(request):
                 context['profile_account'] = request.user.profile
                 return render(request, 'dashboard/req_tamperer.html', context)
             req_header, resp_header = send_request(request, url, method, data, auth, header)
+            if req_header == None and resp_header == None:
+                context['error_message'] = 'Invalid URL format.'
+                context['profile_account'] = request.user.profile
+                return render(request, 'dashboard/req_tamperer.html', context)
             context['request_output'] = req_header
             context['response_output'] = resp_header
             context['profile_account'] = request.user.profile
