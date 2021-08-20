@@ -19,15 +19,16 @@ def insert_item(dic, item={}, pos=None):
 def send_request(request, url, method, data, auth, header):
     headers = {}
     payload = {}
-    auth_dict = {}
+    auth_arr = []
     params = {}
     full_url = yarl.URL(url)
 
     headers['User-Agent'] = headers.get(request.META['HTTP_USER_AGENT'], 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36')
+    headers[header[0]] = headers.get(header[1], header[1])
     if data[0] != '':
          payload = data
     if auth[0] != '':
-        auth_dict = auth
+        auth_arr = auth
     if full_url.query_string != '':
         queries = full_url.query_string.split('&')
         for query in queries:
@@ -38,13 +39,15 @@ def send_request(request, url, method, data, auth, header):
 
     print(headers)
     print(payload)
-    print(auth_dict)
-    print(params)
+    print(auth_arr)
     print(full_url.parent)
 
     if method == 'GET':
         # headers | no payload | auth_dict | params
-        resp = requests.get(url, headers=headers, params=params, auth=('', ''))
+        if len(auth_arr) != 0:
+            resp = requests.get(url, headers=headers, params=params, auth=(str(auth_arr[0]), str(auth_arr[1])))
+        else:
+            resp = requests.get(url, headers=headers, params=params)
         print(resp.status_code)
     elif method == 'POST':
         resp = requests.post(url, data=payload, headers=headers)
