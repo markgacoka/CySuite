@@ -165,7 +165,10 @@ def req_tamperer(request):
         else:
             url = request.POST.get('req_url')
             method = request.POST.get('req-method')
-            req_header, resp_header = send_request(request, url, method)
+            data = [request.POST.get('data-key'), request.POST.get('data-value')]
+            auth = [request.POST.get('user'), request.POST.get('pass')]
+            header = [request.POST.get('header-name'), request.POST.get('header-value')]
+            req_header, resp_header = send_request(request, url, method, data, auth, header)
             context['request_output'] = req_header
             context['response_output'] = resp_header
             context['profile_account'] = request.user.profile
