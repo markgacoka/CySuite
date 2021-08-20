@@ -34,7 +34,7 @@ def send_request(request, url, method, data, auth, header):
             query_part = query.split('=')
             params[query_part[0]] = query_part[1]
 
-    params = full_url.query
+    params = dict(full_url.query)
 
     print(headers)
     print(payload)
