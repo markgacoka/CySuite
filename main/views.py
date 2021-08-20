@@ -82,7 +82,6 @@ def projects(request):
         project_list.append(project_details)
 
     if request.method == 'POST':
-        print(request.POST)
         if 'delete-project' in request.POST.keys():
             try:
                 ProjectModel.objects.filter(project_name__iexact=request.POST.get('delete-project')).filter(project_user=request.user).delete()
