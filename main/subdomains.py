@@ -12,6 +12,7 @@ from projectsonar2 import projectsonar_script2
 from riddler import riddler_script
 from shodan import shodan_script
 from threatcrowd import threatcrowd_script
+from threatcrowd2 import ThreatCrowd
 from virustotal import virustotal_script
 from virustotal2 import Virustotal
 
@@ -57,78 +58,86 @@ def cleanup(subdomain_lst):
                     subdomain_lst[idx] = str(yarl.URL(subdomain_yarl_result.origin()))[8:]
                 else:
                     subdomain_lst[idx] = str(yarl.URL(subdomain_yarl_result.origin()))[7:]
-    return subdomain_lst
+    return list(set(subdomain_lst))
 
 def subdomain_list(domain):
     final_subdomains = []
 
     # APIs
-    final_subdomains += anubis_script(domain)
-    final_subdomains += findsubdomains_script(domain)
-    final_subdomains += hackertarget_script(domain)
-    final_subdomains += openthreat_script(domain)
-    final_subdomains += projectsonar_script(domain)
-    final_subdomains += projectsonar_script2(domain)
-    final_subdomains += threatcrowd_script(domain)
+    # final_subdomains += anubis_script(domain)
+    # final_subdomains += findsubdomains_script(domain)
+    # final_subdomains += hackertarget_script(domain)
+    # final_subdomains += openthreat_script(domain)
+    # final_subdomains += projectsonar_script(domain)
+    # final_subdomains += projectsonar_script2(domain)
+    # final_subdomains += threatcrowd_script(domain)
     # Needs token
-    final_subdomains += shodan_script(domain)
-    final_subdomains += riddler_script(domain)
-    final_subdomains += virustotal_script(domain)
+    # final_subdomains += shodan_script(domain)
+    # final_subdomains += riddler_script(domain)
+    # final_subdomains += virustotal_script(domain)
 
     # Archives
-    final_subdomains += waybackmachine_script(domain)
+    # final_subdomains += waybackmachine_script(domain)
     # Does not work
     # final_subdomains += commoncrawl_script(domain)
 
     # Certificates
-    final_subdomains += certspotter_script(domain)
-    final_subdomains += crt_script(domain)
+    # final_subdomains += certspotter_script(domain)
+    # final_subdomains += crt_script(domain)
     # Needs token
-    final_subdomains += censys_script(domain)
+    # final_subdomains += censys_script(domain)
     # Does not work
     # final_subdomains += entrust_certificates_script(domain)
     # final_subdomains += google_transparency_script(domain)
 
     # DNS Databases
-    pdns = PassiveDNS(domain)
-    pdns.enumerate()
-    final_subdomains += pdns.subdomains
+    # pdns = PassiveDNS(domain)
+    # pdns.enumerate()
+    # final_subdomains += pdns.subdomains
     # Needs token
-    final_subdomains += dnstrails_script(domain)
+    # final_subdomains += dnstrails_script(domain)
     # Does not work
     # final_subdomains += dnsdb_script(domain)
     # Both needs token and does not work
     # final_subdomains += passivetotal_script(domain)
 
     # Search engines
-    ask = AskEnum(domain)
-    ask.enumerate()
-    final_subdomains += ask.subdomains
+    # ask = AskEnum(domain)
+    # ask.enumerate()
+    # final_subdomains += ask.subdomains
 
-    baidu = BaiduEnum(domain)
-    baidu.enumerate()
-    final_subdomains += baidu.subdomains
+    # baidu = BaiduEnum(domain)
+    # baidu.enumerate()
+    # final_subdomains += baidu.subdomains
 
-    bing = BingEnum(domain)
-    bing.enumerate()
-    final_subdomains += bing.subdomains
+    # bing = BingEnum(domain)
+    # bing.enumerate()
+    # final_subdomains += bing.subdomains
 
-    dnsdumpster = DNSdumpster(domain)
-    dnsdumpster.enumerate()
-    final_subdomains += dnsdumpster.subdomains
+    # dnsdumpster = DNSdumpster(domain)
+    # dnsdumpster.enumerate()
+    # final_subdomains += dnsdumpster.subdomains
 
-    netcraft = NetcraftEnum(domain)
-    netcraft.enumerate()
-    final_subdomains += netcraft.subdomains
+    # netcraft = NetcraftEnum(domain)
+    # netcraft.enumerate()
+    # final_subdomains += netcraft.subdomains
 
-    yahoo = YahooEnum(domain)
-    yahoo.enumerate()
-    final_subdomains += yahoo.subdomains
+    # yahoo = YahooEnum(domain)
+    # yahoo.enumerate()
+    # final_subdomains += yahoo.subdomains
+
+    # With threading - Search Engines
+    if not domain.startswith('http://') or not domain.startswith('https://'):
+        new_domain = 'http://' + domain
+    else:
+        new_domain = domain
+
+
 
     print("Cleaning up...")
     final_subdomains = cleanup(final_subdomains)
 
-    yield set(final_subdomains)
+    yield final_subdomains
     
 url = "coda.io"
 print(next(subdomain_list(url)))

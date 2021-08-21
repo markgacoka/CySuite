@@ -6,18 +6,16 @@ def dnsdb_script(domain):
     headers = {"user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:52.0) Gecko/20100101 Firefox/52.0"}
     url = "http://www.dnsdb.org/{0}/".format(domain)
 
-    scrapper = create_scraper()
-    response = scrapper.get(url, headers=headers)
+    try:
+        scrapper = create_scraper()
+        response = scrapper.get(url, headers=headers)
+        soup = BeautifulSoup(response.text, "html.parser")
 
-    soup = BeautifulSoup(response.text, "html.parser")
-
-    for link in soup.findAll("a"):
-        try:
-            if link.string is not None:
-                dnsdb.append(link.string)
-
-        except KeyError:
-            pass
-
-    dnsdb = set(dnsdb)
-    return dnsdb
+        for link in soup.findAll("a"):
+            try:
+                if link.string is not None:
+                    dnsdb.append(link.string)
+        return dnsdb
+    except:
+        print("An error occurred while scraping.")
+    return []
