@@ -18,5 +18,4 @@ def virustotal_script(domain):
                 VT.append(sd)
 
         VT = set(VT)
-        print("  \__ {0}: {1}".format("Unique subdomains found", len(VT)))
         return VT

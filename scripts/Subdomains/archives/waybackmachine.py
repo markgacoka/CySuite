@@ -19,5 +19,4 @@ def waybackmachine_script(domain):
             pass
 
     WB = set(WB)
-    print("  \__ {0}: {1}".format("Unique subdomains found", len(WB)))
     return WB

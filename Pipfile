@@ -14,6 +14,8 @@ django-allauth = "*"
 pillow = "*"
 pypng = "*"
 puremagic = "*"
+pylint-django = "*"
+cfscrape = "*"
 
 [dev-packages]
 
