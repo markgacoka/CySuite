@@ -8,26 +8,34 @@ def censys_script(domain):
     SECRET = os.environ.get('CENSYS_SECRET')
 
     if UID == "" or SECRET == "":
-        print("  \__", "No Censys API credentials configured", "red")
+        print("No Censys API credentials configured")
         return []
 
     else:
         payload = {"query": domain}
+        try:
+            res = requests.post(API_URL + "/search/certificates", json=payload, auth=(UID, SECRET), timeout=10)
+            res.raise_for_status()
 
-        res = requests.post(API_URL + "/search/certificates", json=payload, auth=(UID, SECRET))
+            if res.status_code == 200:
+                C = re.findall("CN=([\w\.\-\d]+)\." + domain, str(res.content))
+                numberOfPages = re.findall("pages\":\s(\d+)?}", str(res.content))
 
-        if res.status_code == 429:
-            print("  \__", "Rate limit exceeded. See https://www.censys.io/account for rate limit details.", "red")
-            return C
+                for page in range(2, int(numberOfPages[0])):
+                    payload = {"query": domain, "page": page}
+                    res = requests.post(API_URL + "/search/certificates", json=payload, auth=(UID, SECRET))
+                    tempC = re.findall("CN=([\w\.\-\d]+)\." + domain, str(res.content))
+                    C = C + tempC
 
-        C = re.findall("CN=([\w\.\-\d]+)\." + domain, str(res.content))
-        numberOfPages = re.findall("pages\":\s(\d+)?}", str(res.content))
-
-        for page in range(2, int(numberOfPages[0]) + 1):
-            payload = {"query": domain, "page": page}
-            res = requests.post(API_URL + "/search/certificates", json=payload, auth=(UID, SECRET))
-            tempC = re.findall("CN=([\w\.\-\d]+)\." + domain, str(res.content))
-            C = C + tempC
-
-        C = set(C)
-        return C
+                C = set(C)
+                return C
+            else:
+                return C
+        except requests.exceptions.RequestException as err:
+            print ("Request Exception:", err)
+        except requests.exceptions.HTTPError as errh:
+            print ("HTTP Error:", errh)
+        except requests.exceptions.ConnectionError as errc:
+            print ("Connection Error:", errc)
+        except requests.exceptions.Timeout as errt:
+            print ("Timeout Error:", errt)  
