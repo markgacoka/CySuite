@@ -19,21 +19,32 @@ def shodan_script(domain):
         print("  \__", "No Riddler API credentials configured")
         return []
     else:
-        auth_response = requests.get('https://api.shodan.io/dns/domain/' + domain + '?key=' + SHODAN_API)
-        data = json.loads(auth_response.text)
-        if 'error' in data:
-            shodan = []
-        else:
-            for item in data["data"]:
-                entry = item["subdomain"]  
-                record_type = item["type"]
-                value = item["value"]
-                if record_type == 'CNAME' and domain in value: 
-                    delim = value.split('.')
-                    match = delim[-2] + '.' + delim[-1]
-                    if match == domain:
-                        subdomains.add(value)
-            for url in sorter(subdomains): 
-                shodan.append(url)
-            shodan = set(shodan)
-    return shodan
+        try:
+            res = requests.get('https://api.shodan.io/dns/domain/' + domain + '?key=' + SHODAN_API, timeout=10)
+            res.raise_for_status()
+            data = json.loads(res.text)
+            if 'error' in data:
+                shodan = []
+            else:
+                for item in data["data"]:
+                    entry = item["subdomain"]  
+                    record_type = item["type"]
+                    value = item["value"]
+                    if record_type == 'CNAME' and domain in value: 
+                        delim = value.split('.')
+                        match = delim[-2] + '.' + delim[-1]
+                        if match == domain:
+                            subdomains.add(value)
+
+                for url in sorter(subdomains): 
+                    shodan.append(url)
+            return shodan
+        except requests.exceptions.RequestException as err:
+            print ("Request Exception:", err)
+        except requests.exceptions.HTTPError as errh:
+            print ("HTTP Error:", errh)
+        except requests.exceptions.ConnectionError as errc:
+            print ("Connection Error:", errc)
+        except requests.exceptions.Timeout as errt:
+            print ("Timeout Error:", errt) 
+        return []

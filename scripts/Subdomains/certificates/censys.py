@@ -26,11 +26,8 @@ def censys_script(domain):
                     res = requests.post(API_URL + "/search/certificates", json=payload, auth=(UID, SECRET))
                     tempC = re.findall("CN=([\w\.\-\d]+)\." + domain, str(res.content))
                     C = C + tempC
-
-                C = set(C)
                 return C
-            else:
-                return C
+            return C
         except requests.exceptions.RequestException as err:
             print ("Request Exception:", err)
         except requests.exceptions.HTTPError as errh:
@@ -38,4 +35,5 @@ def censys_script(domain):
         except requests.exceptions.ConnectionError as errc:
             print ("Connection Error:", errc)
         except requests.exceptions.Timeout as errt:
-            print ("Timeout Error:", errt)  
+            print ("Timeout Error:", errt)
+        return C

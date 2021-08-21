@@ -1,22 +1,24 @@
-import json, threading
+import json
+import multiprocessing
+import urllib.parse as urlparse
 
-class ThreatCrowd(EnumratorBaseThreaded):
+import sys
+sys.path.append('../search_engines')
+from utils import enumeratorBaseThreaded
+
+class ThreatCrowd(enumeratorBaseThreaded):
     def __init__(self, domain, subdomains=None, q=None):
         subdomains = subdomains or []
         base_url = 'https://www.threatcrowd.org/searchApi/v2/domain/report/?domain={domain}'
-        self.domain = domain 
-        self.queryurl = 'https://www.threatcrowd.org/searchApi/v2/domain/report/?domain={0}'.format(self.domain)
         self.engine_name = "ThreatCrowd"
-        self.lock = threading.Lock()
         self.q = q
         super(ThreatCrowd, self).__init__(base_url, self.engine_name, domain, subdomains, q=q)
         return
 
     def req(self, url):
         try:
-            resp = self.session.get(self.queryurl, headers=self.headers, timeout=self.timeout)
-        except Exception as e:
-            print("ERROR ", e)
+            resp = self.session.get(url, headers=self.headers, timeout=self.timeout)
+        except Exception:
             resp = None
 
         return self.get_response(resp)
@@ -35,7 +37,6 @@ class ThreatCrowd(EnumratorBaseThreaded):
                 if not subdomain.endswith(self.domain):
                     continue
                 if subdomain not in self.subdomains and subdomain != self.domain:
-                    print("{0} : {1}".format(self.engine_name, subdomain))
                     self.subdomains.append(subdomain.strip())
         except Exception as e:
             pass

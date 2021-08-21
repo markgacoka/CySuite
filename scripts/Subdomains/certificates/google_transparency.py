@@ -21,13 +21,22 @@ def google_transparency_script(domain):
             url = "".join([baseURL, "?domain=", domain, "&include_expired=true&include_subdomains=true"])
         else:
             url = "".join([baseURL, "/page?domain=", domain, "&include_expired=true&include_subdomains=true&p=", token])
-        response = requests.get(url, headers=headers)
-        token, hostnames = parseResponse(response.text, domain)
-        for hostname in hostnames:
-            GTR.append(hostname)
+        try:
+            res = requests.get(url, headers=headers, timeout=10)
+            res.raise_for_status()
+            token, hostnames = parseResponse(res.text, domain)
+            for hostname in hostnames:
+                GTR.append(hostname)
+            if token == "null":
+                break
+            return GTR
+        except requests.exceptions.RequestException as err:
+            print ("Request Exception:", err)
+        except requests.exceptions.HTTPError as errh:
+            print ("HTTP Error:", errh)
+        except requests.exceptions.ConnectionError as errc:
+            print ("Connection Error:", errc)
+        except requests.exceptions.Timeout as errt:
+            print ("Timeout Error:", errt)
 
-        if token == "null":
-            break
-
-    GTR = set(GTR)
     return GTR

@@ -1,31 +1,25 @@
-import re
-import os
-import threading
 import multiprocessing
-import requests
 import urllib.parse as urlparse
+import requests
 
-class EnumratorBase(object):
-    def __init__(self, base_url, engine_name, domain, subdomains=None):
+def subdomain_sorting_key(hostname):
+    parts = hostname.split('.')[::-1]
+    if parts[-1] == 'www':
+        return parts[:-1], 1
+    return parts, 0
+
+class enumeratorBase(object):
+    def __init__(self, base_url, engine_name, domain, subdomains=None, silent=False, verbose=True):
         subdomains = subdomains or []
         self.domain = urlparse.urlparse(domain).netloc
         self.session = requests.Session()
         self.subdomains = []
         self.timeout = 25
         self.base_url = base_url
-        self.engine_name = engine_name
-        self.headers = {
-              'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
-              'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-              'Accept-Language': 'en-US,en;q=0.8',
-              'Accept-Encoding': 'gzip',
-          }
-
-    def print_(self, text):
-        return
+        self.headers = {}
 
     def send_req(self, query, page_no=1):
-        
+
         url = self.base_url.format(query=query, page_no=page_no)
         try:
             resp = self.session.get(url, headers=self.headers, timeout=self.timeout)
@@ -80,11 +74,8 @@ class EnumratorBase(object):
 
         while flag:
             query = self.generate_query()
-            if(query):
-                count = query.count(self.domain)  # finding the number of subdomains found so far
-            else:
-                count = 0
-                
+            count = query.count(self.domain)  # finding the number of subdomains found so far
+
             # if they we reached the maximum number of subdomains in search query
             # then we should go over the pages
             if self.check_max_subdomains(count):
@@ -113,13 +104,11 @@ class EnumratorBase(object):
 
         return self.subdomains
 
-
-class EnumratorBaseThreaded(multiprocessing.Process, EnumratorBase):
-    def __init__(self, base_url, engine_name, domain, subdomains=None, q=None, lock=threading.Lock()):
+class enumeratorBaseThreaded(multiprocessing.Process, enumeratorBase):
+    def __init__(self, base_url, engine_name, domain, subdomains=None, q=None, silent=False, verbose=True):
         subdomains = subdomains or []
-        EnumratorBase.__init__(self, base_url, engine_name, domain, subdomains)
+        enumeratorBase.__init__(self, base_url, engine_name, domain, subdomains, silent=silent, verbose=verbose)
         multiprocessing.Process.__init__(self)
-        self.lock = lock
         self.q = q
         return
 
