@@ -1,7 +1,8 @@
 import time, re
 from urllib.parse import urlparse
+from utils import enumeratorBaseThreaded
 
-class GoogleEnum(EnumratorBaseThreaded):
+class GoogleEnum(enumeratorBaseThreaded):
     def __init__(self, domain, subdomains=None, q=None):
         subdomains = subdomains or []
         base_url = "https://google.com/search?q={query}&btnG=Search&hl=en-US&biw=&bih=&gbv=1&start={page_no}&filter=0"
@@ -23,16 +24,14 @@ class GoogleEnum(EnumratorBaseThreaded):
                     link = "http://" + link
                 subdomain = urlparse.urlparse(link).netloc
                 if subdomain and subdomain not in self.subdomains and subdomain != self.domain:
-                    print("{0}: {1}".format(self.engine_name, subdomain))
                     self.subdomains.append(subdomain.strip())
         except Exception:
             pass
         return links_list
 
     def check_response_errors(self, resp):
-        if (type(resp) is str and 'Our systems have detected unusual traffic' in resp):
-            print("[!] Error: Google probably now is blocking our requests" )
-            print("[~] Finished now the Google Enumeration ...")
+        if (type(resp) is str) and 'Our systems have detected unusual traffic' in resp:
+            print("[!] Error: Google probably now is blocking our requests")
             return False
         return True
 

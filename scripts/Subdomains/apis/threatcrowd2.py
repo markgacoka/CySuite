@@ -3,7 +3,7 @@ import multiprocessing
 import urllib.parse as urlparse
 
 import sys
-sys.path.append('../search_engines')
+sys.path.insert(0, 'scripts/Subdomains/search_engines')
 from utils import enumeratorBaseThreaded
 
 class ThreatCrowd(enumeratorBaseThreaded):

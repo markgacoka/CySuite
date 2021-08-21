@@ -1,9 +1,10 @@
 import sys
 import yarl
+import multiprocessing
 
 # APIs
 sys.path.insert(1, 'scripts/Subdomains/apis')
-from .anubis import anubis_script
+from anubis import anubis_script
 from findsubdomains import findsubdomains_script
 from hackertarget import hackertarget_script
 from openthreat import openthreat_script
@@ -26,6 +27,7 @@ sys.path.insert(1, 'scripts/Subdomains/certificates')
 from censys import censys_script
 from certspotter import certspotter_script
 from crt import crt_script
+from crt2 import CrtSearch
 from entrust_certificates import entrust_certificates_script
 from google_transparency import google_transparency_script
 
@@ -40,9 +42,12 @@ from passivetotal import passivetotal_script
 sys.path.insert(1, 'scripts/Subdomains/search_engines')
 from ask import AskEnum
 from baidu import BaiduEnum
+from bing import BingEnum
 from dnsdumpster import DNSdumpster
+from google import GoogleEnum
 from netcraft import NetcraftEnum
 from yahoo import YahooEnum
+from threaders import main
 
 def cleanup(subdomain_lst):
     for idx, subdomain in enumerate(subdomain_lst):
@@ -64,78 +69,44 @@ def subdomain_list(domain):
     final_subdomains = []
 
     # APIs
-    # final_subdomains += anubis_script(domain)
-    # final_subdomains += findsubdomains_script(domain)
-    # final_subdomains += hackertarget_script(domain)
-    # final_subdomains += openthreat_script(domain)
-    # final_subdomains += projectsonar_script(domain)
-    # final_subdomains += projectsonar_script2(domain)
-    # final_subdomains += threatcrowd_script(domain)
+    final_subdomains += anubis_script(domain)
+    final_subdomains += findsubdomains_script(domain)
+    final_subdomains += hackertarget_script(domain)
+    final_subdomains += openthreat_script(domain)
+    final_subdomains += projectsonar_script(domain)
+    final_subdomains += projectsonar_script2(domain)
+    final_subdomains += threatcrowd_script(domain)
+
+    final_subdomains += waybackmachine_script(domain)
+
+    final_subdomains += certspotter_script(domain)
+    final_subdomains += crt_script(domain)
+
+    # GoogleEnum and VirusTotal removed
+    chosenEnums = [CrtSearch, ThreatCrowd, BaiduEnum, YahooEnum, BingEnum, AskEnum, NetcraftEnum, DNSdumpster, PassiveDNS]
+    threaders = main(domain, chosenEnums)
+    final_subdomains += threaders
+
+    print("Cleaning up...")
+    final_subdomains = cleanup(final_subdomains)
+
+    
     # Needs token
     # final_subdomains += shodan_script(domain)
     # final_subdomains += riddler_script(domain)
     # final_subdomains += virustotal_script(domain)
-
-    # Archives
-    # final_subdomains += waybackmachine_script(domain)
-    # Does not work
-    # final_subdomains += commoncrawl_script(domain)
-
-    # Certificates
-    # final_subdomains += certspotter_script(domain)
-    # final_subdomains += crt_script(domain)
-    # Needs token
     # final_subdomains += censys_script(domain)
-    # Does not work
+    # final_subdomains += dnstrails_script(domain)
+
+    # TO-DO
+    # final_subdomains += commoncrawl_script(domain)
     # final_subdomains += entrust_certificates_script(domain)
     # final_subdomains += google_transparency_script(domain)
-
-    # DNS Databases
-    # pdns = PassiveDNS(domain)
-    # pdns.enumerate()
-    # final_subdomains += pdns.subdomains
-    # Needs token
-    # final_subdomains += dnstrails_script(domain)
-    # Does not work
     # final_subdomains += dnsdb_script(domain)
-    # Both needs token and does not work
+    
+    # Also needs token
     # final_subdomains += passivetotal_script(domain)
-
-    # Search engines
-    # ask = AskEnum(domain)
-    # ask.enumerate()
-    # final_subdomains += ask.subdomains
-
-    # baidu = BaiduEnum(domain)
-    # baidu.enumerate()
-    # final_subdomains += baidu.subdomains
-
-    # bing = BingEnum(domain)
-    # bing.enumerate()
-    # final_subdomains += bing.subdomains
-
-    # dnsdumpster = DNSdumpster(domain)
-    # dnsdumpster.enumerate()
-    # final_subdomains += dnsdumpster.subdomains
-
-    # netcraft = NetcraftEnum(domain)
-    # netcraft.enumerate()
-    # final_subdomains += netcraft.subdomains
-
-    # yahoo = YahooEnum(domain)
-    # yahoo.enumerate()
-    # final_subdomains += yahoo.subdomains
-
-    # With threading - Search Engines
-    if not domain.startswith('http://') or not domain.startswith('https://'):
-        new_domain = 'http://' + domain
-    else:
-        new_domain = domain
-
-
-
-    print("Cleaning up...")
-    final_subdomains = cleanup(final_subdomains)
+    
 
     yield final_subdomains
     

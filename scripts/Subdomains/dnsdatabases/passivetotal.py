@@ -21,10 +21,9 @@ def passivetotal_script(domain):
                 print("Quota exceeded.")
                 return []
 
-            try:
-                for subdomain in res.json()["subdomains"]:
-                    PT.append("%s.%s" % (subdomain, domain))
-                return PT
+            for subdomain in res.json()["subdomains"]:
+                PT.append("%s.%s" % (subdomain, domain))
+            return PT
         except requests.exceptions.RequestException as err:
             print ("Request Exception:", err)
         except requests.exceptions.HTTPError as errh:

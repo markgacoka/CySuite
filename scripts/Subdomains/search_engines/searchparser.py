@@ -1,8 +1,6 @@
 import re
 
-
 class Parser:
-
     def __init__(self, results, word):
         self.results = results
         self.word = word

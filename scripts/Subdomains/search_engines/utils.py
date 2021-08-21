@@ -1,15 +1,9 @@
 import multiprocessing
-import urllib.parse as urlparse
 import requests
-
-def subdomain_sorting_key(hostname):
-    parts = hostname.split('.')[::-1]
-    if parts[-1] == 'www':
-        return parts[:-1], 1
-    return parts, 0
+import urllib.parse as urlparse
 
 class enumeratorBase(object):
-    def __init__(self, base_url, engine_name, domain, subdomains=None, silent=False, verbose=True):
+    def __init__(self, base_url, engine_name, domain, subdomains=None):
         subdomains = subdomains or []
         self.domain = urlparse.urlparse(domain).netloc
         self.session = requests.Session()
@@ -105,9 +99,9 @@ class enumeratorBase(object):
         return self.subdomains
 
 class enumeratorBaseThreaded(multiprocessing.Process, enumeratorBase):
-    def __init__(self, base_url, engine_name, domain, subdomains=None, q=None, silent=False, verbose=True):
+    def __init__(self, base_url, engine_name, domain, subdomains=None, q=None):
         subdomains = subdomains or []
-        enumeratorBase.__init__(self, base_url, engine_name, domain, subdomains, silent=silent, verbose=verbose)
+        enumeratorBase.__init__(self, base_url, engine_name, domain, subdomains)
         multiprocessing.Process.__init__(self)
         self.q = q
         return
