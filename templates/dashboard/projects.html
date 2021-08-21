@@ -100,7 +100,7 @@ Projects | CySuite
                             </div>
                         </div>
                         <div style="float: right; width: 30%;">
-                            <button class="project-btn btn-width" style="background-color: #3E4261; min-width: max-content;">View&emsp;<i class="hide fa fa-angle-double-right"></i></button>
+                            <button class="project-btn btn-width" id="view-btn" value="{{project_ele|get_item:"project"}}" style="background-color: #3E4261; min-width: max-content;">View&emsp;<i class="hide fa fa-angle-double-right"></i></button>
                         </div>
                 </div>
             </div>
@@ -116,6 +116,28 @@ Projects | CySuite
     });
     $('.close-modal').click(function(){
         elements.removeClass('active');
+    });
+</script>
+<script>
+	function viewProject(project){
+		var token = '{{csrf_token}}';
+		$.ajax({
+			headers: { "X-CSRFToken": token },
+			type: 'POST',
+			data: {"view": project},
+			success: function(response){
+                if(response.status == 1){
+                    window.location.href = "/subdomain-enum";
+                }
+			}
+		});
+	}
+
+    $(document).ready(function(){
+        $('#view-btn').click(function(){
+            var project = this.value;
+        viewProject(project);
+        });
     });
 </script>
 {% endblock %}

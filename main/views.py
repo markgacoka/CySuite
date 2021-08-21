@@ -89,6 +89,15 @@ def projects(request):
             except:
                 context['error_message'] = 'An error occurred!'
             context['project_list'] = project_list
+        elif 'view' in request.POST.keys():
+            try:
+                curr_project = request.POST.get('view')
+                request.session['project'] = curr_project
+                request.session.modified = True
+                response = {'status': 1, 'message': "Ok"}
+            except:
+                response = {'status': 0, 'message': "Something went wrong!"}
+            return HttpResponse(json.dumps(response), content_type='application/json')
         elif ('in_scope_domains' and 'project_name' and 'program') in request.POST.keys():
             tempdict = request.POST.copy()
             tempdict['in_scope_domains'] = tempdict['in_scope_domains'].split('\r\n')
@@ -111,6 +120,8 @@ def projects(request):
                         if domain != None and domain != '':
                             project_model.in_scope_domains.append(domain.strip())
                     project_model.save()
+                    request.session['project'] = project_form.cleaned_data['project_name']
+                    request.session.modified = True
                     messages.success(request, 'Project has been created successfully!')
                     return redirect('projects')
                 else:
@@ -132,6 +143,10 @@ def notes(request):
 
 def subdomain_enum(request):
     context = {}
+    project_session = request.session['project']
+    print(project_session)
+    project_object = ProjectModel.objects.filter(project_user=request.user).filter(project_name__iexact=project_session)
+    subdomains = project_object
     context['profile_account'] = request.user.profile
     return render(request, 'dashboard/subdomain_enum.html', context)
 
