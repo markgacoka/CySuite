@@ -53,6 +53,15 @@ Sudomain Enumeration | CySuite
                                 <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
                                 <td>Present [Cloudflare]</td>
                             </tr>
+                            {% for subdomain in subdomain_info %}
+                            <tr>
+                                <td><a href="{{subdomain}}">{{subdomain}}</a></td>
+                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
+                                <td>None</td>
+                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
+                                <td>Present [Cloudflare]</td>
+                            </tr>
+                            {% endfor %}
                             </tbody>
                     </table>
                 </div>

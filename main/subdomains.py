@@ -106,9 +106,5 @@ def subdomain_list(domain):
     
     # Also needs token
     # final_subdomains += passivetotal_script(domain)
-    
 
     yield final_subdomains
-    
-url = "coda.io"
-print(next(subdomain_list(url)))
