@@ -25,10 +25,11 @@
     <script>
 		document.addEventListener("DOMContentLoaded", function() {
 			$("#datatables-dashboard-projects").DataTable({
-				pageLength: 6,
+				pageLength: 10,
 				lengthChange: false,
 				bFilter: false,
-				autoWidth: false
+				autoWidth: true,
+                responsive: true
 			});
 		});
 	</script>
