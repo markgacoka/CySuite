@@ -12,9 +12,8 @@ def dnsdb_script(domain):
         soup = BeautifulSoup(response.text, "html.parser")
 
         for link in soup.findAll("a"):
-            try:
-                if link.string is not None:
-                    dnsdb.append(link.string)
+            if link.string is not None:
+                dnsdb.append(link.string)
         return dnsdb
     except:
         print("An error occurred while scraping.")

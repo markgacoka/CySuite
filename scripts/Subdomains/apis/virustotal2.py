@@ -1,9 +1,10 @@
 
 import sys
-sys.path.append('../search_engines')
+import json
+sys.path.insert(0, 'scripts/Subdomains/search_engines')
 from utils import enumeratorBaseThreaded
 
-class Virustotal(enumratorBaseThreaded):
+class Virustotal(enumeratorBaseThreaded):
     def __init__(self, domain, subdomains=None, q=None):
         subdomains = subdomains or []
         base_url = 'https://www.virustotal.com/ui/domains/{domain}/subdomains'
@@ -18,7 +19,7 @@ class Virustotal(enumratorBaseThreaded):
         try:
             resp = self.session.get(url, headers=self.headers, timeout=self.timeout)
         except Exception as e:
-            self.print_(e)
+            print(e)
             resp = None
 
         return self.get_response(resp)
@@ -29,7 +30,7 @@ class Virustotal(enumratorBaseThreaded):
             resp = self.send_req(self.url)
             resp = json.loads(resp)
             if 'error' in resp:
-                self.print_(R + "[!] Error: Virustotal probably now is blocking our requests" + W)
+                print("[!] Error: Virustotal probably now is blocking our requests")
                 break
             if 'links' in resp and 'next' in resp['links']:
                 self.url = resp['links']['next']

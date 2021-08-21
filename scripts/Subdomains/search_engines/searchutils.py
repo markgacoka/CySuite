@@ -4,7 +4,6 @@ import random
 import os
 
 class Core(object):
-    
     @staticmethod
     def get_user_agent() -> str:
         # User-Agents from https://github.com/tamimibrahim17/List-of-user-agents

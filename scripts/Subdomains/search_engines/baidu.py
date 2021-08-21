@@ -1,16 +1,16 @@
 import re, time, random
 from collections import Counter
 from urllib.parse import urlparse
-from .utils import EnumratorBaseThreaded
+from utils import enumeratorBaseThreaded
 
-class BaiduEnum(EnumratorBaseThreaded):
+class BaiduEnum(enumeratorBaseThreaded):
     def __init__(self, domain, subdomains=None, q=None):
         subdomains = subdomains or []
         base_url = 'https://www.baidu.com/s?pn={page_no}&wd={query}&oq={query}'
         self.engine_name = "Baidu"
         self.MAX_DOMAINS = 2
         self.MAX_PAGES = 760
-        EnumratorBaseThreaded.__init__(self, base_url, self.engine_name, domain, subdomains, q=q)
+        enumeratorBaseThreaded.__init__(self, base_url, self.engine_name, domain, subdomains, q=q)
         self.querydomain = self.domain
         self.q = q
         return
@@ -31,7 +31,6 @@ class BaiduEnum(EnumratorBaseThreaded):
                     subdomain_list.append(subdomain)
                     if subdomain not in self.subdomains and subdomain != self.domain:
                         found_newdomain = True
-                        print("{0} : {1}" % (self.engine_name, subdomain))
                         self.subdomains.append(subdomain.strip())
         except Exception:
             pass

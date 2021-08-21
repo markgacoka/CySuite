@@ -7,7 +7,6 @@ def hackertarget_script(domain):
     headers = {"user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:52.0) Gecko/20100101 Firefox/52.0"}
     try:
         res = requests.get(url, headers=headers, timeout=10).text
-        res.raise_for_status()
         hostnames = [result.split(",")[0] for result in res.split("\n")]
 
         for hostname in hostnames:

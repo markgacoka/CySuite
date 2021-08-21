@@ -1,8 +1,8 @@
 import re
 from urllib.parse import urlparse
-from .utils import EnumratorBaseThreaded
+from utils import enumeratorBaseThreaded
 
-class YahooEnum(EnumratorBaseThreaded):
+class YahooEnum(enumeratorBaseThreaded):
     def __init__(self, domain, subdomains=None, q=None):
         subdomains = subdomains or []
         base_url = "https://search.yahoo.com/search?p={query}&b={page_no}"
@@ -29,7 +29,6 @@ class YahooEnum(EnumratorBaseThreaded):
                 if not subdomain.endswith(self.domain):
                     continue
                 if subdomain and subdomain not in self.subdomains and subdomain != self.domain:
-                    print("%s%s: %s%s".format(self.engine_name, subdomain))
                     self.subdomains.append(subdomain.strip())
         except Exception:
             pass

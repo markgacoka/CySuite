@@ -1,15 +1,15 @@
 import re
 from urllib.parse import urlparse
-from .utils import EnumratorBaseThreaded
+from utils import enumeratorBaseThreaded
 
-class BingEnum(EnumratorBaseThreaded):
+class BingEnum(enumeratorBaseThreaded):
     def __init__(self, domain, subdomains=None, q=None):
         subdomains = subdomains or []
         base_url = 'https://www.bing.com/search?q={query}&go=Submit&first={page_no}'
         self.engine_name = "Bing"
         self.MAX_DOMAINS = 30
         self.MAX_PAGES = 0
-        EnumratorBaseThreaded.__init__(self, base_url, self.engine_name, domain, subdomains, q=q)
+        enumeratorBaseThreaded.__init__(self, base_url, self.engine_name, domain, subdomains, q=q)
         self.q = q
         return
 
@@ -28,7 +28,6 @@ class BingEnum(EnumratorBaseThreaded):
                     link = "http://" + link
                 subdomain = urlparse.urlparse(link).netloc
                 if subdomain not in self.subdomains and subdomain != self.domain:
-                    print("{0} {1}".format(self.engine_name, subdomain))
                     self.subdomains.append(subdomain.strip())
         except Exception:
             pass
