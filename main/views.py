@@ -104,18 +104,22 @@ def projects(request):
             tempdict['in_scope_domains'] = tempdict['in_scope_domains'].split('\r\n')
             request.POST = tempdict
             context['profile_account'] = request.user.profile
-            if ProjectModel.objects.filter(project_name__iexact=request.POST.get('project_name')).filter(project_user=request.user).exists():
+            if ProjectModel.objects.filter(project_user=request.user).filter(project_name__iexact=request.POST.get('project_name')).exists():
                 context['project_list'] = project_list
                 context['error_message'] = 'Project name already exists!'
             else:
                 project_form = ProjectForm(request.POST)
                 if project_form.is_valid():
+                    subdomains = []
+                    for domain in request.POST.get('in_scope_domains'):
+                        subdomains += next(subdomain_list(domain))
+
                     project_model = ProjectModel.objects.create(
                         project_name = project_form.cleaned_data['project_name'],
                         program = project_form.cleaned_data['program'],
                         in_scope_domains = [],
                         progress = 0,
-                        subdomains = [],
+                        subdomains = subdomains,
                         project_user = request.user)
                     for domain in project_form.cleaned_data['in_scope_domains']:
                         if domain != None and domain != '':
@@ -145,13 +149,14 @@ def notes(request):
 def subdomain_enum(request):
     context = {}
     project_session = request.session['project']
+    if len(ProjectModel.objects.filter(project_user=request.user).filter(project_name__iexact=project_session).values_list()) > 0:
+        context['is_project'] = True
+    else:
+        context['is_project'] = False
+
     project_object = ProjectModel.objects.filter(project_user=request.user).filter(project_name__iexact=project_session)
-    # subdomains = project_object.values_list()[0][-1]
-    # in_scope = project_object.values_list()[0][4]
-    # for domain in in_scope:
-    #     subdomains += next(subdomain_list(domain))
-    # project_object.update(subdomains=subdomains)
-    # context['subdomain_info'] = subdomains
+    subdomains = project_object.values_list()[0][-1]
+    context['subdomain_info'] = subdomains
     # context['ssl_info']
     # context['screenshot']
     # context['header_info']

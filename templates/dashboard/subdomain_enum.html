@@ -8,12 +8,14 @@ Sudomain Enumeration | CySuite
     <h2 style="padding-left: 15px; color: #293042; margin: 0;">Enumerate Subdomains</h2>
 </div>
 <div class="container-fluid p-0">
+    {% if is_project == False %}
     <div class="alert alert-warning alert-dismissible mb-3" role="alert">
         <div class="alert-message">
             <p class="mb-0"><strong>No project chosen!</strong> Start one from the <a
                     href="projects.html">Projects</a> tab and scan subdomains to see the list.</p>
         </div>
     </div>
+    {% else %}
     <div class="row">
         <div class="col-lg-6 col-xxl-8" style="padding-bottom: 2rem;">
             <div class="card" style="height: 100%;">
@@ -32,207 +34,17 @@ Sudomain Enumeration | CySuite
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td><a href="">subdomain1.site.com</a></td>
-                                <td><span class="badge badge-soft-success badge-pill">200</span></td>
-                                <td><a>Open</a></td>
-                                <td><code style="font-size: 0.8rem">102.343.26.11</code></td>
-                                <td>Absent</td>
-                            </tr>
-                            <tr>
-                                <td><a href="">subdomain2.site.com</a></td>
-                                <td><span class="badge bg-danger">404</span></td>
-                                <td>None</td>
-                                <td><code style="font-size: 0.8rem">78.3.43.2.2</code></td>
-                                <td>Present [Microsoft Azure]</td>
-                            </tr>
-                            <tr>
-                                <td><a href="">subdomain3.site.com</a></td>
-                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
-                                <td>None</td>
-                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
-                                <td>Present [Cloudflare]</td>
-                            </tr>
-                                                        <tr>
-                                <td><a href="">subdomain3.site.com</a></td>
-                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
-                                <td>None</td>
-                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
-                                <td>Present [Cloudflare]</td>
-                            </tr>
-                                                        <tr>
-                                <td><a href="">subdomain3.site.com</a></td>
-                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
-                                <td>None</td>
-                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
-                                <td>Present [Cloudflare]</td>
-                            </tr>
-                                                        <tr>
-                                <td><a href="">subdomain3.site.com</a></td>
-                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
-                                <td>None</td>
-                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
-                                <td>Present [Cloudflare]</td>
-                            </tr>
-                                                        <tr>
-                                <td><a href="">subdomain3.site.com</a></td>
-                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
-                                <td>None</td>
-                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
-                                <td>Present [Cloudflare]</td>
-                            </tr>
-                                                        <tr>
-                                <td><a href="">subdomain3.site.com</a></td>
-                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
-                                <td>None</td>
-                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
-                                <td>Present [Cloudflare]</td>
-                            </tr>
-                                                        <tr>
-                                <td><a href="">subdomain3.site.com</a></td>
-                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
-                                <td>None</td>
-                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
-                                <td>Present [Cloudflare]</td>
-                            </tr>
-                                                        <tr>
-                                <td><a href="">subdomain3.site.com</a></td>
-                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
-                                <td>None</td>
-                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
-                                <td>Present [Cloudflare]</td>
-                            </tr>
-                                                        <tr>
-                                <td><a href="">subdomain3.site.com</a></td>
-                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
-                                <td>None</td>
-                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
-                                <td>Present [Cloudflare]</td>
-                            </tr>
-                                                        <tr>
-                                <td><a href="">subdomain3.site.com</a></td>
-                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
-                                <td>None</td>
-                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
-                                <td>Present [Cloudflare]</td>
-                            </tr>
-                                                        <tr>
-                                <td><a href="">subdomain3.site.com</a></td>
-                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
-                                <td>None</td>
-                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
-                                <td>Present [Cloudflare]</td>
-                            </tr>
-                                                        <tr>
-                                <td><a href="">subdomain3.site.com</a></td>
-                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
-                                <td>None</td>
-                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
-                                <td>Present [Cloudflare]</td>
-                            </tr>
-                                                        <tr>
-                                <td><a href="">subdomain3.site.com</a></td>
-                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
-                                <td>None</td>
-                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
-                                <td>Present [Cloudflare]</td>
-                            </tr>
-                                                        <tr>
-                                <td><a href="">subdomain3.site.com</a></td>
-                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
-                                <td>None</td>
-                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
-                                <td>Present [Cloudflare]</td>
-                            </tr>
-                                                        <tr>
-                                <td><a href="">subdomain3.site.com</a></td>
-                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
-                                <td>None</td>
-                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
-                                <td>Present [Cloudflare]</td>
-                            </tr>
-                                                        <tr>
-                                <td><a href="">subdomain3.site.com</a></td>
-                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
-                                <td>None</td>
-                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
-                                <td>Present [Cloudflare]</td>
-                            </tr>
-                                                        <tr>
-                                <td><a href="">subdomain3.site.com</a></td>
-                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
-                                <td>None</td>
-                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
-                                <td>Present [Cloudflare]</td>
-                            </tr>
-                                                        <tr>
-                                <td><a href="">subdomain3.site.com</a></td>
-                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
-                                <td>None</td>
-                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
-                                <td>Present [Cloudflare]</td>
-                            </tr>
-                                                        <tr>
-                                <td><a href="">subdomain3.site.com</a></td>
-                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
-                                <td>None</td>
-                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
-                                <td>Present [Cloudflare]</td>
-                            </tr>
-                                                        <tr>
-                                <td><a href="">subdomain3.site.com</a></td>
-                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
-                                <td>None</td>
-                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
-                                <td>Present [Cloudflare]</td>
-                            </tr>
-                                                        <tr>
-                                <td><a href="">subdomain3.site.com</a></td>
-                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
-                                <td>None</td>
-                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
-                                <td>Present [Cloudflare]</td>
-                            </tr>
-                                                        <tr>
-                                <td><a href="">subdomain3.site.com</a></td>
-                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
-                                <td>None</td>
-                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
-                                <td>Present [Cloudflare]</td>
-                            </tr>
-                                                        <tr>
-                                <td><a href="">subdomain3.site.com</a></td>
-                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
-                                <td>None</td>
-                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
-                                <td>Present [Cloudflare]</td>
-                            </tr>
-                                                        <tr>
-                                <td><a href="">subdomain3.site.com</a></td>
-                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
-                                <td>None</td>
-                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
-                                <td>Present [Cloudflare]</td>
-                            </tr>
-                                                        <tr>
-                                <td><a href="">subdomain3.site.com</a></td>
-                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
-                                <td>None</td>
-                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
-                                <td>Present [Cloudflare]</td>
-                            </tr>
-                                                        <tr>
-                                <td><a href="">subdomain3.site.com</a></td>
-                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
-                                <td>None</td>
-                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
-                                <td>Present [Cloudflare]</td>
-                            </tr>
                             {% for subdomain in subdomain_info %}
                             <tr>
-                                <td><a href="{{subdomain}}">{{subdomain}}</a></td>
-                                <td><span class="badge badge-soft-warning badge-pill">500</span></td>
-                                <td>None</td>
+                                <td><a href="https://{{subdomain}}" target="_blank">{{subdomain}}</a></td>
+                                {% if subdomain_status == '200' %}
+                                    <td><span class="badge badge-soft-success badge-pill">{{subdomain_status}}</span></td>
+                                {% elif subdomain_status == '400' or subdomain_status == '401' or subdomain_status == '403' %}
+                                    <td><span class="badge bg-danger">{{subdomain_status}}</span></td>
+                                {% else %}
+                                    <td><span class="badge badge-soft-warning badge-pill">{{subdomain_status}}</span></td>
+                                {% endif %}
+                                <td>View</td>
                                 <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
                                 <td>Present [Cloudflare]</td>
                             </tr>
@@ -242,7 +54,7 @@ Sudomain Enumeration | CySuite
                 </div>
             </div>
         </div>
-    <div class="col-lg-6 col-xxl-4" style="padding-bottom: 2rem;">
+<div class="col-lg-6 col-xxl-4" style="padding-bottom: 2rem;">
         <div class="card" style="height:100%;">
                 <div class="card-header" style="padding-bottom: 0 !important;">
                     <h3 class="mb-0">More Information</h3>
@@ -299,4 +111,16 @@ Sudomain Enumeration | CySuite
         </div>
     </div>
 </div>
+{% endif %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        $("#datatables-reponsive").DataTable({
+            pageLength: 20,
+            lengthChange: false,
+            bFilter: false,
+            autoWidth: true,
+            responsive: true
+        });
+    });
+</script>
 {% endblock %}
