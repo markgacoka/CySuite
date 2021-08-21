@@ -144,9 +144,13 @@ def notes(request):
 def subdomain_enum(request):
     context = {}
     project_session = request.session['project']
-    print(project_session)
     project_object = ProjectModel.objects.filter(project_user=request.user).filter(project_name__iexact=project_session)
-    subdomains = project_object
+    subdomains = project_object.values_list()[0][-1]
+    print(subdomains)
+    # context['subdomain_info']
+    # context['ssl_info']
+    # context['screenshot']
+    # context['header_info']
     context['profile_account'] = request.user.profile
     return render(request, 'dashboard/subdomain_enum.html', context)
 
