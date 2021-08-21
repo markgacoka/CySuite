@@ -16,6 +16,7 @@ from .forms import WordlistForm
 from .models import PayloadModel
 from .models import WordlistModel
 from .models import ProjectModel
+from .subdomains import subdomain_list
 from PIL import Image
 from django.template.context_processors import csrf
 from django.conf import settings
@@ -146,8 +147,12 @@ def subdomain_enum(request):
     project_session = request.session['project']
     project_object = ProjectModel.objects.filter(project_user=request.user).filter(project_name__iexact=project_session)
     subdomains = project_object.values_list()[0][-1]
+    in_scope = project_object.values_list()[0][4]
     print(subdomains)
-    # context['subdomain_info']
+    for domain in in_scope:
+        subdomains += next(subdomain_list(domain))
+    project_object.update(subdomains=subdomains)
+    context['subdomain_info'] = subdomains
     # context['ssl_info']
     # context['screenshot']
     # context['header_info']
