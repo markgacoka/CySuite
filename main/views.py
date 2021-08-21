@@ -146,13 +146,12 @@ def subdomain_enum(request):
     context = {}
     project_session = request.session['project']
     project_object = ProjectModel.objects.filter(project_user=request.user).filter(project_name__iexact=project_session)
-    subdomains = project_object.values_list()[0][-1]
-    in_scope = project_object.values_list()[0][4]
-    print(subdomains)
-    for domain in in_scope:
-        subdomains += next(subdomain_list(domain))
-    project_object.update(subdomains=subdomains)
-    context['subdomain_info'] = subdomains
+    # subdomains = project_object.values_list()[0][-1]
+    # in_scope = project_object.values_list()[0][4]
+    # for domain in in_scope:
+    #     subdomains += next(subdomain_list(domain))
+    # project_object.update(subdomains=subdomains)
+    # context['subdomain_info'] = subdomains
     # context['ssl_info']
     # context['screenshot']
     # context['header_info']
