@@ -71,6 +71,7 @@ def login_view(request):
             user = authenticate(email=email, password=password)
         
             if user:
+                project_session = request.session.get('project', None)
                 login(request, user)
                 return redirect('dashboard')
     else:
@@ -81,6 +82,9 @@ def login_view(request):
 
 
 def logout_view(request):
+    if 'project' in request.session:
+        del request.session['project']
+        request.session.modified = True
     logout(request)
     return redirect("index")
 
