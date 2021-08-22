@@ -65,14 +65,14 @@ def cleanup(subdomain_lst):
         if not subdomain_yarl.is_absolute():
             subdomain_yarl_result = 'http://' + str(subdomain_yarl)
             if yarl.URL(subdomain_yarl_result).path_qs != '' and yarl.URL(subdomain_yarl_result).path_qs != '/':
-                clean_subdomains[idx] = str(yarl.URL(subdomain_yarl_result))[7:]
+                clean_subdomains[idx] = str(yarl.URL(subdomain_yarl_result))[7:].strip()
         else:
             subdomain_yarl_result = subdomain_yarl
             if yarl.URL(subdomain_yarl_result).path_qs != '' and yarl.URL(subdomain_yarl_result).path_qs != '/':
                 if 'https' in str(subdomain_yarl_result):
-                    clean_subdomains[idx] = str(yarl.URL(subdomain_yarl_result.origin()))[8:]
+                    clean_subdomains[idx] = str(yarl.URL(subdomain_yarl_result.origin()))[8:].strip()
                 else:
-                    clean_subdomains[idx] = str(yarl.URL(subdomain_yarl_result.origin()))[7:]
+                    clean_subdomains[idx] = str(yarl.URL(subdomain_yarl_result.origin()))[7:].strip()
     return list(set(clean_subdomains))
 
 def subdomain_list(domain):
