@@ -2529,6 +2529,11 @@ progress {
     }
 }
 
+.dataTables_info,
+.dataTables_paginate {
+    padding-top: 2rem;
+}
+
 .form-control[type=file] {
     overflow: hidden
 }

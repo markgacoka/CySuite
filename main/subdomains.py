@@ -50,20 +50,30 @@ from yahoo import YahooEnum
 from threaders import main
 
 def cleanup(subdomain_lst):
-    for idx, subdomain in enumerate(subdomain_lst):
+    new_lst = []
+    for subdomain in subdomain_lst:
+        if '\n' in subdomain:
+            intermediary = subdomain.split('\n')
+            for i in intermediary:
+                new_lst.append(i)
+        else:
+            new_lst.append(subdomain)
+    clean_subdomains = list(set(new_lst))
+
+    for idx, subdomain in enumerate(clean_subdomains):
         subdomain_yarl = yarl.URL(subdomain)
         if not subdomain_yarl.is_absolute():
             subdomain_yarl_result = 'http://' + str(subdomain_yarl)
             if yarl.URL(subdomain_yarl_result).path_qs != '' and yarl.URL(subdomain_yarl_result).path_qs != '/':
-                subdomain_lst[idx] = str(yarl.URL(subdomain_yarl_result))[7:]
+                clean_subdomains[idx] = str(yarl.URL(subdomain_yarl_result))[7:]
         else:
             subdomain_yarl_result = subdomain_yarl
             if yarl.URL(subdomain_yarl_result).path_qs != '' and yarl.URL(subdomain_yarl_result).path_qs != '/':
                 if 'https' in str(subdomain_yarl_result):
-                    subdomain_lst[idx] = str(yarl.URL(subdomain_yarl_result.origin()))[8:]
+                    clean_subdomains[idx] = str(yarl.URL(subdomain_yarl_result.origin()))[8:]
                 else:
-                    subdomain_lst[idx] = str(yarl.URL(subdomain_yarl_result.origin()))[7:]
-    return list(set(subdomain_lst))
+                    clean_subdomains[idx] = str(yarl.URL(subdomain_yarl_result.origin()))[7:]
+    return list(set(clean_subdomains))
 
 def subdomain_list(domain):
     final_subdomains = []
