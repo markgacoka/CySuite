@@ -66,3 +66,8 @@ subdomains, related IP addresses (IPv4), status codes, Web Application Firewall 
 
 For more information on the database models used, check the [API Docs page](scripts/API.md)
 
+### Remove all pycache files
+```
+find . -type d -name __pycache__ -exec rm -r {} \+
+```
+

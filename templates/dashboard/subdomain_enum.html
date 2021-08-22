@@ -1,5 +1,6 @@
 {% extends '../base.html' %}
 {% load static %}
+{% load custom_tags %}
 {% block title%}
 Sudomain Enumeration | CySuite
 {% endblock %}
@@ -19,8 +20,9 @@ Sudomain Enumeration | CySuite
     <div class="row">
         <div class="col-lg-6 col-xxl-8" style="padding-bottom: 2rem;">
             <div class="card" style="height: 100%;">
-                <div class="card-header">
-                    <h5 class="card-title">Subdomains list</h5>
+                <div class="card-header" style="padding-bottom: 0; width: 100%; height: 4.5rem;">
+                    <h2 style="width: 80%; float: left; margin:0;">Subdomains</h2>
+                    <button class="project-btn" style="font-size: 1rem; height: auto; text-align: center; transform: scale(0.9); display: inline-block; float: right;"><i class="fa fa-retweet"></i>&nbsp;Rescan</button>
                 </div>
                 <div class="card-body">
                     <table id="datatables-reponsive" class="table table-striped" style="table-layout: fixed; height: 100%; width: 100%;">
@@ -34,19 +36,19 @@ Sudomain Enumeration | CySuite
                             </tr>
                             </thead>
                             <tbody>
-                            {% for subdomain in subdomain_info %}
+                            {% for info in subdomain_info %}
                             <tr>
-                                <td><a href="https://{{subdomain}}" target="_blank">{{subdomain}}</a></td>
-                                {% if subdomain_status == '200' %}
-                                    <td><span class="badge badge-soft-success badge-pill">{{subdomain_status}}</span></td>
-                                {% elif subdomain_status == '400' or subdomain_status == '401' or subdomain_status == '403' %}
-                                    <td><span class="badge bg-danger">{{subdomain_status}}</span></td>
+                                <td><a href="https://{{info|get_item:"subdomain"}}" target="_blank">{{info|get_item:"subdomain"}}</a></td>
+                                {% if '200' in info|get_item:"status_code" %}
+                                    <td><span class="badge badge-soft-success badge-pill">{{info|get_item:"status_code"}}</span></td>
+                                {% elif '400' in info|get_item:"status_code" or '401' in info|get_item:"status_code" or '403' in info|get_item:"status_code" %}
+                                    <td><span class="badge bg-danger">{{info|get_item:"status_code"}}</span></td>
                                 {% else %}
-                                    <td><span class="badge badge-soft-warning badge-pill">{{subdomain_status}}</span></td>
+                                    <td><span class="badge badge-soft-warning badge-pill">{{info|get_item:"status_code"}}</span></td>
                                 {% endif %}
-                                <td>View</td>
-                                <td><code style="font-size: 0.8rem">132.343.2.1</code></td>
-                                <td>Present [Cloudflare]</td>
+                                <td>{{info|get_item:"screenshot"}}</td>
+                                <td><code style="font-size: 0.8rem">{{info|get_item:"ip_address"}}</code></td>
+                                <td>{{info|get_item:"waf"}}</td>
                             </tr>
                             {% endfor %}
                             </tbody>
