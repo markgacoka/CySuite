@@ -161,18 +161,18 @@ def subdomain_enum(request):
     info_list = []
     
     for idx, subdomain in enumerate(subdomains):
-        gen1 = status_code()
-        gen2 = get_ip()
-        next(gen1)
-        next(gen2)
         subdomain_info = {}
-        status = gen1.send(subdomain)
-        ip = gen2.send(subdomain)
-        print(subdomain, status, ip)
+        # gen1 = status_code()
+        # gen2 = get_ip()
+        # next(gen1)
+        # next(gen2)
+        # status = gen1.send(subdomain)
+        # ip = gen2.send(subdomain)
+        # print(subdomain, status, ip)
         subdomain_info['subdomain'] = subdomain_info.get('subdomain', subdomain)
-        subdomain_info['status_code'] = subdomain_info.get('status_code', status)
+        subdomain_info['status_code'] = subdomain_info.get('status_code', '200 OK')
         subdomain_info['screenshot'] = subdomain_info.get('screenshot', 'None')
-        subdomain_info['ip_address'] = subdomain_info.get('ip_address', ip)
+        subdomain_info['ip_address'] = subdomain_info.get('ip_address', '123.123.123.123')
         subdomain_info['waf'] = subdomain_info.get('waf', 'Absent')
         info_list.append(subdomain_info)
 

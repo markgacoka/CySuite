@@ -18,6 +18,7 @@ pylint-django = "*"
 cfscrape = "*"
 tornado = "*"
 aiohttp = "*"
+jsonfield = "*"
 
 [dev-packages]
 

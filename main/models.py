@@ -1,5 +1,6 @@
 import uuid
 from django.db import models
+from jsonfield import JSONField
 from django.conf import settings
 from cyauth.models import Account
 from django.contrib.postgres.fields import ArrayField
@@ -80,3 +81,21 @@ class WordlistModel(models.Model):
 
     def return_db_values(self):
         return [self.wordlist_file_3, self.wordlist_file_4, self.wordlist_file_5]
+
+class SubdomainModel(models.Model):
+    hostname = models.TextField(primary_key=True, unique=True, related_name='subdomain')
+    status_code = models.TextField(max_length=30, unique=False, null=True, blank=False)
+    screenshot = models.FileField(default=None, upload_to='screenshots/', blank=True, null=True)
+    ip_address = models.CharField(max_length=30, unique=False, null=True, blank=True)
+    waf = models.TextField(max_length=30, unique=False, null=True, blank=False)
+    ssl_info = JSONField()
+    header_info = JSONField()
+    directories = ArrayField(models.CharField(max_length=3000, blank=True), blank=True, null=True, default=list)
+
+    class Meta():
+        db_table = 'subdomain'
+        verbose_name = _('subdomain')
+        verbose_name_plural = _('subdomains')
+
+    def __str__(self):
+        return self.wordlist_user.name + ' Subdomains'
