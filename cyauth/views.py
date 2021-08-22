@@ -72,6 +72,7 @@ def login_view(request):
         
             if user:
                 project_session = request.session.get('project', None)
+                request.session['project'] = None
                 login(request, user)
                 return redirect('dashboard')
     else:

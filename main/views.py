@@ -16,6 +16,7 @@ from .forms import WordlistForm
 from .models import PayloadModel
 from .models import WordlistModel
 from .models import ProjectModel
+from .models import SubdomainModel
 from .subdomains import subdomain_list
 from PIL import Image
 from django.template.context_processors import csrf
@@ -95,7 +96,7 @@ def projects(request):
         elif 'view' in request.POST.keys():
             try:
                 curr_project = request.POST.get('view')
-                request.session['project'] = curr_project
+                request.session['project'] = request.session.get('project', curr_project)
                 request.session.modified = True
                 response = {'status': 1, 'message': "Ok"}
             except:
@@ -112,22 +113,37 @@ def projects(request):
             else:
                 project_form = ProjectForm(request.POST)
                 if project_form.is_valid():
-                    subdomains = []
-                    for domain in request.POST.get('in_scope_domains'):
-                        subdomains += next(subdomain_list(domain))
+                    # subdomains = []
+                    # for domain in request.POST.get('in_scope_domains'):
+                    #     subdomains += next(subdomain_list(domain))
 
                     project_model = ProjectModel.objects.create(
                         project_name = project_form.cleaned_data['project_name'],
                         program = project_form.cleaned_data['program'],
                         in_scope_domains = [],
                         progress = 0,
-                        subdomains = subdomains,
+                        subdomains = [],
                         project_user = request.user)
-                    for domain in project_form.cleaned_data['in_scope_domains']:
-                        if domain != None and domain != '':
-                            project_model.in_scope_domains.append(domain.strip())
-                    project_model.save()
-                    request.session['project'] = project_form.cleaned_data['project_name']
+
+                    # for domain in project_form.cleaned_data['in_scope_domains']:
+                    #     if domain != None and domain != '':
+                    #         project_model.in_scope_domains.append(domain.strip())
+                    # project_model.save()
+
+
+                    # for idx, subdomain in enumerate(subdomains):
+                    #     subdomain_model = SubdomainModel.objects.filter(subdomain_user=request.user).create(
+                    #         project = project_form.cleaned_data['project_name'],
+                    #         hostname = subdomain,
+                    #         status_code = '200 OK',
+                    #         screenshot = None,
+                    #         ip_address = '123.123.123.123',
+                    #         waf = 'Absent',
+                    #         ssl_info = {},
+                    #         header_info = {},
+                    #         directories = [])
+
+                    request.session['project'] =  project_form.cleaned_data['project_name']
                     request.session.modified = True
                     messages.success(request, 'Project has been created successfully!')
                     return redirect('projects')
@@ -150,32 +166,57 @@ def notes(request):
 
 def subdomain_enum(request):
     context = {}
-    project_session = request.session['project']
-    if len(ProjectModel.objects.filter(project_user=request.user).filter(project_name__iexact=project_session).values_list()) > 0:
-        context['is_project'] = True
-    else:
-        context['is_project'] = False
-
-    project_object = ProjectModel.objects.filter(project_user=request.user).filter(project_name__iexact=project_session)
-    subdomains = project_object.values_list()[0][-1]
     info_list = []
-    
-    for idx, subdomain in enumerate(subdomains):
-        subdomain_info = {}
-        # gen1 = status_code()
-        # gen2 = get_ip()
-        # next(gen1)
-        # next(gen2)
-        # status = gen1.send(subdomain)
-        # ip = gen2.send(subdomain)
-        # print(subdomain, status, ip)
-        subdomain_info['subdomain'] = subdomain_info.get('subdomain', subdomain)
-        subdomain_info['status_code'] = subdomain_info.get('status_code', '200 OK')
-        subdomain_info['screenshot'] = subdomain_info.get('screenshot', 'None')
-        subdomain_info['ip_address'] = subdomain_info.get('ip_address', '123.123.123.123')
-        subdomain_info['waf'] = subdomain_info.get('waf', 'Absent')
-        info_list.append(subdomain_info)
+    project_session = request.session['project']
 
+    if request.method == 'POST':
+        if 'rescan' in request.POST.keys():
+            project_object = ProjectModel.objects.filter(project_user=request.user).filter(project_name__iexact=project_session)
+            subdomains = project_object.values_list()[0][-1]
+            for idx, subdomain in enumerate(subdomains):
+                subdomain_info = {}
+                subdomain_model = SubdomainModel.objects.filter(subdomain_user=request.user).filter(project_name__iexact=project_session).update(
+                    project = project_session,
+                    hostname = subdomain,
+                    status_code = next(status_code(subdomain)),
+                    screenshot = None,
+                    ip_address = next(get_ip(subdomain)),
+                    waf = 'Absent',
+                    ssl_info = {},
+                    header_info = {},
+                    directories = [])
+                subdomain_info['subdomain'] = subdomain_info.get('subdomain', subdomain)
+                subdomain_info['status_code'] = subdomain_info.get('status_code', '200 OK')
+                subdomain_info['screenshot'] = subdomain_info.get('screenshot', 'None')
+                subdomain_info['ip_address'] = subdomain_info.get('ip_address', '123.123.123.123')
+                subdomain_info['waf'] = subdomain_info.get('waf', 'Absent')
+                info_list.append(subdomain_info)
+            subdomain_model.save()
+    else:
+        if len(ProjectModel.objects.filter(project_user=request.user).filter(project_name__iexact=request.session['project']).values_list()) > 0:
+            context['is_project'] = 'True'
+        else:
+            context['is_project'] = 'False'
+            context['profile_account'] = request.user.profile
+            return render(request, 'dashboard/subdomain_enum.html', context)
+
+        # subdomain_model = SubdomainModel.objects.filter(subdomain_user=request.user).filter(project_name__iexact=project_session)
+        # for model in subdomain_model:
+        #     subdomain_info['subdomain'] = model.values_list('hostname', flat=True)
+        #     subdomain_info['status_code'] = model.values_list('status_code', flat=True)
+        #     subdomain_info['screenshot'] = model.values_list('screenshot', flat=True)
+        #     subdomain_info['ip_address'] = model.values_list('ip_address', flat=True)
+        #     subdomain_info['waf'] = model.values_list('waf', flat=True)
+        #     info_list.append(subdomain_info)
+        # subdomain_model.save()            
+
+    scan = ProjectModel.objects.filter(project_user=request.user).filter(project_name__iexact=request.session['project']).values('subdomains')
+    print(scan)
+    print(scan.count())
+    # if len(scan['subdomains']) == 0:
+    #     context['first_scan'] = 'True'
+    # else:
+    #     context['first_scan'] = 'False'
     context['subdomain_info'] = info_list
     # context['ssl_info']
     # context['screenshot']
