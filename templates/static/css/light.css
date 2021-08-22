@@ -2531,7 +2531,7 @@ progress {
 
 .dataTables_info,
 .dataTables_paginate {
-    padding-top: 2rem;
+    padding-top: 2rem !important;
 }
 
 .form-control[type=file] {
