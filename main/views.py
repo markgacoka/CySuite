@@ -157,9 +157,8 @@ def subdomain_enum(request):
     if request.method == 'POST':
         if 'scan' in request.POST.keys():
             subdomains = []
-            # for domain in project_model_instance.values('in_scope_domains')[0]['in_scope_domains']:
-            #     subdomains += next(subdomain_list(domain))
-            subdomains = ['coda.io', 'blog.coda.io']
+            for domain in project_model_instance.values('in_scope_domains')[0]['in_scope_domains']:
+                subdomains += next(subdomain_list(domain))
             project_model_instance.update(subdomains=subdomains)
             for idx, subdomain in enumerate(subdomains):
                 subdomain_info = {}
@@ -167,15 +166,17 @@ def subdomain_enum(request):
                     subdomain_user = request.user,
                     project = ProjectModel.objects.get(project_name=project_session),
                     hostname = subdomain,
-                    # status_code = next(status_code(subdomain)),
-                    status_code = '200 OK',
-                    screenshot = 'None',
-                    # ip_address = next(get_ip(subdomain)),
-                    ip_address = '123.123.123.123',
-                    waf = 'Absent',
-                    ssl_info = {},
-                    header_info = {},
-                    directories = [])
+                    defaults = {        
+                        # status_code = next(status_code(subdomain)),
+                        # ip_address = next(get_ip(subdomain)),
+                        'status_code': '200 OK',
+                        'screenshot': 'None',
+                        'ip_address': '123.123.123.123',
+                        'waf': 'Absent',
+                        'ssl_info': {},
+                        'header_info': {},
+                        'directories': []
+                    })
                 subdomain_model
                 subdomain_info['subdomain'] = subdomain_info.get('subdomain', subdomain)
                 subdomain_info['status_code'] = subdomain_info.get('status_code', '200 OK')
@@ -206,7 +207,6 @@ def subdomain_enum(request):
         project_model_instance_all = ProjectModel.objects.get(project_user=request.user)
         subdomain_model_instance = SubdomainModel.objects.filter(project=project_model_instance_all)
         for model in subdomain_model_instance.values_list():
-            print(model)
             subdomain_info = {}
             subdomain_info['subdomain'] = model[3]
             subdomain_info['status_code'] = model[4]
