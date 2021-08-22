@@ -4,8 +4,7 @@ from http.client import responses
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
-def status_code():
-    domain = yield
+def status_code(domain):
     try:
         if not domain.startswith('http://') and not domain.startswith('https://'):
             domain = 'http://' + domain

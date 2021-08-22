@@ -83,7 +83,8 @@ class WordlistModel(models.Model):
         return [self.wordlist_file_3, self.wordlist_file_4, self.wordlist_file_5]
 
 class SubdomainModel(models.Model):
-    project = models.ForeignKey(ProjectModel, unique=False, related_name='subdomain', on_delete=models.CASCADE)
+    project_user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, unique=True, related_name='subdomain', on_delete=models.CASCADE)
+    project = models.TextField(max_length=30, unique=False, blank=True, null=False)
     hostname = models.TextField(max_length=200, unique=True)
     status_code = models.TextField(max_length=30, unique=False, null=True, blank=False)
     screenshot = models.FileField(default=None, upload_to='screenshots/', blank=True, null=True)
