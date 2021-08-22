@@ -16,6 +16,8 @@ pypng = "*"
 puremagic = "*"
 pylint-django = "*"
 cfscrape = "*"
+tornado = "*"
+aiohttp = "*"
 
 [dev-packages]
 

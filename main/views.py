@@ -24,6 +24,8 @@ from django.contrib import messages
 from django.core.files import File
 from django.http import FileResponse
 from django.core.files.storage import default_storage
+from scripts.Requests.status_code import status_code
+from scripts.IPAddress.get_host import get_web_details
 from scripts.WordlistGen.wordlist import print_wordlist
 from scripts.WordlistGen.status import url_status
 from scripts.Headers.request import send_request
@@ -156,7 +158,19 @@ def subdomain_enum(request):
 
     project_object = ProjectModel.objects.filter(project_user=request.user).filter(project_name__iexact=project_session)
     subdomains = project_object.values_list()[0][-1]
-    context['subdomain_info'] = subdomains
+    info_list = []
+    details = get_web_details(subdomains)
+    # status_codes_lst = list(next(status_code(subdomains)))
+    for idx, subdomain in enumerate(subdomains):
+        subdomain_info = {}
+        subdomain_info['subdomain'] = subdomain_info.get('subdomain', subdomain)
+        subdomain_info['status_code'] = subdomain_info.get('status_code', '200')
+        subdomain_info['screenshot'] = subdomain_info.get('screenshot', 'None')
+        subdomain_info['ip_address'] = subdomain_info.get('ip_address', details[idx])
+        subdomain_info['waf'] = subdomain_info.get('waf', 'Absent')
+        info_list.append(subdomain_info)
+
+    context['subdomain_info'] = info_list
     # context['ssl_info']
     # context['screenshot']
     # context['header_info']
