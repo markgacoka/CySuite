@@ -33,7 +33,7 @@ class Newsletter(models.Model):
 
 class ProjectModel(models.Model):
     project_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="projects", on_delete=models.CASCADE)
-    project_name = models.CharField(max_length=30, unique=True, null=False, blank=True)
+    project_name = models.CharField(max_length=30, primary_key=True, unique=False, null=False, blank=True)
     program = models.TextField(max_length=30, unique=False, null=False, blank=False)
     in_scope_domains = ArrayField(models.CharField(max_length=250, blank=True), blank=True, null=True, default=list)
     progress = models.IntegerField(default=0, blank=True, null=True)
@@ -83,8 +83,8 @@ class WordlistModel(models.Model):
         return [self.wordlist_file_3, self.wordlist_file_4, self.wordlist_file_5]
 
 class SubdomainModel(models.Model):
-    project_user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, unique=True, related_name='subdomain', on_delete=models.CASCADE)
-    project = models.TextField(max_length=30, unique=False, blank=True, null=False)
+    subdomain_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='subdomain', on_delete=models.CASCADE)
+    project = models.ForeignKey(ProjectModel, max_length=30, unique=False, blank=True, null=False, on_delete=models.CASCADE)
     hostname = models.TextField(max_length=200, unique=True)
     status_code = models.TextField(max_length=30, unique=False, null=True, blank=False)
     screenshot = models.FileField(default=None, upload_to='screenshots/', blank=True, null=True)
@@ -100,4 +100,4 @@ class SubdomainModel(models.Model):
         verbose_name_plural = _('subdomains')
 
     def __str__(self):
-        return self.wordlist_user.name + ' Subdomains'
+        return self.subdomain_user.name + ' Subdomains'
