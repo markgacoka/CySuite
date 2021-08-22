@@ -113,14 +113,10 @@ def projects(request):
             else:
                 project_form = ProjectForm(request.POST)
                 if project_form.is_valid():
-                    # subdomains = []
-                    # for domain in request.POST.get('in_scope_domains'):
-                    #     subdomains += next(subdomain_list(domain))
-
                     project_model = ProjectModel.objects.create(
                         project_name = project_form.cleaned_data['project_name'],
                         program = project_form.cleaned_data['program'],
-                        in_scope_domains = [],
+                        in_scope_domains = project_form.cleaned_data['in_scope_domains'],
                         progress = 0,
                         subdomains = [],
                         project_user = request.user)
@@ -168,14 +164,21 @@ def subdomain_enum(request):
     context = {}
     info_list = []
     project_session = request.session['project']
+    project_model = ProjectModel.objects.filter(project_user=request.user).filter(project_name__iexact=request.session['project'])
+    subdomain_model = SubdomainModel.objects.filter(subdomain_user=request.user).filter(project_name__iexact=project_session)
 
     if request.method == 'POST':
-        if 'rescan' in request.POST.keys():
-            project_object = ProjectModel.objects.filter(project_user=request.user).filter(project_name__iexact=project_session)
-            subdomains = project_object.values_list()[0][-1]
+        if 'scan' in request.POST.keys():
+            subdomains = []
+            for domain in project_model.values('in_scope_domains')[0]['hostname']:
+                subdomains += next(subdomain_list(domain))
+            for subdomain in subdomains:
+                project_model.subdomains.append(subdomain.strip())
+            project_model.save()
             for idx, subdomain in enumerate(subdomains):
                 subdomain_info = {}
-                subdomain_model = SubdomainModel.objects.filter(subdomain_user=request.user).filter(project_name__iexact=project_session).update(
+                subdomain_model = subdomain_model.create(
+                    project_user = request.user,
                     project = project_session,
                     hostname = subdomain,
                     status_code = next(status_code(subdomain)),
@@ -186,41 +189,45 @@ def subdomain_enum(request):
                     header_info = {},
                     directories = [])
                 subdomain_info['subdomain'] = subdomain_info.get('subdomain', subdomain)
-                subdomain_info['status_code'] = subdomain_info.get('status_code', '200 OK')
+                subdomain_info['status_code'] = subdomain_info.get('status_code', next(status_code(subdomain)))
                 subdomain_info['screenshot'] = subdomain_info.get('screenshot', 'None')
-                subdomain_info['ip_address'] = subdomain_info.get('ip_address', '123.123.123.123')
+                subdomain_info['ip_address'] = subdomain_info.get('ip_address', next(get_ip(subdomain)))
                 subdomain_info['waf'] = subdomain_info.get('waf', 'Absent')
+                subdomain_info['screenshot'] = subdomain_info.get('screenshot', 'Absent')
+                subdomain_info['ssl_info'] = subdomain_info.get('ssl_info', 'Absent')
+                subdomain_info['header'] = subdomain_info.get('header', 'Absent')
                 info_list.append(subdomain_info)
             subdomain_model.save()
     else:
-        if len(ProjectModel.objects.filter(project_user=request.user).filter(project_name__iexact=request.session['project']).values_list()) > 0:
+        if len(project_model.values_list()) > 0:
             context['is_project'] = 'True'
         else:
             context['is_project'] = 'False'
             context['profile_account'] = request.user.profile
             return render(request, 'dashboard/subdomain_enum.html', context)
 
-        # subdomain_model = SubdomainModel.objects.filter(subdomain_user=request.user).filter(project_name__iexact=project_session)
-        # for model in subdomain_model:
-        #     subdomain_info['subdomain'] = model.values_list('hostname', flat=True)
-        #     subdomain_info['status_code'] = model.values_list('status_code', flat=True)
-        #     subdomain_info['screenshot'] = model.values_list('screenshot', flat=True)
-        #     subdomain_info['ip_address'] = model.values_list('ip_address', flat=True)
-        #     subdomain_info['waf'] = model.values_list('waf', flat=True)
-        #     info_list.append(subdomain_info)
-        # subdomain_model.save()            
+        if subdomain_model:
+            for model in subdomain_model:
+                subdomain_info = {}
+                subdomain_info['subdomain'] = model.values('hostname')[0]['hostname']
+                subdomain_info['status_code'] = model.values('status_code')[0]['status_code']
+                subdomain_info['screenshot'] = model.values('screenshot')[0]['screenshot']
+                subdomain_info['ip_address'] = model.values('ip_address')[0]['ip_address']
+                subdomain_info['waf'] = model.values('waf')[0]['waf']
+                subdomain_info['screenshot'] = subdomain_info.get('screenshot', 'Absent')
+                subdomain_info['ssl_info'] = subdomain_info.get('ssl_info', 'Absent')
+                subdomain_info['header'] = subdomain_info.get('header', 'Absent')
+                info_list.append(subdomain_info)
 
-    scan = ProjectModel.objects.filter(project_user=request.user).filter(project_name__iexact=request.session['project']).values('subdomains')
-    print(scan)
-    print(scan.count())
-    # if len(scan['subdomains']) == 0:
-    #     context['first_scan'] = 'True'
-    # else:
-    #     context['first_scan'] = 'False'
+    if project_model.count() > 0:
+        scan = project_model.values('subdomains')
+        if len(scan[0]['subdomains']) > 0:
+            context['first_scan'] = 'False'
+        else:
+            context['first_scan'] = 'True'
+    else:
+        context['first_scan'] = 'True'
     context['subdomain_info'] = info_list
-    # context['ssl_info']
-    # context['screenshot']
-    # context['header_info']
     context['profile_account'] = request.user.profile
     return render(request, 'dashboard/subdomain_enum.html', context)
 
