@@ -19,6 +19,8 @@ pypng = "*"
 fake-useragent = "*"
 channels = "*"
 websockets = "*"
+uvloop = "*"
+django-background-tasks = "*"
 
 [dev-packages]
 

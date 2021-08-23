@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.twitter',
     'main',
     'cyauth',
+    'background_task',
 ]
 
 SITE_ID = 4
