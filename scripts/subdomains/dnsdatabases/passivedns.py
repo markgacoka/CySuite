@@ -1,6 +1,4 @@
-import sys
-sys.path.append('../search_engines')
-from utils import enumeratorBaseThreaded
+from .utils import enumeratorBaseThreaded
 
 class PassiveDNS(enumeratorBaseThreaded):
     def __init__(self, domain, subdomains=None, q=None):

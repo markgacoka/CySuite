@@ -2,7 +2,7 @@
 import sys
 import json
 sys.path.insert(0, 'scripts/Subdomains/search_engines')
-from utils import enumeratorBaseThreaded
+from .utils import enumeratorBaseThreaded
 
 class Virustotal(enumeratorBaseThreaded):
     def __init__(self, domain, subdomains=None, q=None):

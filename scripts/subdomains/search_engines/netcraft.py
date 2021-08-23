@@ -3,7 +3,7 @@ import hashlib
 import urllib
 import time, random
 import urllib.parse
-from utils import enumeratorBaseThreaded
+from .utils import enumeratorBaseThreaded
 
 class NetcraftEnum(enumeratorBaseThreaded):
     def __init__(self, domain, subdomains=None, q=None):

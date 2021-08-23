@@ -1,6 +1,6 @@
 import re
 from urllib.parse import urlparse
-from utils import enumeratorBaseThreaded
+from .utils import enumeratorBaseThreaded
 
 class YahooEnum(enumeratorBaseThreaded):
     def __init__(self, domain, subdomains=None, q=None):

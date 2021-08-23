@@ -1,7 +1,7 @@
 import re, time, random
 from collections import Counter
 from urllib.parse import urlparse
-from utils import enumeratorBaseThreaded
+from .utils import enumeratorBaseThreaded
 
 class BaiduEnum(enumeratorBaseThreaded):
     def __init__(self, domain, subdomains=None, q=None):

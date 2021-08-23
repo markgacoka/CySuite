@@ -1,7 +1,6 @@
 
-import sys, re
-sys.path.append('../search_engines')
-from utils import enumeratorBaseThreaded
+import re
+from .utils import enumeratorBaseThreaded
 
 class CrtSearch(enumeratorBaseThreaded):
     def __init__(self, domain, subdomains=None, q=None):
