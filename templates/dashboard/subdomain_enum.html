@@ -5,6 +5,15 @@
 Sudomain Enumeration | CySuite
 {% endblock %}
 {% block content %}
+{% if messages %}
+    {% for message in messages %}
+        {% if 'successfully!' in message.message %}
+            <button style="display: none;" class="alert-popup" id="alert-success" name="{{message}}" value="success"></button>
+        {% else %}
+            <button style="display: none;" class="alert-popup" id="alert-warning" name="{{message}}" value="warning"></button>
+        {% endif %}
+    {% endfor %}
+{% endif %}
 <div class="card" style="padding: 1rem 0 1rem 0; background-color: white; box-shadow: 1px 3px 2px 0 rgb(255 0 0 / 10%); border: 1px ridge #d9534f; width: 100%;">
     <h2 style="padding-left: 15px; color: #293042; margin: 0;">Enumerate Subdomains</h2>
 </div>
