@@ -4,7 +4,7 @@ import threading
 import multiprocessing
 import requests
 import urllib.parse as urlparse
-from utils import enumeratorBaseThreaded
+from .utils import enumeratorBaseThreaded
 
 class AskEnum(enumeratorBaseThreaded):
     def __init__(self, domain, subdomains=None, q=None):

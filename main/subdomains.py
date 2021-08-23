@@ -1,53 +1,44 @@
-import sys
-import yarl
-import multiprocessing
-
-# APIs
-sys.path.insert(1, 'scripts/Subdomains/apis')
-from anubis import anubis_script
-from findsubdomains import findsubdomains_script
-from hackertarget import hackertarget_script
-from openthreat import openthreat_script
-from projectsonar import projectsonar_script
-from projectsonar2 import projectsonar_script2
-from riddler import riddler_script
-from shodan import shodan_script
-from threatcrowd import threatcrowd_script
-from threatcrowd2 import ThreatCrowd
-from virustotal import virustotal_script
-from virustotal2 import Virustotal
+from scripts.subdomains.apis.anubis import anubis_script
+from scripts.subdomains.apis.findsubdomains import findsubdomains_script
+from scripts.subdomains.apis.hackertarget import hackertarget_script
+from scripts.subdomains.apis.openthreat import openthreat_script
+from scripts.subdomains.apis.projectsonar import projectsonar_script
+from scripts.subdomains.apis.projectsonar2 import projectsonar_script2
+from scripts.subdomains.apis.riddler import riddler_script
+from scripts.subdomains.apis.shodan import shodan_script
+from scripts.subdomains.apis.threatcrowd import threatcrowd_script
+from scripts.subdomains.apis.threatcrowd2 import ThreatCrowd
+from scripts.subdomains.apis.virustotal import virustotal_script
+from scripts.subdomains.apis.virustotal2 import Virustotal
 
 # Archives
-sys.path.insert(1, 'scripts/Subdomains/archives')
-from commoncrawl import commoncrawl_script
-from waybackmachine import waybackmachine_script
+from scripts.subdomains.archives.commoncrawl import commoncrawl_script
+from scripts.subdomains.archives.waybackmachine import waybackmachine_script
 
 # Certificates
-sys.path.insert(1, 'scripts/Subdomains/certificates')
-from censys import censys_script
-from certspotter import certspotter_script
-from crt import crt_script
-from crt2 import CrtSearch
-from entrust_certificates import entrust_certificates_script
-from google_transparency import google_transparency_script
+from scripts.subdomains.certificates.censys import censys_script
+from scripts.subdomains.certificates.certspotter import certspotter_script
+from scripts.subdomains.certificates.crt import crt_script
+from scripts.subdomains.certificates.crt2 import CrtSearch
+from scripts.subdomains.certificates.entrust_certificates import entrust_certificates_script
+from scripts.subdomains.certificates.google_transparency import google_transparency_script
 
 # DNS databases
-sys.path.insert(1, 'scripts/Subdomains/dnsdatabases')
-from dnsdb import dnsdb_script
-from dnstrails import dnstrails_script
-from passivedns import PassiveDNS
-from passivetotal import passivetotal_script
+from scripts.subdomains.dnsdatabases.dnsdb import dnsdb_script
+from scripts.subdomains.dnsdatabases.dnstrails import dnstrails_script
+from scripts.subdomains.dnsdatabases.passivedns import PassiveDNS
+from scripts.subdomains.dnsdatabases.passivetotal import passivetotal_script
 
 # Search Engines
-sys.path.insert(1, 'scripts/Subdomains/search_engines')
-from ask import AskEnum
-from baidu import BaiduEnum
-from bing import BingEnum
-from dnsdumpster import DNSdumpster
-from google import GoogleEnum
-from netcraft import NetcraftEnum
-from yahoo import YahooEnum
-from threaders import main
+from scripts.subdomains.search_engines.ask import AskEnum
+from scripts.subdomains.search_engines.baidu import BaiduEnum
+from scripts.subdomains.search_engines.bing import BingEnum
+from scripts.subdomains.search_engines.dnsdumpster import DNSdumpster
+from scripts.subdomains.search_engines.google import GoogleEnum
+from scripts.subdomains.search_engines.netcraft import NetcraftEnum
+from scripts.subdomains.search_engines.yahoo import YahooEnum
+from scripts.subdomains.search_engines.threaders import main
+import yarl
 
 def cleanup(subdomain_lst):
     new_lst = []
@@ -86,12 +77,11 @@ def subdomain_list(domain):
     final_subdomains += projectsonar_script(domain)
     final_subdomains += projectsonar_script2(domain)
     final_subdomains += threatcrowd_script(domain)
-
+    # Archives
     final_subdomains += waybackmachine_script(domain)
-
+    # Certificated
     final_subdomains += certspotter_script(domain)
     final_subdomains += crt_script(domain)
-
     # GoogleEnum and VirusTotal removed
     chosenEnums = [CrtSearch, ThreatCrowd, BaiduEnum, YahooEnum, BingEnum, AskEnum, NetcraftEnum, DNSdumpster, PassiveDNS]
     threaders = main(domain, chosenEnums)
@@ -99,8 +89,7 @@ def subdomain_list(domain):
 
     print("Cleaning up...")
     final_subdomains = cleanup(final_subdomains)
-
-    
+        
     # Needs token
     # final_subdomains += shodan_script(domain)
     # final_subdomains += riddler_script(domain)
@@ -116,5 +105,4 @@ def subdomain_list(domain):
     
     # Also needs token
     # final_subdomains += passivetotal_script(domain)
-
     yield final_subdomains

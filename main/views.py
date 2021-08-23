@@ -158,7 +158,7 @@ def subdomain_enum(request):
         if 'scan' in request.POST.keys():
             subdomains = []
             for domain in project_model_instance.values('in_scope_domains')[0]['in_scope_domains']:
-                subdomains += next(subdomain_list(domain))
+                subdomains += list(next(subdomain_list(domain)))
             project_model_instance.update(subdomains=subdomains)
             for idx, subdomain in enumerate(subdomains):
                 subdomain_info = {}
@@ -216,7 +216,6 @@ def subdomain_enum(request):
             subdomain_info['ssl_info'] = model[8]
             subdomain_info['header_info'] = model[9]
             info_list.append(subdomain_info)
-
     context['subdomain_info'] = info_list
     context['profile_account'] = request.user.profile
     return render(request, 'dashboard/subdomain_enum.html', context)

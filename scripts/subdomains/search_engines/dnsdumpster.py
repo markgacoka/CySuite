@@ -1,9 +1,9 @@
 import re
 import threading
 import requests
-from searchparser import Parser
-from searchutils import Core
-from utils import enumeratorBaseThreaded
+from .searchparser import Parser
+from .searchutils import Core
+from .utils import enumeratorBaseThreaded
 
 class DNSdumpster(enumeratorBaseThreaded):
     def __init__(self, domain, subdomains=None, q=None):

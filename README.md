@@ -66,8 +66,32 @@ subdomains, related IP addresses (IPv4), status codes, Web Application Firewall 
 
 For more information on the database models used, check the [API Docs page](scripts/API.md)
 
+### Run the program
+```
+git clone https://github.com/markgacoka/CySuite
+cd CySuite
+pipenv install
+pipenv shell
+pipenv install -r requirements.txt
+
+# Asynchronicity (Redis, Celery and RabbitMQ)
+docker run -d -p 5672:5672 rabbitmq 
+docker run -d -p 6379:6379 redis
+redis-server
+celery -A cysuite worker -l info
+
+# Creating a superuser
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver
+```
+
 ### Remove all pycache files
 ```
 find . -type d -name __pycache__ -exec rm -r {} \+
 ```
 
+### Before launch
+- Flush database and make migrations afresh
+- Change settings.py from `DEBUG=True` to `DEBUG=FALSE`
