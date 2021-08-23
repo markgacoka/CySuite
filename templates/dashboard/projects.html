@@ -96,7 +96,7 @@ Projects | CySuite
                             </div>
                         </div>
                         <div style="float: right; width: 30%;">
-                            <button class="project-btn btn-width" id="view-btn" value="{{project_ele|get_item:"project"}}" style="background-color: #3E4261; min-width: max-content;">View&emsp;<i class="hide fa fa-angle-double-right"></i></button>
+                            <button class="project-btn btn-width" onclick="viewProject('{{project_ele|get_item:"project"}}');" style="background-color: #3E4261; min-width: max-content;">View&emsp;<i class="hide fa fa-angle-double-right"></i></button>
                         </div>
                 </div>
             </div>
@@ -116,6 +116,7 @@ Projects | CySuite
 </script>
 <script>
 	function viewProject(project){
+        console.log(project);
 		var token = '{{csrf_token}}';
 		$.ajax({
 			headers: { "X-CSRFToken": token },
@@ -128,12 +129,5 @@ Projects | CySuite
 			}
 		});
 	}
-
-    $(document).ready(function(){
-        $('#view-btn').click(function(){
-            var project = this.value;
-        viewProject(project);
-        });
-    });
 </script>
 {% endblock %}

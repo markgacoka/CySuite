@@ -41,30 +41,30 @@ from scripts.subdomains.search_engines.threaders import main
 import yarl
 
 def cleanup(subdomain_lst):
-    new_lst = []
-    for subdomain in subdomain_lst:
-        if '\n' in subdomain:
-            intermediary = subdomain.split('\n')
+    clean_lst = []
+    for domain in subdomain_lst:
+        if domain.strip() == '' or domain == None:
+            pass
+        if '\n' in domain:
+            intermediary = domain.split('\n')
             for i in intermediary:
-                new_lst.append(i)
+                clean_lst.append(i)
         else:
-            new_lst.append(subdomain)
-    clean_subdomains = list(set(new_lst))
-
-    for idx, subdomain in enumerate(clean_subdomains):
-        subdomain_yarl = yarl.URL(subdomain)
-        if not subdomain_yarl.is_absolute():
-            subdomain_yarl_result = 'http://' + str(subdomain_yarl)
-            if yarl.URL(subdomain_yarl_result).path_qs != '' and yarl.URL(subdomain_yarl_result).path_qs != '/':
-                clean_subdomains[idx] = str(yarl.URL(subdomain_yarl_result))[7:].strip()
+            clean_lst.append(domain)
+    for idx, subdomain in enumerate(clean_lst):
+        if subdomain.startswith('https://'):
+            if yarl.URL(subdomain).path_qs != '' or  yarl.URL(subdomain).path_qs != '/':
+                clean_lst[idx] = str(yarl.URL(subdomain).origin())[8:].strip()
+        elif subdomain.startswith('http://'):
+            if yarl.URL(subdomain).path_qs != '' or yarl.URL(subdomain).path_qs != '/':
+                clean_lst[idx] = str(yarl.URL(subdomain).origin())[7:].strip()
         else:
-            subdomain_yarl_result = subdomain_yarl
-            if yarl.URL(subdomain_yarl_result).path_qs != '' and yarl.URL(subdomain_yarl_result).path_qs != '/':
-                if 'https' in str(subdomain_yarl_result):
-                    clean_subdomains[idx] = str(yarl.URL(subdomain_yarl_result.origin()))[8:].strip()
-                else:
-                    clean_subdomains[idx] = str(yarl.URL(subdomain_yarl_result.origin()))[7:].strip()
-    return list(set(clean_subdomains))
+            if subdomain.strip() != '' and subdomain != None:
+                subdomain_full = 'http://' + str(subdomain)
+                subdomain_yarl = yarl.URL(subdomain_full)
+                if subdomain_yarl.path_qs != '' or subdomain_yarl.path_qs != '/':
+                    clean_lst[idx] = str(subdomain_yarl.origin())[7:].strip()
+    return list(filter(None, set(clean_lst)))
 
 def subdomain_list(domain):
     final_subdomains = []

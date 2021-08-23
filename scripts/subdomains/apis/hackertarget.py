@@ -1,10 +1,13 @@
 import requests
 from urllib.parse import quote
+from fake_useragent import UserAgent
+
+ua = UserAgent()
 
 def hackertarget_script(domain):
     HT = []
     url = "https://api.hackertarget.com/hostsearch/?q={0}".format(quote(domain))
-    headers = {"user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:52.0) Gecko/20100101 Firefox/52.0"}
+    headers = {"user-agent": ua.random}
     try:
         res = requests.get(url, headers=headers, timeout=10).text
         hostnames = [result.split(",")[0] for result in res.split("\n")]

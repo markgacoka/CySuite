@@ -1,4 +1,7 @@
 import requests, os
+from fake_useragent import UserAgent
+
+ua = UserAgent()
 
 def virustotal_script(domain):
     VT = []
@@ -9,7 +12,7 @@ def virustotal_script(domain):
         return []
     else:
         parameters = {"domain": domain, "apikey": VT_API_KEY}
-        headers = {"user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:52.0) Gecko/20100101 Firefox/52.0"}
+        headers = {"User-Agent": ua.random}
         try:
             res = requests.get("https://www.virustotal.com/vtapi/v2/domain/report", params=parameters, headers=headers, timeout=10)
             res.raise_for_status()

@@ -1,8 +1,11 @@
 import requests
+from fake_useragent import UserAgent
+
+ua = UserAgent()
 
 def projectsonar_script2(domain):
     PS = []
-    headers = {"user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:52.0) Gecko/20100101 Firefox/52.0", "content-type": "application/json"}
+    headers = {"User-Agent": ua.random}
     try:
         res = requests.get("https://sonar.omnisint.io/subdomains/" + domain, headers=headers, timeout=10)
         res.raise_for_status()

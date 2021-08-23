@@ -1,12 +1,15 @@
 import requests
 from bs4 import BeautifulSoup
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
+from fake_useragent import UserAgent
+
+ua = UserAgent()
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 def findsubdomains_script(domain):
     FSD = []
-    headers = {"user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:52.0) Gecko/20100101 Firefox/52.0"}
+    headers = {"User-Agent": ua.random}
     url = "https://findsubdomains.com/subdomains-of/{}".format(domain)
     try:
         res = requests.get(url, headers=headers, verify=False, timeout=10)

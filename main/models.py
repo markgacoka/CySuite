@@ -33,7 +33,7 @@ class Newsletter(models.Model):
 
 class ProjectModel(models.Model):
     project_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="projects", on_delete=models.CASCADE)
-    project_name = models.CharField(max_length=30, primary_key=True, unique=False, null=False, blank=True)
+    project_name = models.CharField(max_length=30, unique=False, null=False, blank=True)
     program = models.TextField(max_length=30, unique=False, null=False, blank=False)
     in_scope_domains = ArrayField(models.CharField(max_length=250, blank=True), blank=True, null=True, default=list)
     progress = models.IntegerField(default=0, blank=True, null=True)

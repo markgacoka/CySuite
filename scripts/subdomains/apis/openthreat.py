@@ -1,9 +1,12 @@
 import json
 import requests
+from fake_useragent import UserAgent
+
+ua = UserAgent()
 
 def openthreat_script(domain):
     OT = []
-    headers = {"user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:52.0) Gecko/20100101 Firefox/52.0", "content-type": "application/json"}
+    headers = {"User-Agent": ua.random, "Content-Type": "application/json"}
     try:
         res = requests.get("https://otx.alienvault.com/otxapi/indicator/hostname/url_list/" + domain, headers=headers, timeout=10)
         res.raise_for_status()
