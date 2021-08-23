@@ -80,7 +80,6 @@ def subdomain_list(domain):
     # Archives
     final_subdomains += waybackmachine_script(domain)
     # Certificated
-    final_subdomains += certspotter_script(domain)
     final_subdomains += crt_script(domain)
     # GoogleEnum and VirusTotal removed
     chosenEnums = [CrtSearch, ThreatCrowd, BaiduEnum, YahooEnum, BingEnum, AskEnum, NetcraftEnum, DNSdumpster, PassiveDNS]
@@ -89,7 +88,10 @@ def subdomain_list(domain):
 
     print("Cleaning up...")
     final_subdomains = cleanup(final_subdomains)
-        
+
+    # Times out after too many requests
+    # final_subdomains += certspotter_script(domain)    
+    
     # Needs token
     # final_subdomains += shodan_script(domain)
     # final_subdomains += riddler_script(domain)

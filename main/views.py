@@ -156,8 +156,30 @@ def subdomain_enum(request):
 
     if request.method == 'POST':
         if 'scan' in request.POST.keys():
-            subdomain_info = compute.now(request)
-            messages.success(request, 'Scan In Progress. Stand by!')
+            subdomains = []
+            
+            for domain in project_model_instance.values('in_scope_domains')[0]['in_scope_domains']:
+                subdomains += list(next(subdomain_list(domain)))
+                project_model_instance.update(subdomains=subdomains, progress=25)
+                for idx, subdomain in enumerate(subdomains):
+                    subdomain_info = {}
+                    subdomain_model = SubdomainModel.objects.update_or_create(
+                        subdomain_user = request.user,
+                        project = ProjectModel.objects.get(project_name=project_session),
+                        hostname = subdomain,
+                        defaults = {        
+                            # status_code = next(status_code(subdomain)),
+                            # ip_address = next(get_ip(subdomain)),
+                            'status_code': '200 OK',
+                            'screenshot': 'None',
+                            'ip_address': '123.123.123.123',
+                            'waf': 'Absent',
+                            'ssl_info': {},
+                            'header_info': {},
+                            'directories': []
+                        })
+            messages.success(request, 'Scan completed successfully!')
+        return redirect('subdomain_enum')
     else:
         if len(project_model_instance.values_list()) > 0:
             context['is_project'] = 'True'
@@ -190,32 +212,6 @@ def subdomain_enum(request):
     context['profile_account'] = request.user.profile
     return render(request, 'dashboard/subdomain_enum.html', context)
 
-from background_task import background
-@background(schedule=0)
-def compute(request):
-    subdomains = []
-    project_session = request.session['project']
-    project_model_instance = ProjectModel.objects.filter(project_user=request.user).filter(project_name__iexact=project_session)
-    for domain in project_model_instance.values('in_scope_domains')[0]['in_scope_domains']:
-        subdomains += list(next(subdomain_list(domain)))
-        project_model_instance.update(subdomains=subdomains, progress=25)
-        for idx, subdomain in enumerate(subdomains):
-            subdomain_info = {}
-            subdomain_model = SubdomainModel.objects.update_or_create(
-                subdomain_user = request.user,
-                project = ProjectModel.objects.get(project_name=project_session),
-                hostname = subdomain,
-                defaults = {        
-                    # status_code = next(status_code(subdomain)),
-                    # ip_address = next(get_ip(subdomain)),
-                    'status_code': '200 OK',
-                    'screenshot': 'None',
-                    'ip_address': '123.123.123.123',
-                    'waf': 'Absent',
-                    'ssl_info': {},
-                    'header_info': {},
-                    'directories': []
-                })
 def directory_enum(request):
     context = {}
     context['profile_account'] = request.user.profile
