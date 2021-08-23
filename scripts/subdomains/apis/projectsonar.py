@@ -1,5 +1,8 @@
 import requests
 from json import loads
+from fake_useragent import UserAgent
+
+ua = UserAgent()
 
 def filterDomain(domain, subdomains):
     domain_parts = domain.split(".")
@@ -15,8 +18,8 @@ def filterDomain(domain, subdomains):
 def projectsonar_script(domain):
     sonar = []
     url = "http://dns.bufferover.run/dns?q=.{0}".format(domain)
-    headers = {"user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:52.0) Gecko/20100101 Firefox/52.0"}
     try:
+        headers = {"User-Agent": ua.random}
         res = requests.get(url, headers=headers, timeout=10)
         res.raise_for_status()
         response_json = loads(res.text)

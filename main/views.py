@@ -97,7 +97,7 @@ def projects(request):
         elif 'view' in request.POST.keys():
             try:
                 curr_project = request.POST.get('view')
-                request.session['project'] = request.session.get('project', curr_project)
+                request.session['project'] = curr_project
                 request.session.modified = True
                 response = {'status': 1, 'message': "Ok"}
             except:
@@ -159,7 +159,7 @@ def subdomain_enum(request):
             subdomains = []
             for domain in project_model_instance.values('in_scope_domains')[0]['in_scope_domains']:
                 subdomains += list(next(subdomain_list(domain)))
-            project_model_instance.update(subdomains=subdomains)
+            project_model_instance.update(subdomains=subdomains, progress=25)
             for idx, subdomain in enumerate(subdomains):
                 subdomain_info = {}
                 subdomain_model = SubdomainModel.objects.update_or_create(
@@ -204,8 +204,8 @@ def subdomain_enum(request):
             context['profile_account'] = request.user.profile
             return render(request, 'dashboard/subdomain_enum.html', context)
 
-        project_model_instance_all = ProjectModel.objects.get(project_user=request.user)
-        subdomain_model_instance = SubdomainModel.objects.filter(project=project_model_instance_all)
+        user_projects = ProjectModel.objects.get(project_name=request.session['project'])
+        subdomain_model_instance = SubdomainModel.objects.filter(subdomain_user=request.user).filter(project=user_projects)
         for model in subdomain_model_instance.values_list():
             subdomain_info = {}
             subdomain_info['subdomain'] = model[3]

@@ -1,5 +1,8 @@
 import requests
 from re import findall
+from fake_useragent import UserAgent
+
+ua = UserAgent()
 
 def parseResponse(response, domain):
     hostnameRegex = "([\w\.\-]+\.%s)" % (domain.replace(".", "\."))
@@ -11,15 +14,14 @@ def certspotter_script(domain):
 
     base_url = "https://api.certspotter.com"
     next_link = "/v1/issuances?domain={0}&include_subdomains=true&expand=dns_names".format(domain)
-    headers = {"user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:52.0) Gecko/20100101 Firefox/52.0"}
+    headers = {"User-Agent": ua.random}
 
     while next_link:
         try:
             res = requests.get(base_url + next_link, headers=headers, timeout=10)
             res.raise_for_status()
             if res.status_code == 429:
-                print("Search rate limit exceeded.")
-                return []
+                break
 
             CS += parseResponse(res.content, domain)
             try:
