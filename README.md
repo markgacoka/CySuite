@@ -16,6 +16,8 @@ CySuite is designed to scan and test for all classic vulnerabilities in the OWAS
 
 Please make sure to read the [CONTRIBUTING](CONTRIBUTING.md) and [CODE OF CONDUCT](CODE_OF_CONDUCT.md) pages before joining the community or contributing.
 
+VALUES: Lean, Fast, Organized
+
 ## Features
 ### Subdomain Enumeration
 The subdomain enumeration section of Cysuite scans for subdomains both passively and actively.

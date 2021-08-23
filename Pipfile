@@ -12,18 +12,9 @@ bs4 = "*"
 yarl = "*"
 django-allauth = "*"
 pillow = "*"
-pypng = "*"
 puremagic = "*"
-pylint-django = "*"
 cfscrape = "*"
-tornado = "*"
-aiohttp = "*"
 jsonfield = "*"
-python-decouple = "*"
-redis = "*"
-django-celery-results = "*"
-celery-progress = "*"
-celery = "*"
 
 [dev-packages]
 
