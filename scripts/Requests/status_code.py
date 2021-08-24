@@ -13,8 +13,10 @@ def status_code(domain):
     except HTTPError as e:
         status = str(e.code) + ' ' + httplib.responses[e.code]
     except URLError as e:
-        status = str(404) + ' ' + httplib.responses[404]
+        status = 'Not Applicable'
     except socket.timeout as e:
+        status = str(200) + ' ' + httplib.responses[200]
+    except requests.exceptions.Timeout:
         status = str(400) + ' ' + httplib.responses[400]
     else:
         status = str(code) + ' ' + httplib.responses[code]

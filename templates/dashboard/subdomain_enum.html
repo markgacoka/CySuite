@@ -46,11 +46,16 @@ Sudomain Enumeration | CySuite
                     <button class="project-btn" type="submit" style="font-size: 1rem; height: auto; text-align: center; transform: scale(0.9); display: inline-block; float: right;"><i class="fa fa-retweet"></i>&nbsp;Rescan</button>
                     {% endif %}
                 </div>
-                <div class="w3-border" style="padding: 1rem 1.3125rem 0 1.3125rem;">
-                    <div style="width: 100%; border: 2px solid grey;">
-                        <div class="w3-grey" style="height:24px; width:90%; background-color: #2a2d42 !important;"></div>
+                {% if task %}
+                <div class="w3-border" style="padding: 1rem 1.3125rem 0 1.3125rem; position: relative;">
+                    <div style="width: 95%; float: left; border: 2px solid grey; display: inline-block;">
+                        <div class="w3-grey" style="height:24px; width:{{task.percentage}}; background-color: #2a2d42 !important;"></div>
+                    </div>
+                    <div style="width: 5%; float: right; padding-left: 0.5rem; text-align: center;">
+                        <span style="font-size: 1rem;">{{task.percentage}}</span>
                     </div>
                 </div>
+                {% endif %}
                 </form>
                 <div class="card-body">
                     <table id="datatables-reponsive" class="table table-striped" style="table-layout: fixed; height: 100%; width: 100%;">
@@ -67,9 +72,9 @@ Sudomain Enumeration | CySuite
                             {% for info in subdomain_info %}
                             <tr>
                                 <td><a href="https://{{info|get_item:"subdomain"}}" target="_blank">{{info|get_item:"subdomain"}}</a></td>
-                                {% if '1'|first in info|get_item:"status_code" or '2'|first in info|get_item:"status_code" %}
+                                {% if info|get_item:"status_code"|first == '1' or info|get_item:"status_code"|first == '2' %}
                                 <td><span class="badge badge-soft-success badge-pill">{{info|get_item:"status_code"}}</span></td>
-                                {% elif '4'|first in info|get_item:"status_code" %}
+                                {% elif info|get_item:"status_code"|first == '4' %}
                                 <td><span class="badge bg-danger">{{info|get_item:"status_code"}}</span></td>
                                 {% else %}
                                 <td><span class="badge badge-soft-warning badge-pill">{{info|get_item:"status_code"}}</span></td>
@@ -92,13 +97,21 @@ Sudomain Enumeration | CySuite
                         <dd class="col-8 col-xxl-9">
                             <code>subdomain1.site.com</code>
                         </dd>
-                        <dt class="col-4 col-xxl-3">Status Code:</dt>
+                        <dt class="col-4 col-xxl-3">Server Type:</dt>
                         <dd class="col-8 col-xxl-9">
-                            <span class="badge badge-soft-success badge-pill">200</span>
+                            <code style="font-size: 0.8rem;">Apache</code>
                         </dd>
-                        <dt class="col-4 col-xxl-3 mb-0">IP Address:</dt>
-                        <dd class="col-8 col-xxl-9 mb-0">
+                        <dt class="col-4 col-xxl-3">IP Address:</dt>
+                        <dd class="col-8 col-xxl-9">
                             <code style="font-size: 0.8rem;">143.83.21.2</code>
+                        </dd>
+                        <dt class="col-4 col-xxl-3">Open Ports:</dt>
+                        <dd class="col-8 col-xxl-9">
+                            <code style="font-size: 0.8rem;">80, 8080</code>
+                        </dd>
+                        <dt class="col-4 col-xxl-3 mb-0">Status Code:</dt>
+                        <dd class="col-8 col-xxl-9 mb-0">
+                            <span class="badge badge-soft-success badge-pill">200</span>
                         </dd>
                     </dl>
                     <hr>
