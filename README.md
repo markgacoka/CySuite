@@ -95,5 +95,15 @@ find . -type d -name __pycache__ -exec rm -r {} \+
 ```
 
 ### Before launch
-- Flush database and make migrations afresh
-- Change settings.py from `DEBUG=True` to `DEBUG=FALSE`
+{https://www.youtube.com/watch?v=mAeK4Ia4fk8}
+[ ] Hide secret key in `secret.txt` or `.env`
+[ ] Install SSL certificate in Django
+  - HSTS settings
+  - Add SESSION_COOKIE, CSRF and SECURE_SSL settings
+[ ] Flush database and make migrations afresh
+[ ] Allowed Hosts (add the real domain name)
+[ ] Copy static files to root directory
+  - `python manage.py collectstatic`
+[ ] Change settings.py from `DEBUG=True` to `DEBUG=FALSE`
+[ ] `python manage.py check --deploy`
+[ ] Change admin URL

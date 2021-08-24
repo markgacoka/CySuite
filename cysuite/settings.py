@@ -50,10 +50,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.twitter',
     'main',
     'cyauth',
-    'background_task',
 ]
 
-SITE_ID = 4
+SITE_ID = 1
 LOGIN_REDIRECT_URL = '/dashboard'
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_USERNAME_REQUIRED = True
