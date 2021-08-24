@@ -163,16 +163,18 @@ def subdomain_enum(request):
                 project_model_instance.update(subdomains=subdomains, progress=25)
                 for idx, subdomain in enumerate(subdomains):
                     subdomain_info = {}
+                    status = next(status_code(subdomain))
+                    ip_address = next(get_ip(subdomain))
+                    if '4' in status:
+                        print(status)
                     subdomain_model = SubdomainModel.objects.update_or_create(
                         subdomain_user = request.user,
                         project = ProjectModel.objects.get(project_name=project_session),
                         hostname = subdomain,
                         defaults = {        
-                            status_code = next(status_code(subdomain)),
-                            ip_address = next(get_ip(subdomain)),
-                            # 'status_code': '200 OK',
-                            # 'screenshot': 'None',
-                            'ip_address': '123.123.123.123',
+                            'status_code': status,
+                            'ip_address': ip_address,
+                            'screenshot': 'None',
                             'waf': 'Absent',
                             'ssl_info': {},
                             'header_info': {},

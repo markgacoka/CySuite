@@ -7,5 +7,5 @@ def get_ip(domain):
     except Exception as e:
         ip = 'None'
     else:
-       pass
+       ip = ip
     yield ip
