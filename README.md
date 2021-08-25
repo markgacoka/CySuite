@@ -166,7 +166,7 @@ services:
   celery:
     restart: always
     build: .
-    command: celery -A cysuite worker -l INFO
+    command: celery -A cysuite worker -l INFO -P threads --concurrency=8 
     volumes:
       - .:/usr/src/app
     env_file:

@@ -47,11 +47,13 @@ Sudomain Enumeration | CySuite
                     {% endif %}
                 </div>
                 {% if task %}
-                <div class="w3-border" style="padding: 1rem 1.3125rem 0 1.3125rem; position: relative;">
-                    <div class='progress-wrapper' style="width: 95%; float: left; display: inline-block;">
-                        <div id='progress-bar' class='progress-bar' style="background-color: #68a9ef; width: 0%;">&nbsp;</div>
+                <div style="padding: 1rem 1.3125rem 0 1.3125rem; position: relative;">
+                    <div class='progress-wrapper' style="width: 95%; float: left; border: 1px solid grey; display: inline-block;">
+                        <div id='progress-bar' class='progress-bar' style="background-color: #2a2d42; width: 0%;">&nbsp;</div>
                     </div>
-                    <div id="progress-bar-message" style="width: 5%; float: right; padding-left: 0.5rem; text-align: center;">Waiting for progress to start...</div>
+                    <div style="width: 5%; float: right; padding-left: 0.5rem; text-align: center;">
+                        <div id="progress-bar-message"></div>
+                    </div>
                 </div>
                 {% endif %}
                 </form>
@@ -157,11 +159,35 @@ Sudomain Enumeration | CySuite
         window.location.assign(document.URL);
     }
 
-	document.addEventListener("DOMContentLoaded", function () {
-	var progressUrl = "{% url 'celery_progress:task_status' task_id %}";
-    CeleryProgressBar.initProgressBar(progressUrl, {
-        onResult: refreshPage,
-    })
+    function onProgress(progressBarElement, progressBarMessageElement, progress) {
+        progressBarElement.style.backgroundColor = '#2a2d42';
+        progressBarElement.style.width = progress.percent + "%";
+        var description = progress.description || "";
+        if (progress.current == 0) {
+            if (progress.pending === true) {
+                progressBarMessageElement.textContent = '0%';
+            } else {
+                progressBarMessageElement.innerHTML = `<i class="fa fa-spinner fa-spin" style="font-size: 1rem;"></i>`;
+            }
+        } else {
+            progressBarMessageElement.textContent = String(Math.floor(progress.current/progress.total * 100)) + '%';
+        }
+    }
+
+    function onSuccess(progressBarElement, progressBarMessageElement, result) {
+        result = this.getMessageDetails(result);
+        progressBarElement.style.backgroundColor = '#76ce60';
+        progressBarElement.style.width = "100%";
+        progressBarMessageElement.textContent = "100%";
+    }
+	
+    document.addEventListener("DOMContentLoaded", function () {
+        var progressUrl = "{% url 'celery_progress:task_status' task_id %}";
+        CeleryProgressBar.initProgressBar(progressUrl, {
+            onResult: refreshPage,
+            onProgress: onProgress,
+            onSuccess: onSuccess,
+        });
 	});
 </script>
 {% endif %}
