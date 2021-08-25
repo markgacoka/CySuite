@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.twitter',
     'main',
     'cyauth',
+    'django_celery_results',
 ]
 
 SITE_ID = 1
