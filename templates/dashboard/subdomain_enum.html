@@ -48,12 +48,10 @@ Sudomain Enumeration | CySuite
                 </div>
                 {% if task %}
                 <div class="w3-border" style="padding: 1rem 1.3125rem 0 1.3125rem; position: relative;">
-                    <div style="width: 95%; float: left; border: 2px solid grey; display: inline-block;">
-                        <div class="w3-grey" style="height:24px; width:{{task.percentage}}; background-color: #2a2d42 !important;"></div>
+                    <div class='progress-wrapper' style="width: 95%; float: left; display: inline-block;">
+                        <div id='progress-bar' class='progress-bar' style="background-color: #68a9ef; width: 0%;">&nbsp;</div>
                     </div>
-                    <div style="width: 5%; float: right; padding-left: 0.5rem; text-align: center;">
-                        <span style="font-size: 1rem;">{{task.percentage}}</span>
-                    </div>
+                    <div id="progress-bar-message" style="width: 5%; float: right; padding-left: 0.5rem; text-align: center;">Waiting for progress to start...</div>
                 </div>
                 {% endif %}
                 </form>
@@ -151,6 +149,15 @@ Sudomain Enumeration | CySuite
         </div>
     </div>
 </div>
+{% endif %}
+{% if task %}
+<script src="{% static 'celery_progress/celery_progress.js' %}"></script>
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+	var progressUrl = "{% url 'celery_progress:task_status' task_id %}";
+	CeleryProgressBar.initProgressBar(progressUrl);
+	});
+</script>
 {% endif %}
 <script>
     document.addEventListener("DOMContentLoaded", function() {

@@ -6,6 +6,7 @@ import urllib
 import hashlib
 import urllib.parse
 from os import path
+from .tasks import scan_subdomains
 import os, json, base64, requests
 from html import escape, unescape
 from django.shortcuts import render, redirect
@@ -17,7 +18,7 @@ from .models import PayloadModel
 from .models import WordlistModel
 from .models import ProjectModel
 from .models import SubdomainModel
-from .subdomains import subdomain_list
+from cyauth.models import Account
 from PIL import Image
 from django.template.context_processors import csrf
 from django.conf import settings
@@ -25,8 +26,6 @@ from django.contrib import messages
 from django.core.files import File
 from django.http import FileResponse
 from django.core.files.storage import default_storage
-from scripts.Requests.status_code import status_code
-from scripts.IPAddress.get_host import get_ip
 from scripts.WordlistGen.wordlist import print_wordlist
 from scripts.WordlistGen.status import url_status
 from scripts.Headers.request import send_request
@@ -36,6 +35,7 @@ from scripts.HexViewer.hexviewer import hex_viewer
 from scripts.CodeInjection.injector import Injector
 from scripts.HexViewer.full_hexviewer import full_hex_viewer
 from scripts.WordlistGen.generator import extract_wordlist
+
 
 def checkout(request):
     return render(request, 'pages/checkout.html', context={
@@ -156,32 +156,12 @@ def subdomain_enum(request):
 
     if request.method == 'POST':
         if 'scan' in request.POST.keys():
-            subdomains = []
-            
-            for domain in project_model_instance.values('in_scope_domains')[0]['in_scope_domains']:
-                subdomains += list(next(subdomain_list(domain)))
-                project_model_instance.update(subdomains=subdomains, progress=25)
-                for idx, subdomain in enumerate(subdomains):
-                    subdomain_info = {}
-                    status = next(status_code(subdomain))
-                    ip_address = next(get_ip(subdomain))
-                    if '4' in status:
-                        print(status)
-                    subdomain_model = SubdomainModel.objects.update_or_create(
-                        subdomain_user = request.user,
-                        project = ProjectModel.objects.get(project_name=project_session),
-                        hostname = subdomain,
-                        defaults = {        
-                            'status_code': status,
-                            'ip_address': ip_address,
-                            'screenshot': 'None',
-                            'waf': 'Absent',
-                            'ssl_info': {},
-                            'header_info': {},
-                            'directories': []
-                        })
-            messages.success(request, 'Scan completed successfully!')
-        return redirect('subdomain_enum')
+            user_id = Account.objects.filter(username=request.user.username).values('user_id')[0]['user_id']
+            task = scan_subdomains.delay(user_id, project_session)
+            context['task'] = task
+            context['task_id'] = task.task_id
+            messages.success(request, 'Scan in progress. Stand by!')
+        return render(request, 'dashboard/subdomain_enum.html', context)
     else:
         if len(project_model_instance.values_list()) > 0:
             context['is_project'] = 'True'
@@ -214,11 +194,9 @@ def subdomain_enum(request):
     context['profile_account'] = request.user.profile
     return render(request, 'dashboard/subdomain_enum.html', context)
 
-from .tasks import go_to_sleep
+
 def directory_enum(request):
     context = {}
-    task = go_to_sleep.delay(1)
-    context['task_id'] = task.task_id
     context['profile_account'] = request.user.profile
     return render(request, 'dashboard/directory_enum.html', context)
 
