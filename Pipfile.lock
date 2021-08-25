@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "703e6057debdbfccf0b9ecdf76b8913134710869ca2f20a61c11eb66a2f987d0"
+            "sha256": "5b361e7a0bcf7580fa484540d9c0987c2c73f51adf3e24842321046eed749228"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -68,6 +68,14 @@
             ],
             "markers": "python_version >= '3.6'",
             "version": "==5.1.2"
+        },
+        "celery-progress": {
+            "hashes": [
+                "sha256:36a1e58b4408c9bf6aa63908204b50960b005db8e13f3c94ce6f8d6a2a4d4a6c",
+                "sha256:b2622d1b410a763412810f0293153c984f4a0220b76769bd701b5b45e583ddad"
+            ],
+            "index": "pypi",
+            "version": "==0.1.1"
         },
         "certifi": {
             "hashes": [

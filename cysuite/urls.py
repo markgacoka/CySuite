@@ -21,4 +21,5 @@ urlpatterns = [
     path('', include('main.urls')),
     path('', include('cyauth.urls')),
     path('accounts/', include('allauth.urls')),
+    path('celery-progress/', include('celery_progress.urls')),
 ]
