@@ -40,5 +40,5 @@ def scan_subdomains(self, user_id, project_session):
                     'header_info': {},
                     'directories': []
                 })
-        progress_recorder.set_progress(idx+1, len(in_scope))
+            progress_recorder.set_progress(idx+1, len(subdomains))
     return 'Done'
