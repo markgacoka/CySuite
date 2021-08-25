@@ -96,6 +96,8 @@ find . -type d -name __pycache__ -exec rm -r {} \+
 
 ### Before launch
 {https://www.youtube.com/watch?v=mAeK4Ia4fk8}
+[ ] Generate a requirements.txt file
+    `pipenv lock -r > requirements.txt`
 [ ] Hide secret key in `secret.txt` or `.env`
 [ ] Install SSL certificate in Django
   - HSTS settings
@@ -107,3 +109,5 @@ find . -type d -name __pycache__ -exec rm -r {} \+
 [ ] Change settings.py from `DEBUG=True` to `DEBUG=FALSE`
 [ ] `python manage.py check --deploy`
 [ ] Change admin URL
+[ ] Change social login tokens, domains to production
+[ ] Change Paypal API endpoint to production key
