@@ -160,6 +160,7 @@ def subdomain_enum(request):
             task = scan_subdomains.delay(user_id, project_session)
             context['task'] = task
             context['task_id'] = task.task_id
+            context['profile_account'] = request.user.profile
             messages.success(request, 'Scan in progress. Stand by!')
         return render(request, 'dashboard/subdomain_enum.html', context)
     else:
