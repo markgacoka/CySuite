@@ -68,24 +68,169 @@ subdomains, related IP addresses (IPv4), status codes, Web Application Firewall 
 
 For more information on the database models used, check the [API Docs page](scripts/API.md)
 
-### Run the program
+### Containerization Technique
+```
+DIRECTORY:
+\---cysuite
+    |   asgi.py
+    |   settings.py
+    |   celery.py
+    |   urls.py
+    |   wsgi.py
+    |   __init__.py
+\---main
+    \---migrations
+    |   __init__.py
+    |   admin.py
+    |   apps.py
+    |   models.py
+    |   tasks.py
+    |   subdomains.py
+    |   tests.py
+    |   views.py
+    |   __init__.py
+\---cyauth
+    |   __init__.py
+    |   admin.py
+    |   apps.py
+    |   models.py
+    |   tests.py
+    |   views.py
+    |   __init__.py
+| manage.py      
+
+[requirements.txt]
+Example:
+Django>=2.2
+celery==4.4.1
+redis==3.4.1
+psycopg2>=2.7.5,<2.8.0
+
+[Dockerfile]
+FROM python:3.7-alpine
+
+ENV PYTHONUNBUFFERED 1
+COPY ./requirements.txt /requirements.txt
+RUN apk add --update --no-cache postgresql-client jpeg-dev
+RUN apk add --update --no-cache --virtual .tmp-build-deps \ 
+    gcc libc-dev linux-headers postgresql-dev musl-dev zlib zlib-dev
+RUN pip install -r /requirements.txt
+RUN apk del .tmp-build-deps
+WORKDIR /usr/src/app
+
+[.env.dev]
+DB_NAME=cysuite
+DB_USER=postgres
+DB_PASS=Dodomans@001
+DB_HOST=localhost
+POSTGRES_DB=app
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=supersecretpassword
+DEBUG=FALSE
+DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1
+CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
+CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
+
+[docker-compose.yml]
+version: "3.8"
+
+services:
+  django:
+    build: .
+    container_name: django
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/usr/src/app
+    command: >
+      sh -c "python3 manage.py makemigrations &&
+             python3 manage.py migrate &&
+             python3 manage.py runserver 0.0.0.0:8000"
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - pgdb
+      - redis
+
+  pgdb:
+    image: postgres:10-alpine
+    container_name: pgdb
+    env_file:
+      - ./.env.dev
+    volumes: 
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  redis:
+    image: redis:alpine
+  celery:
+    restart: always
+    build: .
+    command: celery -A cysuite worker -l INFO
+    volumes:
+      - .:/usr/src/app
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - pgdb
+      - redis
+      - django
+volumes:
+  pgdata:
+
+[settings]
+INSTALLED_APPS = [
+    'main',
+    'cyauth',
+    ]
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': os.environ.get('DB_HOST'),
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASS'),
+    }
+}
+
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER', 'redis://redis:6379/0')
+CELERY_RESULT_BACKEND =os.environ.get('CELERY_BROKER', 'redis://redis:6379/0')
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+
+[terminal]
+# Create project and app (already created)
+django-admin startproject cysuite .
+python manage.py startapp main
+
+# Send packages with versions to requirements.txt
+pipenv lock -r > requirements.txt
+
+# Create docker files
+Dockerfile
+docker-compose.yml
+
+# Run and start (no build needed)
+docker-compose run django
+docker-compose up
+```
+
+### Running the program
 ```
 git clone https://github.com/markgacoka/CySuite
 cd CySuite
 pipenv install
-pipenv shell
 pipenv install -r requirements.txt
 
-# Asynchronicity (Redis, Celery and RabbitMQ)
-docker run -d -p 5672:5672 rabbitmq 
-docker run -d -p 6379:6379 redis
-redis-server
-celery -A cysuite worker -l info
-
-# Creating a superuser
+# Migrate the database and create a superuser
 python manage.py makemigrations
 python manage.py migrate
 python manage.py createsuperuser
+
+# Run redis, celery worker and Django server
+redis-server
+celery -A cysuite worker -l info
 python manage.py runserver
 ```
 
@@ -94,7 +239,7 @@ python manage.py runserver
 find . -type d -name __pycache__ -exec rm -r {} \+
 ```
 
-### Before launch
+### Before launch (production configs)
 {https://www.youtube.com/watch?v=mAeK4Ia4fk8}
 [ ] Generate a requirements.txt file
     `pipenv lock -r > requirements.txt`
@@ -111,3 +256,10 @@ find . -type d -name __pycache__ -exec rm -r {} \+
 [ ] Change admin URL
 [ ] Change social login tokens, domains to production
 [ ] Change Paypal API endpoint to production key
+[ ] Set specific module versions in Pipfile
+    ```
+    pipenv uninstall --all
+    rm Pipfile* requirements.txt
+    pipenv install [package-name==version]
+    ```
+[ ] Remove unused CSS lines (make it leaner) + minify

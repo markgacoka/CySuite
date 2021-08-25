@@ -16,6 +16,7 @@ cfscrape = "*"
 yarl = "*"
 pillow = "*"
 pypng = "*"
+redis = "*"
 
 [dev-packages]
 
