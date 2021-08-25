@@ -13,6 +13,10 @@ Directory Enumeration | CySuite
 				href="projects.html">Projects</a> tab and scan directories to see the list.</p>
 	</div>
 </div>
+<div class='progress-wrapper'>
+  <div id='progress-bar' class='progress-bar' style="background-color: #68a9ef; width: 0%;">&nbsp;</div>
+</div>
+<div id="progress-bar-message">Waiting for progress to start...</div>
 <div class="card">
 	<div class="card-header pb-0" style="display: block; width: auto; text-align: center;">
 		<div class="alert alert-primary alert-outline alert-dismissible" style="margin: 0 2rem 2rem 0; width: 100%;">
@@ -49,4 +53,11 @@ Directory Enumeration | CySuite
 	<input class="form-select flex-grow-1">
 	<button class="btn btn-primary" type="button">Search</button>
 </div>
+<script src="{% static 'celery_progress/celery_progress.js' %}"></script>
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+	var progressUrl = "{% url 'celery_progress:task_status' task_id %}";
+	CeleryProgressBar.initProgressBar(progressUrl);
+	});
+</script>
 {% endblock %}

@@ -217,7 +217,8 @@ def subdomain_enum(request):
 from .tasks import go_to_sleep
 def directory_enum(request):
     context = {}
-    go_to_sleep.delay(5)
+    task = go_to_sleep.delay(1)
+    context['task_id'] = task.task_id
     context['profile_account'] = request.user.profile
     return render(request, 'dashboard/directory_enum.html', context)
 

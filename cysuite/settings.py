@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'main',
     'cyauth',
     'django_celery_results',
+    'celery_progress',
 ]
 
 SITE_ID = 1
@@ -158,6 +159,9 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
-CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
-CELERY_ACCEPT_CONTENT = ['json']
+CELERY_RESULT_BACKEND = "django-db"
+CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_TRACK_STARTED=True
+CELERY_TIMEZONE = 'Etc/GMT+3'
