@@ -101,3 +101,15 @@ class SubdomainModel(models.Model):
 
     def __str__(self):
         return self.subdomain_user.name + ' Subdomains'
+
+class CeleryTaskModel(models.Model):
+    task_user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, unique=True, related_name='celerytask', on_delete=models.CASCADE)
+    subdomain_task = models.TextField(max_length=50, unique=False, null=True, blank=True)
+
+    class Meta():
+        db_table = 'celerytask'
+        verbose_name = _('celerytask')
+        verbose_name_plural = _('celerytask')
+
+    def __str__(self):
+        return self.task_user.name + ' Celery Tasks'
