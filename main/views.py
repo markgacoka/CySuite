@@ -18,6 +18,7 @@ from .models import PayloadModel
 from .models import WordlistModel
 from .models import ProjectModel
 from .models import SubdomainModel
+from main.models import CeleryTaskModel
 from cyauth.models import Account
 from PIL import Image
 from django.template.context_processors import csrf
@@ -148,6 +149,7 @@ def notes(request):
     context['profile_account'] = request.user.profile
     return render(request, 'dashboard/notes.html', context)
 
+from celery.result import AsyncResult
 def subdomain_enum(request):
     context = {}
     info_list = []
@@ -158,12 +160,25 @@ def subdomain_enum(request):
         if 'scan' in request.POST.keys():
             user_id = Account.objects.filter(username=request.user.username).values('user_id')[0]['user_id']
             task = scan_subdomains.delay(user_id, project_session)
+            task_model = CeleryTaskModel.objects.filter(task_user=request.user).update_or_create(
+                task_user = request.user,
+                defaults = { 
+                    'subdomain_task': task.task_id
+                }
+            )
             context['task'] = task
             context['task_id'] = task.task_id
             context['profile_account'] = request.user.profile
             messages.success(request, 'Scan in progress. Stand by!')
         return render(request, 'dashboard/subdomain_enum.html', context)
     else:
+        if CeleryTaskModel.objects.filter(task_user=request.user).exists():
+            # STARTED, PROGRESS, SUCCESS, PENDING
+            task_id = CeleryTaskModel.objects.filter(task_user=request.user).values('subdomain_task')[0]['subdomain_task']
+            res = AsyncResult(task_id).state
+            if res == 'STARTED' or res == 'PROGRESS':            
+                context['task'] = True
+                context['task_id'] = task_id
         if len(project_model_instance.values_list()) > 0:
             context['is_project'] = 'True'
             if project_model_instance.count() > 0:

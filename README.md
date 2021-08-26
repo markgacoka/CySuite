@@ -166,7 +166,7 @@ services:
   celery:
     restart: always
     build: .
-    command: celery -A cysuite worker -l INFO -P threads --concurrency=8 
+    command: celery -A cysuite worker -P threads -l INFO
     volumes:
       - .:/usr/src/app
     env_file:
@@ -230,7 +230,7 @@ python manage.py createsuperuser
 
 # Run redis, celery worker and Django server
 redis-server
-celery -A cysuite worker -l info
+celery -A cysuite worker -P threads -l INFO --concurrency=8
 python manage.py runserver
 ```
 
