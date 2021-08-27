@@ -18,6 +18,8 @@ pillow = "*"
 pypng = "*"
 redis = "*"
 celery-progress = "*"
+gevent = "*"
+emailfinder = "*"
 
 [dev-packages]
 
