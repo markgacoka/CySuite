@@ -15,6 +15,7 @@ urlpatterns = [
     #dashboard
     path('projects/', views.projects, name='projects'),
     path('notes/', views.notes, name='notes'),
+    path('stats/', views.stats, name='stats'),
     path('subdomain-enum/', views.subdomain_enum, name='subdomain_enum'),
     path('directory-enum/', views.directory_enum, name='directory_enum'),
     path('vuln-analysis/', views.vuln_analysis, name='vuln_analysis'),

@@ -5,7 +5,7 @@
     <div class="sidebar-content js-simplebar">
         <a class="sidebar-brand" href="/"><span class="align-middle me-3">CySuite</span></a>
         <ul class="sidebar-nav">
-            <li class="sidebar-header">Pages</li>
+            <li class="sidebar-header">Home</li>
             {% if request.path == '/dashboard/' %}
             <li class="sidebar-item active">
             {% else %}
@@ -32,6 +32,16 @@
                 <a class="sidebar-link" href="/notes">
                     <i class="align-middle" data-feather="book-open"></i> <span
                         class="align-middle">Notes</span>
+                </a>
+            </li>
+            {% if request.path == '/stats/' %}
+            <li class="sidebar-item active">
+            {% else %}
+            <li class="sidebar-item">
+            {% endif %}
+                <a class="sidebar-link" href="/stats">
+                    <i class="align-middle" data-feather="pie-chart"></i> <span
+                        class="align-middle">Statistics</span>
                 </a>
             </li>
 

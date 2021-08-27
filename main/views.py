@@ -37,6 +37,10 @@ from scripts.CodeInjection.injector import Injector
 from scripts.HexViewer.full_hexviewer import full_hex_viewer
 from scripts.WordlistGen.generator import extract_wordlist
 
+def stats(request):
+    context = {}
+    context['profile_account'] = request.user.profile
+    return render(request, 'dashboard/stats.html', context=context)
 
 def checkout(request):
     return render(request, 'pages/checkout.html', context={
@@ -176,6 +180,7 @@ def subdomain_enum(request):
             # STARTED, PROGRESS, SUCCESS, PENDING
             task_id = CeleryTaskModel.objects.filter(task_user=request.user).values('subdomain_task')[0]['subdomain_task']
             res = AsyncResult(task_id).state
+            task_output = AsyncResult(task_id).result
             if res == 'STARTED' or res == 'PROGRESS':            
                 context['task'] = True
                 context['task_id'] = task_id
