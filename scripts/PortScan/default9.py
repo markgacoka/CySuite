@@ -1,9 +1,6 @@
 # WORKS!
 # Total runtime:
 import socket
-import os
-
-ports = 65535
 
 DEFAULT_TIMEOUT = 0.5
 SUCCESS = 0
@@ -18,7 +15,8 @@ def check_port(*host_port, timeout=DEFAULT_TIMEOUT):
 
 open = []
 target = 'markgacoka.com'
-for port in range(1, ports+1):
+portrange = [20,21,22,23,25,53,80,110,111,135,139,143,443,445,993,995,1723,3306,3389,5900,8080]# top 20
+for port in portrange:
     con = check_port(target, port)
     if con == True:
         open.append(port)

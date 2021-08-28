@@ -1,4 +1,4 @@
-# WORKS! Very slow...
+# WORKS! Very slow af... but shows reason
 from datetime import datetime
 import errno
 import sys
@@ -7,12 +7,11 @@ import socket
 remote_server = 'markgacoka.com'
 remote_server_ip = socket.gethostbyname(remote_server)
 
-startPort = 1
-endPort = 100
+port_range = [20,21,22,23,25,53,80,110,111,135,139,143,443,445,993,995,1723,3306,3389,5900,8080]# top 20
 time_init = datetime.now()
 
 try:
-  for port in range(int(startPort), int(endPort)):
+  for port in port_range:
       print("Checking port {} ...".format(port))
       server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
       server_sock.settimeout(5)
