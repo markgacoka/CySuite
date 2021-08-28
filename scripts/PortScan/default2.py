@@ -1,7 +1,6 @@
 # WORKS! Fastest so far...
-# Runtime: 4.050477743148804 seconds
+# Runtime: 1.1055223941802979 second
 import socket
-
 from queue import Queue
 from threading import Thread
 
@@ -16,7 +15,7 @@ def scanhost(remoteServer):
         for port in SCAN_PORTS:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.setblocking(False)
-            sock.settimeout(0.2)
+            sock.settimeout(0.05)
             result = sock.connect_ex((remoteServerIP, port))
             if result == 0:
                 output.append(port)

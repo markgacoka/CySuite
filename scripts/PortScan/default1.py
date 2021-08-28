@@ -1,13 +1,12 @@
 # WORKS!
-# Total runtime: 9.639406204223633 seconds
+# Total runtime: 1.0093369483947754 seconds
 import socket
 import time
 start_time = time.time()
 
-DEFAULT_TIMEOUT = 0.5
+DEFAULT_TIMEOUT = 0.05
 SUCCESS = 0
 def check_port(*host_port, timeout=DEFAULT_TIMEOUT):
-    # Create and configure the socket.
     sock = socket.socket()
     sock.settimeout(timeout)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
