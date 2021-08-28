@@ -1,4 +1,5 @@
 # Very very fast and works!
+# Runtime: 1.0313730239868164 seconds
 from threading import Thread
 import socket
 import time
@@ -17,28 +18,30 @@ class ThreadWithReturnValue(Thread):
         Thread.join(self, *args)
         return self._return
 
-def portscan(port):
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.settimeout(0.5)# 
-    open_port = None
-    try:
-        con = s.connect((target,port))
-        open_port = port
-        print(open_port)
-        con.close()
-    except: 
-        pass
-    else:
-        return open_port
+class PortScan:
+    def __init__(self, target):
+        self.open_ports = []
+        self.target = target
 
-def get_ports(target, portrange):
-    for port in portrange: 
-        t = ThreadWithReturnValue(target=portscan, args=(port, )) 
-        t.start()
-        if t.join() != None:
-            print(t.join())
-
+    def portscan(self, port):
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.settimeout(0.05)
+        try:
+            con = s.connect((target,port))
+            self.open_ports.append(port)
+            con.close()
+        except: 
+            pass
+        else:
+            return self.open_ports
+        
 portrange = [20,21,22,23,25,53,80,110,111,135,139,143,443,445,993,995,1723,3306,3389,5900,8080]
 target = 'markgacoka.com'
-print(get_ports(target, portrange))
+
+portscan_inst = PortScan(target)
+for port in portrange:
+    t = ThreadWithReturnValue(target=portscan_inst.portscan, args=(port, )) 
+    t.start()
+    t.join()
+print(portscan_inst.open_ports)
 print("--- %s seconds ---" % (time.time() - start_time))
