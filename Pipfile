@@ -20,8 +20,12 @@ redis = "*"
 celery-progress = "*"
 gevent = "*"
 emailfinder = "*"
+scapy = {extras = ["basic"], version = "*"}
 
 [dev-packages]
 
 [requires]
 python_version = "3.8"
+
+[pipenv]
+allow_prereleases = true
