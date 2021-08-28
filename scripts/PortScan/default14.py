@@ -1,4 +1,5 @@
 # WORKS! Fastest so far...
+# Runtime: 4.050477743148804 seconds
 import socket
 
 from queue import Queue
