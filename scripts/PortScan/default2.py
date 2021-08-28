@@ -35,11 +35,10 @@ def scanner(ip, q):
         q.put(ports)
 
 def get_ports(target):
-    q = Queue()    
-    ip = socket.gethostbyname(target)
+    q = Queue()
 
     try:
-        t = Thread(target=scanner, args=[ip, q])
+        t = Thread(target=scanner, args=[target, q])
         t.start()
         return q.get()
     except:
