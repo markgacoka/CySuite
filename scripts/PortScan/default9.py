@@ -1,6 +1,8 @@
 # WORKS!
-# Total runtime:
+# Total runtime: 9.639406204223633 seconds
 import socket
+import time
+start_time = time.time()
 
 DEFAULT_TIMEOUT = 0.5
 SUCCESS = 0
@@ -22,3 +24,4 @@ for port in portrange:
         open.append(port)
 
 print(open)
+print("--- %s seconds ---" % (time.time() - start_time))
