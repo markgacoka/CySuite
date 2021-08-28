@@ -7,18 +7,21 @@ from queue import Queue
 socket.setdefaulttimeout(0.25)
 print_lock = threading.Lock()
 
-target = 'markgacoka.com'
+target = 'google.com'
 t_IP = socket.gethostbyname(target)
 
 def portscan(port):
-   s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-   try:
-      con = s.connect((t_IP, port))
-      with print_lock:
-         print(port, 'is open')
-      con.close()
-   except:
-      pass
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    open_ports = None
+    try:
+        con = s.connect((t_IP, port))
+        with print_lock:
+            print(port)
+            open_ports = port
+        con.close()
+    except:
+        pass
+    return open_ports
 
 def threader():
    while True:
@@ -34,8 +37,8 @@ for x in range(100):
    t.daemon = True
    t.start()
    
-for worker in range(1, 500):
+portrange = [20,21,22,23,25,53,80,110,111,135,139,143,443,445,993,995,1723,3306,3389,5900,8080]
+for worker in portrange:
    q.put(worker)
 
-q.join()
 print('Time taken:', time.time() - startTime)

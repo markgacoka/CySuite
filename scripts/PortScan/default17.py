@@ -1,6 +1,8 @@
 # Very very fast and works!
 from threading import Thread
 import socket
+import time
+start_time = time.time()
 
 class ThreadWithReturnValue(Thread):
     def __init__(self, group=None, target=None, name=None,
@@ -25,7 +27,8 @@ def portscan(port):
         con.close()
     except: 
         pass
-    return open_port
+    else:
+        return open_port
 
 def get_ports(target, portrange):
     open_ports = []
@@ -37,5 +40,6 @@ def get_ports(target, portrange):
     yield open_ports
 
 portrange = [20,21,22,23,25,53,80,110,111,135,139,143,443,445,993,995,1723,3306,3389,5900,8080]
-target = 'markgacoka.com'
+target = 'wsj.com'
 print(next(get_ports(target, portrange)))
+print("--- %s seconds ---" % (time.time() - start_time))
