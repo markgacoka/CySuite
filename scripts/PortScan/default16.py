@@ -1,7 +1,7 @@
-# This script runs on Python 3
-# Most likes on StackOverflow
-# Need to understand how it works
 import socket, threading
+
+import ctypes
+libgcc_s = ctypes.CDLL('libgcc_s.so.1')
 
 def TCP_connect(ip, port_number, delay, output):
     TCPsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -32,9 +32,9 @@ def scan_ports(host_ip, delay):
             print(str(i) + ': ' + output[i])
 
 def main():
-    target = 'markgacoka.com'
-    host_ip = socket.gethostbyname(target)
-    delay = 0.5
+    domain = 'markgacoka.com'
+    host_ip = socket.gethostbyname(domain)
+    delay = 1
     scan_ports(host_ip, delay)
 
 if __name__ == "__main__":

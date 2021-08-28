@@ -23,10 +23,12 @@ def scanPort(target, port):
 		    s.close()
 		    
 		except Exception as err:
-		    #print(err)
 		    print('' + target + '~Port: [open] ' + str(port, ))
+
 def main():
-    for i in range(1, 1024):
-        scan = threading.Thread(target=scanPort, args=(target, i))
-        scan.start()   
+	portrange = [20,21,22,23,25,53,80,110,111,135,139,143,443,445,993,995,1723,3306,3389,5900,8080]
+	for i in portrange:
+		scan = threading.Thread(target=scanPort, args=(target, i))
+		scan.start()   
+
 main()
