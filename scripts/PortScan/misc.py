@@ -3,8 +3,10 @@
 import socket
 from queue import Queue
 import threading
+from io import BytesIO
+from io import StringIO
+import pycurl
 from http.client import responses
-import faster_than_requests as requests
 
 # import time
 # start_time = time.time()
@@ -13,7 +15,8 @@ class Portscanner:
     def __init__(self, domain):
         self.domain = domain
         self.queue = Queue()
-        self.chunk_size = 1024
+        self.buffer = BytesIO()
+        self.headers_cont = StringIO()
         self.open_ports = []
         self.response = []
         self.status_code = ''
@@ -32,15 +35,25 @@ class Portscanner:
     def portscan(self, port):
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            sock.settimeout(5)
+            sock.settimeout(0.5)
             # tcp
             self.ip_address = socket.gethostbyname(self.domain)
             sock.connect((self.ip_address, port))
             sock.close()
-            # http [body, type, status, version, url, length, headers]
-            _, _, status, _, _, _, headers = requests.head('http://' + self.domain)            
-            self.status_code = status
-            self.response_headers = headers
+            # http
+            c = pycurl.Curl()
+            c.setopt(c.URL, 'http://pycurl.io/')
+            c.setopt(c.WRITEDATA, self.buffer)
+            c.setopt(c.HEADER, 1)
+            c.setopt(c.NOBODY, 1)
+            c.setopt(c.HEADERFUNCTION, self.headers_cont.write)
+            c.perform()
+            self.status_code = str(c.getinfo(pycurl.RESPONSE_CODE)) + responses[int(c.getinfo(pycurl.RESPONSE_CODE))]
+            self.response = self.headers_cont.getvalue()
+            c.close()
+            self.buffer.seek(0)
+            self.buffer.read()
+
             return True
         except:
             return False
@@ -74,7 +87,7 @@ class Portscanner:
             thread.join()
         return [self.open_ports, self.ip_address, self.status_code, self.response]
 
-# portscanner = Portscanner('markgacoka.com')
-# port, ip, status, response = portscanner.run_scanner(100)
-# print(port, ip, status, response)
+portscanner = Portscanner('markgacoka.com')
+port, ip, status, response = portscanner.run_scanner(100)
+print(port, ip, status, response)
 # print("--- %s seconds ---" % (time.time() - start_time))
