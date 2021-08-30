@@ -65,7 +65,7 @@ Sudomain Enumeration | CySuite
                                 <th>Status Code</th>
                                 <th>Open Ports</th>
                                 <th>Internet Protocol (IPv4)</th>
-                                <th>Web Application Firewall</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -81,7 +81,7 @@ Sudomain Enumeration | CySuite
                                 {% endif %}
                                 <td>{% for port in info|get_item:"ports" %}<div class="pill">{{port}}</div>{% endfor %}</td>
                                 <td><code style="font-size: 0.8rem; font-weight: 600;">{{info|get_item:"ip_address"}}</code></td>
-                                <td>{{info|get_item:"waf"}}</td>
+                                <td style="font-size: 0.9rem; font-weight: 500;"><a>See More&nbsp; <i class="fa fa-arrow-right"></i></a></td>
                             </tr>
                             {% endfor %}
                             </tbody>
@@ -109,9 +109,9 @@ Sudomain Enumeration | CySuite
                         <dd class="col-8 col-xxl-9">
                             <code style="font-size: 0.8rem;">80, 8080</code>
                         </dd>
-                        <dt class="col-4 col-xxl-3 mb-0">Status Code:</dt>
+                        <dt class="col-4 col-xxl-3 mb-0">Web Application Firewall:</dt>
                         <dd class="col-8 col-xxl-9 mb-0">
-                            <span class="badge badge-soft-success badge-pill">200</span>
+                            <code style="font-size: 0.8rem;">Clouflare</code>
                         </dd>
                     </dl>
                     <hr>
