@@ -1,13 +1,11 @@
 import re
 import io
-import subprocess
 import puremagic
 import urllib
-import hashlib
 import urllib.parse
 from os import path
 from .tasks import scan_subdomains
-import os, json, base64, requests
+import os, json, base64
 from html import escape, unescape
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
@@ -20,13 +18,11 @@ from .models import ProjectModel
 from .models import SubdomainModel
 from main.models import CeleryTaskModel
 from cyauth.models import Account
+from celery.result import AsyncResult
 from PIL import Image
 from django.template.context_processors import csrf
-from django.conf import settings
 from django.contrib import messages
 from django.core.files import File
-from django.http import FileResponse
-from django.core.files.storage import default_storage
 from scripts.WordlistGen.wordlist import print_wordlist
 from scripts.WordlistGen.status import url_status
 from scripts.Headers.request import send_request
@@ -48,6 +44,7 @@ def checkout(request):
     })
 
 def update_transaction(request):
+    context = {}
     if request.method == 'POST':
         context['profile_account'] = request.user.profile
         resp_obj = json.loads(request.body)
@@ -153,7 +150,6 @@ def notes(request):
     context['profile_account'] = request.user.profile
     return render(request, 'dashboard/notes.html', context)
 
-from celery.result import AsyncResult
 def subdomain_enum(request):
     context = {}
     info_list = []
@@ -201,6 +197,7 @@ def subdomain_enum(request):
 
         user_projects = ProjectModel.objects.get(project_name=request.session['project'])
         subdomain_model_instance = SubdomainModel.objects.filter(subdomain_user=request.user).filter(project=user_projects)
+        print(subdomain_model_instance.values_list()[0])
         for model in subdomain_model_instance.values_list():
             subdomain_info = {}
             subdomain_info['subdomain'] = model[3]
@@ -208,8 +205,10 @@ def subdomain_enum(request):
             subdomain_info['screenshot'] = model[5]
             subdomain_info['ip_address'] = model[6]
             subdomain_info['waf'] = model[7]
-            subdomain_info['ssl_info'] = model[8]
-            subdomain_info['header_info'] = model[9]
+            subdomain_info['ports'] = model[8]
+            subdomain_info['ssl_info'] = model[9]
+            subdomain_info['header_info'] = model[10]
+            subdomain_info['directories'] = model[11]
             info_list.append(subdomain_info)
     context['subdomain_info'] = info_list
     context['profile_account'] = request.user.profile
