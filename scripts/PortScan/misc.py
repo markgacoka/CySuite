@@ -3,8 +3,8 @@
 import socket
 from queue import Queue
 import threading
-import ssl
 from http.client import responses
+import faster_than_requests as requests
 
 # import time
 # start_time = time.time()
@@ -20,15 +20,14 @@ class Portscanner:
         self.ip_address = ''
         self.CRLF = "\r\n\r\n"
 
-    def receive_all(sock, chunk_size=1024):
-        chunks = []
+    def recvall(self, sock, BUFF_SIZE=4096):
+        data = bytearray()
         while True:
-            chunk = sock.recv(int(chunk_size))
-            if chunk:
-                chunks.append(chunk)
-            else:
+            packet = sock.recv(BUFF_SIZE)
+            if not packet:
                 break
-        return ''.join(chunks)
+            data.extend(packet)
+        return data
 
     def portscan(self, port):
         try:
@@ -37,12 +36,11 @@ class Portscanner:
             # tcp
             self.ip_address = socket.gethostbyname(self.domain)
             sock.connect((self.ip_address, port))
-            # http
-            req = "GET / HTTP/1.1\r\nHost: {}\r\nAccept: text/html\r\n\r\n".format(self.domain)
-            sock.send(req.encode())
-            self.response = sock.recv(4096).decode("UTF-8", errors='ignore').split('\r\n')
-            self.status_code = self.response[0].split(' ')[1] + ' ' + responses[int(self.response[0].split(' ')[1])]
             sock.close()
+            # http [body, type, status, version, url, length, headers]
+            _, _, status, _, _, _, headers = requests.head('http://' + self.domain)            
+            self.status_code = status
+            self.response_headers = headers
             return True
         except:
             return False
@@ -76,4 +74,7 @@ class Portscanner:
             thread.join()
         return [self.open_ports, self.ip_address, self.status_code, self.response]
 
+# portscanner = Portscanner('markgacoka.com')
+# port, ip, status, response = portscanner.run_scanner(100)
+# print(port, ip, status, response)
 # print("--- %s seconds ---" % (time.time() - start_time))

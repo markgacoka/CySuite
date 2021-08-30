@@ -48,6 +48,8 @@ cfscrape = "*"
 yarl = "*"
 redis = "*"
 httplib2 = "*"
+faster-than-requests = "*"
+nimporter = "*"
 
 [dev-packages]
 
