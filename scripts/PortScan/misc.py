@@ -33,7 +33,7 @@ class Portscanner:
     def portscan(self, port):
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            sock.settimeout(0.5)
+            sock.settimeout(5)
             # tcp
             self.ip_address = socket.gethostbyname(self.domain)
             sock.connect((self.ip_address, port))
@@ -56,7 +56,13 @@ class Portscanner:
                 pass
 
     def run_scanner(self, threads):
-        ports = [20,21,22,23,25,53,80,110,111,135,139,143,443,445,993,995,1723,3306,3389,5900,8080]
+        # most common ports
+        ports = [1, 5, 7, 18, 20, 21, 22, 23, 25, 37, 42, 43, 49, 53, 67, 
+        68, 69, 70, 79, 80, 81, 82, 88, 101, 109, 110, 115, 119, 123, 137, 
+        138, 139, 143, 156, 161, 162, 179, 194, 389, 443, 444, 445, 546, 547,
+        554, 563, 587, 636, 993, 995, 1023, 1080, 1723, 2077, 2078, 2082, 
+        2083, 2086, 2087, 2095, 2096, 3306, 3389, 5900, 8080, 31337, 33434, 33848]
+
         for port in ports:
             self.queue.put(port)
         thread_list = []

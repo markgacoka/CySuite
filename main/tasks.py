@@ -20,7 +20,7 @@ def scan_subdomains(self, user_id, project_session):
     progress_recorder = ProgressRecorder(self)
     for index, subdomain in enumerate(subdomains):
         response_header = {}
-        portscanner = Portscanner('markgacoka.com')
+        portscanner = Portscanner(subdomain)
         port, ip, status, response = portscanner.run_scanner(100)
         response_header[response[0]] = response_header.get(response[0], response[1])
         for header in response[2:]:
