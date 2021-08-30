@@ -19,6 +19,7 @@ from .models import SubdomainModel
 from main.models import CeleryTaskModel
 from cyauth.models import Account
 from celery.result import AsyncResult
+from cysuite.celery import app
 from PIL import Image
 from django.template.context_processors import csrf
 from django.contrib import messages
@@ -160,7 +161,7 @@ def subdomain_enum(request):
         if 'scan' in request.POST.keys():
             user_id = Account.objects.filter(username=request.user.username).values('user_id')[0]['user_id']
             task = scan_subdomains.delay(user_id, project_session)
-            task_model = CeleryTaskModel.objects.filter(task_user=request.user).update_or_create(
+            CeleryTaskModel.objects.filter(task_user=request.user).update_or_create(
                 task_user = request.user,
                 defaults = { 
                     'subdomain_task': task.task_id
@@ -170,6 +171,15 @@ def subdomain_enum(request):
             context['task_id'] = task.task_id
             context['profile_account'] = request.user.profile
             messages.success(request, 'Scan in progress. Stand by!')
+        elif 'cancel' in request.POST.keys():
+            task_id = CeleryTaskModel.objects.filter(task_user=request.user).values('subdomain_task')[0]['subdomain_task']
+            app.control.revoke(task_id)
+            context['profile_account'] = request.user.profile
+        elif 'more' in request.POST.keys():
+            print(request.POST)
+            context['profile_account'] = request.user.profile
+        else:
+            pass
         return render(request, 'dashboard/subdomain_enum.html', context)
     else:
         if CeleryTaskModel.objects.filter(task_user=request.user).exists():

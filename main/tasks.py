@@ -22,10 +22,12 @@ def scan_subdomains(self, user_id, project_session):
         response_header = {}
         portscanner = Portscanner(subdomain)
         port, ip, status, response = portscanner.run_scanner(100)
-        response_header[response[0]] = response_header.get(response[0], response[1])
-        for header in response[2:]:
-            temp = header.split(":", 1)
-            response_header[temp[0]] = temp[1]
+        if len(response) > 0:
+            response_header[response[0]] = response_header.get(response[0], response[1])
+            for header in response[2:]:
+                if len(header) > 0 and ":" in header:
+                    temp = header.split(":", 1)
+                    response_header[temp[0]] = temp[1]
         SubdomainModel.objects.update_or_create(
             subdomain_user_id = user_id,
             project = ProjectModel.objects.get(project_name=project_session),
