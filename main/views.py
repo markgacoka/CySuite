@@ -196,7 +196,7 @@ def subdomain_enum(request):
             return render(request, 'dashboard/subdomain_enum.html', context)
 
         user_projects = ProjectModel.objects.get(project_name=request.session['project'])
-        subdomain_model_instance = SubdomainModel.objects.filter(subdomain_user=request.user).filter(project=user_projects)
+        subdomain_model_instance = SubdomainModel.objects.filter(subdomain_user=request.user).filter(project=user_projects).order_by('hostname')
         print(subdomain_model_instance.values_list()[0])
         for model in subdomain_model_instance.values_list():
             subdomain_info = {}
