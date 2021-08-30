@@ -1,3 +1,4 @@
+from celery_progress.backend import ProgressRecorder
 from scripts.Requests.status_code import status_code
 from scripts.IPAddress.get_host import get_ip
 from scripts.PortScan.misc import Portscanner
@@ -5,7 +6,7 @@ from .subdomains import subdomain_list
 from .models import ProjectModel
 from .models import SubdomainModel
 from celery import shared_task
-from celery_progress.backend import ProgressRecorder
+
 
 @shared_task(bind=True)
 def scan_subdomains(self, user_id, project_session):
@@ -14,30 +15,30 @@ def scan_subdomains(self, user_id, project_session):
     in_scope = project_model_instance.values('in_scope_domains')[0]['in_scope_domains']
     for domain in in_scope:
         subdomains += list(next(subdomain_list(domain)))
-    ports = []
-    for subdomain in subdomains:
-        portscanner = Portscanner(subdomain)
-        ports.append(portscanner.run_scanner(100))
     project_model_instance.update(subdomains=subdomains)
 
     progress_recorder = ProgressRecorder(self)
     for index, subdomain in enumerate(subdomains):
-        status = next(status_code(subdomain))
-        ip_address = next(get_ip(subdomain))
+        response_header = {}
+        portscanner = Portscanner('markgacoka.com')
+        port, ip, status, response = portscanner.run_scanner(100)
+        response_header[response[0]] = response_header.get(response[0], response[1])
+        for header in response[2:]:
+            temp = header.split(":", 1)
+            response_header[temp[0]] = temp[1]
         SubdomainModel.objects.update_or_create(
             subdomain_user_id = user_id,
             project = ProjectModel.objects.get(project_name=project_session),
             hostname = subdomain,
             defaults = {        
                 'status_code': status,
-                'ip_address': ip_address,
+                'ip_address': ip,
                 'screenshot': 'None',
                 'waf': 'Absent',
                 'ssl_info': {},
-                'ports': ports[index],
-                'header_info': {},
+                'header_info': response_header,
                 'directories': [],
-                'ports': ports[index]
+                'ports': port,
             })
         progress_recorder.set_progress(index+1, len(subdomains))
         project_model_instance.update(progress=int((index+1/len(subdomains)* 100)/4))

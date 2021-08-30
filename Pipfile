@@ -47,6 +47,7 @@ bs4 = "*"
 cfscrape = "*"
 yarl = "*"
 redis = "*"
+httplib2 = "*"
 
 [dev-packages]
 
