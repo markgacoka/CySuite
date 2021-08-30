@@ -4,45 +4,46 @@ import socket
 from queue import Queue
 import threading
 
-import time
-start_time = time.time()
+# import time
+# start_time = time.time()
 
-def portscan(port):
-    try:
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.settimeout(0.5)
-        sock.connect((target, port))
-        return True
-    except:
-        return False
+class Portscanner:
+    def __init__(self, domain):
+        self.domain = domain
+        self.target = socket.gethostbyname(domain)
+        self.queue = Queue()
+        self.open_ports = []
 
-def worker():
-    while not queue.empty():
-        port = queue.get()
-        if portscan(port):
-            open_ports.append(port)
-        else:
-            pass
+    def portscan(self, port):
+        try:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(0.5)
+            sock.connect((self.target, port))
+            return True
+        except:
+            return False
 
-def run_scanner(threads):
-    ports = [20,21,22,23,25,53,80,110,111,135,139,143,443,445,993,995,1723,3306,3389,5900,8080]
-    for port in ports:
-        queue.put(port)
-    thread_list = []
+    def worker(self):
+        while not self.queue.empty():
+            port = self.queue.get()
+            if self.portscan(port):
+                self.open_ports.append(int(port))
+            else:
+                pass
 
-    for t in range(threads):
-        thread = threading.Thread(target=worker)
-        thread_list.append(thread)
-    for thread in thread_list:
-        thread.start()
-    for thread in thread_list:
-        thread.join()
-    return open_ports
+    def run_scanner(self, threads):
+        ports = [20,21,22,23,25,53,80,110,111,135,139,143,443,445,993,995,1723,3306,3389,5900,8080]
+        for port in range(1, 65535+1):
+            self.queue.put(port)
+        thread_list = []
 
-queue = Queue()
-open_ports = []
-domain = 'markgacoka.com'
-target = socket.gethostbyname(domain)
+        for t in range(threads):
+            thread = threading.Thread(target=self.worker)
+            thread_list.append(thread)
+        for thread in thread_list:
+            thread.start()
+        for thread in thread_list:
+            thread.join()
+        return self.open_ports
 
-print(run_scanner(100))
-print("--- %s seconds ---" % (time.time() - start_time))
+# print("--- %s seconds ---" % (time.time() - start_time))

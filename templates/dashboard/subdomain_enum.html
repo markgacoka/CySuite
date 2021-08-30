@@ -63,7 +63,7 @@ Sudomain Enumeration | CySuite
                             <tr>
                                 <th>Subdomain</th>
                                 <th>Status Code</th>
-                                <th>Screenshot</th>
+                                <th>Open Ports</th>
                                 <th>Internet Protocol (IPv4)</th>
                                 <th>Web Application Firewall</th>
                             </tr>
@@ -79,8 +79,8 @@ Sudomain Enumeration | CySuite
                                 {% else %}
                                 <td><span class="badge badge-soft-warning badge-pill">{{info|get_item:"status_code"}}</span></td>
                                 {% endif %}
-                                <td>{{info|get_item:"screenshot"}}</td>
-                                <td><code style="font-size: 0.8rem">{{info|get_item:"ip_address"}}</code></td>
+                                <td>{% for port in info|get_item:"ports" %}<div class="pill">{{port}}</div>{% endfor %}</td>
+                                <td><code style="font-size: 0.8rem; font-weight: 600;">{{info|get_item:"ip_address"}}</code></td>
                                 <td>{{info|get_item:"waf"}}</td>
                             </tr>
                             {% endfor %}
