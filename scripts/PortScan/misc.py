@@ -1,12 +1,11 @@
 # Very fast
 # Runtime: 0.5115261077880859 seconds
-import socket
 from queue import Queue
 import threading
-from io import BytesIO
-from io import StringIO
 import pycurl
+import socket
 from http.client import responses
+from io import BytesIO
 
 # import time
 # start_time = time.time()
@@ -15,48 +14,38 @@ class Portscanner:
     def __init__(self, domain):
         self.domain = domain
         self.queue = Queue()
-        self.buffer = BytesIO()
-        self.headers_cont = StringIO()
         self.open_ports = []
         self.response = []
-        self.status_code = ''
-        self.ip_address = ''
+        self.status_code = None
+        self.ip_address = None
         self.CRLF = "\r\n\r\n"
 
-    def recvall(self, sock, BUFF_SIZE=4096):
-        data = bytearray()
-        while True:
-            packet = sock.recv(BUFF_SIZE)
-            if not packet:
-                break
-            data.extend(packet)
-        return data
-
     def portscan(self, port):
+        open_port = False
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.settimeout(0.5)
             # tcp
             self.ip_address = socket.gethostbyname(self.domain)
-            sock.connect((self.ip_address, port))
-            sock.close()
+            is_open = sock.connect((self.ip_address, port))
             # http
             c = pycurl.Curl()
-            c.setopt(c.URL, 'http://pycurl.io/')
-            c.setopt(c.WRITEDATA, self.buffer)
-            c.setopt(c.HEADER, 1)
-            c.setopt(c.NOBODY, 1)
-            c.setopt(c.HEADERFUNCTION, self.headers_cont.write)
+            e = BytesIO()
+            c.setopt(pycurl.URL, 'http://' + self.domain)
+            c.setopt(pycurl.HEADER, True)
+            c.setopt(pycurl.NOBODY, True)
+            c.setopt(pycurl.WRITEFUNCTION, e.write)
             c.perform()
-            self.status_code = str(c.getinfo(pycurl.RESPONSE_CODE)) + responses[int(c.getinfo(pycurl.RESPONSE_CODE))]
-            self.response = self.headers_cont.getvalue()
+            self.status_code = str(c.getinfo(pycurl.RESPONSE_CODE)) + ' ' + responses[int(c.getinfo(pycurl.RESPONSE_CODE))]
+            self.response = e.getvalue().decode('UTF-8')
             c.close()
-            self.buffer.seek(0)
-            self.buffer.read()
-
-            return True
+            sock.close()
+            if is_open == None:
+                open_port = True
         except:
-            return False
+            return open_port
+        finally:
+            return open_port
 
     def worker(self):
         while not self.queue.empty():
@@ -87,7 +76,8 @@ class Portscanner:
             thread.join()
         return [self.open_ports, self.ip_address, self.status_code, self.response]
 
-portscanner = Portscanner('markgacoka.com')
-port, ip, status, response = portscanner.run_scanner(100)
-print(port, ip, status, response)
-# print("--- %s seconds ---" % (time.time() - start_time))
+portscanner = Portscanner('sdklfsl.com')
+# port, ip, status, response_header = portscanner.run_scanner(100)
+# print(port, ip, status, response_header)
+print(portscanner.run_scanner(100))
+# # print("--- %s seconds ---" % (time.time() - start_time))

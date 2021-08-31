@@ -19,26 +19,19 @@ def scan_subdomains(self, user_id, project_session):
 
     progress_recorder = ProgressRecorder(self)
     for index, subdomain in enumerate(subdomains):
-        response_header = {}
         portscanner = Portscanner(subdomain)
         port, ip, status, response = portscanner.run_scanner(100)
-        if len(response) > 0:
-            response_header[response[0]] = response_header.get(response[0], response[1])
-            for header in response[2:]:
-                if len(header) > 0 and ":" in header:
-                    temp = header.split(":", 1)
-                    response_header[temp[0]] = temp[1]
         SubdomainModel.objects.update_or_create(
             subdomain_user_id = user_id,
             project = ProjectModel.objects.get(project_name=project_session),
             hostname = subdomain,
             defaults = {        
-                'status_code': status,
-                'ip_address': ip,
+                'status_code': status or None,
+                'ip_address': ip or None,
                 'screenshot': 'None',
                 'waf': 'Absent',
                 'ssl_info': {},
-                'header_info': response_header,
+                'header_info': response or None,
                 'directories': [],
                 'ports': port,
             })
