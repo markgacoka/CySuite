@@ -92,7 +92,7 @@ class SubdomainModel(models.Model):
     waf = models.TextField(max_length=30, unique=False, null=True, blank=False)
     ports = ArrayField(models.CharField(max_length=10, blank=True), blank=True, null=True, default=list)
     ssl_info = JSONField()
-    header_info = JSONField()
+    header_info = models.TextField(max_length=500, unique=False, null=True, blank=True)
     directories = ArrayField(models.CharField(max_length=3000, blank=True), blank=True, null=True, default=list)
 
     class Meta():
