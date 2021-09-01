@@ -6,7 +6,7 @@ from .subdomains import subdomain_list
 from .models import ProjectModel
 from .models import SubdomainModel
 from celery import shared_task
-
+import re
 
 @shared_task(bind=True)
 def scan_subdomains(self, user_id, project_session):
@@ -19,19 +19,28 @@ def scan_subdomains(self, user_id, project_session):
 
     progress_recorder = ProgressRecorder(self)
     for index, subdomain in enumerate(subdomains):
-        portscanner = Portscanner(subdomain)
-        port, ip, status, response = portscanner.run_scanner(100)
+        portscanner = Portscanner('google.com')
+        port, ip, status, response_header = portscanner.run_scanner(100)
+        if ip == None:
+            ip = 'No IP address'
+        if status == None:
+            status = 'Not Applicable'
+        if len(response_header) > 0 and type(response_header) == bytes:
+            if len(re.findall('\r\n\r\n', response_header.decode())) > 1:
+                response_header_clean = response_header.decode().split('\r\n\r\n')[-2]
+        else:
+            response_header_clean = ''
         SubdomainModel.objects.update_or_create(
             subdomain_user_id = user_id,
             project = ProjectModel.objects.get(project_name=project_session),
             hostname = subdomain,
             defaults = {        
-                'status_code': status or None,
-                'ip_address': ip or None,
+                'status_code': status,
+                'ip_address': ip,
                 'screenshot': 'None',
                 'waf': 'Absent',
                 'ssl_info': {},
-                'header_info': response or None,
+                'header_info': response_header_clean,
                 'directories': [],
                 'ports': port,
             })
