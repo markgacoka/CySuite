@@ -27,7 +27,7 @@ class Portscanner:
             sock.settimeout(1)
             # tcp
             self.ip_address = socket.gethostbyname(self.domain)
-            is_open = sock.connect((self.ip_address, port))
+            sock.connect((self.ip_address, port))
             # http
             c = pycurl.Curl()
             e = BytesIO()
@@ -46,14 +46,13 @@ class Portscanner:
             c.setopt(pycurl.NOBODY, True)
             c.setopt(pycurl.FOLLOWLOCATION, 1)
             c.setopt(pycurl.TIMEOUT_MS, 3000)
-            c.setopt(pycurl.WRITEFUNCTION, e.write)
+            c.setopt(pycurl.HEADERFUNCTION, e.write)
             c.perform()
             self.status_code = str(c.getinfo(pycurl.RESPONSE_CODE)) + ' ' + responses[int(c.getinfo(pycurl.RESPONSE_CODE))]
-            self.response = e.getvalue().decode('UTF-8')
             c.close()
+            self.response = e.getvalue()
             sock.close()
-            if is_open == None:
-                open_port = True
+            open_port = True
         except:
             return open_port
         finally:
@@ -86,11 +85,25 @@ class Portscanner:
             thread.start()
         for thread in thread_list:
             thread.join()
-        return [self.open_ports, self.ip_address, self.status_code, self.response[20:]]
+        return [self.open_ports, self.ip_address, self.status_code, self.response]
 
-subdomains = ["markgacoka.com","webmail.markgacoka.com","fun.markgacoka.com","cpanel.markgacoka.com","webdisk.fun.markgacoka.com","mail.markgacoka.com","dc-9ab17c78bc2d.markgacoka.com","webdisk.markgacoka.com","blog.markgacoka.com","cpanel.fun.markgacoka.com","www.fun.markgacoka.com","www.markgacoka.com","webmail.fun.markgacoka.com"]
-for subdomain in subdomains:
-    portscanner = Portscanner(subdomain)
-    port, ip, status, response_header = portscanner.run_scanner(100)
-    print(port, ip, status, response_header)
+# subdomains = ["markgacoka.com","webmail.markgacoka.com","fun.markgacoka.com","cpanel.markgacoka.com","webdisk.fun.markgacoka.com","mail.markgacoka.com","dc-9ab17c78bc2d.markgacoka.com","webdisk.markgacoka.com","blog.markgacoka.com","cpanel.fun.markgacoka.com","www.fun.markgacoka.com","www.markgacoka.com","webmail.fun.markgacoka.com"]
+# for subdomain in subdomains:
+#     portscanner = Portscanner(subdomain)
+#     port, ip, status, response_header = portscanner.run_scanner(100)
+#     print(port, ip, status, response_header)
+# import re
+# portscanner = Portscanner('webdisk.markgacoka.com')
+# port, ip, status, response_header = portscanner.run_scanner(100)
+# if ip == None:
+#     ip = 'No IP address'
+# if status == None:
+#     status = 'Not Applicable'
+# if len(response_header) > 0 and type(response_header) == bytes:
+#     if len(re.findall('\r\n\r\n', response_header.decode())) > 1:
+#         response_header_clean = response_header.decode().split('\r\n\r\n')[-2]
+# else:
+#     response_header_clean = ''
+# print(status)
+
 # # print("--- %s seconds ---" % (time.time() - start_time))
