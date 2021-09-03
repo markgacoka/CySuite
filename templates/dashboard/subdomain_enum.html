@@ -85,14 +85,14 @@ Sudomain Enumeration | CySuite
                                 {% endif %}
                                 <td>{% for port in info|get_item:"ports" %}<div class="pill">{{port}}</div>{% endfor %}</td>
                                 <td><code style="font-size: 0.8rem; font-weight: 600;">{{info|get_item:"ip_address"}}</code></td>
-                                <form method="post" id="more-form"></form>
+                                <input name="more" value="{{forloop.counter}}" hidden />
+                                <td style="font-size: 0.9rem; font-weight: 500;">
+                                <form method="post" id="more-form">
                                     {% csrf_token %}
-                                    <input name="more" value="{{forloop.counter}}" hidden />
-                                    <td style="font-size: 0.9rem; font-weight: 500;">
-                                    <a style="text-decoration: none;" href="javascript:void(0);" onclick="document.getElementById('more-form').submit();">See More&nbsp; <i class="fa fa-arrow-right"></i>
-                                    </a>
-                                </td>
+                                    <input name="more" value="{{forloop.counter}}" type="hidden" />
+                                    <a href="" style="text-decoration: none;" onclick="document.getElementById('more-form').submit();">See More&nbsp; <i class="fa fa-arrow-right"></i></a>
                                 </form>
+                                </td>
                             </tr>
                             {% endfor %}
                             </tbody>
@@ -106,23 +106,23 @@ Sudomain Enumeration | CySuite
                     <dl class="row">
                         <dt class="col-4 col-xxl-3">Subdomain:</dt>
                         <dd class="col-8 col-xxl-9">
-                            <code>subdomain1.site.com</code>
+                            <code>{% if subdomain_info %}{{subdomain_info|index:sub_index|get_item:"subdomain"}}{% else %}None{% endif %}</code>
                         </dd>
                         <dt class="col-4 col-xxl-3">Server Type:</dt>
                         <dd class="col-8 col-xxl-9">
-                            <code style="font-size: 0.8rem;">Apache</code>
+                            <code style="font-size: 0.8rem;">{% if subdomain_info %}{{subdomain_info|index:sub_index|get_item:"server"}}{% else %}None{% endif %}</code>
                         </dd>
                         <dt class="col-4 col-xxl-3">IP Address:</dt>
                         <dd class="col-8 col-xxl-9">
-                            <code style="font-size: 0.8rem;">143.83.21.2</code>
+                            <code style="font-size: 0.8rem;">{% if subdomain_info %}{{subdomain_info|index:sub_index|get_item:"ip_address"}}{% else %}None{% endif %}</code>
                         </dd>
                         <dt class="col-4 col-xxl-3">Open Ports:</dt>
                         <dd class="col-8 col-xxl-9">
-                            <code style="font-size: 0.8rem;">80, 8080</code>
+                            <code style="font-size: 0.8rem;">{% if subdomain_info %}{{subdomain_info|index:sub_index|get_item:"ports"}}{% else %}None{% endif %}</code>
                         </dd>
                         <dt class="col-4 col-xxl-3 mb-0">Web Application Firewall:</dt>
                         <dd class="col-8 col-xxl-9 mb-0">
-                            <code style="font-size: 0.8rem;">Clouflare</code>
+                            <code style="font-size: 0.8rem;">{% if subdomain_info %}{{subdomain_info|index:sub_index|get_item:"waf"}}{% else %}None{% endif %}</code>
                         </dd>
                     </dl>
                     <hr>
