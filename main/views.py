@@ -156,8 +156,8 @@ def subdomain_enum(request):
     info_list = []
     project_session = request.session['project']
     project_model_instance = ProjectModel.objects.filter(project_user=request.user).filter(project_name__iexact=project_session)
-
     if request.method == 'POST':
+        print(request.POST)
         if 'scan' in request.POST.keys():
             user_id = Account.objects.filter(username=request.user.username).values('user_id')[0]['user_id']
             task = scan_subdomains.delay(user_id, project_session)
@@ -169,17 +169,35 @@ def subdomain_enum(request):
             )
             context['task'] = task
             context['task_id'] = task.task_id
-            context['profile_account'] = request.user.profile
             messages.success(request, 'Scan in progress. Stand by!')
+            # return render("dashboard/subdomain_enum.html", context, context_instance=RequestContext(request))
         elif 'cancel' in request.POST.keys():
             task_id = CeleryTaskModel.objects.filter(task_user=request.user).values('subdomain_task')[0]['subdomain_task']
             app.control.revoke(task_id)
-            context['profile_account'] = request.user.profile
         elif 'more' in request.POST.keys():
             print(request.POST)
+            user_projects = ProjectModel.objects.get(project_name=request.session['project'])
+            subdomain_model_instance = SubdomainModel.objects.filter(subdomain_user=request.user).filter(project=user_projects)
+            for model in subdomain_model_instance.values_list():
+                subdomain_info = {}
+                subdomain_info['subdomain'] = model[3]
+                subdomain_info['status_code'] = model[4]
+                subdomain_info['screenshot'] = model[5]
+                subdomain_info['ip_address'] = model[6]
+                subdomain_info['waf'] = model[7]
+                subdomain_info['ports'] = model[8]
+                subdomain_info['ssl_info'] = model[9]
+                subdomain_info['header_info'] = model[10]
+                subdomain_info['directories'] = model[11]
+                info_list.append(subdomain_info)
+            context['subdomain_info'] = info_list
             context['profile_account'] = request.user.profile
+            context['sub_index'] = int(request.POST.get('more'))
+            return render(request, 'dashboard/subdomain_enum.html', context)
         else:
             pass
+        context['profile_account'] = request.user.profile
+        context['sub_index'] = 0
         return render(request, 'dashboard/subdomain_enum.html', context)
     else:
         if CeleryTaskModel.objects.filter(task_user=request.user).exists():
@@ -206,7 +224,7 @@ def subdomain_enum(request):
             return render(request, 'dashboard/subdomain_enum.html', context)
 
         user_projects = ProjectModel.objects.get(project_name=request.session['project'])
-        subdomain_model_instance = SubdomainModel.objects.filter(subdomain_user=request.user).filter(project=user_projects).order_by('hostname')
+        subdomain_model_instance = SubdomainModel.objects.filter(subdomain_user=request.user).filter(project=user_projects)
         for model in subdomain_model_instance.values_list():
             subdomain_info = {}
             subdomain_info['subdomain'] = model[3]
@@ -220,6 +238,7 @@ def subdomain_enum(request):
             subdomain_info['directories'] = model[11]
             info_list.append(subdomain_info)
     context['subdomain_info'] = info_list
+    context['sub_index'] = 0
     context['profile_account'] = request.user.profile
     return render(request, 'dashboard/subdomain_enum.html', context)
 
