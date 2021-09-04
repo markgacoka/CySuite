@@ -1,6 +1,5 @@
+from scripts.screenshots.screenshot import take_screenshot
 from celery_progress.backend import ProgressRecorder
-from scripts.Requests.status_code import status_code
-from scripts.IPAddress.get_host import get_ip
 from scripts.PortScan.misc import Portscanner
 from .subdomains import subdomain_list
 from .models import ProjectModel
@@ -19,7 +18,7 @@ def scan_subdomains(self, user_id, project_session):
 
     progress_recorder = ProgressRecorder(self)
     for index, subdomain in enumerate(subdomains):
-        portscanner = Portscanner('google.com')
+        portscanner = Portscanner(subdomain)
         port, ip, status, response_header = portscanner.run_scanner(100)
         if ip == None:
             ip = 'No IP address'
@@ -37,7 +36,7 @@ def scan_subdomains(self, user_id, project_session):
             defaults = {        
                 'status_code': status,
                 'ip_address': ip,
-                'screenshot': 'None',
+                'screenshot': 'subdomain.domain.tld.jpg',
                 'waf': 'Absent',
                 'ssl_info': {},
                 'header_info': response_header_clean,

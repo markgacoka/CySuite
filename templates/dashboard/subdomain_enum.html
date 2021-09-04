@@ -109,7 +109,7 @@ Sudomain Enumeration | CySuite
         </div>
 <div class="col-lg-6 col-xxl-4" style="padding-bottom: 2rem;">
         <div class="card" style="height:100%;">
-                <div class="card-body">
+                <div class="card-body" style="max-height: 650px;">
                     {% if subdomain_info|length > 0 and sub_index > -1 %}
                     <dl class="row">
                         <dt class="col-4 col-xxl-3">Subdomain:</dt>
@@ -126,7 +126,7 @@ Sudomain Enumeration | CySuite
                         </dd>
                         <dt class="col-4 col-xxl-3">Open Ports:</dt>
                         <dd class="col-8 col-xxl-9">
-                            <code style="font-size: 0.8rem;">{{subdomain_info|index:sub_index|get_item:"ports"|join:","}}</code>
+                            <code style="font-size: 0.8rem;">{% if subdomain_info|index:sub_index|get_item:"ports" %}{{subdomain_info|index:sub_index|get_item:"ports"|join:","}}{% else %}None{% endif %}</code>
                         </dd>
                         <dt class="col-4 col-xxl-3 mb-0">WAF:</dt>
                         <dd class="col-8 col-xxl-9 mb-0">
@@ -188,7 +188,9 @@ Sudomain Enumeration | CySuite
                     <div>
                         <h6 class="card-title">Header Infomation</h6>
                     </div>
-                    <textarea class="form-control" style="min-height: 400px; font-family: courier new; font-size: 0.8rem; max-width: -webkit-fill-available;" type="text" readonly>{% if subdomain_info|length > 0 and sub_index > -1 %}{{subdomain_info|index:sub_index|get_item:"header_info"}}{% else %}{% endif %}</textarea>
+                    <div style="display: flex; height: 100%; flex-direction: row;">
+                    <textarea class="form-control" style="min-height: inherit; font-family: courier new; font-size: 0.8rem; max-width: -webkit-fill-available;" type="text" readonly>{% if subdomain_info|length > 0 and sub_index > -1 %}{{subdomain_info|index:sub_index|get_item:"header_info"}}{% else %}{% endif %}</textarea>
+                    </div>
                 </div>
             </div>
         </div>
