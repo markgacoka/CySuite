@@ -83,14 +83,14 @@ Sudomain Enumeration | CySuite
                                 {% else %}
                                 <td><span class="badge badge-soft-warning badge-pill">{{info|get_item:"status_code"}}</span></td>
                                 {% endif %}
-                                <td>{% for port in info|get_item:"ports" %}<div class="pill">{{port}}</div>{% endfor %}</td>
+                                <td>{% if info|get_item:"ports" %}{% for port in info|get_item:"ports" %}<div class="pill">{{port}}</div>{% endfor %}{% else %}<div class="pill">None</div>{% endif %}</td>
                                 <td><code style="font-size: 0.8rem; font-weight: 600;">{{info|get_item:"ip_address"}}</code></td>
                                 <input name="more" value="{{forloop.counter}}" hidden />
                                 <td style="font-size: 0.9rem; font-weight: 500;">
-                                <form method="post" id="more-form">
+                                <form method="post" id="more-form{{forloop.counter}}">
                                     {% csrf_token %}
                                     <input name="more" value="{{forloop.counter}}" type="hidden" />
-                                    <a href="" style="text-decoration: none;" onclick="document.getElementById('more-form').submit();">See More&nbsp; <i class="fa fa-arrow-right"></i></a>
+                                    <a href="#" style="text-decoration: none;" onclick="document.getElementById('more-form{{forloop.counter}}').submit();">See More&nbsp; <i class="fa fa-arrow-right"></i></a>
                                 </form>
                                 </td>
                             </tr>
@@ -103,28 +103,53 @@ Sudomain Enumeration | CySuite
 <div class="col-lg-6 col-xxl-4" style="padding-bottom: 2rem;">
         <div class="card" style="height:100%;">
                 <div class="card-body">
+                    {% if subdomain_info|length > 0 and sub_index > 0 %}
                     <dl class="row">
                         <dt class="col-4 col-xxl-3">Subdomain:</dt>
                         <dd class="col-8 col-xxl-9">
-                            <code>{% if subdomain_info %}{{subdomain_info|index:sub_index|get_item:"subdomain"}}{% else %}None{% endif %}</code>
+                            <code>{{subdomain_info|index:sub_index|get_item:"subdomain"}}</code>
                         </dd>
                         <dt class="col-4 col-xxl-3">Server Type:</dt>
                         <dd class="col-8 col-xxl-9">
-                            <code style="font-size: 0.8rem;">{% if subdomain_info %}{{subdomain_info|index:sub_index|get_item:"server"}}{% else %}None{% endif %}</code>
+                            <code style="font-size: 0.8rem;">{{subdomain_info|index:sub_index|get_item:"server"}}</code>
                         </dd>
                         <dt class="col-4 col-xxl-3">IP Address:</dt>
                         <dd class="col-8 col-xxl-9">
-                            <code style="font-size: 0.8rem;">{% if subdomain_info %}{{subdomain_info|index:sub_index|get_item:"ip_address"}}{% else %}None{% endif %}</code>
+                            <code style="font-size: 0.8rem;">{{subdomain_info|index:sub_index|get_item:"ip_address"}}</code>
                         </dd>
                         <dt class="col-4 col-xxl-3">Open Ports:</dt>
                         <dd class="col-8 col-xxl-9">
-                            <code style="font-size: 0.8rem;">{% if subdomain_info %}{{subdomain_info|index:sub_index|get_item:"ports"}}{% else %}None{% endif %}</code>
+                            <code style="font-size: 0.8rem;">{{subdomain_info|index:sub_index|get_item:"ports"}}</code>
                         </dd>
                         <dt class="col-4 col-xxl-3 mb-0">Web Application Firewall:</dt>
                         <dd class="col-8 col-xxl-9 mb-0">
-                            <code style="font-size: 0.8rem;">{% if subdomain_info %}{{subdomain_info|index:sub_index|get_item:"waf"}}{% else %}None{% endif %}</code>
+                            <code style="font-size: 0.8rem;">{{subdomain_info|index:sub_index|get_item:"waf"}}</code>
                         </dd>
                     </dl>
+                    {% else %}
+                    <dl class="row">
+                        <dt class="col-4 col-xxl-3">Subdomain:</dt>
+                        <dd class="col-8 col-xxl-9">
+                            <code>None</code>
+                        </dd>
+                        <dt class="col-4 col-xxl-3">Server Type:</dt>
+                        <dd class="col-8 col-xxl-9">
+                            <code style="font-size: 0.8rem;">None</code>
+                        </dd>
+                        <dt class="col-4 col-xxl-3">IP Address:</dt>
+                        <dd class="col-8 col-xxl-9">
+                            <code style="font-size: 0.8rem;">None</code>
+                        </dd>
+                        <dt class="col-4 col-xxl-3">Open Ports:</dt>
+                        <dd class="col-8 col-xxl-9">
+                            <code style="font-size: 0.8rem;">None</code>
+                        </dd>
+                        <dt class="col-4 col-xxl-3 mb-0">Web Application Firewall:</dt>
+                        <dd class="col-8 col-xxl-9 mb-0">
+                            <code style="font-size: 0.8rem;">None</code>
+                        </dd>
+                    </dl>
+                    {% endif %}
                     <hr>
                     <div>
                         <h6 class="card-title" style="margin-bottom: 1rem;">SSL Infomation</h6>
@@ -156,7 +181,7 @@ Sudomain Enumeration | CySuite
                     <div>
                         <h6 class="card-title">Header Infomation</h6>
                     </div>
-                    <textarea class="form-control" style="min-height: 300px; max-width: -webkit-fill-available;" type="text" readonly></textarea>
+                    <textarea class="form-control" style="min-height: 300px; max-width: -webkit-fill-available;" type="text" readonly>{{subdomain_info|index:sub_index|get_item:"header_info"}}</textarea>
                 </div>
             </div>
         </div>
@@ -216,7 +241,7 @@ Sudomain Enumeration | CySuite
             lengthChange: false,
             bFilter: false,
             autoWidth: true,
-            responsive: true
+            responsive: true,
         });
     });
 </script>
