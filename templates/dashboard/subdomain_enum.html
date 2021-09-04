@@ -103,9 +103,9 @@ Sudomain Enumeration | CySuite
 <div class="col-lg-6 col-xxl-4" style="padding-bottom: 2rem;">
         <div class="card" style="height:100%;">
                 <div class="card-body">
-                    {% if subdomain_info|length > 0 and sub_index > 0 %}
+                    {% if subdomain_info|length > 0 and sub_index > -1 %}
                     <dl class="row">
-                        <dt class="col-4 col-xxl-3">Subdomain:</dt>
+                        <dt class="col-4 col-xxl-3">Subdomain:{{sub_index}}</dt>
                         <dd class="col-8 col-xxl-9">
                             <code>{{subdomain_info|index:sub_index|get_item:"subdomain"}}</code>
                         </dd>

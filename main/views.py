@@ -173,23 +173,24 @@ def subdomain_enum(request):
             )
             context['task'] = task
             context['task_id'] = task.task_id
-            request.session['sub_index'] = 0
+            request.session['sub_index'] = -1
             request.session.modified = True
-            context['sub_index'] = 0
+            context['sub_index'] = request.session['sub_index']
             context['subdomain_info'] = [{}]
             messages.success(request, 'Scan in progress. Stand by!')
             # return render("dashboard/subdomain_enum.html", context, context_instance=RequestContext(request))
         elif 'cancel' in request.POST.keys():
             task_id = CeleryTaskModel.objects.filter(task_user=request.user).values('subdomain_task')[0]['subdomain_task']
             app.control.revoke(task_id)
-            request.session['sub_index'] = 0
+            request.session['sub_index'] = -1
             request.session.modified = True
             context['subdomain_info'] = [{}]
-            context['sub_index'] = 0
+            context['sub_index'] = request.session['sub_index']
         elif 'more' in request.POST.keys():
+            info_list = []
             more_num = int(request.POST.get('more'))
             user_projects = ProjectModel.objects.get(project_name=request.session['project'])
-            subdomain_model_instance = SubdomainModel.objects.filter(subdomain_user=request.user).filter(project=user_projects)
+            subdomain_model_instance = SubdomainModel.objects.filter(subdomain_user=request.user).filter(project=user_projects).order_by('hostname')
             for model in subdomain_model_instance.values_list():
                 subdomain_info = {}
                 subdomain_info['subdomain'] = model[3]
@@ -206,12 +207,13 @@ def subdomain_enum(request):
             context['profile_account'] = request.user.profile
             request.session['sub_index'] = more_num
             request.session.modified = True
-            context['sub_index'] = request.session.get('sub_index')
+            context['sub_index'] = int(request.session.get('sub_index')) - 1
         else:
             pass
         context['profile_account'] = request.user.profile
         return render(request, 'dashboard/subdomain_enum.html', context)
     else:
+        print("REQ 1: ", request.session.get('sub_index'))
         context['profile_account'] = request.user.profile
         if CeleryTaskModel.objects.filter(task_user=request.user).exists():
             # STARTED, PROGRESS, SUCCESS, PENDING
@@ -227,9 +229,9 @@ def subdomain_enum(request):
                 context['sub_index'] = int(request.session.get('sub_index'))
         sub_index = request.session.get('sub_index')
         if not sub_index:
-            context['sub_index'] = 0
-            request.session['sub_index'] = 0
+            request.session['sub_index'] = -1
             request.session.modified = True
+            context['sub_index'] = request.session['sub_index']
         if len(project_model_instance.values_list()) > 0:
             context['is_project'] = 'True'
             if project_model_instance.count() > 0:
@@ -238,16 +240,16 @@ def subdomain_enum(request):
                     context['first_scan'] = 'False'
                 else:
                     context['first_scan'] = 'True'
-                    context['sub_index'] = 0
-                    request.session['sub_index'] = 0
+                    request.session['sub_index'] = -1
                     request.session.modified = True
+                    context['sub_index'] = request.session['sub_index']
                     context['subdomain_info'] = [{}]
                     return render(request, 'dashboard/subdomain_enum.html', context)
             else:
                 context['first_scan'] = 'True'
-                context['sub_index'] = 0
                 request.session['sub_index'] = 0
                 request.session.modified = True
+                context['sub_index'] = request.session['sub_index']
                 context['subdomain_info'] = [{}]
                 return render(request, 'dashboard/subdomain_enum.html', context)
         else:
@@ -269,7 +271,7 @@ def subdomain_enum(request):
             subdomain_info['directories'] = model[11]
             info_list.append(subdomain_info)
         context['subdomain_info'] = info_list
-        context['sub_index'] = request.session.get('sub_index')
+        context['sub_index'] = request.session.get('sub_index') - 1
     context['profile_account'] = request.user.profile
     return render(request, 'dashboard/subdomain_enum.html', context)
 
