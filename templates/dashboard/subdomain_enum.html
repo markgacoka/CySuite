@@ -75,17 +75,21 @@ Sudomain Enumeration | CySuite
                             <tbody>
                             {% for info in subdomain_info %}
                             <tr>
-                                <td><a href="https://{{info|get_item:"subdomain"}}" target="_blank">{{info|get_item:"subdomain"}}</a></td>
-                                {% if info|get_item:"status_code"|first == '1' or info|get_item:"status_code"|first == '2' %}
-                                <td><span class="badge badge-soft-success badge-pill">{{info|get_item:"status_code"}}</span></td>
-                                {% elif info|get_item:"status_code"|first == '4' %}
-                                <td><span class="badge bg-danger">{{info|get_item:"status_code"}}</span></td>
+                                <td>{% if info|get_item:"subdomain" %}<a href="https://{{info|get_item:"subdomain"}}" target="_blank">{{info|get_item:"subdomain"}}</a>{% else %}{% endif %}</td>
+                                {% if info|get_item:"status_code" %}
+                                    {% if info|get_item:"status_code"|first == '1' or info|get_item:"status_code"|first == '2' %}
+                                    <td><span class="badge badge-soft-success badge-pill">{{info|get_item:"status_code"}}</span></td>
+                                    {% elif info|get_item:"status_code"|first == '4' %}
+                                    <td><span class="badge bg-danger">{{info|get_item:"status_code"}}</span></td>
+                                    {% else %}
+                                    <td><span class="badge badge-soft-warning badge-pill">{{info|get_item:"status_code"}}</span></td>
+                                    {% endif %}
                                 {% else %}
-                                <td><span class="badge badge-soft-warning badge-pill">{{info|get_item:"status_code"}}</span></td>
+                                    <td></td>
                                 {% endif %}
-                                <td>{% if info|get_item:"ports" %}{% for port in info|get_item:"ports" %}<div class="pill">{{port}}</div>{% endfor %}{% else %}<div class="pill">None</div>{% endif %}</td>
-                                <td><code style="font-size: 0.8rem; font-weight: 600;">{{info|get_item:"ip_address"}}</code></td>
-                                <input name="more" value="{{forloop.counter}}" hidden />
+                                <td>{% if info|get_item:"ports" %}{% for port in info|get_item:"ports" %}<div class="pill">{{port}}</div>{% endfor %}{% else %}{% endif %}</td>
+                                <td>{% if info|get_item:"ip_address" %}<code style="font-size: 0.8rem; font-weight: 600;">{{info|get_item:"ip_address"}}{% else %}{% endif %}</code></td>
+                                {% if subdomain_info|length > 1%}
                                 <td style="font-size: 0.9rem; font-weight: 500;">
                                 <form method="post" id="more-form{{forloop.counter}}">
                                     {% csrf_token %}
@@ -93,6 +97,9 @@ Sudomain Enumeration | CySuite
                                     <a href="#" style="text-decoration: none;" onclick="document.getElementById('more-form{{forloop.counter}}').submit();return false;">See More&nbsp; <i class="fa fa-arrow-right"></i></a>
                                 </form>
                                 </td>
+                                {% else%}
+                                <td></td>
+                                {% endif %}
                             </tr>
                             {% endfor %}
                             </tbody>
@@ -130,23 +137,23 @@ Sudomain Enumeration | CySuite
                     <dl class="row">
                         <dt class="col-4 col-xxl-3">Subdomain:</dt>
                         <dd class="col-8 col-xxl-9">
-                            <code>None</code>
+                            <code>-</code>
                         </dd>
                         <dt class="col-4 col-xxl-3">Server Type:</dt>
                         <dd class="col-8 col-xxl-9">
-                            <code style="font-size: 0.8rem;">None</code>
+                            <code style="font-size: 0.8rem;">-</code>
                         </dd>
                         <dt class="col-4 col-xxl-3">IP Address:</dt>
                         <dd class="col-8 col-xxl-9">
-                            <code style="font-size: 0.8rem;">None</code>
+                            <code style="font-size: 0.8rem;">-</code>
                         </dd>
                         <dt class="col-4 col-xxl-3">Open Ports:</dt>
                         <dd class="col-8 col-xxl-9">
-                            <code style="font-size: 0.8rem;">None</code>
+                            <code style="font-size: 0.8rem;">-</code>
                         </dd>
                         <dt class="col-4 col-xxl-3 mb-0">WAF:</dt>
                         <dd class="col-8 col-xxl-9 mb-0">
-                            <code style="font-size: 0.8rem;">None</code>
+                            <code style="font-size: 0.8rem;">-</code>
                         </dd>
                     </dl>
                     {% endif %}
@@ -181,7 +188,7 @@ Sudomain Enumeration | CySuite
                     <div>
                         <h6 class="card-title">Header Infomation</h6>
                     </div>
-                    <textarea class="form-control" style="min-height: 400px; font-family: courier new; font-size: 0.8rem; max-width: -webkit-fill-available;" type="text" readonly>{{subdomain_info|index:sub_index|get_item:"header_info"}}</textarea>
+                    <textarea class="form-control" style="min-height: 400px; font-family: courier new; font-size: 0.8rem; max-width: -webkit-fill-available;" type="text" readonly>{% if subdomain_info|length > 0 and sub_index > -1 %}{{subdomain_info|index:sub_index|get_item:"header_info"}}{% else %}{% endif %}</textarea>
                 </div>
             </div>
         </div>
