@@ -242,7 +242,7 @@ def subdomain_enum(request):
                     context['first_scan'] = 'True'
                     request.session['sub_index'] = -1
                     request.session.modified = True
-                    context['sub_index'] = request.session['sub_index']
+                    context['sub_index'] = request.session.get('sub_index') - 1
                     context['subdomain_info'] = [{}]
                     return render(request, 'dashboard/subdomain_enum.html', context)
             else:
