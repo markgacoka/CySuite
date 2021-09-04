@@ -44,7 +44,7 @@ Sudomain Enumeration | CySuite
                     <button class="project-btn" type="submit" style="font-size: 1rem; height: auto; text-align: center; transform: scale(0.9); display: inline-block; float: right;"><i class="fa fa-retweet"></i>&nbsp;Scan</button>
                     {% elif task %}
                     <input name="cancel" hidden />
-                    <button class="project-btn" type="submit" style="font-size: 1rem; height: auto; text-align: center; transform: scale(0.9); display: inline-block; float: right;"><i class="fa fa-ban"></i>&nbsp;Cancel</button>
+                    <button class="project-btn" type="submit" style="margin-right: 4%; font-size: 1rem; height: auto; text-align: center; transform: scale(0.9); display: inline-block; float: right;"><i class="fa fa-ban"></i>&nbsp;Cancel</button>
                     {% else%}
                     <input name="scan" hidden />
                     <button class="project-btn" type="submit" style="font-size: 1rem; height: auto; text-align: center; transform: scale(0.9); display: inline-block; float: right;"><i class="fa fa-retweet"></i>&nbsp;Rescan</button>
@@ -87,7 +87,23 @@ Sudomain Enumeration | CySuite
                                 {% else %}
                                     <td></td>
                                 {% endif %}
-                                <td>{% if info|get_item:"ports" %}{% for port in info|get_item:"ports" %}<div class="pill">{{port}}</div>{% endfor %}{% else %}{% endif %}</td>
+                                <td>
+                                    {% if info|get_item:"ports" %}
+                                        {% if info|get_item:"ports"|length > 4 %} 
+                                            {% for port in info|get_item:"ports"|slice:"0:2" %}
+                                                {% if forloop.counter == 2 %}
+                                                    <i class="fa fa-ellipsis-h"></i>
+                                                {% endif %}
+                                                <div class="pill">{{port}}</div>
+                                            {% endfor %}
+                                        {% else %}
+                                            {% for port in info|get_item:"ports" %}
+                                                <div class="pill">{{port}}</div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% else %}
+                                    {% endif %}
+                                </td>
                                 <td>{% if info|get_item:"ip_address" %}<code style="font-size: 0.8rem; font-weight: 600;">{{info|get_item:"ip_address"}}{% else %}{% endif %}</code></td>
                                 {% if subdomain_info|length > 1%}
                                 <td style="font-size: 0.9rem; font-weight: 500;">
@@ -108,8 +124,8 @@ Sudomain Enumeration | CySuite
             </div>
         </div>
 <div class="col-lg-6 col-xxl-4" style="padding-bottom: 2rem;">
-        <div class="card" style="height:100%;">
-                <div class="card-body" style="max-height: 650px;">
+        <div class="card" style="height: 100%">
+                <div class="card-body" style="height: 100%; display: flex; flex-direction: column;">
                     {% if subdomain_info|length > 0 and sub_index > -1 %}
                     <dl class="row">
                         <dt class="col-4 col-xxl-3">Subdomain:</dt>
@@ -182,14 +198,18 @@ Sudomain Enumeration | CySuite
                     <hr>
                     <div>
                         <h6 class="card-title" style="margin-bottom: 1rem;">Screenshot</h6>
-                        <img src="{% static 'img/illustrations/home-bg.jpg' %}" alt="Website screenshot" style="max-width: -webkit-fill-available; height: auto;" onerror="">
+                        {% if subdomain_info|index:sub_index|get_item:"screenshot" != None %}
+                            <img src='/media/screenshots/{{subdomain_info|index:sub_index|get_item:"subdomain"}}.jpg' alt="Website screenshot" style="max-width: -webkit-fill-available; height: auto;" onerror="">
+                        {% else %}
+                            <img src="/media/screenshots/no_screenshot.png" alt="No screenshot" style="max-width: -webkit-fill-available; height: auto;" onerror=""/>
+                        {% endif %}
                     </div>
                     <hr>
                     <div>
                         <h6 class="card-title">Header Infomation</h6>
                     </div>
-                    <div style="display: flex; height: 100%; flex-direction: row;">
-                    <textarea class="form-control" style="min-height: inherit; font-family: courier new; font-size: 0.8rem; max-width: -webkit-fill-available;" type="text" readonly>{% if subdomain_info|length > 0 and sub_index > -1 %}{{subdomain_info|index:sub_index|get_item:"header_info"}}{% else %}{% endif %}</textarea>
+                    <div style="display: flex; flex-direction: row; height: inherit;">
+                    <textarea class="form-control" style="font-family: courier new;font-size: 0.8rem;max-width: -webkit-fill-available;display: table-row;" type="text" readonly>{% if subdomain_info|length > 0 and sub_index > -1 %}{{subdomain_info|index:sub_index|get_item:"header_info"}}{% else %}{% endif %}</textarea>
                     </div>
                 </div>
             </div>

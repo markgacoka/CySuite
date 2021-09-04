@@ -21,12 +21,20 @@ def scan_subdomains(self, user_id, project_session):
         portscanner = Portscanner(subdomain)
         port, ip, status, response_header = portscanner.run_scanner(100)
         if ip == None:
+            screenshot = None
             ip = 'No IP address'
+        else:
+            screenshot_output = take_screenshot(subdomain)
+            if screenshot_output == True:
+                screenshot = '{}.jpg'.format(subdomain)
+            else:
+                screenshot = None
+
         if status == None:
             status = 'Not Applicable'
         if len(response_header) > 0 and type(response_header) == bytes:
             if len(re.findall('\r\n\r\n', response_header.decode())) > 1:
-                response_header_clean = response_header.decode().split('\r\n\r\n')[-2]
+                response_header_clean = str(response_header.decode().split('\r\n\r\n')[-2])
         else:
             response_header_clean = ''
         SubdomainModel.objects.update_or_create(
@@ -36,7 +44,7 @@ def scan_subdomains(self, user_id, project_session):
             defaults = {        
                 'status_code': status,
                 'ip_address': ip,
-                'screenshot': 'subdomain.domain.tld.jpg',
+                'screenshot': screenshot,
                 'waf': 'Absent',
                 'ssl_info': {},
                 'header_info': response_header_clean,
