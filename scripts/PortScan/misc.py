@@ -92,18 +92,4 @@ class Portscanner:
 #     portscanner = Portscanner(subdomain)
 #     port, ip, status, response_header = portscanner.run_scanner(100)
 #     print(port, ip, status, response_header)
-# import re
-# portscanner = Portscanner('webdisk.markgacoka.com')
-# port, ip, status, response_header = portscanner.run_scanner(100)
-# if ip == None:
-#     ip = 'No IP address'
-# if status == None:
-#     status = 'Not Applicable'
-# if len(response_header) > 0 and type(response_header) == bytes:
-#     if len(re.findall('\r\n\r\n', response_header.decode())) > 1:
-#         response_header_clean = response_header.decode().split('\r\n\r\n')[-2]
-# else:
-#     response_header_clean = ''
-# print(status)
-
-# # print("--- %s seconds ---" % (time.time() - start_time))
+# print("--- %s seconds ---" % (time.time() - start_time))
