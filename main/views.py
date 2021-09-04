@@ -93,6 +93,8 @@ def projects(request):
             try:
                 ProjectModel.objects.filter(project_name__iexact=request.POST.get('delete-project')).filter(project_user=request.user).delete()
                 messages.success(request, 'Project has been deleted successfully!')
+                del request.session['sub_index']
+                request.session.modified = True
                 return redirect('projects')
             except:
                 context['error_message'] = 'An error occurred!'
@@ -105,7 +107,9 @@ def projects(request):
                 response = {'status': 1, 'message': "Ok"}
             except:
                 response = {'status': 0, 'message': "Something went wrong!"}
-            return HttpResponse(json.dumps(response), content_type='application/json')
+            else:
+                return HttpResponse(json.dumps(response), content_type='application/json')     
+            
         elif ('in_scope_domains' and 'project_name' and 'program') in request.POST.keys():
             tempdict = request.POST.copy()
             tempdict['in_scope_domains'] = tempdict['in_scope_domains'].split('\r\n')
@@ -155,9 +159,9 @@ def subdomain_enum(request):
     context = {}
     info_list = []
     project_session = request.session['project']
+    request.session.modified = True
     project_model_instance = ProjectModel.objects.filter(project_user=request.user).filter(project_name__iexact=project_session)
     if request.method == 'POST':
-        print(request.POST)
         if 'scan' in request.POST.keys():
             user_id = Account.objects.filter(username=request.user.username).values('user_id')[0]['user_id']
             task = scan_subdomains.delay(user_id, project_session)
@@ -169,13 +173,21 @@ def subdomain_enum(request):
             )
             context['task'] = task
             context['task_id'] = task.task_id
+            request.session['sub_index'] = 0
+            request.session.modified = True
+            context['sub_index'] = 0
+            context['subdomain_info'] = [{}]
             messages.success(request, 'Scan in progress. Stand by!')
             # return render("dashboard/subdomain_enum.html", context, context_instance=RequestContext(request))
         elif 'cancel' in request.POST.keys():
             task_id = CeleryTaskModel.objects.filter(task_user=request.user).values('subdomain_task')[0]['subdomain_task']
             app.control.revoke(task_id)
+            request.session['sub_index'] = 0
+            request.session.modified = True
+            context['subdomain_info'] = [{}]
+            context['sub_index'] = 0
         elif 'more' in request.POST.keys():
-            print(request.POST)
+            more_num = int(request.POST.get('more'))
             user_projects = ProjectModel.objects.get(project_name=request.session['project'])
             subdomain_model_instance = SubdomainModel.objects.filter(subdomain_user=request.user).filter(project=user_projects)
             for model in subdomain_model_instance.values_list():
@@ -192,14 +204,15 @@ def subdomain_enum(request):
                 info_list.append(subdomain_info)
             context['subdomain_info'] = info_list
             context['profile_account'] = request.user.profile
-            context['sub_index'] = int(request.POST.get('more'))
-            return render(request, 'dashboard/subdomain_enum.html', context)
+            request.session['sub_index'] = more_num
+            request.session.modified = True
+            context['sub_index'] = request.session.get('sub_index')
         else:
             pass
         context['profile_account'] = request.user.profile
-        context['sub_index'] = 0
         return render(request, 'dashboard/subdomain_enum.html', context)
     else:
+        context['profile_account'] = request.user.profile
         if CeleryTaskModel.objects.filter(task_user=request.user).exists():
             # STARTED, PROGRESS, SUCCESS, PENDING
             task_id = CeleryTaskModel.objects.filter(task_user=request.user).values('subdomain_task')[0]['subdomain_task']
@@ -208,6 +221,15 @@ def subdomain_enum(request):
             if res == 'STARTED' or res == 'PROGRESS':            
                 context['task'] = True
                 context['task_id'] = task_id
+            if res == 'SUCCESS':
+                request.session['sub_index'] = 1
+                request.session.modified = True
+                context['sub_index'] = int(request.session.get('sub_index'))
+        sub_index = request.session.get('sub_index')
+        if not sub_index:
+            context['sub_index'] = 0
+            request.session['sub_index'] = 0
+            request.session.modified = True
         if len(project_model_instance.values_list()) > 0:
             context['is_project'] = 'True'
             if project_model_instance.count() > 0:
@@ -216,15 +238,24 @@ def subdomain_enum(request):
                     context['first_scan'] = 'False'
                 else:
                     context['first_scan'] = 'True'
+                    context['sub_index'] = 0
+                    request.session['sub_index'] = 0
+                    request.session.modified = True
+                    context['subdomain_info'] = [{}]
+                    return render(request, 'dashboard/subdomain_enum.html', context)
             else:
                 context['first_scan'] = 'True'
+                context['sub_index'] = 0
+                request.session['sub_index'] = 0
+                request.session.modified = True
+                context['subdomain_info'] = [{}]
+                return render(request, 'dashboard/subdomain_enum.html', context)
         else:
             context['is_project'] = 'False'
-            context['profile_account'] = request.user.profile
             return render(request, 'dashboard/subdomain_enum.html', context)
 
         user_projects = ProjectModel.objects.get(project_name=request.session['project'])
-        subdomain_model_instance = SubdomainModel.objects.filter(subdomain_user=request.user).filter(project=user_projects)
+        subdomain_model_instance = SubdomainModel.objects.filter(subdomain_user=request.user).filter(project=user_projects).order_by('hostname')
         for model in subdomain_model_instance.values_list():
             subdomain_info = {}
             subdomain_info['subdomain'] = model[3]
@@ -237,8 +268,8 @@ def subdomain_enum(request):
             subdomain_info['header_info'] = model[10]
             subdomain_info['directories'] = model[11]
             info_list.append(subdomain_info)
-    context['subdomain_info'] = info_list
-    context['sub_index'] = 0
+        context['subdomain_info'] = info_list
+        context['sub_index'] = request.session.get('sub_index')
     context['profile_account'] = request.user.profile
     return render(request, 'dashboard/subdomain_enum.html', context)
 
