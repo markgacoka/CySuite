@@ -50,6 +50,8 @@ redis = "*"
 httplib2 = "*"
 nimporter = "*"
 pycurl = "*"
+pywebcapture = "*"
+webdriver-manager = "*"
 
 [dev-packages]
 
