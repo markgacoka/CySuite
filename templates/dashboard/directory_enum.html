@@ -4,6 +4,7 @@
 Directory Enumeration | CySuite
 {% endblock %}
 {% block content %}
+{% if is_project == 'False'%}
 <div class="card" style="padding: 1rem 0 1rem 0; background-color: white; box-shadow: 1px 3px 2px 0 rgb(50 0 128 / 10%); border: 1px ridge #3E4261; width: 100%;">
 	<h2 style="padding-left: 15px; color: #293042; margin: 0;">Enumarate Directories</h2>
 </div>
@@ -13,23 +14,32 @@ Directory Enumeration | CySuite
 				href="projects.html">Projects</a> tab and scan directories to see the list.</p>
 	</div>
 </div>
+{% else %}
 <div class="card">
 	<div class="card-header pb-0" style="display: block; width: auto; text-align: center;">
 		<div class="alert alert-primary alert-outline alert-dismissible" style="margin: 0 2rem 2rem 0; width: 100%;">
 			<div class="alert-icon">
-				<i class="fa fa-globe"></i>
-			</div>
-			<input class="alert-message" placeholder="subdomain.site.com"></input>
-		</div>
-		<div class="alert alert-primary alert-outline alert-dismissible" style="margin-right: 2rem; width: 100%;">
-			<div class="alert-icon">
 				<i class="fa fa-book"></i>
 			</div>
-		<select class="dropdown-icon flex-grow-1">
-			<option>Custom</option>
-			<option>Starbucks</option>
-			<option>Amazon</option>
-		</select>
+			<select class="dropdown-icon flex-grow-1">
+				{% for key, values in all.items %}
+				<option>{{key}}</option>
+				{% endfor %}
+			</select>
+		</div>
+		<div class="alert alert-primary alert-outline alert-dismissible" style="margin: 0 2rem 0 0; width: 100%;">
+			<div class="alert-icon">
+				<i class="fa fa-globe"></i>
+			</div>
+			<select class="dropdown-icon flex-grow-1" style="width: 100%;">
+				{% for key, values in all.items %}
+					<optgroup label="{{key}}">
+						{% for value in values %}
+							<option>{{value}}</option>
+						{% endfor %}
+					</optgroup>
+				{% endfor %}
+			</select>
 		</div>
 	</div>
 	<div class="card-body">
@@ -49,4 +59,19 @@ Directory Enumeration | CySuite
 	<input class="form-select flex-grow-1">
 	<button class="btn btn-primary" type="button">Search</button>
 </div>
+{% block js %}
+<script>
+	function htmlDecode(str) {
+		const doc = new DOMParser().parseFromString(str, "text/html");
+		return doc.documentElement.textContent;
+	}
+
+	var subdomains = [];
+	var mylist = '{{subdomains}}'.split(',');
+	for(i = 0; i < mylist.length; i++){
+		subdomains.push(htmlDecode(mylist[i]).replace("[", "").replace("]", "").replace("'", ""));
+	};
+</script>
+{% endblock %}
+{% endif %}
 {% endblock %}

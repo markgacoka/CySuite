@@ -275,9 +275,20 @@ def subdomain_enum(request):
     context['profile_account'] = request.user.profile
     return render(request, 'dashboard/subdomain_enum.html', context)
 
-
 def directory_enum(request):
     context = {}
+    all = {}
+    project_model_instance = ProjectModel.objects.filter(project_user=request.user)
+    projects = list(project[2] for project in project_model_instance.values_list())
+    subdomains = list(subdomains[6] for subdomains in project_model_instance.values_list())
+    if len(project_model_instance.values_list()) > 0:
+        context['is_project'] = 'True'
+    else:
+        context['is_project'] = 'False'
+    
+    for idx, project in enumerate(projects):
+        all[project] = all.get(project, subdomains[idx])
+    context['all'] = all
     context['profile_account'] = request.user.profile
     return render(request, 'dashboard/directory_enum.html', context)
 
