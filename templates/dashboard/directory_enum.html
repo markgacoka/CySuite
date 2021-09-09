@@ -1,5 +1,6 @@
 {% extends '../base.html' %}
 {% load static %}
+{% load custom_tags %}
 {% block title%}
 Directory Enumeration | CySuite
 {% endblock %}
@@ -21,9 +22,9 @@ Directory Enumeration | CySuite
 			<div class="alert-icon">
 				<i class="fa fa-book"></i>
 			</div>
-			<select class="dropdown-icon flex-grow-1">
-				{% for key, values in all.items %}
-				<option>{{key}}</option>
+			<select class="dropdown-icon flex-grow-1" id="select-project" onchange="val()">
+				{% for project in projects %}
+				<option>{{project}}</option>
 				{% endfor %}
 			</select>
 		</div>
@@ -31,14 +32,12 @@ Directory Enumeration | CySuite
 			<div class="alert-icon">
 				<i class="fa fa-globe"></i>
 			</div>
-			<select class="dropdown-icon flex-grow-1" style="width: 100%;">
-				{% for key, values in all.items %}
-					<optgroup label="{{key}}">
-						{% for value in values %}
-							<option>{{value}}</option>
-						{% endfor %}
-					</optgroup>
+			<select class="dropdown-icon flex-grow-1" id="subdomain-group" style="width: 100%;">
+			<optgroup id="project-group">
+				{% for value in subdomains %}
+					<option>{{value}}</option>
 				{% endfor %}
+			</optgroup>
 			</select>
 		</div>
 	</div>
@@ -60,17 +59,54 @@ Directory Enumeration | CySuite
 	<button class="btn btn-primary" type="button">Search</button>
 </div>
 {% block js %}
-<script>
-	function htmlDecode(str) {
-		const doc = new DOMParser().parseFromString(str, "text/html");
-		return doc.documentElement.textContent;
+<script type="text/javascript">
+	var token = '{{csrf_token}}';
+	function val() {
+		d = document.getElementById("select-project").value;
+		var s = document.getElementById('project-group');
+		s.label = d;
+		$.ajax({
+			headers: { "X-CSRFToken": token },
+			url: '{% url 'directory_enum' %}',
+			data: {"project": d},
+			type: 'POST',
+		}).done(function( responseMsg ) {
+			var selectbox = document.getElementById("subdomain-group");
+			selectbox.options.length = 0;
+
+			for (var j = 0; j < responseMsg.length; j++){
+				var newOptionElement = document.createElement('option');
+				newOptionElement.value = responseMsg[j];
+				newOptionElement.innerHTML = responseMsg[j];
+				selectbox.appendChild(newOptionElement);
+			}
+			});
 	}
 
-	var subdomains = [];
-	var mylist = '{{subdomains}}'.split(',');
-	for(i = 0; i < mylist.length; i++){
-		subdomains.push(htmlDecode(mylist[i]).replace("[", "").replace("]", "").replace("'", ""));
-	};
+	$(document).ready(function() {
+		var project = '{{project}}';
+		function htmlDecode(str) {
+			const doc = new DOMParser().parseFromString(str, "text/html");
+			return doc.documentElement.textContent;
+		}
+
+		var subdomains = [];
+		var mylist = '{{subdomains}}'.split(',');
+		for(i = 0; i < mylist.length; i++){
+			subdomains.push(htmlDecode(mylist[i]).replace("[", "").replace("]", "").replace("'", ""));
+		};
+
+		for (i = 0; i < document.getElementById("select-project").length; ++i){
+			if (document.getElementById("select-project").options[i].value == project){
+				document.getElementById("select-project").options[i].selected = true
+			}
+		}
+
+
+		d = document.getElementById("select-project").value;
+		var s = document.getElementById('project-group');
+		s.label = project;
+	});
 </script>
 {% endblock %}
 {% endif %}
