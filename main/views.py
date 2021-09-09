@@ -146,7 +146,6 @@ def projects(request):
         context['profile_account'] = request.user.profile
     else:
         context['project_list'] = project_list
-        context['project_details'] = project_list
         context['profile_account'] = request.user.profile
     return render(request, 'dashboard/projects.html', context)
 
