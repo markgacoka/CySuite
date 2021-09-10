@@ -291,10 +291,11 @@ def directory_enum(request):
         project = request.POST.get('project')
         return HttpResponse(json.dumps(all[project]), content_type="application/json")
     else:
-        if request.session['project'] == 0:
+        if request.session['project'] == 0 or request.session['project'] == None:
             request.session['project'] = None
             context['project'] = None
             return render(request, 'dashboard/directory_enum.html', context)
+        
         for idx, project in enumerate(projects):
             all[project] = all.get(project, subdomains[idx])
 

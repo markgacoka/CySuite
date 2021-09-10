@@ -82,9 +82,12 @@ Projects | CySuite
                     <form method="post" id="project_delete">
                     {% csrf_token %}
                     <div style="width: 100%;">
-                        <h6 style="float: left; width: 95%">Asset</h6>
-                        <input name="delete-project" value="{{project_ele|get_item:"project"}}" hidden />
-                        <a href="#" onclick="document.getElementById('project_delete').submit()"><i class="fa fa-trash" style="font-size: 1.2rem; color: #3E4261;"></i></a>
+                        <h6 style="float: left; width: 80%">Asset</h6>
+                        <div style="float: right; width: 10%;">
+                            <input name="delete-project" value="{{project_ele|get_item:"project"}}" hidden />
+                            <a href="#" style="padding-right: 0.5rem;" onclick=""><i class="fa fa-edit" style="font-size: 1.2rem; color: #3E4261;"></i></a>
+                            <a href="#" onclick="document.getElementById('project_delete').submit()"><i class="fa fa-trash" style="font-size: 1.2rem; color: #3E4261;"></i></a>
+                        </div>
                     </div>
                     </form>
                     <h3>{{project_ele|get_item:"project"}}</h3>
