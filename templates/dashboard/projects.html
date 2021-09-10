@@ -79,17 +79,21 @@ Projects | CySuite
                     <h3 class="project-title">{{project_ele|get_item:"program"}}</h3>
                 </div>
                 <div class="course-info">
-                    <form method="post" id="project_delete">
-                    {% csrf_token %}
                     <div style="width: 100%;">
                         <h6 style="float: left; width: 80%">Asset</h6>
                         <div style="float: right; width: 10%;">
-                            <input name="delete-project" value="{{project_ele|get_item:"project"}}" hidden />
-                            <a href="#" style="padding-right: 0.5rem;" onclick=""><i class="fa fa-edit" style="font-size: 1.2rem; color: #3E4261;"></i></a>
-                            <a href="#" onclick="document.getElementById('project_delete').submit()"><i class="fa fa-trash" style="font-size: 1.2rem; color: #3E4261;"></i></a>
+                            <form method="post" id="project_edit" style="float: left;">
+                            {% csrf_token %}
+                                <input name="edit-project" value="{{project_ele|get_item:"project"}}" hidden />
+                                <a href="#" onclick="document.getElementById('project_edit').submit()" style="padding-right: 0.5rem;" onclick=""><i class="fa fa-edit" style="font-size: 1.2rem; color: #3E4261;"></i></a>
+                            </form>
+                            <form method="post" id="project_delete" style="float: right;">
+                            {% csrf_token %}
+                                <input name="delete-project" value="{{project_ele|get_item:"project"}}" hidden />
+                                <a href="#" onclick="document.getElementById('project_delete').submit()"><i class="fa fa-trash" style="font-size: 1.2rem; color: #3E4261;"></i></a>
+                            </form>
                         </div>
                     </div>
-                    </form>
                     <h3>{{project_ele|get_item:"project"}}</h3>
                         <div style="float: left; width: 60%;">
                             <p class="mb-2 fw-bold">Progress <span class="float-end">{{project_ele|get_item:"progress"}}%</span></p>
@@ -127,7 +131,7 @@ Projects | CySuite
 			data: {"view": project},
 			success: function(response){
                 if(response.status == 1){
-                    window.location.href = "/subdomain-enum";
+                    console.log('Test!');
                 }
 			}
 		});
