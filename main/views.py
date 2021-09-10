@@ -274,7 +274,6 @@ def subdomain_enum(request):
     context['profile_account'] = request.user.profile
     return render(request, 'dashboard/subdomain_enum.html', context)
 
-from django.core import serializers
 def directory_enum(request):
     context = {}
     all = {}
@@ -292,9 +291,13 @@ def directory_enum(request):
         project = request.POST.get('project')
         return HttpResponse(json.dumps(all[project]), content_type="application/json")
     else:
+        if request.session['project'] == 0:
+            request.session['project'] = None
+            context['project'] = None
+            return render(request, 'dashboard/directory_enum.html', context)
         for idx, project in enumerate(projects):
             all[project] = all.get(project, subdomains[idx])
-        project = request.session['project']
+
         subdomains = all[request.session['project']]
         context['project'] = project
         context['projects'] = projects
