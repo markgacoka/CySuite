@@ -35,44 +35,6 @@ Projects | CySuite
 {% if feedback_form.non_field_errors %}
     <button style="display: none;" class="alert-popup" id="alert-danger" name="{{feedback_form.non_field_errors}}" value="danger"></button>
 {% endif %}
-<div class="modal-overlay">
-    <form method="post">
-    {% csrf_token %}
-    <div class="modal" style="width: 55vw; min-height: 75vh;">
-        <a class="close-modal">
-        <svg viewBox="0 0 20 20">
-            <path fill="#000000" d="M15.898,4.045c-0.271-0.272-0.713-0.272-0.986,0l-4.71,4.711L5.493,4.045c-0.272-0.272-0.714-0.272-0.986,0s-0.272,0.714,0,0.986l4.709,4.711l-4.71,4.711c-0.272,0.271-0.272,0.713,0,0.986c0.136,0.136,0.314,0.203,0.492,0.203c0.179,0,0.357-0.067,0.493-0.203l4.711-4.711l4.71,4.711c0.137,0.136,0.314,0.203,0.494,0.203c0.178,0,0.355-0.067,0.492-0.203c0.273-0.273,0.273-0.715,0-0.986l-4.711-4.711l4.711-4.711C16.172,4.759,16.172,4.317,15.898,4.045z"></path>
-        </svg>
-        </a>
-        <div style="margin: 2rem 2rem 2rem 2rem;">
-            <h1 class="mb-4">Add a new project</h1>
-            <div class="input-group mb-3">
-                <span class="input-group-text" style="color: white; background-color: #3E4261; width: 9rem;">Project Name</span>
-                <input type="text" name="project_name" id="project_name" class="flex-grow-1 form-control" style="height: auto;">
-            </div>
-            <div class="input-group mb-3">
-                <span class="input-group-text" style="color: white; background-color: #3E4261; width: 9rem;">Program</span>
-                <select class="form-select flex-grow-1 select-dropdown" name="program">
-                    <option>HackerOne</option>
-                    <option>BugCrowd</option>
-                    <option>Intigriti</option>
-                    <option>Synack</option>
-                    <option>Custom</option>
-                </select>
-            </div>
-            <h3>In scope domains</h3>
-            <h6>Add each in-scope domain (*.site.com allowed)</h6>
-            <small>Press <code>[,] or [Tab] or [Enter]</code> once done</small>
-            <div id="tags" style="width: 100%; height: 250px; margin-bottom: 1.5rem;">
-                <input class="form-control" style="width: 100%;" type="text" value="" id="domains" name="in_scope_domains" placeholder="Add a subdomain" />
-            </div>
-            <button class="scan-btn mt-2" type="submit" style="background-color: #3E4261; min-width: max-content;">
-                <i class="fa fa-plus" style="color: white;"></i>&nbsp;&nbsp;Create
-            </button>
-        </div>
-    </div>
-    </form>
-</div>
 {% for project_ele in project_list %}
     <div class="project-column" style="display: block; float: left;  width: 50%;">
         <div class="courses-container">
@@ -87,8 +49,7 @@ Projects | CySuite
                         <div style="float: right; width: 10%;">
                             <form method="post" id="project_edit" style="float: left;">
                             {% csrf_token %}
-                                <input name="edit-project" value="{{project_ele|get_item:"project"}}" hidden />
-                                <a href="#" onclick="document.getElementById('project_edit').submit()" style="padding-right: 0.5rem;" onclick=""><i class="fa fa-edit" style="font-size: 1.2rem; color: #3E4261;"></i></a>
+                                <a href="" name="{{project_ele|get_item:"project"}}" class="edit-btn" id="edit-btn" style="padding-right: 0.5rem;"><i class="fa fa-edit" style="font-size: 1.2rem; color: #3E4261;"></i></a>
                             </form>
                             <form method="post" id="project_delete" style="float: right;">
                             {% csrf_token %}
@@ -113,13 +74,51 @@ Projects | CySuite
         </div>
     </div>
 {% endfor %}
+<div class="modal-overlay">
+    <form method="post">
+    {% csrf_token %}
+    <div class="modal" style="width: 55vw; min-height: 75vh;">
+        <a class="close-modal">
+        <svg viewBox="0 0 20 20">
+            <path fill="#000000" d="M15.898,4.045c-0.271-0.272-0.713-0.272-0.986,0l-4.71,4.711L5.493,4.045c-0.272-0.272-0.714-0.272-0.986,0s-0.272,0.714,0,0.986l4.709,4.711l-4.71,4.711c-0.272,0.271-0.272,0.713,0,0.986c0.136,0.136,0.314,0.203,0.492,0.203c0.179,0,0.357-0.067,0.493-0.203l4.711-4.711l4.71,4.711c0.137,0.136,0.314,0.203,0.494,0.203c0.178,0,0.355-0.067,0.492-0.203c0.273-0.273,0.273-0.715,0-0.986l-4.711-4.711l4.711-4.711C16.172,4.759,16.172,4.317,15.898,4.045z"></path>
+        </svg>
+        </a>
+        <div style="margin: 2rem 2rem 2rem 2rem;">
+            <h1 class="mb-4">Edit a project</h1>
+            <div class="input-group mb-3">
+                <span class="input-group-text" style="color: white; background-color: #3E4261; width: 9rem;">Project Name</span>
+                <input type="text" name="project_name" id="project_name" class="flex-grow-1 form-control" style="height: auto;">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" style="color: white; background-color: #3E4261; width: 9rem;">Program</span>
+                <select class="form-select flex-grow-1 select-dropdown" id="program_name" name="program">
+                    <option>HackerOne</option>
+                    <option>BugCrowd</option>
+                    <option>Intigriti</option>
+                    <option>Synack</option>
+                    <option>Custom</option>
+                </select>
+            </div>
+            <h3>In scope domains</h3>
+            <h6>Add each in-scope domain (*.site.com allowed)</h6>
+            <small>Press <code>[,] or [Tab] or [Enter]</code> once done</small>
+            <div id="tags" style="width: 100%; height: 250px; margin-bottom: 1.5rem;">
+                <input class="form-control" style="width: 100%;" type="text" value="" id="domains" name="in_scope_domains" placeholder="Add a subdomain" />
+            </div>
+            <button class="scan-btn mt-2" type="submit" style="background-color: #3E4261; min-width: max-content;">
+                <i class="fas fa-edit" style="color: white;"></i>&nbsp;&nbsp;Edit
+            </button>
+        </div>
+    </div>
+    </form>
+</div>
 {% endblock %}
 {% block js %}
 <script>
     jQuery(function($) {
         $('#tags input').on('focusout', function() {
             var txt = this.value.replace(/[^a-zA-Z0-9\+\-\.\#]/g, ''); // allowed characters list
-            if (txt) $(this).before('<span class="tag">' + txt + '</span>');
+            if (txt) $(this).before('<span class="tag" id="domain_tags">' + txt + '</span>');
             this.value = "";
             window.setTimeout(function() {
                 this.focus();
@@ -128,7 +127,6 @@ Projects | CySuite
             if (/(188|13)/.test(e.which)) $(this).trigger('focusout');
         });
         $('#project_name').on('click', function() {
-            console.log("Clicked");
             document.getElementById("project_name").focus();
         });
         $('#tags').on('click', '.tag', function() {
@@ -144,18 +142,40 @@ Projects | CySuite
 <script>
     var elements = $('.modal-overlay, .modal'); 
     $('.asset-btn').click(function(){
+        document.getElementById('project_name').value = ''
+                    document.getElementById('program_name').selected = ''
+                    document.getElementById('domains').value = ''
+        elements.addClass('active');
+    });
+    $('.edit-btn').click(function(e){
+        e.preventDefault();
+        var token = '{{csrf_token}}';
+        var project_name = $('#edit-btn').attr('name');
+		$.ajax({
+			headers: { "X-CSRFToken": token },
+			type: 'POST',
+			data: {"edit-project": project_name},
+			success: function(response){
+                console.log(response);
+                if (response['edit'] == true){
+                    document.getElementById('project_name').value = response['details']['project_name']
+                    document.getElementById('program_name').selected = response['details']['program']
+                    document.getElementById('domains').value = response['details']['in_scope_domains']
+                }
+			}
+		});
         elements.addClass('active');
     });
     $('.close-modal').click(function(){
         elements.removeClass('active');
     });
+
     $('form input').on('keypress', function(e) {
         return e.which !== 13;
     });
 </script>
 <script>
 	function viewProject(project){
-        console.log(project);
 		var token = '{{csrf_token}}';
 		$.ajax({
 			headers: { "X-CSRFToken": token },
