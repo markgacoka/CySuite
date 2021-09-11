@@ -123,12 +123,16 @@ Projects | CySuite
                 this.focus();
             }, 0);
         }).on('keyup', function(e) {
-            scope = document.getElementById('scope');
             if (/(188|13)/.test(e.which)) {
-                scope.value += this.value + ',';
                 $(this).trigger('focusout');
             }
         });
+        scope = document.getElementById('scope');
+        document.getElementById('scan-btn').onclick = function() {
+            document.querySelectorAll('.tag').forEach(function(tag){
+                scope.value += tag.innerHTML + ',';
+            })
+        }
         $('#project_name').on('click', function() {
             document.getElementById("project_name").focus();
         });
@@ -151,9 +155,13 @@ Projects | CySuite
         scan_button = document.getElementById("scan-btn")
         scan_button.textContent = "Create"
         document.getElementById("project_title").textContent = "Create a New Project"
-        document.querySelectorAll('.tag').forEach(function(tag){
-            tag.remove()
-        })
+
+        hiddenBtn = document.createElement('input');
+        hiddenBtn.setAttribute("type", "hidden");
+        hiddenBtn.setAttribute("name", "create");
+        hiddenBtn.setAttribute("value", true);
+        var divtags = document.getElementById('tags');
+        divtags.insertBefore(hiddenBtn, divtags.firstChild);
         elements.addClass('active');
     });
     $('.edit-btn').click(function(e){
@@ -165,7 +173,6 @@ Projects | CySuite
 			type: 'POST',
 			data: {"edit-project": project_name},
 			success: function(response){
-                console.log(response);
                 if (response['edit'] == true){
                     document.getElementById('project_name').value = response['details']['project_name']
                     document.getElementById('program_name').selected = response['details']['program']
@@ -173,14 +180,20 @@ Projects | CySuite
                     document.getElementById("project_title").textContent = 'Edit a Project'
                     
                     var domains = response['details']['in_scope_domains']
-                    var divtags = document.getElementById('tags');   
-                    console.log(domains);
+                    var divtags = document.getElementById('tags');
+
+                    hiddenBtn = document.createElement('input');
+                    hiddenBtn.setAttribute("type", "hidden");
+                    hiddenBtn.setAttribute("name", "edit");
+                    hiddenBtn.setAttribute("value", response['details']['project_name']);
+
                     for (let i = 0; i < domains.length; i++) {
                         var newSpan = document.createElement('span');
                         newSpan.setAttribute("class", "tag");
                         newSpan.appendChild(document.createTextNode(domains[i]));
                         divtags.insertBefore(newSpan, divtags.firstChild);
                     }
+                    divtags.insertBefore(hiddenBtn, divtags.firstChild);
                 }
 			}
 		});
