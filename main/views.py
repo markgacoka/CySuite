@@ -89,7 +89,6 @@ def projects(request):
         project_list.append(project_details)
 
     if request.method == 'POST':
-        print(request.POST)
         if 'delete-project' in request.POST.keys():
             try:
                 ProjectModel.objects.filter(project_name__iexact=request.POST.get('delete-project')).filter(project_user=request.user).delete()
@@ -110,8 +109,20 @@ def projects(request):
                 response = {'status': 0, 'message': "Something went wrong!"}
             else:
                 return HttpResponse(json.dumps(response), content_type='application/json')     
-            
+
+        elif 'edit-project' in request.POST.keys():
+            print(request.POST)
+            context['edit'] = True
+            context['project_list'] = project_list
+            context['profile_account'] = request.user.profile
+            return render(request, 'dashboard/projects.html', context)
+
         elif ('in_scope_domains' and 'project_name' and 'program') in request.POST.keys():
+            if request.POST.get('project_name') == '':
+                context['project_list'] = project_list
+                context['profile_account'] = request.user.profile
+                context['error_message'] = 'Project name should not be empty!'
+                return render(request, 'dashboard/projects.html', context)
             tempdict = request.POST.copy()
             tempdict['in_scope_domains'] = tempdict['in_scope_domains'].split('\r\n')
             request.POST = tempdict

@@ -48,7 +48,7 @@ Projects | CySuite
             <h1 class="mb-4">Add a new project</h1>
             <div class="input-group mb-3">
                 <span class="input-group-text" style="color: white; background-color: #3E4261; width: 9rem;">Project Name</span>
-                <input type="text" name="project_name" class="flex-grow-1 form-control" style="height: auto;">
+                <input type="text" name="project_name" id="project_name" class="flex-grow-1 form-control" style="height: auto;">
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text" style="color: white; background-color: #3E4261; width: 9rem;">Program</span>
@@ -61,9 +61,12 @@ Projects | CySuite
                 </select>
             </div>
             <h3>In scope domains</h3>
-            <h6>Add each domain seperated by a new line (*.site.com allowed)</h3>
-            <textarea style="width: 100%; height: 15rem;" type="text" id="domains" name="in_scope_domains"></textarea>
-            <button class="scan-btn mt-2" type="submit" style="background-color: #3E4261">
+            <h6>Add each in-scope domain (*.site.com allowed)</h6>
+            <small>Press <code>[,] or [Tab] or [Enter]</code> once done</small>
+            <div id="tags" style="width: 100%; height: 250px; margin-bottom: 1.5rem;">
+                <input class="form-control" style="width: 100%;" type="text" value="" id="domains" name="in_scope_domains" placeholder="Add a subdomain" />
+            </div>
+            <button class="scan-btn mt-2" type="submit" style="background-color: #3E4261; min-width: max-content;">
                 <i class="fa fa-plus" style="color: white;"></i>&nbsp;&nbsp;Create
             </button>
         </div>
@@ -80,7 +83,7 @@ Projects | CySuite
                 </div>
                 <div class="course-info">
                     <div style="width: 100%;">
-                        <h6 style="float: left; width: 80%">Asset</h6>
+                        <h6 style="float: left; width: 90%">Asset</h6>
                         <div style="float: right; width: 10%;">
                             <form method="post" id="project_edit" style="float: left;">
                             {% csrf_token %}
@@ -113,12 +116,41 @@ Projects | CySuite
 {% endblock %}
 {% block js %}
 <script>
+    jQuery(function($) {
+        $('#tags input').on('focusout', function() {
+            var txt = this.value.replace(/[^a-zA-Z0-9\+\-\.\#]/g, ''); // allowed characters list
+            if (txt) $(this).before('<span class="tag">' + txt + '</span>');
+            this.value = "";
+            window.setTimeout(function() {
+                this.focus();
+            }, 0);
+        }).on('keyup', function(e) {
+            if (/(188|13)/.test(e.which)) $(this).trigger('focusout');
+        });
+        $('#project_name').on('click', function() {
+            console.log("Clicked");
+            document.getElementById("project_name").focus();
+        });
+        $('#tags').on('click', '.tag', function() {
+            if (confirm("Delete this subdomain?")) $(this).remove();
+        });
+
+        const project_input = document.getElementById('project_name');
+        project_input.addEventListener('focusin', (event) => {
+            event.target.focus();
+        });
+    });
+</script>
+<script>
     var elements = $('.modal-overlay, .modal'); 
     $('.asset-btn').click(function(){
         elements.addClass('active');
     });
     $('.close-modal').click(function(){
         elements.removeClass('active');
+    });
+    $('form input').on('keypress', function(e) {
+        return e.which !== 13;
     });
 </script>
 <script>
@@ -131,7 +163,7 @@ Projects | CySuite
 			data: {"view": project},
 			success: function(response){
                 if(response.status == 1){
-                    console.log('Test!');
+                    window.location.href = "/subdomain-enum";
                 }
 			}
 		});
