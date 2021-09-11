@@ -84,7 +84,7 @@ Projects | CySuite
         </svg>
         </a>
         <div style="margin: 2rem 2rem 2rem 2rem;">
-            <h1 class="mb-4">Edit a project</h1>
+            <h1 class="mb-4" id="project_title">Create a New project</h1>
             <div class="input-group mb-3">
                 <span class="input-group-text" style="color: white; background-color: #3E4261; width: 9rem;">Project Name</span>
                 <input type="text" name="project_name" id="project_name" class="flex-grow-1 form-control" style="height: auto;">
@@ -103,11 +103,10 @@ Projects | CySuite
             <h6>Add each in-scope domain (*.site.com allowed)</h6>
             <small>Press <code>[,] or [Tab] or [Enter]</code> once done</small>
             <div id="tags" style="width: 100%; height: 250px; margin-bottom: 1.5rem;">
-                <input class="form-control" style="width: 100%;" type="text" value="" id="domains" name="in_scope_domains" placeholder="Add a subdomain" />
+                <input id="scope" name="in_scope_domains" value="" hidden />
+                <input class="form-control" style="width: 100%;" type="text" value="" id="domains" placeholder="Add a subdomain" />
             </div>
-            <button class="scan-btn mt-2" type="submit" style="background-color: #3E4261; min-width: max-content;">
-                <i class="fas fa-edit" style="color: white;"></i>&nbsp;&nbsp;Edit
-            </button>
+            <button class="scan-btn mt-2" id="scan-btn" type="submit" style="background-color: #3E4261; min-width: max-content;">Create</button>
         </div>
     </div>
     </form>
@@ -118,14 +117,22 @@ Projects | CySuite
     jQuery(function($) {
         $('#tags input').on('focusout', function() {
             var txt = this.value.replace(/[^a-zA-Z0-9\+\-\.\#]/g, ''); // allowed characters list
-            if (txt) $(this).before('<span class="tag" id="domain_tags">' + txt + '</span>');
+            if (txt) $(this).before('<span class="tag">' + txt + '</span>');
             this.value = "";
             window.setTimeout(function() {
                 this.focus();
             }, 0);
         }).on('keyup', function(e) {
-            if (/(188|13)/.test(e.which)) $(this).trigger('focusout');
+            if (/(188|13)/.test(e.which)) {
+                $(this).trigger('focusout');
+            }
         });
+        scope = document.getElementById('scope');
+        document.getElementById('scan-btn').onclick = function() {
+            document.querySelectorAll('.tag').forEach(function(tag){
+                scope.value += tag.innerHTML + ',';
+            })
+        }
         $('#project_name').on('click', function() {
             document.getElementById("project_name").focus();
         });
@@ -143,8 +150,18 @@ Projects | CySuite
     var elements = $('.modal-overlay, .modal'); 
     $('.asset-btn').click(function(){
         document.getElementById('project_name').value = ''
-                    document.getElementById('program_name').selected = ''
-                    document.getElementById('domains').value = ''
+        document.getElementById('program_name').selected = ''
+        document.getElementById('domains').value = ''
+        scan_button = document.getElementById("scan-btn")
+        scan_button.textContent = "Create"
+        document.getElementById("project_title").textContent = "Create a New Project"
+
+        hiddenBtn = document.createElement('input');
+        hiddenBtn.setAttribute("type", "hidden");
+        hiddenBtn.setAttribute("name", "create");
+        hiddenBtn.setAttribute("value", true);
+        var divtags = document.getElementById('tags');
+        divtags.insertBefore(hiddenBtn, divtags.firstChild);
         elements.addClass('active');
     });
     $('.edit-btn').click(function(e){
@@ -156,11 +173,27 @@ Projects | CySuite
 			type: 'POST',
 			data: {"edit-project": project_name},
 			success: function(response){
-                console.log(response);
                 if (response['edit'] == true){
                     document.getElementById('project_name').value = response['details']['project_name']
                     document.getElementById('program_name').selected = response['details']['program']
-                    document.getElementById('domains').value = response['details']['in_scope_domains']
+                    document.getElementById("scan-btn").textContent = "Edit"
+                    document.getElementById("project_title").textContent = 'Edit a Project'
+                    
+                    var domains = response['details']['in_scope_domains']
+                    var divtags = document.getElementById('tags');
+
+                    hiddenBtn = document.createElement('input');
+                    hiddenBtn.setAttribute("type", "hidden");
+                    hiddenBtn.setAttribute("name", "edit");
+                    hiddenBtn.setAttribute("value", response['details']['project_name']);
+
+                    for (let i = 0; i < domains.length; i++) {
+                        var newSpan = document.createElement('span');
+                        newSpan.setAttribute("class", "tag");
+                        newSpan.appendChild(document.createTextNode(domains[i]));
+                        divtags.insertBefore(newSpan, divtags.firstChild);
+                    }
+                    divtags.insertBefore(hiddenBtn, divtags.firstChild);
                 }
 			}
 		});

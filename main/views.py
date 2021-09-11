@@ -132,23 +132,59 @@ def projects(request):
                 context['error_message'] = 'Project name should not be empty!'
                 return render(request, 'dashboard/projects.html', context)
             tempdict = request.POST.copy()
-            tempdict['in_scope_domains'] = tempdict['in_scope_domains'].split('\r\n')
+            tempdict['in_scope_domains'] = tempdict['in_scope_domains'].split(',')
             request.POST = tempdict
             context['profile_account'] = request.user.profile
-            if ProjectModel.objects.filter(project_user=request.user).filter(project_name__iexact=request.POST.get('project_name')).exists():
-                context['project_list'] = project_list
-                context['error_message'] = 'Project name already exists!'
-            else:
+            if 'create' in request.POST.keys():
+                print(request.POST)
+                if ProjectModel.objects.filter(project_user=request.user).filter(project_name__iexact=request.POST.get('project_name')).exists():
+                    context['project_list'] = project_list
+                    context['error_message'] = 'Project name already exists!'
+                else:
+                    project_form = ProjectForm(request.POST)
+                    if project_form.is_valid():
+                        project_model = ProjectModel.objects.create(
+                            project_name = project_form.cleaned_data['project_name'],
+                            program = project_form.cleaned_data['program'],
+                            in_scope_domains = [],
+                            progress = 0,
+                            subdomains = [],
+                            project_user = request.user)
+
+                        for domain in project_form.cleaned_data['in_scope_domains']:
+                            if domain != None and domain != '':
+                                project_model.in_scope_domains.append(domain.strip())
+                        project_model.save()
+
+                        request.session['project'] =  project_form.cleaned_data['project_name']
+                        request.session.modified = True
+                        messages.success(request, 'Project has been created successfully!')
+                        return redirect('projects')
+                    else:
+                        context['error_message'] = 'An error occurred!'
+                        context['project_list'] = project_list
+            elif 'edit' in request.POST.keys():
+                print(request.POST)
                 project_form = ProjectForm(request.POST)
                 if project_form.is_valid():
-                    project_model = ProjectModel.objects.create(
+                    project_model_instance = ProjectModel.objects.filter(project_user=request.user).filter(project_name__iexact=project_form.cleaned_data['project_name'])
+                    subdomains = project_model_instance.values('subdomains')[0]['subdomains']
+                    progress = project_model_instance.values('progress')[0]['progress']
+                    project_model, created = ProjectModel.objects.update_or_create(
                         project_name = project_form.cleaned_data['project_name'],
-                        program = project_form.cleaned_data['program'],
-                        in_scope_domains = [],
-                        progress = 0,
-                        subdomains = [],
-                        project_user = request.user)
-
+                        progress = progress,
+                        subdomains = subdomains,
+                        defaults = {        
+                            'program': project_form.cleaned_data['program'],
+                            'in_scope_domains': [],
+                            'project_user': request.user,
+                        }
+                    )
+                    if not created:
+                        project_model.program = project_form.cleaned_data['program']
+                        project_model.in_scope_domains = []
+                        project_model.project_user = request.user
+                        project_model.save()
                     for domain in project_form.cleaned_data['in_scope_domains']:
                         if domain != None and domain != '':
                             project_model.in_scope_domains.append(domain.strip())
@@ -161,6 +197,8 @@ def projects(request):
                 else:
                     context['error_message'] = 'An error occurred!'
                     context['project_list'] = project_list
+            else:
+                context['project_list'] = project_list
         else:
             context['project_list'] = project_list
         context['profile_account'] = request.user.profile
@@ -232,7 +270,6 @@ def subdomain_enum(request):
         context['profile_account'] = request.user.profile
         return render(request, 'dashboard/subdomain_enum.html', context)
     else:
-        print("REQ 1: ", request.session.get('sub_index'))
         context['profile_account'] = request.user.profile
         if CeleryTaskModel.objects.filter(task_user=request.user).exists():
             # STARTED, PROGRESS, SUCCESS, PENDING
