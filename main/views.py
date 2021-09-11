@@ -237,8 +237,11 @@ def subdomain_enum(request):
             messages.success(request, 'Scan in progress. Stand by!')
             # return render("dashboard/subdomain_enum.html", context, context_instance=RequestContext(request))
         elif 'cancel' in request.POST.keys():
-            task_id = CeleryTaskModel.objects.filter(task_user=request.user).values('subdomain_task')[0]['subdomain_task']
-            app.control.revoke(task_id)
+            task_ids = []
+            for task_id in CeleryTaskModel.objects.filter(task_user=request.user).values('subdomain_task'):
+                task_ids.append(task_id['subdomain_task'])
+            app.control.revoke(task_ids, terminate=True, signal='SIGKILL')
+            app.control.purge()
             request.session['sub_index'] = -1
             request.session.modified = True
             context['subdomain_info'] = [{}]
@@ -272,17 +275,19 @@ def subdomain_enum(request):
     else:
         context['profile_account'] = request.user.profile
         if CeleryTaskModel.objects.filter(task_user=request.user).exists():
-            # STARTED, PROGRESS, SUCCESS, PENDING
+            # STARTED, PROGRESS, SUCCESS, PENDING, FAILURE, -
             task_id = CeleryTaskModel.objects.filter(task_user=request.user).values('subdomain_task')[0]['subdomain_task']
             res = AsyncResult(task_id).state
             task_output = AsyncResult(task_id).result
             if res == 'STARTED' or res == 'PROGRESS':            
                 context['task'] = True
                 context['task_id'] = task_id
-            if res == 'SUCCESS':
+            elif res == 'SUCCESS':
                 request.session['sub_index'] = 1
                 request.session.modified = True
                 context['sub_index'] = int(request.session.get('sub_index'))
+            else:
+                context['task'] = False
         sub_index = request.session.get('sub_index')
         if not sub_index:
             request.session['sub_index'] = -1
@@ -343,6 +348,7 @@ def directory_enum(request):
         context['is_project'] = 'False'
 
     if request.method == 'POST':
+        print(request.POST)
         for idx, project in enumerate(projects):
             all[project] = all.get(project, subdomains[idx])
         project = request.POST.get('project')

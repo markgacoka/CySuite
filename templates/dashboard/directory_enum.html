@@ -42,7 +42,7 @@ Directory Enumeration | CySuite
 				{% endfor %}
 			</optgroup>
 			</select>
-			<button class="btn btn-primary" style="margin: 0 0 2rem 20px; min-height: 50px; width: 12rem; font-size: 0.9rem;" type="button"><i class="fa fa-bug"></i>&emsp;Scan</button>
+			<button class="btn btn-primary" onclick="scan_details();" style="margin: 0 0 2rem 20px; min-height: 50px; width: 12rem; font-size: 0.9rem;" type="button"><i class="fa fa-bug"></i>&emsp;Scan</button>
 		</div>
 	</div>
 	<div class="card-body">
@@ -74,6 +74,21 @@ Directory Enumeration | CySuite
 	<button class="btn btn-primary" type="button">Search</button>
 </div>
 {% block js %}
+<script>
+	function scan_details() {
+		var token = '{{csrf_token}}';
+		var project = document.getElementById("select-project").value
+		var subdomain = document.getElementById("subdomain-group").value
+		$.ajax({
+			headers: { "X-CSRFToken": token },
+			type: 'POST',
+			data: {"project": project, "subdomain": subdomain},
+			success: function(response){
+                console.log("Sent and Received!");
+			}
+		});
+	}
+</script>
 <script type="text/javascript">
 	var token = '{{csrf_token}}';
 	function val() {
@@ -97,7 +112,8 @@ Directory Enumeration | CySuite
 			}
 			});
 	}
-
+</script>
+<script>
 	$(document).ready(function() {
 		var project = '{{project}}';
 		function htmlDecode(str) {
