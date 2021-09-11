@@ -9,6 +9,7 @@ import os, json, base64
 from html import escape, unescape
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.http import JsonResponse
 from .forms import TransactionForm
 from .forms import ProjectForm
 from .forms import WordlistForm
@@ -76,6 +77,7 @@ def privacy_policy(request):
 def terms_conditions(request):
     return render(request, 'pages/terms-conditions.html')
 
+
 def projects(request):
     context = {}
     projects = ProjectModel.objects.filter(project_user=request.user)
@@ -111,11 +113,17 @@ def projects(request):
                 return HttpResponse(json.dumps(response), content_type='application/json')     
 
         elif 'edit-project' in request.POST.keys():
-            print(request.POST)
+            chosen_project = request.POST.get('edit-project')
+            project_model_instance = ProjectModel.objects.filter(project_user=request.user).filter(project_name__iexact=chosen_project).values_list()[0]
+            details = {
+                'project_name': project_model_instance[2],
+                'program': project_model_instance[3],
+                'in_scope_domains': project_model_instance[4],
+            }
             context['edit'] = True
+            context['details'] = details
             context['project_list'] = project_list
-            context['profile_account'] = request.user.profile
-            return render(request, 'dashboard/projects.html', context)
+            return JsonResponse(context)
 
         elif ('in_scope_domains' and 'project_name' and 'program') in request.POST.keys():
             if request.POST.get('project_name') == '':
