@@ -132,7 +132,7 @@ def projects(request):
                 context['error_message'] = 'Project name should not be empty!'
                 return render(request, 'dashboard/projects.html', context)
             tempdict = request.POST.copy()
-            tempdict['in_scope_domains'] = tempdict['in_scope_domains'].split('\r\n')
+            tempdict['in_scope_domains'] = tempdict['in_scope_domains'].split(',')
             request.POST = tempdict
             context['profile_account'] = request.user.profile
             if ProjectModel.objects.filter(project_user=request.user).filter(project_name__iexact=request.POST.get('project_name')).exists():
