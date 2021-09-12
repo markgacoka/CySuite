@@ -25,6 +25,7 @@ from PIL import Image
 from django.template.context_processors import csrf
 from django.contrib import messages
 from django.core.files import File
+from scripts.Directories.crawler import main_crawler
 from scripts.WordlistGen.wordlist import print_wordlist
 from scripts.WordlistGen.status import url_status
 from scripts.Headers.request import send_request
@@ -340,6 +341,7 @@ def directory_enum(request):
     context = {}
     all = {}
     project_model_instance = ProjectModel.objects.filter(project_user=request.user)
+    subdomain_instance = SubdomainModel.objects.filter(subdomain_user=request.user)
     projects = list(project[2] for project in project_model_instance.values_list())
     subdomains = list(subdomains[6] for subdomains in project_model_instance.values_list())
     if len(project_model_instance.values_list()) > 0:
@@ -349,22 +351,43 @@ def directory_enum(request):
 
     if request.method == 'POST':
         print(request.POST)
-        for idx, project in enumerate(projects):
-            all[project] = all.get(project, subdomains[idx])
-        project = request.POST.get('project')
-        return HttpResponse(json.dumps(all[project]), content_type="application/json")
+        if 'scan' in request.POST.keys():
+            subdomain = request.POST.get('subdomain')
+            request.session['curr_subdomain'] = request.POST.get('subdomain')
+            _, internal_dirs, _ = main_crawler(subdomain)
+            user_projects = ProjectModel.objects.get(project_name=request.session['project'])
+            subdomain_instance.filter(project=user_projects).filter(hostname__iexact=subdomain).update(directories=list(internal_dirs))
+            
+            for idx, project in enumerate(projects):
+                all[project] = all.get(project, subdomains[idx])
+            
+            project = request.POST.get('project')
+            return HttpResponse(json.dumps(all[project]), content_type="application/json")
+        elif 'project' in request.POST.keys():
+            for idx, project in enumerate(projects):
+                all[project] = all.get(project, subdomains[idx])
+            
+            project = request.POST.get('project')
+            return HttpResponse(json.dumps(all[project]), content_type="application/json")
+        else:
+            pass
     else:
-        if request.session['project'] == 0 or request.session['project'] == None:
+        if request.session['project'] == None:
             request.session['project'] = None
             context['project'] = None
             return render(request, 'dashboard/directory_enum.html', context)
-        
+
         for idx, project in enumerate(projects):
             all[project] = all.get(project, subdomains[idx])
 
         subdomains = all[request.session['project']]
+        request.session['curr_subdomain'] = subdomains[0]
+        user_projects = ProjectModel.objects.get(project_name=request.session['project'])
+        sub_details = subdomain_instance.filter(project=user_projects).filter(hostname__iexact=request.session['curr_subdomain']).values('directories')[0]['directories']
+
         context['project'] = project
         context['projects'] = projects
+        context['directories'] = sub_details
         context['subdomains'] = subdomains
         context['profile_account'] = request.user.profile
     return render(request, 'dashboard/directory_enum.html', context)

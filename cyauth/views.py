@@ -84,7 +84,8 @@ def login_view(request):
         
             if user:
                 request.session['project'] = request.session.get('project', None)
-                request.session['project'] = request.session.get('sub_index', 0)
+                request.session['sub_index'] = request.session.get('sub_index', 0)
+                request.session['curr_subdomain'] = request.session.get('curr_subdomain', None)
                 login(request, user)
                 return redirect('dashboard')
     else:
@@ -100,6 +101,8 @@ def logout_view(request):
             del request.session['project']
         if request.session.get('sub_index'):
             del request.session['sub_index']
+        if request.session.get('curr_subdomain'):
+            del request.session['curr_subdomain']
         request.session.modified = True
     logout(request)
     return redirect("index")

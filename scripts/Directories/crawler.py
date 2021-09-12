@@ -57,10 +57,9 @@ def crawl(url, max_urls=30):
             break
         crawl(link, max_urls=max_urls)
 
-def main(url):
+def main_crawler(url):
+    url = 'http://' +  url
     crawl(url)
     return [len(external_urls) + len(internal_urls), internal_urls, external_urls]
 
-url = 'https://markgacoka.com'
 # [total number of links, [internal_links], [external_links]]
-print(main(url))
