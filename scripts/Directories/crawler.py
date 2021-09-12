@@ -18,9 +18,7 @@ def get_all_website_links(url):
     """
     Returns all URLs that is found on `url` in which it belongs to the same website
     """
-    # all URLs of `url`
     urls = set()
-    # domain name of the URL without the protocol
     domain_name = urlparse(url).netloc
     soup = BeautifulSoup(requests.get(url).content, "html.parser", from_encoding="iso-8859-1")
     for a_tag in soup.findAll("a"):
