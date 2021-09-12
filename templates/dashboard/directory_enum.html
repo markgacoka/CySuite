@@ -25,7 +25,7 @@ Directory Enumeration | CySuite
 			<div class="alert-icon">
 				<i class="fa fa-book"></i>
 			</div>
-			<select class="dropdown-icon flex-grow-1" id="select-project" onchange="val()">
+			<select class="dropdown-icon flex-grow-1" id="select-project" onchange="val();">
 				{% for project in projects %}
 				<option>{{project}}</option>
 				{% endfor %}
@@ -35,14 +35,15 @@ Directory Enumeration | CySuite
 			<div class="alert-icon" style="height: 50px;">
 				<i class="fa fa-globe"></i>
 			</div>
-			<select class="dropdown-icon flex-grow-1" id="subdomain-group" style="width: 100%;">
+			<select class="dropdown-icon flex-grow-1" id="subdomain-group" style="width: 100%;" onchange="showdirs();">
 			<optgroup id="project-group">
+				{{project}}
 				{% for value in subdomains %}
 					<option>{{value}}</option>
 				{% endfor %}
 			</optgroup>
 			</select>
-			<button class="btn btn-primary" onclick="scan_details();" style="margin: 0 0 2rem 20px; min-height: 50px; width: 12rem; font-size: 0.9rem;" type="button"><i class="fa fa-bug"></i>&emsp;Scan</button>
+			<button class="btn btn-primary" onclick="scan_details();" style="margin: 0 0 2rem 20px; width: 20%; height: 100%; font-size: 0.9rem;" type="button"><i class="fa fa-bug"></i>&emsp;Scan</button>
 		</div>
 	</div>
 	<div class="card-body">
@@ -56,13 +57,13 @@ Directory Enumeration | CySuite
 					<th>Vulnerabilities Discovered</th>
 				</tr>
 				{% for directory in directories %}
-				<tr>
-					<td id="directory">{{directory}}</td>
-					<td>200 OK</td>
-					<td>id, utm_medium</td>
-					<td>HTTP/HTTPS</td>
-					<td>SQL</td>
-				</tr>
+					<tr>
+						<td>{{directory}}</td>
+						<td>Status Code</td>
+						<td>Parameters</td>
+						<td>Accepts</td>
+						<td>Vulnerabilities Discovered</td>
+					</tr>
 				{% endfor %}
 			</table>
 		</div>
@@ -105,14 +106,109 @@ Directory Enumeration | CySuite
 		}).done(function( responseMsg ) {
 			var selectbox = document.getElementById("subdomain-group");
 			selectbox.options.length = 0;
+			var directory_entry = document.getElementById("directory-column");
 
-			for (var j = 0; j < responseMsg.length; j++){
-				var newOptionElement = document.createElement('option');
-				newOptionElement.value = responseMsg[j];
-				newOptionElement.innerHTML = responseMsg[j];
-				selectbox.appendChild(newOptionElement);
+			var project = responseMsg['project_name'];
+			var subdomain_list = responseMsg['subdomain_list'];
+			var chosen_subdomain = responseMsg['chosen_subdomain'];
+			var directories = responseMsg['directories'];
+
+			for (i = 0; i < document.getElementById("select-project").length; ++i){
+				if (document.getElementById("select-project").options[i].value == project){
+					document.getElementById("select-project").options[i].selected = true
+				}
 			}
-			});
+
+			for (var j = 0; j < subdomain_list.length; j++){
+				var newOptionElement = document.createElement('option');
+				newOptionElement.value = subdomain_list[j];
+				newOptionElement.innerHTML = subdomain_list[j];
+				selectbox.appendChild(newOptionElement);
+				if (subdomain_list[j] == chosen_subdomain) {
+					newOptionElement.selected = true
+				}
+			}
+
+			var table = document.getElementById("directories");
+			for(var i = 1;i<table.rows.length;){
+				table.deleteRow(i);
+			}
+
+			let myTable = document.getElementById('directories').getElementsByTagName('tbody')[0];
+			for (var j = 0; j < directories.length; j++){
+				let row = myTable.insertRow();
+
+				let directory = row.insertCell(0);
+				let status = row.insertCell(1);
+				let parameters = row.insertCell(2);
+				let accepts = row.insertCell(3);
+				let vulns = row.insertCell(4);
+
+				directory.innerHTML = `<a href="${directories[j]}">${directories[j]}</a>`;
+				status.innerHTML = '200 OK';
+				parameters.innerHTML = 'utm_medium, id, user';
+				accepts.innerHTML = 'HTTP/HTTPS';
+				vulns.innerHTML = 'SQL';
+			}
+		});
+	}
+
+	function showdirs(){
+		var subdomain = document.getElementById("subdomain-group").value;
+		$.ajax({
+			headers: { "X-CSRFToken": token },
+			url: '{% url 'directory_enum' %}',
+			data: {"show": subdomain},
+			type: 'POST',
+		}).done(function( responseMsg ) {
+			var selectbox = document.getElementById("subdomain-group");
+			selectbox.options.length = 0;
+			var directory_entry = document.getElementById("directory-column");
+
+			var project = responseMsg['project_name'];
+			var subdomain_list = responseMsg['subdomain_list'];
+			var chosen_subdomain = responseMsg['chosen_subdomain'];
+			var directories = responseMsg['directories'];
+
+			for (i = 0; i < document.getElementById("select-project").length; ++i){
+				if (document.getElementById("select-project").options[i].value == project){
+					document.getElementById("select-project").options[i].selected = true
+				}
+			}
+
+			for (var j = 0; j < subdomain_list.length; j++){
+				var newOptionElement = document.createElement('option');
+				newOptionElement.value = subdomain_list[j];
+				newOptionElement.innerHTML = subdomain_list[j];
+				selectbox.appendChild(newOptionElement);
+				if (subdomain_list[j] == chosen_subdomain) {
+					newOptionElement.selected = true
+				}
+			}
+
+			var table = document.getElementById("directories");
+			for(var i = 1;i<table.rows.length;){
+				table.deleteRow(i);
+			}
+
+			console.log(directories);
+			let myTable = document.getElementById('directories').getElementsByTagName('tbody')[0];
+			for (var j = 0; j < directories.length; j++){
+				let row = myTable.insertRow();
+
+				let directory = row.insertCell(0);
+				let status = row.insertCell(1);
+				let parameters = row.insertCell(2);
+				let accepts = row.insertCell(3);
+				let vulns = row.insertCell(4);
+
+				directory.innerHTML = `<a href="${directories[j]}">${directories[j]}</a>`;
+				status.innerHTML = '200 OK';
+				parameters.innerHTML = 'utm_medium, id, user';
+				accepts.innerHTML = 'HTTP/HTTPS';
+				vulns.innerHTML = 'SQL';
+			}
+		})
 	}
 </script>
 <script>
