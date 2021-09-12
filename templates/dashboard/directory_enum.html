@@ -58,11 +58,11 @@ Directory Enumeration | CySuite
 				</tr>
 				{% for directory in directories %}
 					<tr>
-						<td>{{directory}}</td>
-						<td>Status Code</td>
-						<td>Parameters</td>
-						<td>Accepts</td>
-						<td>Vulnerabilities Discovered</td>
+						<td><a href="{{directory}}">{{directory}}</a></td>
+						<td>200 OK</td>
+						<td>utm_medium, id, user</td>
+						<td>HTTP/HTTPS</td>
+						<td>SQL</td>
 					</tr>
 				{% endfor %}
 			</table>

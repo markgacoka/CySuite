@@ -3,6 +3,7 @@
 import requests
 from urllib.parse import urlparse, urljoin
 from bs4 import BeautifulSoup
+from urllib.request import Request, urlopen
 
 internal_urls = set()
 external_urls = set()
@@ -38,7 +39,8 @@ def get_all_website_links(url):
                 external_urls.add(href)
             continue
         urls.add(href)
-        internal_urls.add(href)
+        if url[7:] in href:
+            internal_urls.add(href)
     return urls
 
 total_urls_visited = 0
@@ -59,7 +61,17 @@ def crawl(url, max_urls=30):
 
 def main_crawler(url):
     url = 'http://' +  url
-    crawl(url)
-    return [len(external_urls) + len(internal_urls), internal_urls, external_urls]
+    try:
+        req = Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36'})
+        if urlopen(req, timeout=10).getcode() == 200:
+            crawl(url)
+        else:
+            return [None, None, None]
+    except:
+        return [None, None, None]
+    finally:
+        return [len(external_urls) + len(internal_urls), list(internal_urls), list(external_urls)]
 
 # [total number of links, [internal_links], [external_links]]
+# _, inter, _ = main_crawler('blog.coda.io')
+# print(inter)

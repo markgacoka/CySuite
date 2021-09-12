@@ -191,7 +191,7 @@ def projects(request):
 
                     request.session['project'] =  project_form.cleaned_data['project_name']
                     request.session.modified = True
-                    messages.success(request, 'Project has been created successfully!')
+                    messages.success(request, 'Project details have been successfully edited!')
                     return redirect('projects')
                 else:
                     context['error_message'] = 'An error occurred!'
@@ -337,7 +337,6 @@ def subdomain_enum(request):
 
 def directory_enum(request):
     context = {}
-
     project_model_instance = ProjectModel.objects.filter(project_user=request.user)
     if len(project_model_instance.values_list()) > 0:
         context['is_project'] = 'True'
@@ -347,8 +346,28 @@ def directory_enum(request):
     if request.method == 'POST':
         if 'scan' in request.POST.keys():
             all = {}
-            subdomain = request.POST.get('scan')
-            _, internal_dirs, _ = main_crawler(subdomain)
+            subdomain_instance = SubdomainModel.objects.filter(subdomain_user=request.user)
+            user_projects = ProjectModel.objects.get(project_name=request.session['project'])
+
+            project_name = request.session['project']
+            subdomains_list = [host['hostname'] for host in subdomain_instance.filter(project=user_projects).values('hostname')]
+            chosen_subdomain = request.POST.get('subdomain')
+            _, internal_dirs, _ = main_crawler(chosen_subdomain)
+            subdomain_instance.filter(project=user_projects).filter(hostname__iexact=chosen_subdomain).update(directories=internal_dirs)
+            project_model_instance.filter(project_name__iexact=project_name).update(progress=24)
+            directories = subdomain_instance.filter(project=user_projects).filter(hostname__iexact=chosen_subdomain).values('directories')[0]['directories']
+
+            request.session['project'] = project_name
+            request.session['curr_subdomain'] = chosen_subdomain
+            request.session.modified = True
+
+            all = {
+                'project_name': project_name,
+                'subdomain_list': sorted(subdomains_list),
+                'chosen_subdomain': chosen_subdomain,
+                'directories': sorted(directories)
+            }
+
             return HttpResponse(json.dumps(all), content_type="application/json")
         elif 'project' in request.POST.keys():
             all = {}
@@ -371,7 +390,7 @@ def directory_enum(request):
 
             all = {
                 'project_name': project_name,
-                'subdomain_list': subdomains_list,
+                'subdomain_list': sorted(subdomains_list),
                 'chosen_subdomain': chosen_subdomain,
                 'directories': sorted(directories)
             }
@@ -393,7 +412,7 @@ def directory_enum(request):
 
             all = {
                 'project_name': project_name,
-                'subdomain_list': subdomains_list,
+                'subdomain_list': sorted(subdomains_list),
                 'chosen_subdomain': chosen_subdomain,
                 'directories': sorted(directories)
             }
@@ -416,10 +435,19 @@ def directory_enum(request):
         user_projects = ProjectModel.objects.get(project_name=project_name)
         subdomain_instance = SubdomainModel.objects.filter(subdomain_user=request.user)
         subdomains = [host['hostname'] for host in subdomain_instance.filter(project=user_projects).values('hostname')]
-        subdomains.pop(subdomains.index(chosen_subdomain))
-        subdomains.insert(0, chosen_subdomain)
+        subdomains = sorted(subdomains)
+
 
         if chosen_subdomain != None:
+            subdomains.pop(subdomains.index(chosen_subdomain))
+            subdomains.insert(0, chosen_subdomain)
+            directories = subdomain_instance.filter(project=user_projects).filter(hostname__iexact=chosen_subdomain).values('directories')[0]['directories']
+            context['directories'] = sorted(directories)
+        else:
+            request.session['curr_subdomain'] = subdomains[0]
+            chosen_subdomain = request.session['curr_subdomain']
+            subdomains.pop(subdomains.index(chosen_subdomain))
+            subdomains.insert(0, chosen_subdomain)
             directories = subdomain_instance.filter(project=user_projects).filter(hostname__iexact=chosen_subdomain).values('directories')[0]['directories']
             context['directories'] = sorted(directories)
 
