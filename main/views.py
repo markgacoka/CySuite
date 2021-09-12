@@ -25,7 +25,7 @@ from PIL import Image
 from django.template.context_processors import csrf
 from django.contrib import messages
 from django.core.files import File
-from scripts.Directories.crawler import main_crawler
+from scripts.Directories.crawler import CrawlerTool
 from scripts.WordlistGen.wordlist import print_wordlist
 from scripts.WordlistGen.status import url_status
 from scripts.Headers.request import send_request
@@ -346,13 +346,15 @@ def directory_enum(request):
     if request.method == 'POST':
         if 'scan' in request.POST.keys():
             all = {}
+            internal_dirs = []
             subdomain_instance = SubdomainModel.objects.filter(subdomain_user=request.user)
             user_projects = ProjectModel.objects.get(project_name=request.session['project'])
-
+            
             project_name = request.session['project']
             subdomains_list = [host['hostname'] for host in subdomain_instance.filter(project=user_projects).values('hostname')]
             chosen_subdomain = request.POST.get('subdomain')
-            _, internal_dirs, _ = main_crawler(chosen_subdomain)
+            crawler = CrawlerTool()
+            _, internal_dirs, _ = crawler.main_crawler(chosen_subdomain)
             subdomain_instance.filter(project=user_projects).filter(hostname__iexact=chosen_subdomain).update(directories=internal_dirs)
             project_model_instance.filter(project_name__iexact=project_name).update(progress=24)
             directories = subdomain_instance.filter(project=user_projects).filter(hostname__iexact=chosen_subdomain).values('directories')[0]['directories']
@@ -421,8 +423,8 @@ def directory_enum(request):
         else:
             pass
     else:
-        if request.session['project'] == None:
-            context['project'] = None
+        if request.session['project'] == None or request.session['project'] == '':
+            context['is_project'] = 'False'
             return render(request, 'dashboard/directory_enum.html', context)
 
         project_name = request.session['project']
@@ -437,8 +439,7 @@ def directory_enum(request):
         subdomains = [host['hostname'] for host in subdomain_instance.filter(project=user_projects).values('hostname')]
         subdomains = sorted(subdomains)
 
-
-        if chosen_subdomain != None:
+        if chosen_subdomain != None and chosen_subdomain in subdomains:
             subdomains.pop(subdomains.index(chosen_subdomain))
             subdomains.insert(0, chosen_subdomain)
             directories = subdomain_instance.filter(project=user_projects).filter(hostname__iexact=chosen_subdomain).values('directories')[0]['directories']
@@ -452,7 +453,7 @@ def directory_enum(request):
             context['directories'] = sorted(directories)
 
         context['project'] = project_name
-        context['projects'] = projects
+        context['projects'] =  projects
         context['subdomains'] = subdomains
         context['profile_account'] = request.user.profile
     return render(request, 'dashboard/directory_enum.html', context)
