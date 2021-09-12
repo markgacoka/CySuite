@@ -55,13 +55,15 @@ Directory Enumeration | CySuite
 					<th>Accepts</th>
 					<th>Vulnerabilities Discovered</th>
 				</tr>
+				{% for directory in directories %}
 				<tr>
-					<td>https://coda.io/home</td>
+					<td id="directory">{{directory}}</td>
 					<td>200 OK</td>
 					<td>id, utm_medium</td>
 					<td>HTTP/HTTPS</td>
 					<td>SQL</td>
 				</tr>
+				{% endfor %}
 			</table>
 		</div>
 	</div>
@@ -82,7 +84,7 @@ Directory Enumeration | CySuite
 		$.ajax({
 			headers: { "X-CSRFToken": token },
 			type: 'POST',
-			data: {"project": project, "subdomain": subdomain},
+			data: {"scan": true, "project": project, "subdomain": subdomain},
 			success: function(response){
                 console.log("Sent and Received!");
 			}
