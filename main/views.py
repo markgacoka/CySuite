@@ -2,6 +2,7 @@ import re
 import io
 import puremagic
 import urllib
+import datetime
 import urllib.parse
 from os import path
 from .tasks import scan_subdomains
@@ -53,6 +54,7 @@ def dashboard(request):
 
         context['asset_count'] = project_model_instance.count()
         context['project_arr'] = reversed(project_arr)
+        context['date'] = datetime.date.today()
         context['subdomain_num'] = subdomain_num
         context['profile_account'] = request.user.profile
         return render(request, 'dashboard/dashboard.html', context)
@@ -102,7 +104,6 @@ def privacy_policy(request):
 def terms_conditions(request):
     return render(request, 'pages/terms-conditions.html')
 
-
 def projects(request):
     context = {}
     projects = ProjectModel.objects.filter(project_user=request.user)
@@ -121,6 +122,7 @@ def projects(request):
                 ProjectModel.objects.filter(project_name__iexact=request.POST.get('delete-project')).filter(project_user=request.user).delete()
                 messages.success(request, 'Project has been deleted successfully!')
                 del request.session['sub_index']
+                del request.session['project']
                 request.session.modified = True
                 return redirect('projects')
             except:
@@ -447,7 +449,7 @@ def directory_enum(request):
         else:
             pass
     else:
-        if request.session['project'] == None or request.session['project'] == '':
+        if not request.session['project'] or request.session['project'] == None or request.session['project'] == '':
             context['is_project'] = 'False'
             return render(request, 'dashboard/directory_enum.html', context)
 
