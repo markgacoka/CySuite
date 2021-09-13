@@ -36,6 +36,30 @@ from scripts.CodeInjection.injector import Injector
 from scripts.HexViewer.full_hexviewer import full_hex_viewer
 from scripts.WordlistGen.generator import extract_wordlist
 
+def dashboard(request):
+    if request.user.is_authenticated == True:
+        context = {}
+        project_arr = []
+        project_model_instance = ProjectModel.objects.filter(project_user=request.user)
+        subdomain_num = 0
+        
+        for project in project_model_instance.values_list():
+            subdomain_num += len(project[6])
+            project_dict = {}
+            project_dict['project_name'] = project[2]
+            project_dict['program'] = project[3]
+            project_dict['report_link'] = None
+            project_arr.append(project_dict)
+
+        context['asset_count'] = project_model_instance.count()
+        context['project_arr'] = project_arr
+        context['subdomain_num'] = subdomain_num
+        context['profile_account'] = request.user.profile
+        return render(request, 'dashboard/dashboard.html', context)
+    else:
+        return redirect('index')
+
+
 def stats(request):
     context = {}
     context['profile_account'] = request.user.profile
