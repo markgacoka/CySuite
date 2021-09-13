@@ -1,3 +1,4 @@
+from main.models import ProjectModel
 import os
 
 from django.shortcuts import render, redirect
@@ -43,6 +44,12 @@ def thank_you(request):
 def dashboard(request):
     if request.user.is_authenticated == True:
         context = {}
+        project_model_instance = ProjectModel.objects.filter(project_user=request.user)
+        subdomain_num = 0
+        for project in project_model_instance.values_list():
+            subdomain_num += len(project[6])
+        context['asset_count'] = project_model_instance.count()
+        context['subdomain_num'] = subdomain_num
         context['profile_account'] = request.user.profile
         return render(request, 'dashboard/dashboard.html', context)
     else:
