@@ -103,7 +103,7 @@ Dashboard | CySuite
     </div>
     <div class="row gx-2 gx-lg-3">
         <div class="col-lg-5 mb-3 mb-lg-5">
-            <div class="card h-100">
+            <div class="card h-100" style="min-height: 450px;">
                 <div class="card-header">
                     <h3 class="card-header-title">Most Recent Projects</h3>
                 </div>
@@ -113,10 +113,20 @@ Dashboard | CySuite
                         exploitation of the asset.</p>
 
                     <ul class="list-group list-group-flush list-group-no-gutters">
+                        {% if project_arr|length > 0 %}
                         <li class="list-group-item py-3">
                             <h5 class="modal-title">From latest:</h5>
                         </li>
+                        {% else %}
+                        <hr />
+                        <div class="alert alert-warning alert-dismissible mb-3" role="alert" style="border: 1px solid #84aef2; background-color: white;">
+                            <div class="alert-message">
+                                <p class="mb-0" style="color: black;">No projects</p>
+                            </div>
+                        </div>
+                        {% endif %}
                         {% for project_ele in project_arr %}
+                        {% if forloop.counter <= 3 %}
                         <li class="list-group-item py-3">
                             <div class="media">
                                 <div class="mt-1 mr-3">
@@ -142,15 +152,15 @@ Dashboard | CySuite
                                 </div>
                             </div>
                         </li>
+                        {% endif %}
                         {% endfor %}
-                        <li class="list-group-item"><small>Open the <a href='{% url 'projects' %}'>Projects</a> tab to see
-                                the other projects.</small></li>
+                        <li class="list-group-item"><small>Open the <a href='{% url 'projects' %}'>Projects</a> tab to see all your projects.</small></li>
                     </ul>
                 </div>
             </div>
         </div>
         <div class="col-lg-7 mb-3 mb-lg-5">
-            <div class="card h-100">
+            <div class="card h-100" style="min-height: 450px;">
                 <div class="card-header">
                     <h4 class="card-header-title">Latest Vulnerability Detections</h4>
                 </div>

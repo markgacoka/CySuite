@@ -52,7 +52,7 @@ def dashboard(request):
             project_arr.append(project_dict)
 
         context['asset_count'] = project_model_instance.count()
-        context['project_arr'] = project_arr
+        context['project_arr'] = reversed(project_arr)
         context['subdomain_num'] = subdomain_num
         context['profile_account'] = request.user.profile
         return render(request, 'dashboard/dashboard.html', context)
