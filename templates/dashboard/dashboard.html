@@ -1,6 +1,7 @@
 {% extends '../base.html' %}
 {% load static %}
 {% load socialaccount %}
+{% load custom_tags %}
 
 {% block title%}
 Dashboard | CySuite
@@ -115,6 +116,7 @@ Dashboard | CySuite
                         <li class="list-group-item py-3">
                             <h5 class="modal-title">From latest:</h5>
                         </li>
+                        {% for project_ele in project_arr %}
                         <li class="list-group-item py-3">
                             <div class="media">
                                 <div class="mt-1 mr-3">
@@ -124,8 +126,8 @@ Dashboard | CySuite
                                 <div class="media-body">
                                     <div class="row align-items-center">
                                         <div class="col">
-                                            <h5 class="mb-0">Starbucks</h5>
-                                            <span class="d-block font-size-sm">Hackerone</span>
+                                            <h5 class="mb-0">{{project_ele|get_item:"project_name"}}</h5>
+                                            <span class="d-block font-size-sm">{{project_ele|get_item:"program"}}</span>
                                         </div>
 
                                         <div class="col-auto">
@@ -140,56 +142,7 @@ Dashboard | CySuite
                                 </div>
                             </div>
                         </li>
-                        <li class="list-group-item py-3">
-                            <div class="media">
-                                <div class="mt-1 mr-3">
-                                    <img class="avatar avatar-xs avatar-4by3"
-                                        src="{% static 'img/icons/mailchimp.svg' %}" alt="Image Description">
-                                </div>
-                                <div class="media-body">
-                                    <div class="row align-items-center">
-                                        <div class="col">
-                                            <h5 class="mb-0">Mailchimp</h5>
-                                            <span class="d-block font-size-sm">Hackerone</span>
-                                        </div>
-
-                                        <div class="col-auto">
-                                            <a class="btn btn-sm btn-primary" href="#"
-                                                title="Launch importer" target="_blank">
-                                                Open <span
-                                                    class="d-none d-sm-inline-block">Report</span>
-                                                <i class="tio-open-in-new ml-1"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item py-3">
-                            <div class="media">
-                                <div class="mt-1 mr-3">
-                                    <img class="avatar avatar-xs avatar-4by3"
-                                        src="{% static 'img/icons/google-webdev.svg' %}">
-                                </div>
-                                <div class="media-body">
-                                    <div class="row align-items-center">
-                                        <div class="col">
-                                            <h5 class="mb-0">Coda.io</h5>
-                                            <span class="d-block font-size-sm">Hackerone</span>
-                                        </div>
-
-                                        <div class="col-auto">
-                                            <a class="btn btn-sm btn-primary" href="#"
-                                                title="Launch importer" target="_blank">
-                                                Open <span
-                                                    class="d-none d-sm-inline-block">Report</span>
-                                                <i class="tio-open-in-new ml-1"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
+                        {% endfor %}
                         <li class="list-group-item"><small>Open the <a href='{% url 'projects' %}'>Projects</a> tab to see
                                 the other projects.</small></li>
                     </ul>

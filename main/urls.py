@@ -13,6 +13,7 @@ urlpatterns = [
     path('privacy-policy/', views.privacy_policy, name='privacy_policy'),
     path('terms-conditions/', views.terms_conditions, name='terms_conditions'),
     #dashboard
+    path('dashboard/', views.dashboard, name="dashboard"),
     path('projects/', views.projects, name='projects'),
     path('notes/', views.notes, name='notes'),
     path('stats/', views.stats, name='stats'),
