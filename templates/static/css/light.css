@@ -624,9 +624,13 @@ span.tag {
     border-bottom: 0;
 }
 
+p.thick {
+    font-weight: bold;
+}
+
 .parent {
     width: 100%;
-    height: 400px;
+    height: 600px;
     overflow: hidden;
     border: 0px solid transparent;
 }
@@ -635,6 +639,7 @@ span.tag {
     height: 100%;
     margin-right: -50px; /* Maximum width of scrollbar */
     padding-right: 50px; /* Maximum width of scrollbar */
+    padding-left: 50px;
     overflow-y: scroll;
 }
 
@@ -2560,7 +2565,7 @@ span.tag {
         width: 43%;
     }
     .header-input {
-        width: 41%;
+        width: 43%;
     }
     .body-container {
         height: 2rem;

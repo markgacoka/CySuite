@@ -4,9 +4,9 @@
 Vulnerability Analysis | CySuite
 {% endblock %}
 {% block content %}
-<div class="row">
-<div class="col-12 col-lg-5">
-    <div class="card" style="height: 450px;">
+<div class="row" style="height: 100%;">
+<div class="col-12 col-lg-5" style="display: flow-root;">
+    <div class="card" style="height: auto;">
         <div class="card-header">
             <h2 class="mb-0">Vulnerability analysis scan</h2>
         </div>
@@ -21,6 +21,7 @@ Vulnerability Analysis | CySuite
                     <option>Amazon</option>
                 </select>
             </div>
+            <h4>Select Subdomain</h4>
             <div class="alert alert-primary alert-outline alert-dismissible" style="margin: 0 2rem 2rem 0; width: 100%;">
                 <div class="alert-icon">
                     <i class="fa fa-globe"></i>
@@ -30,6 +31,7 @@ Vulnerability Analysis | CySuite
                     <option>subdomain2.site.com</option>
                 </select>
             </div>
+            <h4>Select Scan Type</h4>
             <div class="alert alert-primary alert-outline alert-dismissible" style="margin: 0 2rem 2rem 0; width: 100%;">
                 <div class="alert-icon">
                     <i class="fa fa-bug"></i>
@@ -40,31 +42,30 @@ Vulnerability Analysis | CySuite
                     <option>Agressive</option>
                 </select>
             </div>
-            <button class="btn btn-primary save-btn" style="min-height: 45px; width: auto; float: right; font-size: 0.9rem;" type="button"><i class="fa fa-search"></i> &nbsp;Scan</button>
+            <button class="btn btn-primary save-btn" style="min-height: 45px; width: auto; float: right; font-size: 0.9rem;" type="button"><i class="fa fa-book"></i> &nbsp;Generate report</button>
         </div>
     </div>
 </div>
-<div class="col-12 col-lg-7" style="height: auto;">
-    <div class="card" style="min-height: 450px;">
+<div class="col-12 col-lg-7" style="display: flow-root;">
+    <div class="card" style="height: auto;">
         <div class="card-header" style="padding-bottom: 0;">
             <h3 class="mb-0">Report</h3>
+            <hr/>
         </div>
         <div class="card-header">
         <div class="parent">
             <div class="child" style="color: #3E4261; font-family: courier new; font-size: 0.9rem;">
-                <p>
-                <strong>Server:</strong> Apache</br>
-                <strong>Version number:</strong> 2.23</br>
-                <strong>Technologies:</strong> NodeJS, Stripe, React</br>
-                <strong>Known Vulnerabilities:</strong> CVE-2020-12423</p>
-              <strong>Interesting Files:</strong></br>
-                <blockquote>
+                <p class="thick">Architecture</p>
+                Server: Apache</br>
+                Version number: 2.23</br>
+                Technologies: NodeJS, Stripe, React</br>
+                Known Vulnerabilities: CVE-2020-12423<br/><br/>
+                <p class="thick">Interesting Files:</p>
                     /robots.txt</br>
                     /webDav</br>
-                    /login</br>
-                </blockquote>
+                    /login</br><br/>
 
-                <strong>DNS Records:</strong></br>
+                <p class="thick">DNS Records::</p>
                     example.com.		59	IN	A	104.245.210.170</br>
                     www.example.com.	59	IN	A	104.245.210.170</br></br>
 
@@ -80,34 +81,34 @@ Vulnerability Analysis | CySuite
                     example.com.		3599	IN	CAA	0 issue "letsencrypt.org"</br>
                     example.com.		3599	IN	CAA	0 issuewild "sectigo.com"</br></br>
 
-                <strong>SSL Server Certificate:</strong></br>
-                    <strong>Issued To:</strong></br>
-                        Common Name (CN)	www.venafi.com</br>
-                        Organization (O)	Venafi, Inc.</br>
-                        Organizational Unit (OU)	<Not Part Of Certificate></br>
-
-                    <strong>Issued By:</strong></br>
-                        Common Name (CN)	HydrantID SSL CA G3</br>
-                        Organization (O)	HydrantID (Avalanche Cloud Corporation)</br>
-                        Organizational Unit (OU)	<Not Part Of Certificate></br></br>
-
-                    <strong>Validity Period:</strong></br>
-                        Issued On	Wednesday, April 14, 2021 at 8:09:54 PM</br>
-                        Expires On	Thursday, April 14, 2022 at 8:19:00 PM</br></br>
-
-                    <strong>Fingerprints:</strong></br>
-                        SHA-256 Fingerprint	A0 C1 5D EE 42 52 40 D4 34 E3 19 20 53 37 83 7D</br>
-                        C1 77 6F A1 41 04 88 4D 48 1D 2B 37 C0 3F 9B D9</br>
-                        SHA-1 Fingerprint	3E 1D ED A6 59 39 1A 76 F2 03 97 FB 46 50 76 00</br>
-                        94 4C F4 C9</br></br>
-
-                <strong>Code Analysis:</strong></br>
+                <p class="thick">Code Anlaysis:</p>
                     Code Health: 95%</br>
                     Load time: 5ms</br>
                     Redirect: No</br></br>
 
-                <strong>Scanned Secrets:</strong></br>
-                    2b3cb2d32aab688bcd9779 - Heroku API Key [index.js]</br>
+                <p class="thick">Scanned Secrets:</p>
+                    2b3cb2d32aab688bcd9779 - Heroku API Key [index.js]</br><br/>
+
+                <p class="thick">SSL Server Certificate:</p>
+                    <p class="thick">Issued To:</p>
+                        Common Name (CN)	www.venafi.com</br>
+                        Organization (O)	Venafi, Inc.</br>
+                        Organizational Unit (OU)	<Not Part Of Certificate></br>
+
+                    <p class="thick">Issued By:</p>
+                        Common Name (CN)	HydrantID SSL CA G3</br>
+                        Organization (O)	HydrantID (Avalanche Cloud Corporation)</br>
+                        Organizational Unit (OU)	<Not Part Of Certificate></br></br>
+
+                    <p class="thick">Validity Period:</p>
+                        Issued On	Wednesday, April 14, 2021 at 8:09:54 PM</br>
+                        Expires On	Thursday, April 14, 2022 at 8:19:00 PM</br></br>
+
+                    <p class="thick">Fingerprints:</p>
+                        SHA-256 Fingerprint	A0 C1 5D EE 42 52 40 D4 34 E3 19 20 53 37 83 7D</br>
+                        C1 77 6F A1 41 04 88 4D 48 1D 2B 37 C0 3F 9B D9</br>
+                        SHA-1 Fingerprint	3E 1D ED A6 59 39 1A 76 F2 03 97 FB 46 50 76 00</br>
+                        94 4C F4 C9</br>
             </div>
             </div>
         </div>
