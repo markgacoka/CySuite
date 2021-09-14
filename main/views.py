@@ -54,6 +54,7 @@ def dashboard(request):
 
         context['asset_count'] = project_model_instance.count()
         context['project_arr'] = reversed(project_arr)
+        context['project_len'] = len(project_arr)
         context['date'] = datetime.date.today()
         context['subdomain_num'] = subdomain_num
         context['profile_account'] = request.user.profile

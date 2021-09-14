@@ -283,6 +283,35 @@ Directory Enumeration | CySuite
 		s.label = project;
 	});
 </script>
+<script>
+	$(document).ready(function(){
+		if (numPages > 1){
+			$('#directories').after('<div id="nav" style="background-color: #3E4261;height: 45px;width: 100%; display: flex; align-items: center;"></div>');
+		}
+		var rowsShown = 20;
+		var rowsTotal = $('#directories tbody tr').length;
+		var numPages = rowsTotal/rowsShown;
+		if (numPages > 1){
+			for(i = 0;i < numPages;i++) {
+				var pageNum = i + 1;
+				$('#nav').append('<a href="#" style="color: white; padding: 0 1.7rem 0 1.7rem; height: 100%; text-align: center; display: flex; align-items: center; border: 1px solid lightgray;" rel="'+i+'">'+pageNum+'</a> ');
+			}
+		}
+		$('#directories tbody tr').hide();
+		$('#directories tbody tr').slice(0, rowsShown).show();
+		$('#nav a:first').addClass('active');
+		$('#nav a').bind('click', function(){
+			$('#nav a').removeClass('active');
+			$(this).addClass('active');
+			var currPage = $(this).attr('rel');
+			var startItem = currPage * rowsShown;
+			var endItem = startItem + rowsShown;
+			$('#directories tbody tr').css('opacity','0.0').hide().slice(startItem, endItem).
+					css('display','table-row').animate({opacity:1}, 300);
+			$('#directories tbody tr').css('opacity','1.0').slice(0, 1).show();
+		});
+	});
+</script>
 {% endblock %}
 {% endif %}
 {% endblock %}

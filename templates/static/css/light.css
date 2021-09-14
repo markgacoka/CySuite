@@ -623,14 +623,6 @@ span.tag {
 #directories tr:last-child td {
     border-bottom: 0;
 }
-#directories tr td:first-child,
-#directories tr th:first-child {
-    border-left: 0;
-}
-#directories tr td:last-child,
-#directories tr th:last-child {
-    border-right: 0;
-}
 
 .figure {
     display: inline-block
