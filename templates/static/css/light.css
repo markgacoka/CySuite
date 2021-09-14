@@ -624,6 +624,20 @@ span.tag {
     border-bottom: 0;
 }
 
+.parent {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    border: 0px solid transparent;
+}
+
+.child {
+    height: 100%;
+    margin-right: -50px; /* Maximum width of scrollbar */
+    padding-right: 50px; /* Maximum width of scrollbar */
+    overflow-y: scroll;
+}
+
 .figure {
     display: inline-block
 }
