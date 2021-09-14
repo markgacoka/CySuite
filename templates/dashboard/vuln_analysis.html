@@ -47,66 +47,69 @@ Vulnerability Analysis | CySuite
 <div class="col-12 col-lg-7" style="height: auto;">
     <div class="card" style="min-height: 450px;">
         <div class="card-header" style="padding-bottom: 0;">
-            <h4 class="mb-0">Report</h4>
+            <h3 class="mb-0">Report</h3>
         </div>
         <div class="card-header">
-            <textarea class="form-control" type="text" style="min-height: 400px; font-family: courier new; font-size: 0.9rem" readonly>
-Server: Apache
-Version number: 2.23
-Technologies: NodeJS, Stripe, React
-Known Vulnerabilities: CVE-2020-12423
+        <div class="parent">
+            <div class="child" style="color: #3E4261; font-family: courier new; font-size: 0.9rem;">
+                <p>
+                <strong>Server:</strong> Apache</br>
+                <strong>Version number:</strong> 2.23</br>
+                <strong>Technologies:</strong> NodeJS, Stripe, React</br>
+                <strong>Known Vulnerabilities:</strong> CVE-2020-12423</p>
+              <strong>Interesting Files:</strong></br>
+                <blockquote>
+                    /robots.txt</br>
+                    /webDav</br>
+                    /login</br>
+                </blockquote>
 
-Interesting Files:
-    /robots.txt
-    /webDav
-    /login
+                <strong>DNS Records:</strong></br>
+                    example.com.		59	IN	A	104.245.210.170</br>
+                    www.example.com.	59	IN	A	104.245.210.170</br></br>
 
-DNS Records:
-    example.com.		59	IN	A	104.245.210.170
-    www.example.com.	59	IN	A	104.245.210.170
+                    example.com.		3599	IN	MX	1 aspmx.l.google.com.</br>
+                    example.com.		3599	IN	MX	5 alt1.aspmx.l.google.com.</br>
+                    example.com.		3599	IN	MX	5 alt2.aspmx.l.google.com.</br>
+                    example.com.		3599	IN	MX	10 alt3.aspmx.l.google.com.</br>
+                    example.com.		3599	IN	MX	10 alt4.aspmx.l.google.com.</br></br>
 
-    example.com.		3599	IN	MX	1 aspmx.l.google.com.
-    example.com.		3599	IN	MX	5 alt1.aspmx.l.google.com.
-    example.com.		3599	IN	MX	5 alt2.aspmx.l.google.com.
-    example.com.		3599	IN	MX	10 alt3.aspmx.l.google.com.
-    example.com.		3599	IN	MX	10 alt4.aspmx.l.google.com.
+                    example.com.		3599	IN	CAA	0 iodef "mailto:ops@example.com"</br>
+                    example.com.		3599	IN	CAA	0 issue "amazonaws.com"</br>
+                    example.com.		3599	IN	CAA	0 issue "sectigo.com"</br>
+                    example.com.		3599	IN	CAA	0 issue "letsencrypt.org"</br>
+                    example.com.		3599	IN	CAA	0 issuewild "sectigo.com"</br></br>
 
-    example.com.		3599	IN	CAA	0 iodef "mailto:ops@example.com"
-    example.com.		3599	IN	CAA	0 issue "amazonaws.com"
-    example.com.		3599	IN	CAA	0 issue "sectigo.com"
-    example.com.		3599	IN	CAA	0 issue "letsencrypt.org"
-    example.com.		3599	IN	CAA	0 issuewild "sectigo.com"
+                <strong>SSL Server Certificate:</strong></br>
+                    <strong>Issued To:</strong></br>
+                        Common Name (CN)	www.venafi.com</br>
+                        Organization (O)	Venafi, Inc.</br>
+                        Organizational Unit (OU)	<Not Part Of Certificate></br>
 
+                    <strong>Issued By:</strong></br>
+                        Common Name (CN)	HydrantID SSL CA G3</br>
+                        Organization (O)	HydrantID (Avalanche Cloud Corporation)</br>
+                        Organizational Unit (OU)	<Not Part Of Certificate></br></br>
 
-SSL Server Certificate:
-    Issued To:
-        Common Name (CN)	www.venafi.com
-        Organization (O)	Venafi, Inc.
-        Organizational Unit (OU)	<Not Part Of Certificate>
+                    <strong>Validity Period:</strong></br>
+                        Issued On	Wednesday, April 14, 2021 at 8:09:54 PM</br>
+                        Expires On	Thursday, April 14, 2022 at 8:19:00 PM</br></br>
 
-    Issued By:
-        Common Name (CN)	HydrantID SSL CA G3
-        Organization (O)	HydrantID (Avalanche Cloud Corporation)
-        Organizational Unit (OU)	<Not Part Of Certificate>
+                    <strong>Fingerprints:</strong></br>
+                        SHA-256 Fingerprint	A0 C1 5D EE 42 52 40 D4 34 E3 19 20 53 37 83 7D</br>
+                        C1 77 6F A1 41 04 88 4D 48 1D 2B 37 C0 3F 9B D9</br>
+                        SHA-1 Fingerprint	3E 1D ED A6 59 39 1A 76 F2 03 97 FB 46 50 76 00</br>
+                        94 4C F4 C9</br></br>
 
-    Validity Period:
-        Issued On	Wednesday, April 14, 2021 at 8:09:54 PM
-        Expires On	Thursday, April 14, 2022 at 8:19:00 PM
+                <strong>Code Analysis:</strong></br>
+                    Code Health: 95%</br>
+                    Load time: 5ms</br>
+                    Redirect: No</br></br>
 
-    Fingerprints:
-        SHA-256 Fingerprint	A0 C1 5D EE 42 52 40 D4 34 E3 19 20 53 37 83 7D
-        C1 77 6F A1 41 04 88 4D 48 1D 2B 37 C0 3F 9B D9
-        SHA-1 Fingerprint	3E 1D ED A6 59 39 1A 76 F2 03 97 FB 46 50 76 00
-        94 4C F4 C9
-
-Code Analysis:
-    Code Health: 95%
-    Load time: 5ms
-    Redirect: No
-
-Scanned Secrets:
-    2b3cb2d32aab688bcd9779 - Heroku API Key [index.js]
-            </textarea>
+                <strong>Scanned Secrets:</strong></br>
+                    2b3cb2d32aab688bcd9779 - Heroku API Key [index.js]</br>
+            </div>
+            </div>
         </div>
     </div>
 </div>
