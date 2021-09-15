@@ -65,8 +65,15 @@ def dashboard(request):
 
 def stats(request):
     context = {}
-    context['profile_account'] = request.user.profile
-    return render(request, 'dashboard/stats.html', context=context)
+    labels = ["Jan", "Feb", "Mar", "Apr"]
+    data = [100,80,150,200]
+    context = {
+        "labels": json.dumps(labels),
+        "data": json.dumps(data),
+        "profile_account": request.user.profile
+        }
+    print(context)
+    return render(request, 'dashboard/stats.html', context)
 
 def checkout(request):
     return render(request, 'pages/checkout.html', context={
