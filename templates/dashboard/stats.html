@@ -26,6 +26,7 @@
             <h4>Personal Progress</h4>
         </div>
         <div class="card-body py-4">
+            <canvas width="205" height="220" style="display: inline-block; width: 205px; height: 220px; vertical-align: top;"></canvas>
         </div>
     </div>
     <div class="col-xl-8 col-lg-7" style="margin-bottom: 24px; width: 35%; float: right; margin-right: 1rem; min-height: 100%;">
@@ -94,6 +95,10 @@
         series: [20, 80],
         chart: {
             type: 'donut',
+            width: '100%',
+            animations: {
+                enabled: false,
+            },
     },
     dataLabels: {
         enabled: false
@@ -145,6 +150,10 @@
 <script>
   $(document).ready(function () {
     var ctx = document.getElementById("myChart").getContext("2d");
+    var gradient = ctx.createLinearGradient(0, 0, 0, 450);
+    gradient.addColorStop(1, '#2a305c');
+    gradient.addColorStop(0, '#2a305c');
+
     var myChart = new Chart(ctx, {
       type: "doughnut",
       data: {
@@ -153,27 +162,20 @@
           {
             label: "# of users",
             data: ["1", "2", "3", "4", "5"],
-            backgroundColor: [
-              "rgba(255, 99, 132, 0.2)",
-              "rgba(54, 162, 235, 0.2)",
-              "rgba(255, 206, 86, 0.2)",
-              "rgba(75, 192, 192, 0.2)",
-              "rgba(153, 102, 255, 0.2)",
-              "rgba(255, 159, 64, 0.2)",
-            ],
+            backgroundColor: gradient,
             borderColor: [
-              "rgba(255, 99, 132, 1)",
-              "rgba(54, 162, 235, 1)",
-              "rgba(255, 206, 86, 1)",
-              "rgba(75, 192, 192, 1)",
-              "rgba(153, 102, 255, 1)",
-              "rgba(255, 159, 64, 1)",
+              "#fff",
             ],
             borderWidth: 1,
           },
         ],
       },
       options: {
+        responsive: true,
+        legend: {
+            position: "right",
+            align: "middle"
+        },
         scales: {
           y: {
             beginAtZero: true,
