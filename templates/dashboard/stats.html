@@ -4,7 +4,7 @@
 {% block title %} Statistics | CySuite {% endblock %}
 {% block content %}
 <div class="col-12 col-xxl d-flex" style="width: 100%;">
-    <div class="card flex-fill" style="width: 40%; float: left; margin-right: 1rem;">
+    <div class="card flex-fill" style="width: 30%; float: left; margin-right: 1rem;">
         <div class="card-header pb-0">
             <h4>Personal Progress</h4>
         </div>
@@ -27,24 +27,7 @@
             </div>
         </div>
     </div>
-    <div class="card flex-fill" style="width: 30%; float: right; margin-right: 1rem;">
-        <div class="card-header">
-            <h4>Safeness Score</h4>
-        </div>
-    </div>
-    <div class="card flex-fill" style="width: 10%; float: right; margin-right: 1rem;"></div>
-    <div class="card flex-fill" style="width: 14%; float: right;"></div>
-</div>
-<div class="col-12 col-xxl d-flex" style="width: 100%;">
-    <div class="col-xl-8 col-lg-7" style="width: 49%; flex:1; float:right;">
-        <div class="card shadow mb-4" style="padding-bottom: 1rem;">
-            <div class="card-header py-3">
-                <h4>World Map</h4>
-            </div>
-            <div id="vmap" style="width: 100%; height: 400px;"></div>
-        </div>
-    </div>
-    <div class="col-xl-8 col-lg-7" style="width: 20%; height: 100%;">
+    <div class="col-xl-8 col-lg-7" style="width: 30%; float: right; margin-right: 1rem; height: 100%;">
         <div class="card shadow mb-4" style="padding-bottom: 1rem;">
             <div class="card-header py-3">
                 <h4>Line Chart</h4>
@@ -56,24 +39,51 @@
             </div>
         </div>
     </div>
-    <div class="col-xl-8 col-lg-7" style="width: 20%; float:right;">
-        <div class="card shadow mb-4" style="padding-bottom: 1rem;">
+    <div class="card flex-fill" style="width: 20%; float: right; margin-right: 1rem;">
+        <div class="card-header">
+            <h4>Safeness Score</h4>
+        </div>
+    </div>
+    <div class="card flex-fill" style="width: 20%; float: right;"></div>
+</div>
+<div class="col-12 col-xxl d-flex" style="width: 100%;">
+    <div class="col-xl-8 col-lg-7" style="width: 49%; flex:1; float:right; padding: 0;">
+        <div class="card shadow" style="margin-bottom: 0; height: 100%;">
+            <div class="card-header py-3">
+                <h4>World Map</h4>
+            </div>
+            <div id="vmap" style="width: 100%; height: 400px;"></div>
+        </div>
+    </div>
+    <div class="col-xl-8 col-lg-7" style="width: 49%;float:right;padding-right: 0;">
+        <div class="card shadow" style="height: 100%;">
             <div class="card-header py-3">
                 <h4>Pie Chart</h4>
             </div>
-            <canvas id="myChart"></canvas>
+            <canvas id="myChart" style="display: block; width: 710px; height: 355px;" class="chartjs-render-monitor" width="710" height="355"></canvas>
         </div>
     </div>
 </div>
 {% endblock %}
 {% block js %}
 <link href="{% static 'css/jqvmap.css' %}" media="screen" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="{% static 'js/jquery.vmap.sampledata.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/jquery.vmap.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/jquery.vmap.world.js' %}" charset="utf-8"></script>
 <script type="text/javascript">
     jQuery(document).ready(function() {
-    jQuery('#vmap').vectorMap({ map: 'world_en' });
+        jQuery('#vmap').vectorMap({
+            map: 'world_en',
+            backgroundColor: '#fff',
+            color: '#ffffff',
+            hoverOpacity: 0.7,
+            selectedColor: '#C8EEFF',
+            enableZoom: false,
+            showTooltip: true,
+            values: sample_data,
+            scaleColors: ['#C8EEFF', '#006491'],
+            normalizeFunction: 'polynomial'
+        });
     });
 </script>
 <script>
