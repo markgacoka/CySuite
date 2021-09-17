@@ -26,22 +26,6 @@
             <h4>Personal Progress</h4>
         </div>
         <div class="card-body py-4">
-            <div class="product-timeline card-body pt-2 mt-1">
-            <ul class="timeline-1 mb-0">
-                <li class="mt-0" id="mrg-8">
-                <i class="ti-pie-chart bg-primary-gradient text-white product-icon"></i>
-                <span class="fw-semibold mb-4 tx-14">Total Products</span>
-                <a href="#" class="float-end tx-11 text-muted">3 days ago</a>
-                <p class="mb-0 text-muted tx-12">1.3k New Products</p>
-                </li>
-                <li class="mt-0" id="mrg-8">
-                <i class="mdi mdi-cart-outline bg-danger-gradient text-white product-icon"></i>
-                <span class="fw-semibold mb-4 tx-14">Total Sales</span>
-                <a href="#" class="float-end tx-11 text-muted">35 mins ago</a>
-                <p class="mb-0 text-muted tx-12">1k New Sales</p>
-                </li>
-            </ul>
-            </div>
         </div>
     </div>
     <div class="col-xl-8 col-lg-7" style="margin-bottom: 24px; width: 35%; float: right; margin-right: 1rem; min-height: 100%;">
@@ -58,17 +42,25 @@
     </div>
     <div class="col-xl-8 col-lg-7" style="width: 15%; float: right; min-height: 100%;">
         <div class="stat-container">
-            <div class="card flex-fill">
+            <div class="card flex-fill" style="justify-content: center;">
+            <div style="width: 100%; height: 40px; position: absolute; top: 50%; left: 0; margin-top: -20px; line-height:19px; text-align: center; z-index: 999999999999999">99%<Br />Total</div>
+                <div id="chart1" style="position: absolute; align-items: center; margin: 1rem;"></div>
             </div>
-            <div class="card flex-fill" style="margin-bottom: 24px;">
+            <div class="card flex-fill" style="justify-content: center; margin-bottom: 24px;">
+            <div style="width: 100%; height: 40px; position: absolute; top: 50%; left: 0; margin-top: -20px; line-height:19px; text-align: center; z-index: 999999999999999">99%<Br />Total</div>
+                <div id="chart2" style="position: absolute; align-items: center; margin: 1rem;"></div>
             </div>
         </div>
     </div>
     <div class="col-xl-8 col-lg-7" style="width: 15%; float: right; min-height: 100%;">
         <div class="stat-container">
-            <div class="card flex-fill">
+            <div class="card flex-fill" style="justify-content: center;">
+            <div style="width: 100%; height: 40px; position: absolute; top: 50%; left: 0; margin-top: -20px; line-height:19px; text-align: center; z-index: 999999999999999">99%<Br />Total</div>
+                <div id="chart3" style="position: absolute; align-items: center; margin: 1rem;"></div>
             </div>
-            <div class="card flex-fill" style="margin-bottom: 24px;">
+            <div class="card flex-fill" style="justify-content: center; margin-bottom: 24px;">
+            <div style="width: 100%; height: 40px; position: absolute; top: 50%; left: 0; margin-top: -20px; line-height:19px; text-align: center; z-index: 999999999999999">99%<Br />Total</div>
+                <div id="chart4" style="position: absolute; align-items: center; margin: 1rem;"></div>
             </div>
         </div>
     </div>
@@ -98,6 +90,43 @@
 <script type="text/javascript" src="{% static 'js/jquery.vmap.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/jquery.vmap.world.js' %}" charset="utf-8"></script>
 <script type="text/javascript">
+    var options = {
+        series: [20, 80],
+        chart: {
+            type: 'donut',
+    },
+    dataLabels: {
+        enabled: false
+    },
+    legend: {
+        show: false
+    },
+    fill: {
+        colors: ['#6e707e', '#3E4261']
+    },
+     tooltip: {
+      enabled: false,
+    },
+    responsive: [{
+        breakpoint: 480,
+        options: {
+            chart: {
+                width: 200
+            },
+        }
+    }]
+    };
+
+    var chart1 = new ApexCharts(document.querySelector("#chart1"), options);
+    var chart2 = new ApexCharts(document.querySelector("#chart2"), options);
+    var chart3 = new ApexCharts(document.querySelector("#chart3"), options);
+    var chart4 = new ApexCharts(document.querySelector("#chart4"), options);
+    chart1.render();
+    chart2.render();
+    chart3.render();
+    chart4.render();
+</script>
+<script type="text/javascript">
     jQuery(document).ready(function() {
         jQuery('#vmap').vectorMap({
             map: 'world_en',
@@ -108,7 +137,7 @@
             enableZoom: false,
             showTooltip: true,
             values: sample_data,
-            scaleColors: ['#C8EEFF', '#006491'],
+            scaleColors: ['#dfe2fe', '#2a305c'],
             normalizeFunction: 'polynomial'
         });
     });
@@ -191,13 +220,13 @@
           label: "Earnings",
           lineTension: 0.3,
           backgroundColor: "rgba(78, 115, 223, 0.05)",
-          borderColor: "rgba(78, 115, 223, 1)",
+          borderColor: "#3E4261",
           pointRadius: 3,
-          pointBackgroundColor: "rgba(78, 115, 223, 1)",
-          pointBorderColor: "rgba(78, 115, 223, 1)",
+          pointBackgroundColor: "#3E4261",
+          pointBorderColor: "#3E4261",
           pointHoverRadius: 3,
-          pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-          pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+          pointHoverBackgroundColor: "#3E4261",
+          pointHoverBorderColor: "#3E4261",
           pointHitRadius: 10,
           pointBorderWidth: 2,
           data: [
