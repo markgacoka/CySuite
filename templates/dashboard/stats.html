@@ -16,11 +16,6 @@
                 <option>Coda</option>
             </select>
         </div>
-        <div class="card flex-fill" style="width: 40%; min-height: 3rem; float: left;">
-            <select class="dropdown-icon flex-grow-1" id="select-project" onchange="val();">			
-                <option>Coda</option>
-            </select>
-        </div>
         <div class="card flex-fill" style="width: auto; float: left;">
             <button class="btn btn-primary" style="width: max-content; transform: scale(1.2);">Query</button>
         </div>
@@ -152,7 +147,7 @@
             showTooltip: true,
             values: sample_data,
             //'#dfe2fe'
-            scaleColors: ['#2a305c'],
+            scaleColors: ['#dfe2fe', '#2a305c'],
             normalizeFunction: 'polynomial'
         });
     });
@@ -162,7 +157,7 @@
     var ctx = document.getElementById("myChart").getContext("2d");
     var gradient = ctx.createLinearGradient(0, 0, 0, 450);
     gradient.addColorStop(1, '#2a305c');
-    gradient.addColorStop(0, '#2a305c');
+    gradient.addColorStop(0, '#6e707e');
 
     var myChart = new Chart(ctx, {
       type: "doughnut",
