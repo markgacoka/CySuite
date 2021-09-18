@@ -7,6 +7,7 @@ from main.views import (
 )
 
 urlpatterns = [
+    path('2/', views.index2, name="index2"),
     #main-pages
     url(r'^transaction/', update_transaction, name='transaction'),
     path('checkout/', views.checkout, name='checkout'),
