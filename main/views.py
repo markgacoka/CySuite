@@ -240,11 +240,6 @@ def projects(request):
         context['profile_account'] = request.user.profile
     return render(request, 'dashboard/projects.html', context)
 
-def notes(request):
-    context = {}
-    context['profile_account'] = request.user.profile
-    return render(request, 'dashboard/notes.html', context)
-
 def subdomain_enum(request):
     context = {}
     info_list = []

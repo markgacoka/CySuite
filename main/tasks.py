@@ -1,6 +1,6 @@
 from scripts.screenshots.screenshot import take_screenshot
 from celery_progress.backend import ProgressRecorder
-from scripts.PortScan.misc import Portscanner
+from scripts.PortScan.portscan import Portscanner
 from .subdomains import subdomain_list
 from .models import ProjectModel
 from .models import SubdomainModel
