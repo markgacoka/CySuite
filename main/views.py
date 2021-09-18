@@ -80,13 +80,6 @@ def checkout(request):
         'PAYPAL_CLIENT_ID': os.environ.get('PAYPAL_CLIENT_ID'),
     })
 
-def index2(request):
-    if request.user.is_authenticated == True:
-        return redirect('dashboard')
-    else:
-        context = {}        
-    return render(request, 'index2.html', context)
-
 def update_transaction(request):
     context = {}
     if request.method == 'POST':
