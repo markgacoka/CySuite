@@ -22,18 +22,6 @@ def index(request):
                 return redirect('thank_you')
     return render(request, 'index.html', context)
 
-def index2(request):
-    context = {}
-    if request.POST:
-        if request.POST['subscriber'] == '' or request.POST['subscriber'] == None:
-            pass
-        else:
-            newsletter_form = NewsletterForm(request.POST)
-            if newsletter_form.is_valid():
-                newsletter_form.save()
-            return redirect('thank_you')
-    return render(request, 'index2.html', context)
-
 def thank_you(request):
     if request.user.is_authenticated == True:
         return redirect('dashboard')
