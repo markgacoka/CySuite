@@ -15,7 +15,6 @@ urlpatterns = [
     #dashboard
     path('dashboard/', views.dashboard, name="dashboard"),
     path('projects/', views.projects, name='projects'),
-    path('notes/', views.notes, name='notes'),
     path('stats/', views.stats, name='stats'),
     path('subdomain-enum/', views.subdomain_enum, name='subdomain_enum'),
     path('directory-enum/', views.directory_enum, name='directory_enum'),
@@ -26,6 +25,4 @@ urlpatterns = [
     path('wordlist-gen/', views.wordlist_gen, name='wordlist_gen'),
     path('decoder/', views.decoder, name='decoder'),
     path('injector/', views.injector, name='injector'),
-    #notes
-    path('notes/post-1', views.post, name='post'),
 ]

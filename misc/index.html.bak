@@ -1,0 +1,320 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CySuite</title>
+    <link rel="icon" href="{% static 'img/icons/favicon.ico' %}" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" >
+</head>
+<body data-theme-mode-panel-active data-theme="light" style="font-family: 'Mazzard H';">
+    <div class="site-wrapper overflow-hidden position-relative">
+        <header class="site-header site-header--menu-center dark-mode-texts landing-17-menu site-header--absolute site-header--sticky scrolling">
+            <div class="container">
+                <nav class="navbar site-navbar">
+                    <div class="brand-logo">
+                        <a href="#">
+                            <img src="{% static 'img/logo/logo.png' %}" alt="" class="light-version-logo logo-resize">
+                            <img src="{% static 'img/logo/logo.png' %}" alt="" class="dark-version-logo logo-resize">
+                        </a>
+                    </div>
+                    <div class="menu-block-wrapper">
+                        <div class="menu-overlay"></div>
+                        <nav class="menu-block" id="append-menu-header">
+                            <div class="mobile-menu-head">
+                                <div class="go-back">
+                                    <i class="fa fa-angle-left"></i>
+                                </div>
+                                <div class="current-menu-title"></div>
+                                <div class="mobile-menu-close">&times;</div>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="header-btns  header-btn-l-17 ms-auto d-none d-xs-inline-flex align-items-center">
+                        <a class="btn sign-in-btn focus-reset" href="/login">Sign in</a>
+                        <a class="start-trail-btn btn focus-reset" href="/register">Sign Up</a>
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <div class="hero-area-l-17 position-relative">
+            <div class="container">
+                <div class="row position-relative justify-content-center">
+                    <div class="col-xxl-6 col-xl-7 col-lg-8 col-md-11 order-lg-1 order-1" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
+                        <div class="content text-center">
+                            <h1>Upgrade your security analysis!</h1>
+                            <p>CySuite is an all-in-one tool for web security analysis. Perfect for security researchers, DevOps and bug hunters.</p>
+                            <label class="btn" for="modal-1">Request API Access</label>
+                            <span>API access is released on a rolling basis</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-8 col-lg-9 order-lg-1 order-0">
+                        <div class="hero-area-image">
+                            <img src="{% static 'img/showcase/capture.png' %}" alt="" class="w-100" style="border-radius: 10px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input class="modal-state" id="modal-1" type="checkbox" />
+        <div class="modal">
+            <label class="modal__bg" for="modal-1"></label>
+            <div class="modal__inner" style="min-width: 70rem; height: fit-content;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <label class="modal__close d-flex align-items-center justify-content-center" for="modal-1"><i class="fa fa-times"></i></label>
+                    </div>
+                    <div class="modal-row no-gutters">
+                        <div class="modal-column d-flex">
+                            <div class="modal-body p-5 img d-flex" style="background-image:url({% static 'img/backgrounds/bg-1.jpg' %}); width: inherit;">
+                            </div>
+                        </div>
+                        <div class="modal-column d-flex">
+                            <div class="modal-body p-5 d-flex align-items-center">
+                                <div class="text w-100 text-center py-5">
+                                    <h3 class="mb-4 api-request-h4">Fill in the details below to join the waitlist. You will be notified via email on API rollout.</h4>
+                                    <form action="#" class="code-form">
+                                        <div class="form-group d-flex">
+                                            <input type="text" class="form-control" placeholder="Name">
+                                        </div>
+                                        <div class="form-group d-flex">
+                                            <input type="text" class="form-control" placeholder="Email">
+                                        </div>
+                                        <div class="form-group d-flex">
+                                            <textarea type="text" class="form-control" style="min-height: 300px;" placeholder="Why do you need API access? (Be descriptive)"></textarea>
+                                        </div>
+                                    </form>
+                                    <a href="#" class="submit-btn d-block py-3">Submit</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="feature-area-l-17 position-relative">
+            <div class="container">
+                <div class="row feature-area-l-17-items justify-content-center text-center">
+                    <div class="col-lg-4 col-md-6 col-sm-9">
+                        <div class="single-features single-border position-relative">
+                            <div class="circle-dot-1">
+                                <i class="fas fa-circle"></i>
+                            </div>
+                            <h4>Cybersecurity Documentation</h4>
+                            <p class="desc">CySuite has the largest corpus of cybersecurity information e.g. CVEs, PoC, comprehensive notes and esoteric techniques.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-9">
+                        <div class="single-features single-border position-relative">
+                            <div class="circle-dot-2">
+                                <i class="fas fa-circle"></i>
+                            </div>
+                            <h4>Access to Security Tools</h4>
+                            <p class="desc">Internal tools such as request manipulators, encoder/decoders & wordlist generators for convenient analysis.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-9">
+                        <div class="single-features">
+                            <div class="circle-dot-3">
+                                <i class="fas fa-circle"></i>
+                            </div>
+                            <h4>Automated blackbox testing</h4>
+                            <p class="desc">Enumerate subdomains, directories and files hosted by an asset quickly and efficiently through passive and active methods.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-area-l-17-1">
+            <div class="container">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-xl-10 col-lg-12">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-lg-6 col-md-8" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
+                                <div class="content-img position-relative">
+                                    <div class="image-1">
+                                        <img src="{% static 'img/showcase/project-management.png' %}" alt="" style="width: 400px; height: auto;">
+                                    </div>
+                                    <div class="image-2">
+                                        <img src="{% static 'img/showcase/project-management-two.png' %}" alt="" style="width: 400px; height: auto;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="offset-xxl-1 col-xxl-5 col-xl-6 col-lg-6 col-md-8" data-aos="fade-left" data-aos-duration="800" data-aos-once="true">
+                                <div class="content section-heading-11">
+                                    <h2> Manage everything faster from a single place.</h2>
+                                    <p>CySuite provides access to a modern dashboard that organizes the target's data at each step. All the target's site information, vulnerabilities and exploits used are saved in a secure database accessed only through your account.</p>
+                                    <a href="/register" class="btn focus-reset">Start Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-area-l-17-2">
+            <div class="container">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-xl-10 col-lg-12">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-xxl-5 col-xl-6 col-lg-6 col-md-8 order-lg-1 order-1" data-aos="fade-left" data-aos-duration="800" data-aos-once="true" style="z-index:1;">
+                                <div class="content section-heading-11">
+                                    <h2>Get access to premium security tools and APIs</h2>
+                                    <p>Analyze and manipulate requests, generate custom wordlists and inject payloads. All the features integrated with the target, and right from your dashboard.</p>
+                                    <a href="/register" class="btn focus-reset">Sign Up</a>
+                                </div>
+                            </div>
+                            <div class="offset-xxl-1 col-xxl-6 col-xl-6 col-lg-6 col-md-8 order-lg-1 order-0" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
+                                <div class="content-img position-relative">
+                                    <div class="image-1">
+                                        <img src="{% static 'img/showcase/code_injection.png' %}" alt="" style="width: 400px; height: auto;">
+                                    </div>
+                                    <div class="image-2">
+                                        <img src="{% static 'img/showcase/wordlist_generator.png' %}" alt="" style="width: 400px; height: auto;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pricing-area-l-17 position-relative overflow-hidden">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-8 text-center" data-aos="fade-down" data-aos-duration="800" data-aos-once="true">
+                        <div class="content section-heading-11">
+                            <h2>Choose a plan to start</h2>
+                            <p>Plans are considerably priced and can be cancelled at any time, no questions asked. Based on your goal, choose the plan that is most valuable to you.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center" id="table-price-value" data-pricing-dynamic data-value-active="monthly">
+                    <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8">
+                        <div class="single-price popular-pricing popular-pricing-3 position-relative" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
+                            <div class="price-top justify-content-between">
+                                <span>Basic</span>
+                            </div>
+                            <div class="main-price">
+                                <div class="price d-flex position-relative ">
+                                    <h2 class="d-inline-block dynamic-value" data-monthly="FREE"><span class="dynamic-value"></span></h2>
+                                </div>
+                            </div>
+                            <p>Perfect for security researchers who want to test out the service.</p>
+                            <div class="price-body pt-8">
+                                <ul class="pricing-list list-unstyled">
+                                    <li> <i class="icon icon-check-2-2"></i> Access to some security tools</li>
+                                    <li> <i class="icon icon-check-2-2"></i> Access to partial cybersecurity notes</li>
+                                    <li><del><i class="icon icon-check-2-2"></i> Access to updated DNS names and CVE database</li>
+                                    <li><del><i class="icon icon-check-2-2"></i> API access for integration with automation workflows</li>
+                                    <li><del><i class="icon icon-check-2-2"></i> Technical Support</li>
+                                </ul>
+                            </div>
+                            <div class="price-btn">
+                                <a class="btn" href="/register">Sign Up</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8">
+                        <div class="single-price popular-pricing popular-pricing-3 position-relative" data-aos="fade-up" data-aos-duration="800" data-aos-once="true">
+                            <div class="price-top justify-content-between">
+                                <span>Pro</span>
+                            </div>
+                            <div class="main-price">
+                                <div class="price d-flex position-relative">
+                                    <span class="d-inline-block dynamic-value ">$</span>
+                                    <h2 class="d-inline-block dynamic-value" data-monthly="15"> <span class="dynamic-value" data-monthly="/ month"></span></h2>
+                                </div>
+                            </div>
+                            <p>Perfect for researchers who are looking for an online tool for security research.</p>
+                            <div class="price-body">
+                                <ul class="pricing-list list-unstyled">
+                                    <li> <i class="icon icon-check-2-2"></i> Access to all security tools</li>
+                                    <li> <i class="icon icon-check-2-2"></i> Access to comprehensive cybersecurity notes</li>
+                                    <li> <i class="icon icon-check-2-2"></i> Access to updated DNS names and CVE database</li>
+                                    <li> <i class="icon icon-check-2-2"></i> Fast track to API access, testing and usage</li>
+                                    <li> <i class="icon icon-check-2-2"></i> Technical Support</li>
+                                </ul>
+                            </div>
+                            <div class="price-btn">
+                                <a class="btn" href="/checkout">Choose Plan</a>
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cta-area-l-17">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="d-md-flex justify-content-between text-align-lg-start text-center align-items-center">
+                            <h2>Ready to take the step to a more advanced analysis?</h2>
+                            <a href="#" class="btn">Request access</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer-area-l-17 position-relative">
+            <div class="footer-shape">
+                <img src="{% static 'img/backgrounds/footer-shape.svg' %}" alt="">
+            </div>
+            <div class="container pt-lg-23 pt-15 pb-12">
+                <div class="row footer-area-l-17-items justify-content-between" data-aos="fade-left" data-aos-duration="800" data-aos-once="true">
+                    <div class="footer-widget widget4">
+                        <p class="widget-title" style="text-align: center;">Sign up to the newsletter to receive updates</p>
+                        <form class="form-inline" style="justify-content: center;" method="post">
+                        {% csrf_token %}
+                            <div class="newsletter-form news-icon text-md-center">
+                                <div>
+                                    <span><input type="email" class="form-control" id="email" name="subscriber" size="40" style="color: black;" aria-required="true" placeholder="Enter Your Email :" /></span>
+                                    <input type="submit" name="submit" value="Subscribe" class="email-btn" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright-area-l-17 text-center text-md-start">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-4 col-md-4">
+                            <div class="copyright">
+                                <p> &copy; CySuite 2021 All right reserved. </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-md-6">
+                            <div class="footer-menu">
+                                <ul class="list-unstyled d-flex flex-wrap justify-content-center">
+                                    <li><a href="/privacy-policy">Privacy Policy</a></li>
+                                    <li> <a href="/terms-conditions">Terms & Conditions</a> </li>
+                                    <li><a href="mailto:info@cysuite.io">Contact</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-2">
+                            <div class="social-icons text-md-end">
+                                <ul class="pl-0 list-unstyled">
+                                    <li class="d-inline-block"><a href="https://twitter.com/CySuite_"><i class="fab fa-twitter"></i></a></li>
+                                    <li class="d-inline-block"><a href="https://medium.com/@cysuiteio"><i class="fab fa-medium"></i></a></li>
+                                    <li class="d-inline-block"><a href="https://github.com/markgacoka"><i class="fab fa-github"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="{% static 'js/app.js' %}"></script>
+    <script src="{% static 'js/vendor.min.js' %}"></script>
+    <script src="{% static 'js/packery.pkgd.min.js' %}"></script>
+    <script src="{% static 'js/image.loaded.js' %}"></script>
+</body>
+</html>
