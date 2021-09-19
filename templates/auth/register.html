@@ -49,17 +49,16 @@
                                             </div>
                                             {% endif %}
                                             {% for field in registration_form %}
-                                            {{field.errors}}
+                                            {% ifchanged field.errors %}
                                                 {% for error in field.errors %}
-                                                    {% ifchanged error %}
-                                                        <div class="alert alert-danger alert-dismissible" role="alert">
-                                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                                            <div class="alert-message">
-                                                                <strong>{{error}}</strong>
-                                                            </div>
+                                                    <div class="alert alert-danger alert-dismissible" role="alert">
+                                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                        <div class="alert-message">
+                                                            <strong>{{error}}</strong>
                                                         </div>
-                                                    {% endifchanged %}
+                                                    </div>
                                                 {% endfor %}
+                                            {% endifchanged %}
                                             {% endfor %}
                                             <div class="mb-3">
                                                 <div class="row" style="display: flex;">
