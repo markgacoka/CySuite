@@ -72,7 +72,37 @@ def stats(request):
         "data": json.dumps(data),
         "profile_account": request.user.profile
         }
-    print(context)
+
+    project_name = request.session['project']
+    chosen_subdomain = request.session['curr_subdomain']
+    
+    if project_name == None or chosen_subdomain == None:
+        context['projects'] =  None
+        context['subdomains'] = None
+        context['profile_account'] = request.user.profile
+        return render(request, 'dashboard/stats.html', context)
+
+    project_model_instance = ProjectModel.objects.filter(project_user=request.user)
+    projects = list(project[2] for project in project_model_instance.values_list())
+    projects.pop(projects.index(project_name))
+    projects.insert(0,project_name)
+
+    user_projects = ProjectModel.objects.get(project_name=project_name)
+    subdomain_instance = SubdomainModel.objects.filter(subdomain_user=request.user)
+    subdomains = [host['hostname'] for host in subdomain_instance.filter(project=user_projects).values('hostname')]
+    subdomains = sorted(subdomains)
+
+    if chosen_subdomain != None and chosen_subdomain in subdomains:
+        subdomains.pop(subdomains.index(chosen_subdomain))
+        subdomains.insert(0, chosen_subdomain)
+    else:
+        chosen_subdomain = request.session['curr_subdomain']
+        subdomains.pop(subdomains.index(chosen_subdomain))
+        subdomains.insert(0, chosen_subdomain)
+
+    context['projects'] =  projects
+    context['subdomains'] = subdomains
+    context['profile_account'] = request.user.profile
     return render(request, 'dashboard/stats.html', context)
 
 def checkout(request):
