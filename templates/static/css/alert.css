@@ -1001,7 +1001,7 @@ button:not(:disabled) {
 }
 
 .alert-dismissible .btn-close {
-    padding: 1.1875rem .95rem;
+    padding-right: 1rem;
     position: absolute;
     right: 0;
     top: 0;
@@ -1039,9 +1039,16 @@ button:not(:disabled) {
 }
 
 .alert-danger {
-    background-color: #f7dddc;
-    border-color: #f4cbca;
+    background-color: transparent;
+    border: 2px solid red;
+    border-radius: 0px;
     color: #82322f
+}
+
+.alert-text {
+    position: absolute;
+    top: 30%;
+    color: red !important;
 }
 
 @keyframes progress-bar-stripes {
@@ -1101,15 +1108,15 @@ button:not(:disabled) {
 }
 
 .btn-close {
-    background: transparent url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3E%3C/svg%3E") 50%/1em auto no-repeat;
+    background-color: transparent;
     border: 0;
     border-radius: .2rem;
     box-sizing: content-box;
     color: #000;
-    height: 1em;
     opacity: .5;
     padding: .25em;
-    width: 1em
+    width: 1em;
+    height: 100%;
 }
 
 .btn-close:hover {
@@ -1292,7 +1299,7 @@ button:not(:disabled) {
 
 
 .alert strong {
-    color: #000
+    color: red;
 }
 
 .alert-outline,
