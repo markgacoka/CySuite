@@ -8,12 +8,16 @@
         <h3 style="padding: 1rem;">Select an Asset to analyze</h3>
         <div class="card flex-fill" style="width: 40%; min-height: 3rem; float: left;">
             <select class="dropdown-icon flex-grow-1" id="select-project" onchange="val();">			
-                <option>Coda</option>
+            {% for project in projects %}
+                <option>{{project}}</option>
+            {% endfor %}
             </select>
         </div>
         <div class="card flex-fill" style="width: 40%; min-height: 3rem; float: left;">
             <select class="dropdown-icon flex-grow-1" id="select-project" onchange="val();">			
-                <option>Coda</option>
+            {% for subdomain in subdomains %}
+                <option>{{subdomain}}</option>
+            {% endfor %}
             </select>
         </div>
         <div class="card flex-fill" style="width: auto; float: left;">
@@ -21,6 +25,7 @@
         </div>
     </div>
 </div>
+{% if projects != None and subdomains != None %}
 <div class="col-12 col-xxl d-flex" style="width: 100%;">
     <div class="card flex-fill" style="width: 20%; float: left; margin-right: 1rem;">
         <div class="card-header pb-0">
@@ -88,6 +93,7 @@
         </div>
     </div>
 </div>
+{% endif %}
 {% endblock %}
 {% block js %}
 <link href="{% static 'css/jqvmap.css' %}" media="screen" rel="stylesheet" type="text/css">
