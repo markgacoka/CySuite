@@ -73,6 +73,11 @@ def stats(request):
         "profile_account": request.user.profile
         }
 
+    if 'project' not in request.session:
+        request.session['project'] = request.session.get('project', None)
+    if 'curr_subdomain' not in request.session:
+        request.session['curr_subdomain'] = request.session.get('curr_subdomain', None)
+
     project_name = request.session['project']
     chosen_subdomain = request.session['curr_subdomain']
     
