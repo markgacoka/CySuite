@@ -66,6 +66,8 @@
                         Our Values
                     </a>
                     </li>
+                </ul>
+                <ul class="header__list" style="float: right;display: flex;position: relative;">
                     <li class="header__list-item">
                         <a class="glue-button glue-button--medium-emphasis" title="Log In" href="/login" tabindex="0">
                             Log In
@@ -80,12 +82,12 @@
         </div>
     </header>
     <div style="height: 600px; position: absolute; display: contents;">
-        <video class="video-illustration" src="{% static 'img/illustrations/background_smaller.mp4' %}" width="100%" height="100%" autoplay="" loop="" muted="" style="object-fit: cover;"></video>
-        <div class="glue-mod-text-center overlay">
-            <h1 class="title-text font-bold text-3xl lg:text-5xl leading-snug" style="font-size: calc(2vw + 3vh); color: white;">Crowdsourced analysis making the Internet safer.</h1>
-            <h2 class="title-text" style="font-size: 20px; font-weight: 400; color: white;">CySuite provides you with a convinient dashboard to manage all your targets' data with rich visualization.</h2>
-            <a class="title-button glue-button--medium-emphasis" title="Create an Account" href="/register" style="float: right;">
-                Create an Account&emsp;<i class="fa fa-chevron-right" style="color: #000; z-index: 1;"></i>
+        <video class="video-illustration" src="{% static 'img/illustrations/background_smaller.mp4' %}" width="100%" height="100%" autoplay="" loop="" muted="" style="object-fit: cover; opacity: 0.08;"></video>
+        <div class="glue-mod-text-center overlay" style="display: flex;">
+            <h1 class="title-text font-bold text-3xl lg:text-5xl leading-snug" style="font-size: calc(2vw + 1.5vh); color: #333; padding-bottom: 1.5rem;">Making a safer Internet through crowdsourced analysis.</h1>
+            <h2 class="title-text" style="font-size: 22px; font-weight: 400; color: #333;">CySuite provides you with a convenient dashboard to manage all your targets' data with rich visualization.</h2>
+            <a class="title-button glue-button--medium-emphasis" title="Create an Account" href="/register" style="float: right; color:white;">
+                Create an Account&emsp;<i class="fa fa-chevron-right" style="color: lightgray; z-index: 1;"></i>
             </a>
         </div>
     </div>
@@ -155,20 +157,19 @@
         <div class="container">
             <div class="row justify-content-between">
                 <div class="col-lg-4">
-                    <span class="caption aos-init aos-animate" style="color: #000000;">Digital Services</span>
-                    <h2 class="font-bold text-3xl lg:text-5xl leading-snug" style="padding-bottom: 1rem;">Selling Digital Services</h2>
+                    <span class="caption aos-init aos-animate" style="color: #000000;">Central Dashboard</span>
+                    <h2 class="font-bold text-3xl lg:text-5xl leading-snug" style="padding-bottom: 1rem;">User Feedback - UI/UX</h2>
                     <div class="mb-4 aos-init aos-animate" data-aos="fade-up" data-aos-delay="300">
                         <div class="untree_co-testimonial d-flex">
                             <div class="text">
                                 <blockquote>
-                                    “Separated they <span class="highlight">live in Bookmarksgrove right at the coast of the Semantics</span>, a large language ocean. A small river named Duden flows by their place and supplies it with the
-                                    necessary regelialia. ”
+                                    “Lorem ipsum <span class="highlight">dolor sit amet, consectetur adipiscing elit. </span>Mauris aliquet, dolor a congue dictum, arcu sapien blandit eros, semper maximus ex turpis a tellus. Vestibulum id vehicula risus, quis sodales libero.”
                                 </blockquote>
                                 <div class="author d-flex">
                                     <div class="pic mr-3">
                                         <img src="{% static 'img/profile/avatar.jpeg'%}" alt="Image" class="img-fluid"/>
                                     </div>
-                                    <div><strong class="d-block">James Anderson</strong><span class="d-block">Facebook, Product Lead</span></div>
+                                    <div><strong class="d-block">Anonymous User</strong><span class="d-block">Role, Company</span></div>
                                 </div>
                             </div>
                         </div>
@@ -210,6 +211,18 @@
         </div>
     </div>
     <footer class="bg-whisper">
+        <div style="width: 100%; padding-top:2rem;">
+            <p class="widget-title" style="text-align: center;">Sign up to the newsletter to receive updates</p>
+            <form class="form-inline" style="justify-content: center; padding-top: 1rem;" method="post">
+            {% csrf_token %}
+                <div class="newsletter-form news-icon text-md-center">
+                    <div>
+                        <span><input type="email" class="form-control" id="email" name="subscriber" size="40" style="color: black;" aria-required="true" placeholder="Enter Your Email :" /></span>
+                        <input type="submit" name="submit" value="Subscribe" class="email-btn" />
+                    </div>
+                </div>
+            </form>
+        </div>
         <div class="max-w-6xl mx-auto px-6">
             <div class="py-6 md:py-12 lg:py-20 border-b border-primary-100">
                 <div class="md:flex -mx-6">

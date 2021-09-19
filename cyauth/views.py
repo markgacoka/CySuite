@@ -40,6 +40,10 @@ def registration_view(request):
             email = form.cleaned_data.get('email')
             raw_password = form.cleaned_data.get('password1')
             account = authenticate(email=email, password=raw_password)
+            request.session['project'] = request.session.get('project', None)
+            request.session['sub_index'] = request.session.get('sub_index', 0)
+            request.session['curr_subdomain'] = request.session.get('curr_subdomain', None)
+            request.session.modified = True
             login(request, account)
             return redirect('dashboard')
         else:
@@ -66,6 +70,7 @@ def login_view(request):
                 request.session['project'] = request.session.get('project', None)
                 request.session['sub_index'] = request.session.get('sub_index', 0)
                 request.session['curr_subdomain'] = request.session.get('curr_subdomain', None)
+                request.session.modified = True
                 login(request, user)
                 return redirect('dashboard')
     else:

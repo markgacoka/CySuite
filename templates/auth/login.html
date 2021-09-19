@@ -19,9 +19,9 @@
     <div class="main d-flex justify-content-center w-100">
         <main class="content d-flex p-0">
             <div class="container d-flex flex-column">
-                <center><a href="/"><img src="{% static 'img/icons/cysuite.png' %}" style="width: 15rem; height: auto; padding-top: 3rem;"></a></center>
-                <div class="row h-100" style="padding: 3rem 1rem 0 1rem;">
-                    <div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
+                <center><a href="/"><img src="{% static 'img/logo/logo_footer.png' %}" style="width: 15rem; height: auto; padding-top: 3rem;"></a></center>
+                <div class="row h-100" style="padding: 1rem 1rem 0 1rem;">
+                    <div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100" style="width: calc(100% - 20vw/25vh)">
                         <div class="d-table-cell align-middle">
                             <div class="text-center mt-4">
                             <h2 class="h2" style="font-size: 2rem;">Log In</h2>
@@ -29,12 +29,12 @@
                                     Sign in to your account to continue
                                 </p>
                             </div>
-                            <div class="card">
+                            <div class="card" style="height: fit-content;">
                                 <div class="card-body">
                                     <div class="m-sm-4">
                                         <div class="text-center">
                                         </div>
-                                        <form method="post">
+                                        <form method="post" id="login-form">
                                             {% csrf_token %}
                                             {% if login_form.non_field_errors %}
                                             <div class="alert alert-danger alert-dismissible" role="alert">
@@ -60,7 +60,7 @@
                                                 <a href="#" class="login100-social-item bg2"><i class="fa fa-twitter"></i></a>
                                                 <a href="{% provider_login_url 'google' %}" class="login100-social-item bg3"><i class="fa fa-google"></i></a>
                                             </div>
-                                            <div class="mb-3">
+                                            <div class="mb-3" style="padding-top: 2rem;">
                                                 <label class="form-label">Email</label>
                                                 <input class="form-control form-control-lg" type="text" name="email" placeholder="Enter your email" />
                                             </div>
@@ -70,15 +70,18 @@
                                                 <small><a href="/reset-password">Forgot password?</a></small>
                                             </div>
                                            <div>
+
+                                            </div>
+                                            <div style="height: 5rem; width: 100%;">
+                                                <a id="form-submit" class="title-button glue-button--medium-emphasis" title="Log In" href="#" style="float: right;" onclick="document.forms['login-form'].submit();">
+                                                    Sign In
+                                                </a>
                                                 <div class="form-check align-items-center">
                                                     <input id="customControlInline" type="checkbox" class="form-check-input" value="remember-me" name="remember-me" checked>
                                                     <label class="form-check-label text-small" for="customControlInline">Remember me</label>
                                                 </div>
+                                                <p style="padding-top: 0.5rem;">Don't have an account? <a href="/register">Sign Up</a></p>
                                             </div>
-                                            <div class="text-center mt-3 mb-3">
-                                                <button type="submit" class="btn btn-lg btn-primary">Sign in</button>
-                                            </div>
-                                            <p style="text-align: center;">Don't have an account? <a href="/register">Sign Up</a></p>
                                         </form>
                                     </div>
                                 </div>
@@ -90,4 +93,18 @@
         </main>
     </div>
 </body>
+<script src="{% static 'js/app.js' %}"></script>
+<script>
+$(function() {
+    $("form input").keypress(function (e) {
+        if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+            $('#form-submit').click();
+            return false;
+        } else {
+            return true;
+        }
+    });
+});
+
+</script>
 </html>
