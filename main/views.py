@@ -243,7 +243,13 @@ def projects(request):
 def subdomain_enum(request):
     context = {}
     info_list = []
-    project_session = request.session['project']
+    try:
+        if request.session['project']:
+            project_session = request.session['project']
+        else:
+            project_session = request.session['project'] = None
+    except KeyError:
+        project_session = request.session['project'] = None
     request.session.modified = True
     project_model_instance = ProjectModel.objects.filter(project_user=request.user).filter(project_name__iexact=project_session)
     if request.method == 'POST':
@@ -454,6 +460,7 @@ def directory_enum(request):
     else:
         if not request.session['project'] or request.session['project'] == None or request.session['project'] == '':
             context['is_project'] = 'False'
+            context['profile_account'] = request.user.profile
             return render(request, 'dashboard/directory_enum.html', context)
 
         project_name = request.session['project']
@@ -484,7 +491,7 @@ def directory_enum(request):
         context['project'] = project_name
         context['projects'] =  projects
         context['subdomains'] = subdomains
-        context['profile_account'] = request.user.profile
+    context['profile_account'] = request.user.profile
     return render(request, 'dashboard/directory_enum.html', context)
 
 def vuln_analysis(request):
@@ -741,9 +748,12 @@ def injector(request):
                 context['status'] = 'Viewing full hex code'
                 context.update(csrf(request))
                 return render(request, 'dashboard/injector.html', context)
-        elif request.POST.get('filename') == '' or '.' not in request.POST.get('filename') or request.POST.get('filename') == None:
+        elif (request.POST.get('filename') == None or request.POST.get('filename') == '' or '.' not in request.POST.get('filename')) and 'clear' not in request.POST.keys():
             context['status'] = 'Not injected'
             context['error_message'] = 'Filename does not follow the correct filename pattern'
+            filename, dimensions = None, (None, None)
+        elif (request.POST.get('filename') == None or request.POST.get('filename') == '' or '.' not in request.POST.get('filename')) and 'clear' in request.POST.keys():
+            context['status'] = 'Cleared'
             filename, dimensions = None, (None, None)
         elif type(width) != int or type(height) != int or width < 0 or height < 0:
             context['status'] = 'Not injected'
@@ -753,7 +763,6 @@ def injector(request):
             filename = 'media/payloads/' + request.POST.get('filename')
             injection = Injector(file_type, width, height, payload, filename)
             filename, dimensions = injection.main()
-
 
         if filename != None and dimensions != None:
             new_filename = re.sub(r'^.*?/', '', filename)
