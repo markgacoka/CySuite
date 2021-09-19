@@ -11,6 +11,7 @@
     <title>Sign Up | CySuite</title>
     <link rel="icon" href="{% static 'img/icons/favicon.ico' %}" type="image/x-icon" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.css">
     <link href="{% static 'css/alert.css' %}" rel="stylesheet">
     <link href="{% static 'css/auth.css' %}" rel="stylesheet">
     <script src="{% static 'js/app.js' %}"></script>
@@ -21,7 +22,7 @@
             <div class="container d-flex flex-column">
                 <center><a href="/"><img src="{% static 'img/logo/logo_footer.png' %}" style="width: 15rem; height: auto; padding-top: 3rem;"></a></center>
                 <div class="row h-100" style="padding: 2rem 1rem 0 1rem;">
-                    <div class="mx-auto d-table h-100" style="width: 80%;">
+                    <div class="mx-auto d-table h-100" style="width: 90%; max-width: 800px; min-width: 70%;">
                         <div class="d-table-cell align-middle">
                             <div class="text-center mt-4">
                                 <h1 class="h2" style="font-size: 2rem;">Get started</h1>
@@ -42,7 +43,7 @@
                                             {% csrf_token %}
                                             {% if registration_form.non_field_errors %}
                                             <div class="alert alert-danger alert-dismissible" role="alert">
-                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><i class="fa fa-times" style="font-size: 1.3rem; color:red; z-index: 2;"></i></button>
                                                 <div class="alert-message">
                                                     <strong>{{registration_form.non_field_errors}}</strong>
                                                 </div>
@@ -52,9 +53,9 @@
                                             {% ifchanged field.errors %}
                                                 {% for error in field.errors %}
                                                     <div class="alert alert-danger alert-dismissible" role="alert">
-                                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><i class="fa fa-times" style="font-size: 1.3rem; color:red; z-index: 2;"></i></button>
                                                         <div class="alert-message">
-                                                            <strong>{{error}}</strong>
+                                                            <strong class="alert-text">{{error}}</strong>
                                                         </div>
                                                     </div>
                                                 {% endfor %}
