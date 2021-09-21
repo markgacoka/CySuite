@@ -107,11 +107,43 @@ DIRECTORY:
 
 # Start the postgresql server
 sudo service postgresql start
+  [Might need to kill the default postgres server started]
+  sudo lsof -i tcp:5432
+  sudo kill -9 [PID]
 
 # Run and start docker
+docker build .
 docker-compose build
+docker-compose -f docker-compose.yml up --no-start
+docker-compose -f docker-compose.yml start
+
+# Test if container runs
 docker-compose run django
+
+# Deploy
 docker-compose up
+
+# Delete all images
+sudo docker rmi -f $(docker images -q)
+
+# Stop and remove docker containers
+docker-compose down
+docker container stop $(docker container ls -aq)
+sudo killall -9 python celery redis redis-server
+sudo kill -9 $(sudo lsof -t -i:5432)
+sudo kill -9 $(sudo lsof -t -i:6379)
+docker stop $(docker ps -a -q)
+docker rm -f $(docker ps -a -q)
+sudo service postgresql stop
+
+# When conficts with container already in use (host or port)
+docker ps -a
+docker stop [container_name]
+docker rm -f [container_name]
+
+# Setting up the database
+docker exec -it dev-postgres bash
+> psql -h localhost -U postgres
 ```
 
 ### Running the program locally

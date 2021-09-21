@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.9"
 
 services:
   django:
@@ -8,24 +8,25 @@ services:
       - "8000:8000"
     volumes:
       - .:/usr/src/app
-    command: >
-      sh -c "python3 manage.py makemigrations cyauth &&
-             python3 manage.py makemigrations main &&
-             python3 manage.py migrate &&
-             python3 manage.py runserver 0.0.0.0:8000"
+    command: python manage.py runserver 0.0.0.0:8000
     env_file:
-      - ./.env.dev
+      - ./.env
     depends_on:
-      - pgdb
+      - db
       - redis
 
-  pgdb:
+  db:
     image: postgres:10-alpine
-    container_name: pgdb
+    container_name: db
+    restart: always
     env_file:
-      - ./.env.dev
+      - ./.env
+    # build:
+    #   context: ./Docker
+    #   dockerfile: db.Dockerfile
     volumes: 
-      - pgdata:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
+    # command: postgres -c listen_addresses='*'
     ports:
       - "5432:5432"
   redis:
@@ -37,10 +38,10 @@ services:
     volumes:
       - .:/usr/src/app
     env_file:
-      - ./.env.dev
+      - ./.env
     depends_on:
-      - pgdb
+      - db
       - redis
       - django
 volumes:
-  pgdata:
+  db_data:
