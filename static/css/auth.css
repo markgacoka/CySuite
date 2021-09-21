@@ -195,7 +195,6 @@ input {
 .form-control:focus {
     background-color: #fff;
     border-color: #9fc0f5;
-    box-shadow: 0 0 0 .2rem rgba(63, 128, 234, .25);
     color: #495057;
     outline: 0
 }
