@@ -101,31 +101,36 @@ DIRECTORY:
     |   __init__.py
 | manage.py      
 
-[terminal]
-# Send packages with versions to requirements.txt
-# pipenv lock -r > requirements.txt
+### Setup ###
+# Ensure database was created
+docker-compose exec db psql --username=docker --dbname=cysuite_db
+\l
+\c cysuite_db
+\dt
 
-# Start the postgresql server
-sudo service postgresql start
-  [Might need to kill the default postgres server started]
-  sudo lsof -i tcp:5432
-  sudo kill -9 [PID]
+docker volume inspect django-on-docker_postgres_data
 
-# Run and start docker
-docker build .
+
+# Build services in docker-compose
 docker-compose build
 docker-compose -f docker-compose.yml up --no-start
 docker-compose -f docker-compose.yml start
 
-# Test if container runs
+### Quick Run ###
+# RUN
+docker-compose build
+docker-compose up
+
+# Test if container runs (one-time deployment)
 docker-compose run django
+
+# Start a stopped service
+docker-compose start
 
 # Deploy
 docker-compose up
 
-# Delete all images
-sudo docker rmi -f $(docker images -q)
-
+### Stop Service ###
 # Stop and remove docker containers
 docker-compose down
 docker container stop $(docker container ls -aq)
@@ -136,14 +141,30 @@ docker stop $(docker ps -a -q)
 docker rm -f $(docker ps -a -q)
 sudo service postgresql stop
 
-# When conficts with container already in use (host or port)
+### DANGER ZONE !! ###
+# Delete all images
+sudo docker rmi -f $(docker images -q)
+
+# Stop Docker
+sudo systemctl stop docker
+
+# Removing a container
 docker ps -a
 docker stop [container_name]
 docker rm -f [container_name]
 
-# Setting up the database
+### Misc ###
+# Build image defined in the Dockerfile
+docker build .
+
+# Send packages with versions to requirements.txt
+pipenv lock -r > requirements.txt
+
+# Running bash on Docker
 docker exec -it dev-postgres bash
-> psql -h localhost -U postgres
+
+# Start the postgresql server
+sudo service postgresql start
 ```
 
 ### Running the program locally
