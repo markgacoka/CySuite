@@ -8,7 +8,7 @@ services:
       - "8000:8000"
     volumes:
       - .:/usr/src/app
-    command: python manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver
     env_file:
       - ./.env
     depends_on:
@@ -21,12 +21,8 @@ services:
     restart: always
     env_file:
       - ./.env
-    # build:
-    #   context: ./Docker
-    #   dockerfile: db.Dockerfile
     volumes: 
       - db_data:/var/lib/postgresql/data
-    # command: postgres -c listen_addresses='*'
     ports:
       - "5432:5432"
   redis:
