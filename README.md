@@ -124,11 +124,11 @@ docker-compose up
 # Test if container runs (one-time deployment)
 docker-compose run django
 
-# Start a stopped service
-docker-compose start
-
-# Deploy
+# Deploy/start server again
 docker-compose up
+
+# Stop running container
+docker-compose stop
 
 ### Stop Service ###
 # Stop and remove docker containers
