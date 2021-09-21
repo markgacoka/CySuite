@@ -10,6 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sign In | CySuite</title>
     <link rel="icon" href="{% static 'img/icons/favicon.ico' %}" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
     <link href="{% static 'css/alert.css' %}" rel="stylesheet">
     <link href="{% static 'css/auth.css' %}" rel="stylesheet">
@@ -38,21 +39,23 @@
                                             {% csrf_token %}
                                             {% if login_form.non_field_errors %}
                                             <div class="alert alert-danger alert-dismissible" role="alert">
-                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><i class="fa fa-times" style="font-size: 1.3rem; color:red; z-index: 2;"></i></button>
                                                 <div class="alert-message">
                                                     <strong>{{login_form.non_field_errors}}</strong>
                                                 </div>
                                             </div>
                                             {% endif %}
                                             {% for field in login_form %}
+                                            {% ifchanged field.errors %}
                                                 {% for error in field.errors %}
-                                                <div class="alert alert-danger alert-dismissible" role="alert">
-                                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                                    <div class="alert-message">
-                                                        <strong>{{error}}</strong>
+                                                    <div class="alert alert-danger alert-dismissible" role="alert">
+                                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><i class="fa fa-times" style="font-size: 1.3rem; color:red; z-index: 2;"></i></button>
+                                                        <div class="alert-message">
+                                                            <strong class="alert-text">{{error}}</strong>
+                                                        </div>
                                                     </div>
-                                                </div>
                                                 {% endfor %}
+                                            {% endifchanged %}
                                             {% endfor %}
                                             <h4 style="text-align:center">Sign in using Social</h4>
                                             <div class="flex-c-m">
@@ -64,15 +67,17 @@
                                                 <label class="form-label">Email</label>
                                                 <input class="form-control form-control-lg" type="text" name="email" placeholder="Enter your email" />
                                             </div>
-                                            <div class="mb-3">
+                                            <div style="height: 3rem; margin-bottom: 2rem;">
                                                 <label class="form-label">Password</label>
-                                                <input class="form-control form-control-lg" type="password" name="password" placeholder="Enter your password" />
-                                                <small><a href="/reset-password">Forgot password?</a></small>
+                                                <div style="width: 100%;">
+                                                    <input class="form-control form-control-lg" id="password-input" type="password" name="password" placeholder="Enter your password" style="width:90%; float: left;"/>
+                                                    <button type="button" onclick="toggleInput();" style="padding: 0; background-color: white; width: 10%; border-left: none; float: right; height: 3rem; display: grid; border: 1px solid rgb(206, 212, 218); align-items: center; text-align: center; border-left: hidden;"><i class="show-pass fa fa-eye fa-lg" style="color: grey; font-size: 1.5rem;"></i></button>
+                                                </div>
                                             </div>
-                                           <div>
-
+                                            <small><a href="/reset-password">Forgot password?</a></small>
+                                            <div>
                                             </div>
-                                            <div style="height: 5rem; width: 100%;">
+                                            <div style="padding-top: 1rem;">
                                                 <a id="form-submit" class="title-button glue-button--medium-emphasis" title="Log In" href="#" style="float: right;" onclick="document.forms['login-form'].submit();">
                                                     Sign In
                                                 </a>
@@ -80,8 +85,8 @@
                                                     <input id="customControlInline" type="checkbox" class="form-check-input" value="remember-me" name="remember-me" checked>
                                                     <label class="form-check-label text-small" for="customControlInline">Remember me</label>
                                                 </div>
-                                                <p style="padding-top: 0.5rem;">Don't have an account? <a href="/register">Sign Up</a></p>
                                             </div>
+                                            <p style="width: 50%; padding-top: 0.5rem;">Don't have an account? <a href="/register">Sign Up</a></p>
                                         </form>
                                     </div>
                                 </div>
@@ -94,6 +99,16 @@
     </div>
 </body>
 <script src="{% static 'js/app.js' %}"></script>
+<script>
+  function toggleInput() {
+    var x = document.getElementById("password-input");
+    if (x.type === "password") {
+    x.type = "text";
+    } else {
+    x.type = "password";
+    }
+  }
+</script>
 <script>
 $(function() {
     $("form input").keypress(function (e) {

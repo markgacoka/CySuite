@@ -80,15 +80,18 @@
                                                     <label class="form-label">Username</label>
                                                     <input class="form-control form-control-lg" type="text" name="username" placeholder="Username" />
                                                 </div>
-                                                <div class="mb-3">
+                                                <div style="height: 3rem; margin-bottom: 3rem;">
                                                     <label class="form-label">Password</label>
-                                                    <input class="form-control form-control-lg" type="password" name="password1" id="password1" placeholder="Enter password" />
+                                                    <div style="width: 100%; padding-bottom: 3rem;">
+                                                        <input class="form-control form-control-lg" id="password1" type="password" name="password1" placeholder="Enter your password" style="width:90%; float: left;"/>
+                                                        <button type="button" onclick="toggleInput();" style="padding: 0; background-color: white; width: 10%; border-left: none; float: right; height: 3rem; display: grid; border: 1px solid rgb(206, 212, 218); align-items: center; text-align: center; border-left: hidden;"><i class="show-pass fa fa-eye fa-lg" style="color: grey; font-size: 1.5rem;"></i></button>
+                                                    </div>
                                                 </div>
-                                                <div class="mb-3">
+                                                <div class="mb-3" style="padding-bottom: 3rem;">
                                                     <label class="form-label">Confirm Password</label>
-                                                    <input class="form-control form-control-lg" type="password" name="password2" id="password2" placeholder="Enter password again" />
                                                     <div style="width: 100%;">
-                                                        <input type="checkbox" onclick="toggle()" style="margin-top: 1rem;">&nbsp;<span style="font-size: 13px; color: darkgrey;">Show Password</span>
+                                                        <input class="form-control form-control-lg" id="password2" type="password" name="password2" placeholder="Enter your password again" style="width:90%; float: left;"/>
+                                                        <button type="button" onclick="toggleInput2();" style="padding: 0; background-color: white; width: 10%; border-left: none; float: right; height: 3rem; display: grid; border: 1px solid rgb(206, 212, 218); align-items: center; text-align: center; border-left: hidden;"><i class="show-pass fa fa-eye fa-lg" style="color: grey; font-size: 1.5rem;"></i></button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -110,6 +113,24 @@
     </div>
 </body>
 <script src="{% static 'js/app.js' %}"></script>
+<script>
+  function toggleInput() {
+    var x = document.getElementById("password1");
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
+  }
+  function toggleInput2() {
+    var y = document.getElementById("password2");
+    if (y.type === "password") {
+        y.type = "text";
+    } else {
+        y.type = "password";
+    }
+  }
+</script>
 <script type="text/javascript">
     $(function() {
         $("form input").keypress(function (e) {
@@ -121,17 +142,5 @@
             }
         });
     });
-
-    function toggle() {
-        var x = document.getElementById("password1");
-        var y = document.getElementById("password2");
-        if (x.type === "password" && y.type === "password") {
-            x.type = "text";
-            y.type = "text";
-        } else {
-            x.type = "password";
-            y.type = "password";
-        }
-    }
 </script>
 </html>

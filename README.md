@@ -108,17 +108,11 @@ docker-compose exec db psql --username=docker --dbname=cysuite_db
 \c cysuite_db
 \dt
 
-docker volume inspect django-on-docker_postgres_data
-
-
-# Build services in docker-compose
-docker-compose build
-docker-compose -f docker-compose.yml up --no-start
-docker-compose -f docker-compose.yml start
-
 ### Quick Run ###
 # RUN
 docker-compose build
+docker-compose -f docker-compose.yml up --no-start
+docker-compose -f docker-compose.yml start
 docker-compose up
 
 # Test if container runs (one-time deployment)

@@ -1,5 +1,4 @@
-version: "3.9"
-
+version: '3.9'
 services:
   django:
     build:
@@ -7,10 +6,10 @@ services:
       dockerfile: ./Dockerfile
     container_name: django
     ports:
-      - 8000:8000
+      - '8000:8000'
     volumes:
-      - ./:/usr/src/app
-    command: >
+      - './:/usr/src/app'
+    command: |
       sh -c "python manage.py collectstatic --noinput &&
              python manage.py migrate &&
              python manage.py runserver 0.0.0.0:8000"
@@ -19,27 +18,26 @@ services:
     depends_on:
       - db
       - redis
-
   db:
-    image: postgres:10-alpine
+    image: 'postgres:10-alpine'
     container_name: db
     restart: always
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
-    volumes: 
-      - db_data:/var/lib/postgresql/data
+    volumes:
+      - 'db_data:/var/lib/postgresql/data'
     ports:
-      - 5432:5432
+      - '5432:5432'
   redis:
-    image: redis:alpine
+    image: 'redis:alpine'
   celery:
     restart: always
     build: .
     command: celery -A cysuite worker -P threads -l INFO --concurrency=8
     volumes:
-      - .:/usr/src/app
+      - '.:/usr/src/app'
     env_file:
       - ./.env
     depends_on:
@@ -47,4 +45,4 @@ services:
       - redis
       - django
 volumes:
-  db_data:
+  db_data: null
