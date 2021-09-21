@@ -128,7 +128,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
 @python_2_unicode_compatible
 class UserProfile(models.Model):
     username = models.OneToOneField(Account, primary_key=True, related_name='profile', db_column="user_id", on_delete=models.CASCADE)
-    image = models.ImageField(default='default.jpg', upload_to='profiles/', blank=True, null=True)
+    image = models.ImageField(default='default.jpeg', upload_to='profiles/', blank=True, null=True)
 
     class Meta():
         db_table = 'profile'

@@ -1,18 +1,22 @@
 version: '3.9'
 services:
   django:
+    restart: always
     build:
       context: .
       dockerfile: ./Dockerfile
     container_name: django
     ports:
       - '8000:8000'
-    volumes:
-      - './:/usr/src/app'
     command: |
       sh -c "python manage.py collectstatic --noinput &&
+             python manage.py makemigrations &&
              python manage.py migrate &&
              python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/usr/src/app
+      - static_volume:/usr/src/app/static
+      - media_volume:/usr/src/app/media
     env_file:
       - ./.env
     depends_on:
@@ -27,17 +31,26 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
     volumes:
-      - 'db_data:/var/lib/postgresql/data'
+      - db_data:/var/lib/postgresql/data
     ports:
       - '5432:5432'
   redis:
-    image: 'redis:alpine'
+    restart: always
+    image: redis:alpine
+    container_name: redis
+    volumes:
+      - redisdata:/data
   celery:
     restart: always
-    build: .
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: celery
     command: celery -A cysuite worker -P threads -l INFO --concurrency=8
     volumes:
-      - '.:/usr/src/app'
+      - .:/usr/src/app
+      - static_volume:/usr/src/app/static
+      - media_volume:/usr/src/app/media
     env_file:
       - ./.env
     depends_on:
@@ -45,4 +58,7 @@ services:
       - redis
       - django
 volumes:
-  db_data: null
+  db_data:
+  redisdata:
+  static_volume:
+  media_volume:

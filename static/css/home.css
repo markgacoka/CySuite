@@ -3941,7 +3941,7 @@ a:visited {
 
 @media (min-width:1024px) {
     .header__area-container {
-        margin: 0 0 0 120px;
+        margin: 0 0 0 calc(10vw);
     }
 }
 
@@ -3956,7 +3956,7 @@ a:visited {
 }
 
 .header__area-container-logo {
-    height: 25px;
+    height: 30px;
     width: auto;
 }
 

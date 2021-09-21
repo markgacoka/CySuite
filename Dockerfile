@@ -13,6 +13,3 @@ RUN apk update --no-cache \
 && apk del --no-cache --purge build-deps
 RUN apk add postgresql-libs libpq --no-cache
 WORKDIR /usr/src/app
-
-RUN adduser -D user
-USER user
