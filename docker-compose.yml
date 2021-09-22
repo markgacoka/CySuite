@@ -9,14 +9,15 @@ services:
     ports:
       - '8000:8000'
     command: |
-      sh -c "python manage.py collectstatic --noinput &&
-             python manage.py makemigrations &&
-             python manage.py migrate &&
-             python manage.py runserver 0.0.0.0:8000"
+      sh -c "python3 manage.py collectstatic --noinput &&
+             python3 manage.py makemigrations &&
+             python3 manage.py migrate &&
+             python3 manage.py wait_for_db &&
+             python3 manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/usr/src/app
       - static_volume:/usr/src/app/static
-      - media_volume:/usr/src/app/media
+      - media_volume:/media
     env_file:
       - ./.env
     depends_on:
@@ -26,10 +27,8 @@ services:
     image: 'postgres:10-alpine'
     container_name: db
     restart: always
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
+    env_file:
+      - ./.env
     volumes:
       - db_data:/var/lib/postgresql/data
     ports:

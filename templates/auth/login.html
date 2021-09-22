@@ -38,12 +38,14 @@
                                         <form method="post" id="login-form">
                                             {% csrf_token %}
                                             {% if login_form.non_field_errors %}
+                                            {% for error in login_form.non_field_errors %}
                                             <div class="alert alert-danger alert-dismissible" role="alert">
                                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><i class="fa fa-times" style="font-size: 1.3rem; color:red; z-index: 2;"></i></button>
                                                 <div class="alert-message">
-                                                    <strong>{{login_form.non_field_errors}}</strong>
+                                                    <strong>{{error}}</strong>
                                                 </div>
                                             </div>
+                                            {% endfor %}
                                             {% endif %}
                                             {% for field in login_form %}
                                             {% ifchanged field.errors %}
@@ -59,9 +61,9 @@
                                             {% endfor %}
                                             <h4 style="text-align:center">Sign in using Social</h4>
                                             <div class="flex-c-m">
-                                                <a href="#" class="login100-social-item bg1"><i class="fa fa-facebook"></i></a>
-                                                <a href="#" class="login100-social-item bg2"><i class="fa fa-twitter"></i></a>
-                                                <a href="{% provider_login_url 'google' %}" class="login100-social-item bg3"><i class="fa fa-google"></i></a>
+                                                <a href="#" class="login100-social-item bg1"><i class="fab fa-facebook-f"></i></a>
+                                                <a href="#" class="login100-social-item bg2"><i class="fab fa-twitter"></i></a>
+                                                <a href="{% provider_login_url 'google' %}" class="login100-social-item bg3"><i class="fab fa-google"></i></a>
                                             </div>
                                             <div class="mb-3" style="padding-top: 2rem;">
                                                 <label class="form-label">Email</label>
