@@ -8,7 +8,7 @@ Projects | CySuite
 {% block content %}
 <div class="card" style="padding: 1.5rem 20px 1.5rem 20px; width: 100%;">
     <h2 style="float: left; width: 40%; padding: 0; margin: 0;">Add a new project</h2>
-    <button class="asset-btn" id="add-project" style="background-color: #3E4261; float: left; width: 20%; min-width: max-content; position: absolute; right: 0; top: 20%; margin-right: 20px;"><i class="fa fa-plus" style="color: white;"></i>&emsp;Add Asset</button>
+    <button class="asset-btn" id="add-project" style="background-color: rgba(9, 14, 36, 0.9); float: left; width: 20%; min-width: max-content; position: absolute; right: 0; top: 20%; margin-right: 20px;"><i class="fa fa-plus" style="color: white;"></i>&emsp;Add Asset</button>
 </div>
 {% if success_message %}
     <button style="display: none;" class="alert-popup" id="alert-success" name="{{success_message}}" value="success"></button>
@@ -39,7 +39,7 @@ Projects | CySuite
     <div class="project-column" style="display: block; float: left;  width: 50%;">
         <div class="courses-container">
             <div class="course">
-                <div class="course-preview" style="background-color: #3E4261">
+                <div class="course-preview" style="background-color: rgba(9, 14, 36, 0.9);">
                     <h6 class="project-category">Program</h6>
                     <h3 class="project-title">{{project_ele|get_item:"program"}}</h3>
                 </div>
@@ -67,7 +67,7 @@ Projects | CySuite
                             </div>
                         </div>
                         <div style="float: right; width: 30%;">
-                            <button class="project-btn btn-width" onclick="viewProject('{{project_ele|get_item:"project"}}');" style="background-color: #3E4261; min-width: max-content;">View&emsp;<i class="hide fa fa-angle-double-right"></i></button>
+                            <button class="project-btn btn-width" onclick="viewProject('{{project_ele|get_item:"project"}}');" style="background-color: rgba(9, 14, 36, 0.9); min-width: max-content;">View&emsp;<i class="hide fa fa-angle-double-right"></i></button>
                         </div>
                 </div>
             </div>

@@ -3537,16 +3537,16 @@ fieldset:disabled .btn {
 
 .btn-primary {
     color: #fff;
-    background-color:#3E4261;
-    border-color: #3E4261;
+    background-color:rgba(9, 14, 36, 0.8);
+    border-color: rgba(9, 14, 36, 0.8);
 }
 
 .btn-check:focus+.btn-primary,
 .btn-primary:focus,
 .btn-primary:hover {
     color: #fff;
-    background-color: #3E4261;
-    border-color: #3E4261
+    background-color: rgba(9, 14, 36, 0.7);
+    border-color: rgba(9, 14, 36, 0.7);
 }
 
 .btn-check:focus+.btn-primary,
@@ -13023,7 +13023,7 @@ a.badge-soft-dark:focus {
 .show>.btn-secondary.dropdown-toggle,
 .show>.btn-success.dropdown-toggle,
 .show>.btn-warning.dropdown-toggle {
-    color: #fff
+    color: rgba(233, 236, 239);
 }
 
 .btn-facebook {
@@ -14590,7 +14590,7 @@ body[data-theme=light] .sidebar {
 
 .sidebar-content {
     transition: margin-left .35s ease-in-out, left .35s ease-in-out, margin-right .35s ease-in-out, right .35s ease-in-out;
-    background: #293042
+    background: rgba(9, 14, 36, 0.6);
 }
 
 body[data-theme=colored] .sidebar-content {
@@ -14627,7 +14627,7 @@ a.sidebar-link {
     position: relative;
     text-decoration: none;
     cursor: pointer;
-    color: rgba(233, 236, 239, .5)
+    color: rgba(233, 236, 239, .7);
 }
 
 body[data-theme=colored] .sidebar-link,
@@ -14650,7 +14650,7 @@ body[data-theme=light] a.sidebar-link {
 a.sidebar-link i,
 a.sidebar-link svg {
     margin-right: .75rem;
-    color: rgba(233, 236, 239, .5)
+    color: rgba(233, 236, 239, .8)
 }
 
 body[data-theme=colored] .sidebar-link i,
