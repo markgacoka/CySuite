@@ -25,7 +25,7 @@ Profile | CySuite
                         {% csrf_token %}
                         <img src="{{profile_account.image.url}}" alt="Profile image" class="img-fluid rounded-circle mb-2" width="128" height="128" style="border-radius:50% !important; width: 128px; height: 128px; object-fit: cover;"/>
                         <h5 class="card-title mb-2">{{user.given_name}}&nbsp;{{user.family_name}}</h5>
-                        <label class="btn btn-primary btn-sm" style="width: 100%; position: relative; color: white; padding: 0.5rem; cursor: pointer;">
+                        <label class="btn btn-primary btn-sm" style="width: 100%; position: relative; color: rgba(233, 236, 239); padding: 0.5rem; cursor: pointer;">
                             <input type="file" name="image" accept="image/*" onchange="form.submit()" hidden />
                             <i class="fa fa-upload" style="font-size: 0.8rem;"></i>&nbsp;Choose File
                         </label>

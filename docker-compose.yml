@@ -15,9 +15,9 @@ services:
              python3 manage.py wait_for_db &&
              python3 manage.py runserver 0.0.0.0:8000"
     volumes:
-      - .:/usr/src/app
-      - static_volume:/usr/src/app/static
-      - media_volume:/media
+      - '.:/usr/src/app'
+      - 'static_volume:/static'
+      - 'media_volume:/media'
     env_file:
       - ./.env
     depends_on:
@@ -30,15 +30,15 @@ services:
     env_file:
       - ./.env
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - 'db_data:/var/lib/postgresql/data'
     ports:
       - '5432:5432'
   redis:
     restart: always
-    image: redis:alpine
+    image: 'redis:alpine'
     container_name: redis
     volumes:
-      - redisdata:/data
+      - 'redisdata:/data'
   celery:
     restart: always
     build:
@@ -47,9 +47,9 @@ services:
     container_name: celery
     command: celery -A cysuite worker -P threads -l INFO --concurrency=8
     volumes:
-      - .:/usr/src/app
-      - static_volume:/usr/src/app/static
-      - media_volume:/usr/src/app/media
+      - '.:/usr/src/app'
+      - 'static_volume:/static'
+      - 'media_volume:/media'
     env_file:
       - ./.env
     depends_on:
@@ -57,7 +57,7 @@ services:
       - redis
       - django
 volumes:
-  db_data:
-  redisdata:
-  static_volume:
-  media_volume:
+  db_data: null
+  redisdata: null
+  static_volume: null
+  media_volume: null
