@@ -26,19 +26,22 @@
     </div>
 </div>
 {% if projects != None and subdomains != None %}
-<div class="col-12 col-xxl d-flex" style="width: 100%;">
-    <div class="card flex-fill" style="width: 20%; float: left; margin-right: 1rem;">
-        <div class="card-header pb-0">
-            <h4>Personal Notes</h4>
+<div class="col-12 col-xxl" style="width: 100%; padding-bottom: 2rem;">
+  <div class="card-header py-3" style="width: 100%; display: block; text-align: center;">
+      <h4>Server Map</h4>
+  </div>
+  <div id="vmap" style="width: 100%; height: 400px;"></div>
+</div>
+<div class="col-12 col-xxl" style="width: 100%; display: inline-block;">
+    <div style="padding: inherit; margin-bottom: 24px; height: auto width: 30%; float: left;">
+        <div class="card-header py-3">
+            <h4>Architecture</h4>
         </div>
-        <div class="card-body" style="padding: 1rem 1rem 1.5rem 1rem;">
-            <textarea class="form-control" style="background-color: #e2e8ee;width: 100%; height: 80%;"></textarea>
-            <div style="width: 100%; margin: 1rem 0 0 0; height: 20%; ">
-                <button class="btn btn-primary" style="float: right; width: max-content;">Save</button>
-            </div>
+        <div class="card-body" style="background: #fff;">
+          <canvas id="myChart" style="display: block; width: auto; height: auto;" class="chartjs-render-monitor"></canvas>
         </div>
     </div>
-    <div class="col-xl-8 col-lg-7" style="margin-bottom: 24px; width: 35%; float: right; margin-right: 1rem; min-height: 100%;">
+    <div class="col-xl-8 col-lg-7" style="height: auto; width: 70%; display: contents; padding-right: 0;">
         <div class="card shadow" style="margin-bottom: 24px; min-height: 100%">
             <div class="card-header py-3">
                 <h4>Moving average of vulnerabilites per subdomains</h4>
@@ -50,48 +53,17 @@
             </div>
         </div>
     </div>
-    <div class="col-xl-8 col-lg-7" style="width: 15%; float: right; min-height: 100%;">
-        <div class="stat-container">
-            <div class="card flex-fill" style="justify-content: center;">
-            <div style="width: 100%; height: 40px; position: absolute; top: 50%; left: 0; margin-top: -20px; line-height:19px; text-align: center; z-index: 999999999999999">99%<Br />Total</div>
-                <div id="chart1" style="position: absolute; align-items: center; margin: 1rem;"></div>
-            </div>
-            <div class="card flex-fill" style="justify-content: center; margin-bottom: 24px;">
-            <div style="width: 100%; height: 40px; position: absolute; top: 50%; left: 0; margin-top: -20px; line-height:19px; text-align: center; z-index: 999999999999999">99%<Br />Total</div>
-                <div id="chart2" style="position: absolute; align-items: center; margin: 1rem;"></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-8 col-lg-7" style="width: 15%; float: right; min-height: 100%;">
-        <div class="stat-container">
-            <div class="card flex-fill" style="justify-content: center;">
-            <div style="width: 100%; height: 40px; position: absolute; top: 50%; left: 0; margin-top: -20px; line-height:19px; text-align: center; z-index: 999999999999999">99%<Br />Total</div>
-                <div id="chart3" style="position: absolute; align-items: center; margin: 1rem;"></div>
-            </div>
-            <div class="card flex-fill" style="justify-content: center; margin-bottom: 24px;">
-            <div style="width: 100%; height: 40px; position: absolute; top: 50%; left: 0; margin-top: -20px; line-height:19px; text-align: center; z-index: 999999999999999">99%<Br />Total</div>
-                <div id="chart4" style="position: absolute; align-items: center; margin: 1rem;"></div>
-            </div>
-        </div>
-    </div>
 </div>
-<div class="col-12 col-xxl d-flex" style="width: 100%;">
-    <div class="col-xl-8 col-lg-7" style="width: 49%; flex:1; float:right; padding: 0;">
-        <div class="card shadow" style="margin-bottom: 0; height: 100%;">
-            <div class="card-header py-3">
-                <h4>Server Map</h4>
-            </div>
-            <div id="vmap" style="width: 100%; height: 400px;"></div>
-        </div>
-    </div>
-    <div class="col-xl-8 col-lg-7" style="width: 49%;float:right;padding-right: 0;">
-        <div class="card shadow" style="height: 100%;">
-            <div class="card-header py-3">
-                <h4>Architecture</h4>
-            </div>
-            <canvas id="myChart" style="display: block; width: 710px; height: 355px;" class="chartjs-render-monitor" width="710" height="355"></canvas>
-        </div>
-    </div>
+<div class="col-12 col-xxl">
+  <div class="card-header pb-0" style="width: 100%; height: 100%;">
+    <h4>Personal Notes</h4>
+  </div>
+  <div class="card-body" style="height: 100%; background: #fff; padding: 1rem 1rem 1.5rem 1rem;">
+      <textarea class="form-control" style="background-color: #eff; width: 100%; height: 400px; font-family: 'Courier New', Courier monospace; font-size: 0.9rem;"></textarea>
+      <div style="width: 100%; height: initial; display: inline-block; margin: 1rem 0 0 0; height: 20%; ">
+          <button class="btn btn-primary" style="float: right; width: max-content;">Save</button>
+      </div>
+  </div>
 </div>
 {% endif %}
 {% endblock %}
@@ -242,7 +214,7 @@
           pointHoverBorderColor: "#3E4261",
           pointHitRadius: 10,
           pointBorderWidth: 2,
-          data: [0, 5000, 10000, 15000, 20000,],
+          data: [0, 2, 4, 3, 1,],
         },
       ],
     },
