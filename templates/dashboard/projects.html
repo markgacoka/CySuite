@@ -49,12 +49,12 @@ Projects | CySuite
                         <div style="float: right; width: 11%;">
                             <form method="post" id="project_edit" style="float: left;">
                             {% csrf_token %}
-                                <a href="" name="{{project_ele|get_item:"project"}}" class="edit-btn" id="edit-btn" style="padding-right: 0.5rem;"><i class="fa fa-edit" style="font-size: 1.2rem; color: #3E4261;"></i></a>
+                                <a href="" name="{{project_ele|get_item:"project"}}" class="edit-btn" id="edit-btn" style="padding-right: 0.5rem;"><i class="fa fa-edit" style="font-size: 1.2rem; color: rgba(9, 14, 36, 0.9);"></i></a>
                             </form>
                             <form method="post" id="project_delete" style="float: right;">
                             {% csrf_token %}
                                 <input name="delete-project" value="{{project_ele|get_item:"project"}}" hidden />
-                                <a href="#" onclick="document.getElementById('project_delete').submit()"><i class="fa fa-trash" style="font-size: 1.2rem; color: #3E4261;"></i></a>
+                                <a href="#" onclick="document.getElementById('project_delete').submit()"><i class="fa fa-trash" style="font-size: 1.2rem; color: rgba(9, 14, 36, 0.9);"></i></a>
                             </form>
                         </div>
                     </div>
