@@ -59,7 +59,7 @@
     <h4>Personal Notes</h4>
   </div>
   <div class="card-body" style="height: 100%; background: #fff; padding: 1rem 1rem 1.5rem 1rem;">
-      <textarea class="form-control" style="background-color: #eff; width: 100%; height: 400px; font-family: 'Courier New', Courier monospace; font-size: 0.9rem;"></textarea>
+      <textarea class="form-control" style="background-color: rgba(223, 226, 254, 0.2); width: 100%; height: 400px; font-family: 'Courier New', Courier monospace; font-size: 0.9rem;"></textarea>
       <div style="width: 100%; height: initial; display: inline-block; margin: 1rem 0 0 0; height: 20%; ">
           <button class="btn btn-primary" style="float: right; width: max-content;">Save</button>
       </div>
@@ -134,8 +134,8 @@
   $(document).ready(function () {
     var ctx = document.getElementById("myChart").getContext("2d");
     var gradient = ctx.createLinearGradient(0, 0, 0, 450);
-    gradient.addColorStop(1, '#2a305c');
-    gradient.addColorStop(0, '#6e707e');
+    gradient.addColorStop(1, '#6e707e');
+    gradient.addColorStop(0, '#dfe2fe');
 
     var myChart = new Chart(ctx, {
       type: "doughnut",
@@ -145,7 +145,7 @@
           {
             label: "# of users",
             data: ["1", "2", "3", "4", "5"],
-            backgroundColor: gradient,
+            backgroundColor: "#2a305c",
             borderColor: [
               "#fff",
             ],
@@ -199,26 +199,23 @@
   var myLineChart = new Chart(ctx, {
     type: "line",
     data: {
-      labels: ["1", "2", "3", "4", "5"],
+      labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
       datasets: [
         {
-          label: "Earnings",
-          lineTension: 0.3,
           backgroundColor: "rgba(78, 115, 223, 0.05)",
           borderColor: "#3E4261",
           pointRadius: 3,
           pointBackgroundColor: "#3E4261",
           pointBorderColor: "#3E4261",
-          pointHoverRadius: 3,
-          pointHoverBackgroundColor: "#3E4261",
           pointHoverBorderColor: "#3E4261",
           pointHitRadius: 10,
-          pointBorderWidth: 2,
-          data: [0, 2, 4, 3, 1,],
+          data: [0, 2, 4, 3, 1, 2, 5, 4, 3, 2],
         },
       ],
     },
     options: {
+      tooltips: {enabled: false},
+      hover: {mode: null},
       maintainAspectRatio: false,
       layout: {
         padding: {
@@ -228,64 +225,9 @@
           bottom: 0,
         },
       },
-      scales: {
-        xAxes: [
-          {
-            time: {
-              unit: "date",
-            },
-            gridLines: {
-              display: false,
-              drawBorder: false,
-            },
-            ticks: {
-              maxTicksLimit: 7,
-            },
-          },
-        ],
-        yAxes: [
-          {
-            ticks: {
-              maxTicksLimit: 5,
-              padding: 10,
-              callback: function (value, index, values) {
-                return number_format(value);
-              },
-            },
-            gridLines: {
-              color: "rgb(234, 236, 244)",
-              zeroLineColor: "rgb(234, 236, 244)",
-              drawBorder: false,
-              borderDash: [2],
-              zeroLineBorderDash: [2],
-            },
-          },
-        ],
-      },
+      
       legend: {
         display: false,
-      },
-      tooltips: {
-        backgroundColor: "rgb(255,255,255)",
-        bodyFontColor: "#858796",
-        titleMarginBottom: 10,
-        titleFontColor: "#6e707e",
-        titleFontSize: 14,
-        borderColor: "#dddfeb",
-        borderWidth: 1,
-        xPadding: 15,
-        yPadding: 15,
-        displayColors: false,
-        intersect: false,
-        mode: "index",
-        caretPadding: 10,
-        callbacks: {
-          label: function (tooltipItem, chart) {
-            var datasetLabel =
-              chart.datasets[tooltipItem.datasetIndex].label || "";
-            return datasetLabel + ": $" + number_format(tooltipItem.yLabel);
-          },
-        },
       },
     },
   });
