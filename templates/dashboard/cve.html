@@ -1,21 +1,20 @@
 {% extends '../base.html' %}
 {% load static %}
 {% block title%}
-Dorking | CySuite
+CVE Search | CySuite
 {% endblock %}
 {% block content %}
 <div class="card" style="padding: 1rem 0 1rem 0; background-color: white; box-shadow: 1px 3px 2px 0 rgb(50 0 128 / 10%); border: 1px ridge #3E4261; width: 100%;">
-	<h2 style="padding-left: 15px; color: #293042; margin: 0;">Run a dork</h2>
+	<h2 style="padding-left: 15px; color: #293042; margin: 0;">Search the CVE Database</h2>
 </div>
 <div class="card">
 	<div class="card-header pb-0">        
-		<h5>Github Repos / Subdomain for Information Disclosures</h5>
+		<h4>CVE ID | Vendor name | Bug class</h4>
 	</div>
 	<div class="card-body">
 		<div class="form-floating mb-3 input-group">
-			<span class="input-group-text" style="max-height: 3rem; border-radius: 0 0 0 0;">http://</span>
 			<input type="email" class="form-control" id="floatingInput1" style="font-size:1.2rem !important; max-height: 3rem;">
-			<button class="btn btn-primary" style="padding: 0 2rem 0 2rem; border-radius: 0 0 0 0;">Enter</button>
+			<button class="btn btn-primary" style="padding: 0 2rem 0 2rem; border-radius: 0 0 0 0;">Search</button>
 		</div>
 		<textarea class="form-control" id="floatingTextarea1" style="min-height: 500px"></textarea>
 		<label for="floatingTextarea1" style="font-size: 1rem;"></label>

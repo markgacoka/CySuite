@@ -538,10 +538,10 @@ def vuln_analysis(request):
     context['profile_account'] = request.user.profile
     return render(request, 'dashboard/vuln_analysis.html', context)
     
-def dorking(request):
+def cve_search(request):
     context = {}
     context['profile_account'] = request.user.profile
-    return render(request, 'dashboard/dorking.html', context)
+    return render(request, 'dashboard/cve.html', context)
 
 def exploit(request):
     context = {}
