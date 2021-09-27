@@ -12,6 +12,26 @@ class RegistrationForm(UserCreationForm):
     class Meta:
         model = Account
         fields = ("given_name", "family_name", "email", "username", "password1", "password2")
+        error_messages = {
+            'given_name': {
+                'required': ("First name is a required field."),
+            },
+            'family_name': {
+                'required': ("Last name is a required field."),
+            },
+            'email': {
+                'required': ("The email field is a required field."),
+            },
+            'username': {
+                'required': ("Username is a required field."),
+            },
+            'password1': {
+                'required': ("The password field is a required field."),
+            },
+            'password2': {
+                'required': ("The password field is a required field."),
+            },
+        }
 
 class AccountAuthenticationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)

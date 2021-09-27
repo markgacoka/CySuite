@@ -37,6 +37,12 @@
                                         </div>
                                         <form method="post" id="login-form">
                                             {% csrf_token %}
+                                            <h4 style="text-align:center">Sign in using Social</h4>
+                                            <div class="flex-c-m">
+                                                <a href="#" class="login100-social-item bg1"><i class="fab fa-facebook-f"></i></a>
+                                                <a href="#" class="login100-social-item bg2"><i class="fab fa-twitter"></i></a>
+                                                <a href="{% provider_login_url 'google' %}" class="login100-social-item bg3"><i class="fab fa-google"></i></a>
+                                            </div>
                                             {% if login_form.non_field_errors %}
                                             {% for error in login_form.non_field_errors %}
                                             <div class="alert alert-danger alert-dismissible" role="alert">
@@ -59,13 +65,7 @@
                                                 {% endfor %}
                                             {% endifchanged %}
                                             {% endfor %}
-                                            <h4 style="text-align:center">Sign in using Social</h4>
-                                            <div class="flex-c-m">
-                                                <a href="#" class="login100-social-item bg1"><i class="fab fa-facebook-f"></i></a>
-                                                <a href="#" class="login100-social-item bg2"><i class="fab fa-twitter"></i></a>
-                                                <a href="{% provider_login_url 'google' %}" class="login100-social-item bg3"><i class="fab fa-google"></i></a>
-                                            </div>
-                                            <div class="mb-3" style="padding-top: 2rem;">
+                                            <div class="mb-3" style="padding-top: 1rem;">
                                                 <label class="form-label">Email</label>
                                                 <input class="form-control form-control-lg" type="text" name="email" placeholder="Enter your email" />
                                             </div>
