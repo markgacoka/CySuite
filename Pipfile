@@ -51,6 +51,9 @@ pywebcapture = "*"
 webdriver-manager = "*"
 psycopg2-binary = "*"
 pycurl = "*"
+boto3 = "*"
+django-storages = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
