@@ -2,6 +2,8 @@ version: '3.9'
 services:
   django:
     restart: always
+    networks:
+      - cysuite_default
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -9,11 +11,11 @@ services:
     ports:
       - '8000:8000'
     command: |
-      sh -c "python3 manage.py collectstatic --noinput &&
-             python3 manage.py makemigrations &&
-             python3 manage.py migrate &&
-             python3 manage.py wait_for_db &&
-             python3 manage.py runserver 0.0.0.0:8000"
+      sh -c "python manage.py collectstatic --noinput &&
+             python manage.py makemigrations &&
+             python manage.py migrate &&
+             python manage.py wait_for_db &&
+             python manage.py runserver 0.0.0.0:8000"
     volumes:
       - '.:/usr/src/app'
       - 'static_volume:/static'
@@ -27,6 +29,8 @@ services:
     image: 'postgres:10-alpine'
     container_name: db
     restart: always
+    networks:
+      - cysuite_default
     env_file:
       - ./.env
     volumes:
@@ -37,10 +41,14 @@ services:
     restart: always
     image: 'redis:alpine'
     container_name: redis
+    networks:
+      - cysuite_default
     volumes:
       - 'redisdata:/data'
   celery:
     restart: always
+    networks:
+      - cysuite_default
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -61,3 +69,7 @@ volumes:
   redisdata: null
   static_volume: null
   media_volume: null
+
+networks:
+  cysuite_default:
+    driver: bridge

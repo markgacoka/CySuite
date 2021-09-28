@@ -3468,10 +3468,8 @@ textarea.form-control-lg {
     padding: 3px;
     width: 30px;
     height: 30px;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
+    border: 1px solid #7288a2;
     border-radius: 50%;
-    border: 1px solid #7288a2;;
     text-align: center;
     font-weight: 900;
 }
@@ -3502,6 +3500,10 @@ textarea.form-control-lg {
     -webkit-transition: all 0.35s ease 0.15s;
     -o-transition: all 0.35s ease 0.15s;
     transition: all 0.35s ease 0.15s;
+}
+
+.accordion {
+    padding-bottom: 0.5rem;
 }
 
 .is-invalid~.invalid-feedback,
@@ -5611,36 +5613,8 @@ fieldset:disabled .btn {
 
 .accordion-item {
     background-color: #f7f9fc;
-    border: 1px solid rgba(0, 0, 0, .125)
-}
-
-.accordion-item:first-of-type {
-    border-top-left-radius: .2rem;
-    border-top-right-radius: .2rem
-}
-
-.accordion-item:first-of-type .accordion-button {
-    border-top-left-radius: calc(.2rem - 1px);
-    border-top-right-radius: calc(.2rem - 1px)
-}
-
-.accordion-item:not(:first-of-type) {
-    border-top: 0
-}
-
-.accordion-item:last-of-type {
-    border-bottom-right-radius: .2rem;
-    border-bottom-left-radius: .2rem
-}
-
-.accordion-item:last-of-type .accordion-button.collapsed {
-    border-bottom-right-radius: calc(.2rem - 1px);
-    border-bottom-left-radius: calc(.2rem - 1px)
-}
-
-.accordion-item:last-of-type .accordion-collapse {
-    border-bottom-right-radius: .2rem;
-    border-bottom-left-radius: .2rem
+    border: 1px solid rgba(0, 0, 0, .125);
+    border-radius: 0;
 }
 
 .accordion-body {
