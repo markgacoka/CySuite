@@ -69,7 +69,6 @@ volumes:
   redisdata: null
   static_volume: null
   media_volume: null
-
 networks:
   cysuite_default:
     driver: bridge
