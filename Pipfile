@@ -54,6 +54,10 @@ pycurl = "*"
 boto3 = "*"
 django-storages = "*"
 python-dotenv = "*"
+gunicorn = "*"
+django-heroku = "*"
+whitenoise = "*"
+dj-database-url = "*"
 
 [dev-packages]
 
