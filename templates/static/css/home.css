@@ -2467,7 +2467,6 @@ strong {
 }
 
 a {
-    color: #007bff;
     text-decoration: none;
     background-color: transparent;
 }
@@ -2684,7 +2683,6 @@ body[data-aos-duration="800"] [data-aos] {
 }
 
 a {
-    color: #407BFF;
     -webkit-transition: .3s all ease;
     -o-transition: .3s all ease;
     transition: .3s all ease;
@@ -2899,7 +2897,6 @@ h2 {
 a {
     background: 0 0;
     border-radius: 4px;
-    color: #1a73e8;
     display: inline;
     overflow: hidden;
     text-decoration: underline;
@@ -2933,7 +2930,6 @@ a:active {
 a {
     background: 0 0;
     border-radius: 4px;
-    color: #1a73e8;
     display: inline;
     overflow: hidden;
     text-decoration: underline;
@@ -3043,7 +3039,6 @@ a:active {
 a {
     background: 0 0;
     border-radius: 4px;
-    color: #1a73e8;
     display: inline;
     overflow: hidden;
     text-decoration: underline;
@@ -3348,7 +3343,6 @@ p {
 a {
     background: 0 0;
     border-radius: 4px;
-    color: #1a73e8;
     display: inline;
     overflow: hidden;
     text-decoration: underline;
@@ -3430,7 +3424,6 @@ img {
 a {
     background: 0 0;
     border-radius: 4px;
-    color: #1a73e8;
     display: inline;
     overflow: hidden;
     text-decoration: underline;
@@ -3556,7 +3549,6 @@ a:active {
 a {
     background: 0 0;
     border-radius: 4px;
-    color: #1a73e8;
     display: inline;
     overflow: hidden;
     text-decoration: underline;
@@ -4247,7 +4239,6 @@ a:visited {
 }
 
 a {
-    color: #1787FC;
     text-decoration: underline;
 }
 
@@ -4287,7 +4278,6 @@ a:hover {
 }
 
 a {
-    color: #1787FC;
     text-decoration: underline;
 }
 
@@ -4967,7 +4957,7 @@ input:focus {
     right: 0px;
     top: 0px;
     background: #000;
-    color: lightgray;
+    color: white;
     height: 57px;
     width: 11rem;
     cursor: pointer;
@@ -4975,7 +4965,7 @@ input:focus {
 
 .newsletter-form input[type=submit]:hover {
     background: #224;
-    color: white;
+    color: lightgray;
 }
 
 @media (max-width: 768px) {
