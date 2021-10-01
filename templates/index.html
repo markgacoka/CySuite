@@ -132,17 +132,12 @@
                                         <div class="relative h-full">
                                             <div class="px-3 sticky top-0 z-10 py-3 bg-big-stone">
                                                 <div id="id-7" role="tablist" aria-label="Query and response">
-                                                    <button id="gql-query" tabindex="0" aria-selected="true" role="tab" class="text-center tracking-wider uppercase p-3 rounded font-medium text-xs lg:text-sm focus:outline-none bg-light-bunting text-white mr-2" aria-controls="id-7-3">REQUEST</button>
-                                                    <button id="response" tabindex="-1" aria-selected="false" role="tab" class="text-center tracking-wider uppercase p-3 rounded font-medium text-xs lg:text-sm focus:outline-none text-light-haiti" aria-controls="id-7-4">RESPONSE</button>
+                                                    <button id="gql-query" tabindex="0" aria-selected="true" role="tab" class="text-center tracking-wider uppercase p-3 rounded font-medium text-xs lg:text-sm focus:outline-none" aria-controls="id-7-3">REQUEST</button>
+                                                    <button id="response" tabindex="-1" aria-selected="false" role="tab" class="text-center tracking-wider uppercase p-3 rounded font-medium text-xs lg:text-sm focus:outline-none" aria-controls="id-7-4">RESPONSE</button>
                                                 </div>
                                             </div>
                                             <div id="id-7-3" style="height: calc(100% - 70px);" role="tabpanel" tabindex="0" class="focus:outline-none text-sm" aria-labelledby="gql-query">
-                                                <pre
-                                                    class="prism-code language-graphql graphql Code_code__1q0xX rounded bg-big-stone font-mono block p-3 lg:p-6 relative h-full overflow-auto">curl https://cysuite.io</pre>
-                                            </div>
-                                            <div id="id-7-4" hidden="" style="display: none; height: calc(100% - 70px);" role="tabpanel" tabindex="0" class="focus:outline-none text-sm" aria-labelledby="response">
-                                                <pre
-                                                    class="prism-code language-graphql graphql Code_code__1q0xX rounded bg-big-stone font-mono block p-3 lg:p-6 relative h-full overflow-auto">curl https://cysuite.io</pre>
+                                                <pre id="request-api" class="prism-code language-graphql graphql Code_code__1q0xX rounded bg-big-stone font-mono block p-3 lg:p-6 relative h-full overflow-auto"></pre>
                                             </div>
                                         </div>
                                     </div>
@@ -317,4 +312,45 @@
         </div>
     </footer>
     </body>
+    <script>
+    var request_selected = true;
+    var request = document.getElementById('gql-query');
+    var response = document.getElementById('response');
+    var request_api = document.getElementById('request-api');
+
+    request.classList.add("bg-light-bunting");
+    request.classList.add("text-white");
+    request.classList.add("mr-2");
+    request.classList.remove("text-light-haiti"); 
+    request_api.innerHTML = 'curl https://cysuite.io/'
+
+    request.addEventListener('click', requestHandler);
+    response.addEventListener('click', responseHandler);
+
+    function requestHandler(){
+        request.classList.add("bg-light-bunting");
+        request.classList.add("text-white");
+        request.classList.add("mr-2");
+        request.classList.remove("text-light-haiti");
+
+        response.classList.remove("bg-light-bunting");
+        response.classList.remove("text-white");
+        response.classList.remove("mr-2");
+        response.classList.add("text-light-haiti");
+        request_api.innerHTML = 'curl https://cysuite.io/'
+    }
+    
+    function responseHandler(){
+        response.classList.add("bg-light-bunting");
+        response.classList.add("text-white");
+        response.classList.add("mr-2");
+        response.classList.remove("text-light-haiti");
+
+        request.classList.remove("bg-light-bunting");
+        request.classList.remove("text-white");
+        request.classList.remove("mr-2");
+        request.classList.add("text-light-haiti");
+        request_api.innerHTML = 'curl https://cysuite.io/test'
+    }
+    </script>
 </html>
