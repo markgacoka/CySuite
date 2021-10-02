@@ -13,42 +13,6 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 DEBUG = bool(int(os.environ.get("DEBUG", 0)))
 ALLOWED_HOSTS = []
 
-if DEBUG:
-    ALLOWED_HOSTS = ['*',]
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-    CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
-    CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND')
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'HOST': 'localhost',
-            'NAME': os.environ.get('DB_NAME'),
-            'USER': os.environ.get('DB_USER'),
-            'PASSWORD': os.environ.get('DB_PASS'),
-            'PORT': os.environ.get('DB_PORT'),
-        }
-    }
-else:
-    ALLOWED_HOSTS_ENV = os.environ.get('DJANGO_ALLOWED_HOSTS')
-    if ALLOWED_HOSTS_ENV:
-        ALLOWED_HOSTS.extend(ALLOWED_HOSTS_ENV.split(','))
-    CELERY_BROKER_URL = os.environ.get('REDISTOGO_URL')
-    CELERY_RESULT_BACKEND = os.environ.get('REDISTOGO_URL')
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'HOST': os.environ.get('DB_HOST'),
-            'NAME': os.environ.get('DB_NAME'),
-            'USER': os.environ.get('DB_USER'),
-            'PASSWORD': os.environ.get('DB_PASS'),
-            'PORT': os.environ.get('DB_PORT'),
-        }
-    }
-
-db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)
-
 AUTH_USER_MODEL = 'cyauth.Account'
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.AllowAllUsersModelBackend',
@@ -131,6 +95,40 @@ TEMPLATES = [
     },
 ]
 
+if DEBUG:
+    ALLOWED_HOSTS = ['*',]
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'HOST': 'localhost',
+            'NAME': os.environ.get('DB_NAME'),
+            'USER': os.environ.get('DB_USER'),
+            'PASSWORD': os.environ.get('DB_PASS'),
+            'PORT': os.environ.get('DB_PORT'),
+        }
+    }
+else:
+    ALLOWED_HOSTS_ENV = os.environ.get('DJANGO_ALLOWED_HOSTS')
+    if ALLOWED_HOSTS_ENV:
+        ALLOWED_HOSTS.extend(ALLOWED_HOSTS_ENV.split(','))
+    
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'HOST': os.environ.get('DB_HOST'),
+            'NAME': os.environ.get('DB_NAME'),
+            'USER': os.environ.get('DB_USER'),
+            'PASSWORD': os.environ.get('DB_PASS'),
+            'PORT': os.environ.get('DB_PORT'),
+        }
+    }
+
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
+
 WSGI_APPLICATION = 'cysuite.wsgi.application'
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -174,6 +172,13 @@ STATICFILES_FINDERS = [
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+if DEBUG:
+    CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
+    CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND')
+else:
+    CELERY_BROKER_URL = os.environ.get('REDISTOGO_URL')
+    CELERY_RESULT_BACKEND = os.environ.get('REDISTOGO_URL')
 
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = os.environ.get('CELERY_TASK_SERIALIZER', 'json')

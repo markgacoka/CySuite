@@ -67,44 +67,6 @@ def cleanup(subdomain_lst):
     return list(filter(None, set(clean_lst)))
 
 def subdomain_list(domain):
-    final_subdomains = []
-
-    # APIs
-    final_subdomains += anubis_script(domain)
-    final_subdomains += findsubdomains_script(domain)
-    final_subdomains += hackertarget_script(domain)
-    final_subdomains += openthreat_script(domain)
-    final_subdomains += projectsonar_script(domain)
-    final_subdomains += projectsonar_script2(domain)
-    final_subdomains += threatcrowd_script(domain)
-    # Archives
-    final_subdomains += waybackmachine_script(domain)
-    # Certificated
-    final_subdomains += crt_script(domain)
-    # GoogleEnum and VirusTotal removed
-    chosenEnums = [CrtSearch, ThreatCrowd, BaiduEnum, YahooEnum, BingEnum, AskEnum, NetcraftEnum, DNSdumpster, PassiveDNS]
-    threaders = main(domain, chosenEnums)
-    final_subdomains += threaders
-
-    print("Cleaning up...")
+    final_subdomains = projectsonar_script(domain)
     final_subdomains = cleanup(final_subdomains)
-
-    # Times out after too many requests
-    # final_subdomains += certspotter_script(domain)    
-    
-    # Needs token
-    # final_subdomains += shodan_script(domain)
-    # final_subdomains += riddler_script(domain)
-    # final_subdomains += virustotal_script(domain)
-    # final_subdomains += censys_script(domain)
-    # final_subdomains += dnstrails_script(domain)
-
-    # TO-DO
-    # final_subdomains += commoncrawl_script(domain)
-    # final_subdomains += entrust_certificates_script(domain)
-    # final_subdomains += google_transparency_script(domain)
-    # final_subdomains += dnsdb_script(domain)
-    
-    # Also needs token
-    # final_subdomains += passivetotal_script(domain)
     yield final_subdomains
