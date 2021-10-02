@@ -47,6 +47,10 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
                 }
             )
             # verified = sociallogin.account.extra_data['verified']
+        else:
+            if user.objects.filter(email=email_address).exists():
+                curr_user = user.objects.filter(email=email_address)
+                perform_login(request, curr_user[0], email_verification='optional')
 
     if sociallogin.account.provider == 'facebook':
         username = sociallogin.account.extra_data['name']
@@ -64,6 +68,10 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
                 }
             )
             # verified = sociallogin.account.extra_data['verified']
+        else:
+            if user.objects.filter(email=email_address).exists():
+                curr_user = user.objects.filter(email=email_address)
+                perform_login(request, curr_user[0], email_verification='optional')
 
     if sociallogin.account.provider == 'google':
         username = sociallogin.account.extra_data['name']
@@ -81,6 +89,10 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
                 }
             )
             # verified = sociallogin.account.extra_data['verified_email']
+        else:
+            if user.objects.filter(email=email_address).exists():
+                curr_user = user.objects.filter(email=email_address)
+                perform_login(request, curr_user[0], email_verification='optional')
 
     request.session['project'] = request.session.get('project', None)
     request.session['sub_index'] = request.session.get('sub_index', 0)
