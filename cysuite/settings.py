@@ -16,8 +16,8 @@ ALLOWED_HOSTS = []
 if DEBUG:
     ALLOWED_HOSTS = ['*',]
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-    CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL_DEBUG')
-    CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND_DEBUG')
+    CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
+    CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND')
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -32,8 +32,8 @@ else:
     ALLOWED_HOSTS_ENV = os.environ.get('DJANGO_ALLOWED_HOSTS')
     if ALLOWED_HOSTS_ENV:
         ALLOWED_HOSTS.extend(ALLOWED_HOSTS_ENV.split(','))
-    CELERY_BROKER_URL = os.environ.get('REDISTOGO_URL')
-    CELERY_RESULT_BACKEND = os.environ.get('REDISTOGO_URL')
+    CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
+    CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND')
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
     DATABASES = {
         'default': {
