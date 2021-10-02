@@ -34,6 +34,7 @@ else:
         ALLOWED_HOSTS.extend(ALLOWED_HOSTS_ENV.split(','))
     CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
     CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND')
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
