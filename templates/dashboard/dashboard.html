@@ -7,6 +7,15 @@
 Dashboard | CySuite
 {% endblock %}
 {% block content %}
+{% if messages %}
+    {% for message in messages %}
+        {% if 'Successfully!' in message.message %}
+            <button style="display: none;" class="alert-popup" id="alert-success" name="{{message}}" value="success"></button>
+        {% else %}
+            <button style="display: none;" class="alert-popup" id="alert-warning" name="{{message}}" value="warning"></button>
+        {% endif %}
+    {% endfor %}
+{% endif %}
 <div class="container-fluid p-0">
     <div class="row mb-2 mb-xl-3">
         <div class="col-auto d-none d-sm-block" style='width: 100%;'>
