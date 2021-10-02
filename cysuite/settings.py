@@ -32,8 +32,8 @@ else:
     ALLOWED_HOSTS_ENV = os.environ.get('DJANGO_ALLOWED_HOSTS')
     if ALLOWED_HOSTS_ENV:
         ALLOWED_HOSTS.extend(ALLOWED_HOSTS_ENV.split(','))
-    CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
-    CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND')
+    CELERY_BROKER_URL = os.environ.get('REDISTOGO_URL')
+    CELERY_RESULT_BACKEND = os.environ.get('REDISTOGO_URL')
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
     DATABASES = {
         'default': {
