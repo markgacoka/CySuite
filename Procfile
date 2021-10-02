@@ -1,2 +1,2 @@
 web: gunicorn cysuite.wsgi
-celery: celery -A cysuite worker -l INFO
+worker: celery -A cysuite worker -l info
