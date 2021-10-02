@@ -520,12 +520,17 @@ def directory_enum(request):
             directories = subdomain_instance.filter(project=user_projects).filter(hostname__iexact=chosen_subdomain).values('directories')[0]['directories']
             context['directories'] = sorted(directories)
         else:
-            request.session['curr_subdomain'] = subdomains[0]
-            chosen_subdomain = request.session['curr_subdomain']
-            subdomains.pop(subdomains.index(chosen_subdomain))
-            subdomains.insert(0, chosen_subdomain)
-            directories = subdomain_instance.filter(project=user_projects).filter(hostname__iexact=chosen_subdomain).values('directories')[0]['directories']
-            context['directories'] = sorted(directories)
+            if len(subdomains) > 0:
+                request.session['curr_subdomain'] = subdomains[0]
+                chosen_subdomain = request.session['curr_subdomain']
+                subdomains.pop(subdomains.index(chosen_subdomain))
+                subdomains.insert(0, chosen_subdomain)
+                directories = subdomain_instance.filter(project=user_projects).filter(hostname__iexact=chosen_subdomain).values('directories')[0]['directories']
+                context['directories'] = sorted(directories)
+            else:
+                request.session['curr_subdomain'] = []
+                context['projects'] =  []
+                context['subdomains'] = []
 
         context['project'] = project_name
         context['projects'] =  projects
