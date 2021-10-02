@@ -35,8 +35,8 @@
                                     <div class="m-sm-4">
                                     <h4 style="text-align:center">Sign up using Social</h4>
                                     <div class="flex-c-m">
-                                        <a href="#" class="login100-social-item bg1"><i class="fab fa-facebook-f"></i></a>
-                                        <a href="#" class="login100-social-item bg2"><i class="fab fa-twitter"></i></a>
+                                        <a href="{% provider_login_url 'facebook' %}" class="login100-social-item bg1"><i class="fab fa-facebook-f"></i></a>
+                                        <a href="{% provider_login_url 'twitter' %}" class="login100-social-item bg2"><i class="fab fa-twitter"></i></a>
                                         <a href="{% provider_login_url 'google' %}" class="login100-social-item bg3"><i class="fab fa-google"></i></a>
                                     </div>
                                         <form method="post" id="login-form">
@@ -44,7 +44,7 @@
                                             {% if registration_form.non_field_errors %}
                                             {% for error in registration_form.non_field_errors %}
                                             <div class="alert alert-danger alert-dismissible" role="alert">
-                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><i class="fa fa-times" style="font-size: 1.3rem; color:red; z-index: 2;"></i></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><i class="fas fa-times" style="font-size: 1.3rem; color:red; z-index: 2;"></i></button>
                                                 <div class="alert-message">
                                                     <strong>{{error}}</strong>
                                                 </div>
@@ -55,7 +55,7 @@
                                             {% ifchanged field.errors %}
                                                 {% for error in field.errors %}
                                                     <div class="alert alert-danger alert-dismissible" role="alert">
-                                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><i class="fa fa-times" style="font-size: 1.3rem; color:red; z-index: 2;"></i></button>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><i class="fas fa-times" style="font-size: 1.3rem; color:red; z-index: 2;"></i></button>
                                                         <div class="alert-message">
                                                             <strong class="alert-text">{{error}}</strong>
                                                         </div>
