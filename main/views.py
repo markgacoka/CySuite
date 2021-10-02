@@ -315,6 +315,13 @@ def subdomain_enum(request):
                 task_ids.append(task_id['subdomain_task'])
             app.control.revoke(task_ids, terminate=True, signal='SIGKILL')
             app.control.purge()
+
+            from celery.contrib.abortable import AbortableAsyncResult
+            if len(task_ids) > 0:
+                for task_id in task_ids:
+                    abortable_task = AbortableAsyncResult(task_id)
+                    abortable_task.abort()
+
             request.session['sub_index'] = -1
             request.session.modified = True
             context['subdomain_info'] = [{}]
