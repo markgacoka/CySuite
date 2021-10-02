@@ -87,7 +87,8 @@ class Account(AbstractBaseUser, PermissionsMixin):
             return self.given_name
         elif self.name:
             return self.name
-        return 'You'
+        else:
+            return 'You'
 
     def get_full_name(self):
         """
@@ -137,36 +138,3 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.username.name + 'Profile'
-
-@receiver(user_signed_up)
-def set_initial_user_names(request, user, sociallogin=None, **kwargs):
-    preferred_avatar_size_pixels = 256
-    picture_url = "http://www.gravatar.com/avatar/{0}?s={1}".format(
-        hashlib.md5(user.email.encode('UTF-8')).hexdigest(),
-        preferred_avatar_size_pixels
-    )
-
-    if sociallogin:
-        if sociallogin.account.provider == 'twitter':
-            name = sociallogin.account.extra_data['name']
-            user.given_name = name.split()[0]
-            user.family_name = name.split()[1]
-
-        if sociallogin.account.provider == 'facebook':
-            user.given_name = sociallogin.account.extra_data['given_name']
-            user.family_name = sociallogin.account.extra_data['family_name']
-            # verified = sociallogin.account.extra_data['verified']
-            picture_url = "http://graph.facebook.com/{0}/picture?width={1}&height={1}".format(
-                sociallogin.account.uid, preferred_avatar_size_pixels)
-
-        if sociallogin.account.provider == 'google':
-            user.given_name = sociallogin.account.extra_data['given_name']
-            user.family_name = sociallogin.account.extra_data['family_name']
-            # verified = sociallogin.account.extra_data['verified_email']
-            picture_url = sociallogin.account.extra_data['picture']
-
-    profile = UserProfile(user=user)
-    profile.save()
-    user.guess_display_name()
-    user.save()
-    
