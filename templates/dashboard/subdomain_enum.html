@@ -110,7 +110,7 @@ Sudomain Enumeration | CySuite
                                 <form method="post" id="more-form{{forloop.counter}}">
                                     {% csrf_token %}
                                     <input name="more" value="{{forloop.counter}}" type="hidden" />
-                                    <a href="#" style="text-decoration: none;" onclick="document.getElementById('more-form{{forloop.counter}}').submit();return false;">See More&nbsp; <i class="fa fa-arrow-right"></i></a>
+                                    <a href="#" class="project-btn" style="text-decoration: none; min-width: fit-content; letter-spacing: 0px;" onclick="document.getElementById('more-form{{forloop.counter}}').submit();return false;">See More&nbsp; <i class="fa fa-arrow-right"></i></a>
                                 </form>
                                 </td>
                                 {% else%}
@@ -199,7 +199,7 @@ Sudomain Enumeration | CySuite
                     <div>
                         <h6 class="card-title" style="margin-bottom: 1rem;">Screenshot</h6>
                         {% if subdomain_info|index:sub_index|get_item:"screenshot" != None %}
-                            <img src='https://cysuite-bucket.s3.us-west-2.amazonaws.com/media/screenshots/{{subdomain_info|index:sub_index|get_item:"subdomain"}}.jpg' alt="Website screenshot" style="max-width: -webkit-fill-available; height: auto;" onerror="">
+                            <img src='https://cysuite-bucket.s3.us-west-2.amazonaws.com/media/screenshot/{{subdomain_info|index:sub_index|get_item:"subdomain"}}.jpg' alt="Website screenshot" style="max-width: -webkit-fill-available; height: auto;" onerror="">
                         {% else %}
                             <img src="https://cysuite-bucket.s3.us-west-2.amazonaws.com/media/screenshots/no_screenshot.png" alt="No screenshot" style="max-width: -webkit-fill-available; height: auto;" onerror=""/>
                         {% endif %}

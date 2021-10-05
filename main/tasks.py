@@ -1,11 +1,15 @@
-from scripts.screenshots.screenshot import take_screenshot
+from scripts.screenshots.screenshot import upload_screenshot
+from scripts.screenshots.screenshot import get_status_code
 from celery_progress.backend import ProgressRecorder
 from scripts.PortScan.portscan import Portscanner
 from .subdomains import subdomain_list
 from .models import ProjectModel
 from .models import SubdomainModel
 from celery import shared_task
-import re
+import boto3
+import re, os
+from dotenv import load_dotenv
+load_dotenv()
 
 @shared_task(bind=True)
 def scan_subdomains(self, user_id, project_session):
@@ -23,12 +27,10 @@ def scan_subdomains(self, user_id, project_session):
         if ip == None:
             screenshot = None
             ip = 'No IP address'
+        if get_status_code(subdomain) == True:
+            screenshot = upload_screenshot(subdomain)
         else:
-            screenshot_output = take_screenshot(subdomain)
-            if screenshot_output == True:
-                screenshot = '{}.jpg'.format(subdomain)
-            else:
-                screenshot = None
+            screenshot = None
 
         if status == None:
             status = 'Not Applicable'
@@ -41,7 +43,7 @@ def scan_subdomains(self, user_id, project_session):
             subdomain_user_id = user_id,
             project = ProjectModel.objects.get(project_name=project_session),
             hostname = subdomain,
-            defaults = {        
+            defaults = {
                 'status_code': status,
                 'ip_address': ip,
                 'screenshot': screenshot,
