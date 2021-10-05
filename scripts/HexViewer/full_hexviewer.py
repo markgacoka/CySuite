@@ -1,6 +1,7 @@
+import urllib.request
+
 def full_hex_viewer(out_file): 
-    with open(out_file, 'r+b') as f:
-            malicious_image = f.read()
+    malicious_image = urllib.request.urlopen(out_file).read()
 
     def hexdump(src, length=16, sep='.'):
         FILTER = ''.join([(len(repr(chr(x))) == 3) and chr(x) or sep for x in range(256)])
