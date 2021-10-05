@@ -87,7 +87,7 @@ class SubdomainModel(models.Model):
     project = models.ForeignKey(ProjectModel, max_length=30, unique=False, blank=True, null=False, on_delete=models.CASCADE)
     hostname = models.TextField(max_length=200, unique=True)
     status_code = models.TextField(max_length=30, unique=False, null=True, blank=False)
-    screenshot = models.CharField(max_length=250, blank=True, null=True)
+    screenshot = models.CharField(max_length=150, unique=False, null=True, blank=True)
     ip_address = models.CharField(max_length=30, unique=False, null=True, blank=True)
     waf = models.TextField(max_length=30, unique=False, null=True, blank=False)
     ports = ArrayField(models.CharField(max_length=10, blank=True), blank=True, null=True, default=list)
