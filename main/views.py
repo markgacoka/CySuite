@@ -864,7 +864,7 @@ def injector(request):
         else:
             context['status'] = 'Not injected'
         context['ipaddress'] = ip_address
-        context['hex_dump'] = 'None'
+        context['hex_dump'] = ''
         context['profile_account'] = request.user.profile
         context['dimensions'] = '(0, 0)'
         context['file_type'] = 'None'
