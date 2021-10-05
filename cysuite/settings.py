@@ -158,9 +158,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
+# MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'templates/static')]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATICFILES_FINDERS = [
@@ -189,7 +189,7 @@ CELERY_TIMEZONE = os.environ.get('CELERY_TIMEZONE', 'Africa/Nairobi')
 # STATIC_LOCATION = 'static'
 MEDIA_LOCATION = 'media'
 # STATIC_URL = 'https://%s/%s/' % (os.environ.get('AWS_S3_CUSTOM_DOMAIN'), STATIC_LOCATION)
-MEDIA_ROOT = 'https://%s/%s/' % (os.environ.get('AWS_S3_CUSTOM_DOMAIN'), MEDIA_LOCATION)
+MEDIA_URL = 'https://%s/%s/' % (os.environ.get('AWS_S3_CUSTOM_DOMAIN'), MEDIA_LOCATION)
 DEFAULT_FILE_STORAGE = 'cysuite.s3utils.MediaStorage'
 # STATICFILES_STORAGE = 'cysuite.s3utils.StaticStorage'
 # ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
