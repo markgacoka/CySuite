@@ -77,7 +77,7 @@ File Upload | CySuite
 						</tr>
 						<tr>
 							<th><h4>Final file:</h4></th>
-							<td><h5>{% if download|length > 0 %}<a href="{{download.url}}" download rel="noopener noreferrer" target="_blank">Download</a>{% else %}<a href="">Download</a>{% endif %}</h5></td>
+							<td><h5>{% if download|length > 0 %}<a href="https://cysuite-bucket.s3.us-west-2.amazonaws.com/media/{{download}}" download rel="noopener noreferrer" target="_blank">Download</a>{% else %}<a href="">Download</a>{% endif %}</h5></td>
 						</tr>
 						<tr>
 							<th><h4>Status</h4></th>

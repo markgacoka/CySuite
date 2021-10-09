@@ -835,7 +835,7 @@ def injector(request):
         if filename != None and dimensions != None:
             new_filename = re.sub(r'^.*?/', '', filename)
             payload_file = PayloadModel.objects.get(payload_user=request.user)
-            if new_filename != payload_file.payload_image and payload_file.payload_image != 'default.png':
+            if new_filename != payload_file.payload_image and payload_file.payload_image != 'https://cysuite-bucket.s3.us-west-2.amazonaws.com/media/default.png':
                 try:
                     os.remove(payload_file.payload_image.path)
                 except:
@@ -855,7 +855,7 @@ def injector(request):
             context['extension'] = puremagic.magic_file(filename)[0].extension
             context['mime_type'] = puremagic.magic_file(filename)[0].mime_type
             context['byte_match'] = puremagic.magic_file(filename)[0].byte_match.decode('UTF-8','ignore').strip()
-            context['download'] = PayloadModel.objects.get(payload_user=request.user).payload_image
+            context['download'] = PayloadModel.objects.filter(payload_user=request.user).values('payload_image')[0]['payload_image']
             context['status'] = 'Injected successfully'
             context['success_message'] = 'Your payload has been injected successfully!'
             return render(request, 'dashboard/injector.html', context)
