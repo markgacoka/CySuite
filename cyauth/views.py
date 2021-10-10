@@ -140,9 +140,11 @@ def account_view(request):
             Account.objects.filter(username__iexact=request.user.username).delete()
             return redirect('index')
         elif len(request.FILES.get('image')) != 0:
+            extension = str(request.FILES['image'].name.rsplit(".", 1)[-1])
+            request.FILES['image'].name = str(request.user.user_id) + '.' + extension
+            print(request.FILES)
             userprofile = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
             if userprofile.is_valid():
-                filename = request.FILES['image'].name
                 if UserProfile.objects.get(username=request.user).image != 'default.jpg':
                     try:
                         os.remove(UserProfile.objects.get(username=request.user).image.path)
