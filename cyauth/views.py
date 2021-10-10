@@ -139,8 +139,7 @@ def account_view(request):
             Account.objects.filter(username__iexact=request.user.username).delete()
             return redirect('index')
         elif len(request.FILES.get('image')) != 0:
-            extension = str(request.FILES['image'].name.rsplit(".", 1)[-1])
-            full_extension = str(request.user.user_id) + '.' + extension
+            full_extension = str(request.user.user_id)
 
             import boto3
             from dotenv import load_dotenv
