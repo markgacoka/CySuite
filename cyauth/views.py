@@ -152,13 +152,15 @@ def account_view(request):
             # image = request.FILES['image']
             # image.name = full_extension
             # bucket.upload_fileobj(image, full_extension)
+            userform = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
             userprofile = UserProfile.objects.get(username=request.user)
-            if userprofile.image.name != 'default.jpg':
-                userprofile.image = request.FILES['image'].open()
-                userprofile.image.name = full_extension
-                userprofile.save()
-                context['success_message'] = 'Your profile has been updated!'
-                context['profile_account'] = request.user.profile
+            if userform.is_valid():
+                if userprofile.image.name != 'default.jpg':
+                    userform.image = request.FILES['image'].open()
+                    userform.image.name = full_extension
+                    userform.save()
+                    context['success_message'] = 'Your profile has been updated!'
+                    context['profile_account'] = request.user.profile
         else:
             pass
     else:
