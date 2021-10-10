@@ -58,6 +58,7 @@ gunicorn = "*"
 django-heroku = "*"
 whitenoise = "*"
 dj-database-url = "*"
+stripe = "*"
 
 [dev-packages]
 
