@@ -142,24 +142,20 @@ def account_view(request):
             extension = str(request.FILES['image'].name.rsplit(".", 1)[-1])
             full_extension = str(request.user.user_id) + '.' + extension
 
-            # import boto3
-            # from dotenv import load_dotenv
-            # load_dotenv()
+            import boto3
+            from dotenv import load_dotenv
+            load_dotenv()
 
-            # s3 = boto3.resource('s3', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key= os.environ.get('AWS_SECRET_ACCESS_KEY'))
-            # bucket = s3.Bucket(name="cysuite-bucket")
-            # image = request.FILES['image']
-            # image.name = full_extension
-            # bucket.upload_fileobj(image, full_extension)
-            userform = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+            s3 = boto3.resource('s3', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key= os.environ.get('AWS_SECRET_ACCESS_KEY'))
+            bucket = s3.Bucket(name="cysuite-bucket")
+            image = request.FILES['image']
+            image.name = full_extension
+            bucket.upload_fileobj(image, 'media/profiles/' + full_extension)
             userprofile = UserProfile.objects.get(username=request.user)
-            if userform.is_valid():
-                if userprofile.image.name != 'default.jpg':
-                    userform.image = request.FILES['image'].open()
-                    userform.image.name = full_extension
-                    userform.save()
-                    context['success_message'] = 'Your profile has been updated!'
-                    context['profile_account'] = request.user.profile
+            userprofile.image = full_extension
+            userprofile.save()
+            context['success_message'] = 'Your profile has been updated!'
+            context['profile_account'] = request.user.profile
         else:
             pass
     else:
