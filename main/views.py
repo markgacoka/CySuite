@@ -109,6 +109,7 @@ def stats(request):
             context['profile_account'] = request.user.profile
             return render(request, 'dashboard/stats.html', context)
 
+    context['project'] = project_name
     context['projects'] =  projects
     context['subdomains'] = subdomains
     context['profile_account'] = request.user.profile

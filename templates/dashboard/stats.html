@@ -15,9 +15,12 @@
         </div>
         <div class="card flex-fill" style="width: 40%; min-height: 3rem; float: left;">
             <select class="dropdown-icon flex-grow-1" id="select-project" onchange="val();">			
-            {% for subdomain in subdomains %}
-                <option>{{subdomain}}</option>
-            {% endfor %}
+              <optgroup id="project-group">
+                {{project}}
+                {% for value in subdomains %}
+                  <option>{{value}}</option>
+                {% endfor %}
+              </optgroup>
             </select>
         </div>
         <div class="card flex-fill" style="width: auto; float: left;">
@@ -231,5 +234,125 @@
       },
     },
   });
+</script>
+<script type="text/javascript">
+	var token = '{{csrf_token}}';
+	function val() {
+		d = document.getElementById("select-project").value;
+		var s = document.getElementById('project-group');
+		s.label = d;
+		$.ajax({
+			headers: { "X-CSRFToken": token },
+			url: '{% url 'directory_enum' %}',
+			data: {"project": d},
+			type: 'POST',
+		}).done(function( responseMsg ) {
+			window.location.reload(false);
+			var selectbox = document.getElementById("subdomain-group");
+			selectbox.options.length = 0;
+			var directory_entry = document.getElementById("directory-column");
+
+			var project = responseMsg['project_name'];
+			var subdomain_list = responseMsg['subdomain_list'];
+			var chosen_subdomain = responseMsg['chosen_subdomain'];
+			var directories = responseMsg['directories'];
+
+			for (i = 0; i < document.getElementById("select-project").length; ++i){
+				if (document.getElementById("select-project").options[i].value == project){
+					document.getElementById("select-project").options[i].selected = true
+				}
+			}
+
+			for (var j = 0; j < subdomain_list.length; j++){
+				var newOptionElement = document.createElement('option');
+				newOptionElement.value = subdomain_list[j];
+				newOptionElement.innerHTML = subdomain_list[j];
+				selectbox.appendChild(newOptionElement);
+				if (subdomain_list[j] == chosen_subdomain) {
+					newOptionElement.selected = true
+				}
+			}
+
+			var table = document.getElementById("directories");
+			for(var i = 1;i<table.rows.length;){
+				table.deleteRow(i);
+			}
+
+			let myTable = document.getElementById('directories').getElementsByTagName('tbody')[0];
+			for (var j = 0; j < directories.length; j++){
+				let row = myTable.insertRow();
+
+				let directory = row.insertCell(0);
+				let status = row.insertCell(1);
+				let parameters = row.insertCell(2);
+				let accepts = row.insertCell(3);
+				let vulns = row.insertCell(4);
+
+				directory.innerHTML = `<a href="${directories[j]}">${directories[j]}</a>`;
+				status.innerHTML = '200 OK';
+				parameters.innerHTML = 'utm_medium, id, user';
+				accepts.innerHTML = 'HTTP/HTTPS';
+				vulns.innerHTML = 'SQL';
+			}
+		});
+	}
+
+	function showdirs(){
+		var subdomain = document.getElementById("subdomain-group").value;
+		$.ajax({
+			headers: { "X-CSRFToken": token },
+			url: '{% url 'directory_enum' %}',
+			data: {"show": subdomain},
+			type: 'POST',
+		}).done(function( responseMsg ) {
+			window.location.reload(false);
+			var selectbox = document.getElementById("subdomain-group");
+			selectbox.options.length = 0;
+			var directory_entry = document.getElementById("directory-column");
+
+			var project = responseMsg['project_name'];
+			var subdomain_list = responseMsg['subdomain_list'];
+			var chosen_subdomain = responseMsg['chosen_subdomain'];
+			var directories = responseMsg['directories'];
+
+			for (i = 0; i < document.getElementById("select-project").length; ++i){
+				if (document.getElementById("select-project").options[i].value == project){
+					document.getElementById("select-project").options[i].selected = true
+				}
+			}
+
+			for (var j = 0; j < subdomain_list.length; j++){
+				var newOptionElement = document.createElement('option');
+				newOptionElement.value = subdomain_list[j];
+				newOptionElement.innerHTML = subdomain_list[j];
+				selectbox.appendChild(newOptionElement);
+				if (subdomain_list[j] == chosen_subdomain) {
+					newOptionElement.selected = true
+				}
+			}
+
+			var table = document.getElementById("directories");
+			for(var i = 1;i<table.rows.length;){
+				table.deleteRow(i);
+			}
+
+			let myTable = document.getElementById('directories').getElementsByTagName('tbody')[0];
+			for (var j = 0; j < directories.length; j++){
+				let row = myTable.insertRow();
+
+				let directory = row.insertCell(0);
+				let status = row.insertCell(1);
+				let parameters = row.insertCell(2);
+				let accepts = row.insertCell(3);
+				let vulns = row.insertCell(4);
+
+				directory.innerHTML = `<a href="${directories[j]}">${directories[j]}</a>`;
+				status.innerHTML = '200 OK';
+				parameters.innerHTML = 'utm_medium, id, user';
+				accepts.innerHTML = 'HTTP/HTTPS';
+				vulns.innerHTML = 'SQL';
+			}
+		})
+	}
 </script>
 {% endblock %}
