@@ -59,6 +59,7 @@ django-heroku = "*"
 whitenoise = "*"
 dj-database-url = "*"
 stripe = "*"
+djangorestframework = "*"
 
 [dev-packages]
 

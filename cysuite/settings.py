@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'storages',
     'django_celery_results',
     'celery_progress',
+    'rest_framework',
 ]
 
 SITE_ID = int(os.environ.get('SITE_ID'))
