@@ -141,15 +141,21 @@ def account_view(request):
             return redirect('index')
         elif len(request.FILES.get('image')) != 0:
             extension = str(request.FILES['image'].name.rsplit(".", 1)[-1])
-            request.FILES['image'].name = str(request.user.user_id) + '.' + extension
-            print(request.FILES)
-            userprofile = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
-            if userprofile.is_valid():
-                if UserProfile.objects.get(username=request.user).image != 'default.jpg':
-                    try:
-                        os.remove(UserProfile.objects.get(username=request.user).image.path)
-                    except:
-                        print("Tried to remove a non-existent profile image")
+            full_extension = str(request.user.user_id) + '.' + extension
+
+            # import boto3
+            # from dotenv import load_dotenv
+            # load_dotenv()
+
+            # s3 = boto3.resource('s3', aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'), aws_secret_access_key= os.environ.get('AWS_SECRET_ACCESS_KEY'))
+            # bucket = s3.Bucket(name="cysuite-bucket")
+            # image = request.FILES['image']
+            # image.name = full_extension
+            # bucket.upload_fileobj(image, full_extension)
+            userprofile = UserProfile.objects.get(username=request.user)
+            if userprofile.image.name != 'default.jpg':
+                userprofile.image = request.FILES['image'].open()
+                userprofile.image.name = full_extension
                 userprofile.save()
                 context['success_message'] = 'Your profile has been updated!'
                 context['profile_account'] = request.user.profile
