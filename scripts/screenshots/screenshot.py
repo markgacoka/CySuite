@@ -2,9 +2,7 @@
 # Current implementation is a webapp on appspot
 import os
 import requests
-import urllib.request
 import boto3
-import http.client as httplib
 from io import BytesIO
 from dotenv import load_dotenv
 load_dotenv()
