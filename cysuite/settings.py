@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.twitter',
     'main',
     'cyauth',
+    'api',
     'storages',
     'django_celery_results',
     'celery_progress',
