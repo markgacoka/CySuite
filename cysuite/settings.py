@@ -200,8 +200,8 @@ AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_CUSTOM_DOMAIN = os.environ.get('AWS_S3_CUSTOM_DOMAIN')
 AWS_DEFAULT_ACL = os.environ.get('AWS_DEFAULT_ACL')
 AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
-AWS_PRELOAD_METADATA = True
-AWS_QUERYSTRING_AUTH = True
+AWS_PRELOAD_METADATA = bool(int(os.environ.get("AWS_PRELOAD_METADATA", 1)))
+AWS_QUERYSTRING_AUTH = bool(int(os.environ.get("AWS_QUERYSTRING_AUTH", 0)))
 
 two_months = datetime.timedelta(days=61)
 date_two_months_later = datetime.date.today() + two_months
