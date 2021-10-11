@@ -1,10 +1,9 @@
-from django.urls import path, include
-from django.conf.urls import url
-from . import views
 from .views import TestView
+from django.urls import path, include
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
-    path('test/', TestView.as_view(), name='test'),
+    path('', TestView.as_view(), name='home'),
+    path('token/', obtain_auth_token, name='obtain'),
     path('api-auth/', include('rest_framework.urls')),
-    path('', views.home, name='home'),
 ]
