@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_celery_results',
     'celery_progress',
     'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 SITE_ID = int(os.environ.get('SITE_ID'))
@@ -174,6 +175,9 @@ STATICFILES_FINDERS = [
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework.authentication.TokenAuthentication']
+}
 
 if DEBUG:
     CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')

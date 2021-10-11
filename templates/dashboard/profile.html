@@ -209,7 +209,7 @@ Profile | CySuite
                     <div style="padding-top: 1.25rem !important;">
                         <div class="row">
                             {% if not request.user.is_premium %}
-                            <a href="/checkout"><button href="/checkout" class="btn btn-primary" style="min-height: 40px; width: max-content; float: left; margin: 0 10px 0 10px;">Upgrade</button></a>
+                            <a href="/checkout"><button href="/checkout" class="btn btn-primary" style="min-height: 40px; width: 10rem; float: left; margin: 0 10px 0 10px;">Upgrade Account</button></a>
                             {% else %}
                             <button onclick="window.location.href='/checkout/'" class="btn btn-primary" style="min-height: 40px; width: max-content; float: right; margin: 0 10px 0 10px;">Cancel Subscription</button>
                             {% endif %}
