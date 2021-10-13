@@ -94,3 +94,34 @@ Domains
 	}
 ]
 ```
+
+### Example Project
+`getProjects()`
+`/api/projects/1`
+```json
+{
+	"Projects": [
+			{
+				"project": "Google",
+				"program": "HackerOne",
+				"in-scope": ["google.com", "a.google.com"]
+			},
+			{
+				"project": "Starbucks",
+				"program": "Bugcrowd",
+				"in-scope": ["starbucks.com"]
+			}
+	],
+	"_href": [],
+}
+```
+
+### Example Subdomains
+`getSubdomains()`
+`/api/subdomains/`
+```
+{
+	""
+}
+```
+
