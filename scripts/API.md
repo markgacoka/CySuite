@@ -116,12 +116,71 @@ Domains
 }
 ```
 
-### Example Subdomains
-`getSubdomains()`
-`/api/subdomains/`
+### User abilities
+- Get all the available user projects
+- Get project details with in-scope domains, project name
+- Get subdomains with IP, SSL, DNS, ports
+- Get directories, parameters, protocols of subdomains
+
+
+### Functions
+- getUser()
+`Permissions: currentuser`
+`/api/currentuser/`
 ```
-{
-	""
-}
+[PK] user_id:
+username:
+email:
+first_name:
+last_name:
+date_joined:
+last_login_date:
+is_admin:
+is_premium:
+feedback:
+profile_image:
+beta:
+dark:
 ```
 
+- getAllUsers()
+`Permissions: admin`
+`/api/allusers/`
+```
+[:]
+[PK] user_id: 
+username:
+email:
+last_login_date:
+is_admin:
+is_premium:
+feedback:
+beta:
+```
+
+- getProjects()
+`Permissions: currentuser`
+`/api/projects/`
+```
+[PK] project_user_id:
+project:
+program:
+in_scope_domains:
+progress:
+```
+
+- getSubdomains()
+`Permissions: currentuser`
+`/api/subdomains/<in-scope-domain>`
+```
+"in_scope_domain": "google.com",
+
+```
+
+- getDirectories()
+`Permissions: currentuser`
+`/api/directories/<subdomain>`
+```
+```
+
+TODO: Limit requests sent to API per user
