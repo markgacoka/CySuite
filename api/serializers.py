@@ -1,7 +1,7 @@
+from .models import User
 from rest_framework import serializers
-from .models import Student
 
-class StudentSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Student
-        fields = ('name', 'age')
+        model = User
+        fields = ['name', 'age', 'description', 'date_enrolled']
