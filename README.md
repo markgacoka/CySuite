@@ -163,10 +163,17 @@ sudo service postgresql start
 
 ### Running the program locally
 ```
+Windows:
+
 git clone https://github.com/markgacoka/CySuite
 cd CySuite
-pipenv install
-pipenv install -r requirements.txt
+
+pip install virtualenv
+virtualenv --python C:\Users\Username\AppData\Local\Programs\Python\Python[Version]\python.exe venv
+.\venv\Scripts\activate
+
+pip install -r requirements.txt
+[boto3 celery-progress celery cfscrape django-allauth django-celery-results django-heroku django-storages djangorestframework jsonfield pillow puremagic pycurl pypng python-dotenv yarl]
 
 # Migrate the database and create a superuser
 python manage.py makemigrations
