@@ -4944,7 +4944,7 @@ input:focus {
     border: 1px solid lightgray;
     height: 57px;
     padding: 0 30px;
-    width: 100%;
+    width: calc(20vh + 30vw);
     background: #fff;
     color: #fff;
     font-size: 18px;
