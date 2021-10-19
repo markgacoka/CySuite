@@ -34,17 +34,40 @@ Profile | CySuite
                 <hr class="my-0" />
                 <div class="card-body">
                     <h5 class="h6 card-title">About</h5>
-                    <ul class="list-unstyled mb-0">
-                        <li class="mb-1" style="font-size: 0.9rem;"><span data-feather="home" class="feather-sm me-1"></span><b>Username:</b> &nbsp;{{request.user.username}}</li>
-                        <li class="mb-1" style="font-size: 0.9rem;"><span data-feather="briefcase" class="feather-sm me-1"></span><b>Email:</b> &nbsp;{{request.user.email}}</li>
-                        <li class="mb-1" style="font-size: 0.9rem;"><span data-feather="map-pin" class="feather-sm me-1"></span><b>Account Type:</b>&emsp;
-                        {% if request.user.is_premium %}
-                        <span class="badge bg-success">Pro</span>
-                        {% else %}
-                        <span class="badge bg-warning">Free</span>
-                        {% endif %}
-                        </li>
-                    </ul>
+                    <div style="width: 100%;">
+                        <div style="width: 40%; float: left;">
+                            <b>Username:</b>
+                        </div>
+                        <div style="width: 60%; float: right;">
+                            <span>{{request.user.username}}</span>
+                        </div>
+                    </div>
+                    <div style="width: 100%;">
+                        <div style="width: 40%; float: left;">
+                            <b>Email:</b>
+                        </div>
+                        <div style="width: 60%; float: right;">
+                            <span>{{request.user.email}}</span>
+                        </div>
+                    </div>
+                    <div style="width: 100%;">
+                        <div style="width: 40%; float: left;">
+                            <b>Account Type:</b>
+                        </div>
+                        <div style="width: 60%; float: right;">
+                            {% if request.user.is_premium %}
+                            <span class="badge bg-success" style="width: 5rem;">Pro</span>
+                            {% else %}
+                            <span class="badge bg-warning" style="width: 5rem;">Free</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-0" />
+                <div class="card-body">
+                    <h5 class="h6 card-title">Badges</h5>
+                    <button class="w3-btn w3-black" style="margin-top: 0.5rem;">Start Badge<span class="w3-badge w3-margin-left w3-white"><i class="fa fa-trophy" style="color: rgba(9, 14, 36, 0.9);"></i></span></button>
+                    <button class="w3-btn w3-black" style="margin-top: 0.5rem;">Hunter<span class="w3-badge w3-margin-left w3-white"><i class="fa fa-trophy" style="color: rgba(9, 14, 36, 0.9);"></i></span></button>
                 </div>
                 <hr class="my-0" />
                 <div class="card-body">
@@ -55,6 +78,32 @@ Profile | CySuite
                         <li class="mb-1"><span class="fab fa-medium fa-fw me-1"></span> <a href="https://cysuite.medium.com/">Medium</a></li>
                         <li class="mb-1"><span class="fab fa-github fa-fw me-1"></span> <a href="https://github.com/markgacoka">Github</a></li>
                     </ul>
+                </div>
+                <hr class="my-0" />
+                <div class="card-body">
+                    <h5 class="h6 card-title">API Credentials</h5>
+                    <li class="mb-1" style="font-size: 0.8rem; list-style-type: none;">
+                        <div style="width: 100%;">
+                            <div style="width: 20%; float: left;">
+                                <span data-feather="key" class="feather-sm me-1"></span>
+                                <b>Key:</b>
+                            </div>
+                            <div style="width: 70%; float: right;">
+                                <span>1265348263</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="mb-1" style="font-size: 0.8rem; list-style-type: none;">
+                        <div style="width: 100%;">
+                            <div style="width: 30%; float: left;">
+                                <span data-feather="key" class="feather-sm me-1"></span>
+                                <b>Secret:</b>
+                            </div>
+                            <div style="width: 70%; float: right;">
+                                <span>bc2ba397b67a67dc79abd86</span>
+                            </div>
+                        </div>
+                    </li>
                 </div>
             </div>
         </div>
@@ -205,29 +254,48 @@ Profile | CySuite
             </div>
             <div class="card">
                 <div class="card-body" style="padding: 2rem;">
-                    <h5 class="card-title mb-0">Upgrade to Pro</h5>
-                    <div style="padding-top: 1.25rem !important;">
-                        <div class="row">
-                            {% if not request.user.is_premium %}
-                            <a href="/checkout"><button href="/checkout" class="btn btn-primary" style="min-height: 40px; width: 10rem; float: left; margin: 0 10px 0 10px;">Upgrade Account</button></a>
-                            {% else %}
-                            <button onclick="window.location.href='/checkout/'" class="btn btn-primary" style="min-height: 40px; width: max-content; float: right; margin: 0 10px 0 10px;">Cancel Subscription</button>
-                            {% endif %}
-                        </div> 
-                    </div>
+                    <h3>Account Actions</h5>
                     <hr style="width: 95%;">
-                    <h5 class="card-title mb-0">Danger Zone</h5>
                     <form method="post">
                     {% csrf_token %}
                     <div style="padding-top: 1.25rem !important;">
-                        <div class="row">
-                            <input name="delete" hidden />
-                            <button class="btn btn-primary" type="submit" style="min-height: 40px; width: 10rem; margin: 0 10px 0 10px;">Delete Account</button>
-                        </div> 
+                        <div style="float: left;">
+                            {% if not request.user.is_premium %}
+                            <a href="/checkout" class="data-card">
+                            <h3>Upgrade</h3>
+                            <h4>UPGRADE ACCOUNT</h4>
+                            <p>Step up your security analysis by going Pro.</p>
+                            {% else %}
+                            <a href="/checkout" class="data-card">
+                            <h3>Cancel</h3>
+                            <h4>CANCEL SUBSCRIPTION</h4>
+                            <p>You will not be billed again after pausing.</p>
+                            {% endif %}
+                            <span class="link-text">Select
+                                <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z" fill="#753BBD"></path>
+                                </svg>
+                            </span></a>
+                        </div>
+                        <div style="float: left;">
+                            <a onclick="deleteAccount();" class="data-card">
+                            <h3>Delete</h3>
+                            <h4>REMOVE ACCOUNT</h4>
+                            <p>Purge all your data from our records.</p>
+                            <span class="link-text">Select
+                                <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z" fill="#753BBD"></path>
+                                </svg>
+                            </span></a>
+                        </div>
                     </div>
                     </form>
+                </div>
+                </div>
+                <div class="card">
+                <div class="card-body" style="padding: 2rem;">
+                    <h3>Feedback</h3>
                     <hr style="width: 95%;">
-                    <h3 class="card-title" style="margin-bottom: 0.6rem; font-size: 1.2rem;">Feedback</h3>
                     <h5>Tell us what you like about CySuite or what you think could be improved.</h5>
                     <div style="padding-top: 1.25rem">
                         <form method="post">
@@ -285,4 +353,19 @@ Profile | CySuite
         </div>
     </div>
 </div>
+<script>
+    function deleteAccount(){
+		var token = '{{csrf_token}}';
+		$.ajax({
+			url: '{% url 'profile' %}',
+			headers: { "X-CSRFToken": token },
+			type: 'POST',
+			data: {"delete": "true"},
+			success: function(){
+				console.log("Account successfully deleted!")
+                window.location.href = "/";
+			}
+		});
+	}
+</script>
 {% endblock %}
