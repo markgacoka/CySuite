@@ -173,7 +173,7 @@ virtualenv --python C:\Users\Username\AppData\Local\Programs\Python\Python[Versi
 .\venv\Scripts\activate
 
 pip install -r requirements.txt
-[boto3 celery-progress celery cfscrape django-allauth django-celery-results django-heroku django-storages djangorestframework jsonfield pillow puremagic pycurl pypng python-dotenv yarl]
+[boto3 celery-progress celery cfscrape django-allauth django-celery-results django-heroku django-storages djangorestframework jsonfield pillow puremagic pycurl pypng python-dotenv redis yarl]
 
 # Migrate the database and create a superuser
 python manage.py makemigrations
