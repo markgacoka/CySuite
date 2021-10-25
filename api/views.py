@@ -2,8 +2,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import JsonResponse
 from rest_framework import permissions
-from .models import User
-from .serializers import UserSerializer
+from cyauth.models import Account
+from .serializers import UsersSerializer
 
 from django.conf import settings
 from django.urls import URLPattern, URLResolver
@@ -26,19 +26,18 @@ class ListUrlView(APIView):
         url_result = []
         for p in self.list_urls(urlconf.urlpatterns):
             url_result.append(''.join(p))
-        from . import urls
 
         return JsonResponse({'urls': url_result}, json_dumps_params={'indent': 2})
 
 class UsersView(APIView):
     # permission_classes = [permissions.IsAuthenticated]
     def get(self, request, *args, **kwargs):
-        qs = User.objects.all()
-        serializer = UserSerializer(qs, many=True)
+        qs = Account.objects.all()
+        serializer = UsersSerializer(qs, many=True)
         return JsonResponse(serializer.data, safe=False, json_dumps_params={'indent': 2})
     
     def post(self, request, *args, **kwargs):
-        serializer = UserSerializer(data=request.data)
+        serializer = UsersSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
