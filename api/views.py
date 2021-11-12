@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from django.http import JsonResponse
 from rest_framework import permissions
 from cyauth.models import Account
-from .serializers import UsersSerializer
+from .serializers import UsersSerializer, UserSerializer 
 
 from django.conf import settings
 from django.urls import URLPattern, URLResolver
@@ -35,20 +35,16 @@ class UsersView(APIView):
         qs = Account.objects.all()
         serializer = UsersSerializer(qs, many=True)
         return JsonResponse(serializer.data, safe=False, json_dumps_params={'indent': 2})
+
+class UserView(APIView):
+    def get(self, request, *args, **kwargs):
+        qs = Account.objects.filter(user=request.user)
+        serializer = UserSerializer(qs, many=False)
+        return JsonResponse(serializer.data, safe=False, json_dumps_params={'indent': 2})
     
     def post(self, request, *args, **kwargs):
-        serializer = UsersSerializer(data=request.data)
+        serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors)
-
-# class YourModelViewSet(viewsets.ViewSet):
-#      def retrieve(self,request,pk=None):
-#          u = request.user
-#          queryset = YourModel.objects.filter(user=u,pk=pk)
-#          if not queryset:
-#              return Response(status=status.HTTP_400_BAD_REQUEST)
-#          else:
-#              serializer = YourModelSerializer(queryset)
-#              return Response(serializer.data,status=status.HTTP_200_OK)
