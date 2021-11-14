@@ -67,12 +67,12 @@
                                             {% endfor %}
                                             <div class="mb-3" style="padding-top: 1rem;">
                                                 <label class="form-label">Email</label>
-                                                <input class="form-control form-control-lg" type="text" name="email" placeholder="Enter your email" />
+                                                <input class="form-control form-control-lg" type="text" name="email" placeholder="Enter your email" value="{{previous_input.email}}" />
                                             </div>
                                             <div style="height: 3rem; margin-bottom: 2rem;">
                                                 <label class="form-label">Password</label>
                                                 <div style="width: 100%;">
-                                                    <input class="form-control form-control-lg" id="password-input" type="password" name="password" placeholder="Enter your password" style="width:90%; float: left;"/>
+                                                    <input class="form-control form-control-lg" id="password-input" type="password" name="password" placeholder="Enter your password" style="width:90%; float: left;" value="{{previous_input.password}}" />
                                                     <button type="button" onclick="toggleInput();" style="padding: 0; background-color: white; width: 10%; border-left: none; float: right; height: 3rem; display: grid; border: 1px solid rgb(206, 212, 218); align-items: center; text-align: center; border-left: hidden;"><i class="show-pass far fa-eye fa-lg" style="color: grey; font-size: 1.5rem;"></i></button>
                                                 </div>
                                             </div>
