@@ -108,7 +108,6 @@ def account_view(request):
             else:
                 context['error_message'] = 'An error occurred!'
             context['feedback_form'] = feedback_form
-            context['profile_account'] = request.user.profile
 
         elif 'email' and 'username' in request.POST.keys():
             account_form = AccountUpdateForm(request.POST, instance=request.user)
@@ -122,7 +121,6 @@ def account_view(request):
             else:
                 context['error_message'] = 'An error occurred!'
             context['account_form'] = account_form
-            context['profile_account'] = request.user.profile
 
         elif 'old_password' in request.POST.keys():
             password_form = PasswordUpdateForm(request.POST, instance=request.user)
@@ -131,7 +129,6 @@ def account_view(request):
                 context['success_message'] = 'Password Changed!'
                 return redirect('login')
             else:
-                context['profile_account'] = request.user.profile
                 context['error_message'] = 'An error occurred!'
             context['password_form'] = password_form
         elif 'delete' in request.POST.keys():
@@ -154,7 +151,6 @@ def account_view(request):
             userprofile.image = full_extension
             userprofile.save()
             context['success_message'] = 'Your profile has been updated!'
-            context['profile_account'] = request.user.profile
         else:
             pass
     else:
@@ -165,5 +161,4 @@ def account_view(request):
             }
         )
         context['account_form'] = account_form
-        context['profile_account'] = request.user.profile
     return render(request, 'dashboard/profile.html', context)

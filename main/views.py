@@ -56,7 +56,6 @@ def dashboard(request):
         context['project_len'] = len(project_arr)
         context['date'] = datetime.date.today()
         context['subdomain_num'] = subdomain_num
-        context['profile_account'] = request.user.profile
         return render(request, 'dashboard/dashboard.html', context)
     else:
         return redirect('index')
@@ -69,7 +68,6 @@ def stats(request):
     context = {
         "labels": json.dumps(labels),
         "data": json.dumps(data),
-        "profile_account": request.user.profile
         }
 
     if 'project' not in request.session:
@@ -86,7 +84,6 @@ def stats(request):
     if project_name == None:
         context['projects'] = None
         context['subdomains'] = None
-        context['profile_account'] = request.user.profile
         return render(request, 'dashboard/stats.html', context)
 
     projects.pop(projects.index(project_name))
@@ -105,13 +102,11 @@ def stats(request):
         if len(subdomains) == 0:
             context['projects'] =  projects
             context['subdomains'] = None
-            context['profile_account'] = request.user.profile
             return render(request, 'dashboard/stats.html', context)
 
     context['project'] = project_name
     context['projects'] =  projects
     context['subdomains'] = subdomains
-    context['profile_account'] = request.user.profile
     return render(request, 'dashboard/stats.html', context)
 
 def checkout(request):
@@ -122,7 +117,6 @@ def checkout(request):
 def update_transaction(request):
     context = {}
     if request.method == 'POST':
-        context['profile_account'] = request.user.profile
         resp_obj = json.loads(request.body)
         unclean_res = {
             "user_account": request.user.username if request.user.is_authenticated else 'None',
@@ -202,13 +196,11 @@ def projects(request):
         elif ('in_scope_domains' and 'project_name' and 'program') in request.POST.keys():
             if request.POST.get('project_name') == '':
                 context['project_list'] = project_list
-                context['profile_account'] = request.user.profile
                 context['error_message'] = 'Project name should not be empty!'
                 return render(request, 'dashboard/projects.html', context)
             tempdict = request.POST.copy()
             tempdict['in_scope_domains'] = tempdict['in_scope_domains'].split(',')
             request.POST = tempdict
-            context['profile_account'] = request.user.profile
             if 'create' in request.POST.keys():
                 if ProjectModel.objects.filter(project_user=request.user).filter(project_name__iexact=request.POST.get('project_name')).exists():
                     context['project_list'] = project_list
@@ -273,10 +265,8 @@ def projects(request):
                 context['project_list'] = project_list
         else:
             context['project_list'] = project_list
-        context['profile_account'] = request.user.profile
     else:
         context['project_list'] = project_list
-        context['profile_account'] = request.user.profile
     return render(request, 'dashboard/projects.html', context)
 
 def subdomain_enum(request):
@@ -344,16 +334,13 @@ def subdomain_enum(request):
                 subdomain_info['directories'] = model[11]
                 info_list.append(subdomain_info)
             context['subdomain_info'] = info_list
-            context['profile_account'] = request.user.profile
             request.session['sub_index'] = more_num
             request.session.modified = True
             context['sub_index'] = int(request.session.get('sub_index')) - 1
         else:
             pass
-        context['profile_account'] = request.user.profile
         return render(request, 'dashboard/subdomain_enum.html', context)
     else:
-        context['profile_account'] = request.user.profile
         if CeleryTaskModel.objects.filter(task_user=request.user).exists():
             # STARTED, PROGRESS, SUCCESS, PENDING, FAILURE, -
             task_id = CeleryTaskModel.objects.filter(task_user=request.user).values('subdomain_task')[0]['subdomain_task']
@@ -413,7 +400,6 @@ def subdomain_enum(request):
             info_list.append(subdomain_info)
         context['subdomain_info'] = info_list
         context['sub_index'] = request.session.get('sub_index') - 1
-    context['profile_account'] = request.user.profile
     return render(request, 'dashboard/subdomain_enum.html', context)
 
 def directory_enum(request):
@@ -506,7 +492,6 @@ def directory_enum(request):
     else:
         if not request.session['project'] or request.session['project'] == None or request.session['project'] == '':
             context['is_project'] = 'False'
-            context['profile_account'] = request.user.profile
             return render(request, 'dashboard/directory_enum.html', context)
 
         project_name = request.session['project']
@@ -542,22 +527,18 @@ def directory_enum(request):
         context['project'] = project_name
         context['projects'] =  projects
         context['subdomains'] = subdomains
-    context['profile_account'] = request.user.profile
     return render(request, 'dashboard/directory_enum.html', context)
 
 def vuln_analysis(request):
     context = {}
-    context['profile_account'] = request.user.profile
     return render(request, 'dashboard/vuln_analysis.html', context)
     
 def cve_search(request):
     context = {}
-    context['profile_account'] = request.user.profile
     return render(request, 'dashboard/cve.html', context)
 
 def exploit(request):
     context = {}
-    context['profile_account'] = request.user.profile
     return render(request, 'dashboard/exploits.html', context)
 
 def req_tamperer(request):
@@ -573,18 +554,13 @@ def req_tamperer(request):
             header = [request.POST.get('header-name'), request.POST.get('header-value')]
             if (request.POST.get('req-method') == 'GET' or request.POST.get('req-method') == 'HEAD') and (request.POST.get('data-key') != '' and request.POST.get('data-key') != ''):
                 context['error_message'] = '[GET/HEAD] The data is already passed through the query string.'
-                context['profile_account'] = request.user.profile
                 return render(request, 'dashboard/req_tamperer.html', context)
             req_header, resp_header = send_request(request, url, method, data, auth, header)
             if req_header == None and resp_header == None:
                 context['error_message'] = 'Invalid URL format.'
-                context['profile_account'] = request.user.profile
                 return render(request, 'dashboard/req_tamperer.html', context)
             context['request_output'] = req_header
             context['response_output'] = resp_header
-            context['profile_account'] = request.user.profile
-    else:
-        context['profile_account'] = request.user.profile
     return render(request, 'dashboard/req_tamperer.html', context)
 
 def wordlist_gen(request):
@@ -607,7 +583,6 @@ def wordlist_gen(request):
             context['url_status'] = 'N/A'
             context['wordlist_len'] = 0
             context['wordlist_output'] = ''
-            context['profile_account'] = request.user.profile
         elif 'wordlist' in request.FILES.keys():
             wordlist_form = WordlistForm(request.POST, request.FILES, instance=request.user)
             current_user = WordlistModel.objects.get(wordlist_user=request.user)
@@ -647,7 +622,6 @@ def wordlist_gen(request):
                 context['url_status'] = 'N/A'
                 context['wordlist_len'] = 0
                 context['wordlist_output'] = ''
-                context['profile_account'] = request.user.profile
             else:
                 wordlist_url = request.POST.get('wordlist_url')
                 wordlist = next(extract_wordlist(wordlist_url))
@@ -656,7 +630,6 @@ def wordlist_gen(request):
                 context['url_status'] = status
                 context['wordlist_len'] = length
                 context['wordlist_output'] = wordlist
-                context['profile_account'] = request.user.profile
         elif 'download' in request.POST.keys():
             buffer = io.StringIO()
             wordlist_file = File(buffer, 'w')
@@ -685,7 +658,6 @@ def wordlist_gen(request):
             context['url_status'] = 'N/A'
             context['wordlist_len'] = 0
             context['wordlist_output'] = ''
-            context['profile_account'] = request.user.profile
     else:
         names = WordlistModel.objects.get(wordlist_user=request.user)
         wordlist_values = names.return_db_values()
@@ -701,13 +673,11 @@ def wordlist_gen(request):
         context['wordlist_len'] = 0
         context['wordlist_output'] = ''
         context['url_status'] = 'N/A'
-        context['profile_account'] = request.user.profile
     return render(request, 'dashboard/wordlist_gen.html', context)
 
 def decoder(request):
     context = {}
     if request.method == 'POST':
-        context['profile_account'] = request.user.profile
         if 'decode' in request.POST:
             input_str = str(request.POST.get('decode-string'))
             if request.POST.get('decoder') == 'None':
@@ -764,8 +734,6 @@ def decoder(request):
                 return HttpResponse(result)
         else:
             pass
-    else:
-        context['profile_account'] = request.user.profile
     return render(request, 'dashboard/decoder.html', context)
 
 def injector(request):
@@ -800,7 +768,6 @@ def injector(request):
             
                 context['hex_dump'] = hex_dump
                 context['ipaddress'] = ip_address
-                context['profile_account'] = request.user.profile
                 context['dimensions'] = (width, height)
                 context['file_type'] = puremagic.magic_file(new_filename)[0].name 
                 context['file_size'] = str(os.path.getsize(new_filename)) + ' bytes'
@@ -847,7 +814,6 @@ def injector(request):
             hex_dump = hex_viewer(filename)
             context['hex_dump'] = hex_dump
             context['ipaddress'] = ip_address
-            context['profile_account'] = request.user.profile
             context['dimensions'] = dimensions
             context['file_type'] = puremagic.magic_file(filename)[0].name 
             context['file_size'] = str(os.path.getsize(filename)) + ' bytes'
@@ -865,7 +831,6 @@ def injector(request):
             context['status'] = 'Not injected'
         context['ipaddress'] = ip_address
         context['hex_dump'] = ''
-        context['profile_account'] = request.user.profile
         context['dimensions'] = '(0, 0)'
         context['file_type'] = 'None'
         context['file_size'] = '0 bytes'
@@ -877,7 +842,6 @@ def injector(request):
     else:
         context['hex_dump'] = ''
         context['ipaddress'] = ip_address
-        context['profile_account'] = request.user.profile
         context['dimensions'] = '(0, 0)'
         context['file_type'] = 'None'
         context['file_size'] = '0 bytes'
