@@ -54,6 +54,7 @@ def registration_view(request):
 
 def login_view(request):
     context = {}
+    previous_input = {'email':'', 'password': ''}
     user = request.user
     if user.is_authenticated:
         return redirect('dashboard')
@@ -72,9 +73,12 @@ def login_view(request):
                 request.session.modified = True
                 login(request, user)
                 return redirect('dashboard')
+        else:
+            previous_input = {"email": request.POST.get('email'), "password": request.POST.get('password')}
     else:
         form = AccountAuthenticationForm()
-
+    
+    context['previous_input'] = previous_input
     context['login_form'] = form
     return render(request, 'auth/login.html', context)
 
