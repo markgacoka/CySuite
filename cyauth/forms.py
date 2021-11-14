@@ -33,11 +33,21 @@ class RegistrationForm(UserCreationForm):
         }
 
 class AccountAuthenticationForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput)
+    password = forms.CharField(
+        widget=forms.PasswordInput, 
+        error_messages={
+            'required': 'The password field is required to sign in.'
+        }
+    )
 
     class Meta:
         model = Account
         fields = ('email', 'password')
+        error_messages = {
+            'email': {
+                'required': ("An email address is required to sign in."),
+            }
+        }
 
     def clean(self):
         if self.is_valid():

@@ -147,7 +147,7 @@ def account_view(request):
             image = request.FILES['image']
             image.name = full_extension
             bucket.upload_fileobj(image, 'media/profiles/' + full_extension)
-            userprofile = UserProfile.objects.get(username=request.user)
+            userprofile = Account.objects.get(user_id=request.user.user_id)
             userprofile.image = full_extension
             userprofile.save()
             context['success_message'] = 'Your profile has been updated!'
