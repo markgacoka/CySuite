@@ -7,7 +7,7 @@ request.classList.add("bg-light-bunting");
 request.classList.add("text-white");
 request.classList.add("mr-2");
 request.classList.remove("text-light-haiti"); 
-request_api.innerHTML = 'curl https://cysuite.io/'
+request_api.innerHTML = 'curl -X GET http://cysuite.herokuapp.com/api/users/'
 
 request.addEventListener('click', requestHandler);
 response.addEventListener('click', responseHandler);
@@ -22,7 +22,7 @@ function requestHandler(){
     response.classList.remove("text-white");
     response.classList.remove("mr-2");
     response.classList.add("text-light-haiti");
-    request_api.innerHTML = 'curl https://cysuite.io/api/users/'
+    request_api.innerHTML = 'curl -X GET http://cysuite.herokuapp.com/api/users/'
 }
 
 function responseHandler(){
