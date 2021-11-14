@@ -29,21 +29,19 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
         name = sociallogin.account.extra_data['name'].split()
         username = sociallogin.account.extra_data['screen_name']
         if len(name) == 2:
-            family_name = name[1]
+            last_name = name[1]
         else:
-            family_name = ''
+            last_name = ''
 
         if not user.objects.filter(email=email_address).exists() and not user.objects.filter(username=username).exists():
             new_user, created = user.objects.update_or_create(
                 username = username,
                 email = email_address,
                 is_admin = False,
-                is_staff = False,
-                is_superuser = False,
                 is_premium = False, 
                 defaults = {
-                    'given_name': name[0],
-                    'family_name': family_name
+                    'first_name': name[0],
+                    'last_name': last_name
                 }
             )
             # verified = sociallogin.account.extra_data['verified']
@@ -59,12 +57,10 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
                 email = email_address,
                 username = username,
                 is_admin = False,
-                is_staff = False,
-                is_superuser = False,
                 is_premium = False,
                 defaults = {
-                    'given_name': sociallogin.account.extra_data['first_name'],
-                    'family_name': sociallogin.account.extra_data['last_name']
+                    'first_name': sociallogin.account.extra_data['first_name'],
+                    'last_name': sociallogin.account.extra_data['last_name']
                 }
             )
             # verified = sociallogin.account.extra_data['verified']
@@ -79,13 +75,11 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
             new_user, created = user.objects.update_or_create(
                 email = email_address,
                 username = username,
-                is_admin = False,
-                is_staff = False,
                 is_superuser = False,
                 is_premium = False,
                 defaults = {
-                    'given_name': sociallogin.account.extra_data['given_name'],
-                    'family_name': sociallogin.account.extra_data['family_name']
+                    'first_name': sociallogin.account.extra_data['given_name'],
+                    'last_name': sociallogin.account.extra_data['family_name']
                 }
             )
             # verified = sociallogin.account.extra_data['verified_email']
@@ -102,7 +96,6 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
     if created:
         profile = UserProfile(username=new_user)
         profile.save()
-        new_user.guess_display_name()
         new_user.save()
         if new_user:
             perform_login(request, new_user, email_verification='optional')

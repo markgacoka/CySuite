@@ -14,7 +14,6 @@ from django.http import JsonResponse
 from .forms import TransactionForm
 from .forms import ProjectForm
 from .forms import WordlistForm
-from .models import PayloadModel
 from .models import WordlistModel
 from .models import ProjectModel
 from .models import SubdomainModel
@@ -127,7 +126,7 @@ def update_transaction(request):
         resp_obj = json.loads(request.body)
         unclean_res = {
             "user_account": request.user.username if request.user.is_authenticated else 'None',
-            "given_name": resp_obj['payer']['name']['given_name'],
+            "first_name": resp_obj['payer']['name']['given_name'],
             "last_name": resp_obj['payer']['name']['surname'],
             "payer_email": resp_obj['payer']['email_address'],
             "amount": float(resp_obj['purchase_units'][0]['payments']['captures'][0]['amount']['value']),

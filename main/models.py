@@ -1,4 +1,3 @@
-import uuid
 from django.db import models
 from jsonfield import JSONField
 from django.conf import settings
@@ -8,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 
 class Transaction(models.Model):
     user_account = models.TextField(max_length=30, unique=False, null=False, default='None')
-    given_name = models.TextField(max_length=50, blank=True, null=True)
+    first_name = models.TextField(max_length=50, blank=True, null=True)
     last_name = models.TextField(max_length=50, blank=True, null=True)
     payer_email = models.EmailField(max_length=254, blank=True, null=True)
     amount = models.FloatField(blank=True, null=True)
@@ -50,18 +49,6 @@ class ProjectModel(models.Model):
 
     def get_project_details(self):
         return [self.project_name, self.program, self.progress]
-
-class PayloadModel(models.Model):
-    payload_user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, unique=True, related_name='payload', on_delete=models.CASCADE)
-    payload_image = models.ImageField(default='https://cysuite-bucket.s3.us-west-2.amazonaws.com/media/default.png', upload_to='payloads/', blank=True, null=True)
-
-    class Meta():
-        db_table = 'payload'
-        verbose_name = _('payload')
-        verbose_name_plural = _('payloads')
-
-    def __str__(self):
-        return self.payload_user.name + ' Payloads'
 
 class WordlistModel(models.Model):
     wordlist_user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, unique=True, related_name='wordlist', on_delete=models.CASCADE)
