@@ -94,8 +94,6 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
     request.session.modified = True
 
     if created:
-        profile = UserProfile(username=new_user)
-        profile.save()
         new_user.save()
         if new_user:
             perform_login(request, new_user, email_verification='optional')
