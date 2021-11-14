@@ -38,7 +38,7 @@ class UsersView(APIView):
 
 class UserView(APIView):
     def get(self, request, *args, **kwargs):
-        qs = Account.objects.filter(user=request.user)
+        qs = Account.objects.filter(user_id=request.user.user_id)
         serializer = UserSerializer(qs, many=False)
         return JsonResponse(serializer.data, safe=False, json_dumps_params={'indent': 2})
     
