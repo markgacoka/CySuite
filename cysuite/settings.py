@@ -194,6 +194,22 @@ CELERY_RESULT_SERIALIZER = os.environ.get('CELERY_RESULT_SERIALIZER', 'json')
 CELERY_TASK_TRACK_STARTED= bool(int(os.environ.get('CELERY_TASK_TRACK_STARTED', 1)))
 CELERY_TIMEZONE = os.environ.get('CELERY_TIMEZONE', 'Africa/Nairobi')
 
+REDIS_URL = "redis://{host}:{port}/1".format(
+    host=os.getenv('REDIS_HOST', 'localhost'),
+    port=os.getenv('REDIS_PORT', '6379')
+)
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": REDIS_URL,
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        },
+        "KEY_PREFIX": "example"
+    }
+}
+
 # STATIC_LOCATION = 'static'
 MEDIA_LOCATION = 'media'
 # STATIC_URL = 'https://%s/%s/' % (os.environ.get('AWS_S3_CUSTOM_DOMAIN'), STATIC_LOCATION)

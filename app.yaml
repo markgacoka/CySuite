@@ -1,0 +1,24 @@
+runtime: python
+
+entrypoint: gunicorn -b :$PORT cysuite.wsgi
+env: flex
+
+includes:
+  - env_variables.yaml
+  
+handlers:
+- url: /static
+  static_dir: static
+
+- url: /.*
+  script: auto
+
+beta_settings:
+  cloud_sql_instances: cysuite:us-central1:cysuite-db
+
+runtime_config:
+  python_version: 3.7
+
+automatic_scaling:
+  min_num_instances: 1
+  max_num_instances: 5
