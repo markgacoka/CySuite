@@ -51,46 +51,37 @@
                         </a>
                     </div>
                 </div>
-                <ul class="header__list">
-                    <li class="header__list-item">
-                    <a class="header__list-link header__list-link-is-active" href="">
-                        Why CySuite
-                    </a>
-                    </li>
-                    <li class="header__list-item">
-                    <a class="header__list-link" href="">
-                        How it Works
-                    </a>
-                    </li>
-                    <li class="header__list-item">
-                    <a class="header__list-link" href="">
-                        Our Values
-                    </a>
-                    </li>
-                </ul>
-                <ul class="header__list" style="float: right;display: flex;position: relative;">
+                <ul class="header__list" style="float: right; display: flex; position: relative; padding-right: 100px;">
                     <li class="header__list-item">
                         <a class="glue-button glue-button--medium-emphasis" title="Log In" href="/login" tabindex="0">
                             Log In
                         </a>
                     </li>
                 </ul>
-                <span class="header__toggler">
-                <span></span>
-                </span>
             </nav>
             </div>
         </div>
     </header>
-    <div style="height: 600px; position: absolute; display: contents;">
-        <video class="video-illustration" src="{% static 'img/illustrations/background_smallest.mp4' %}" width="100%" height="100%" autoplay="" loop="" muted="" style="object-fit: cover; opacity: 0.08;"></video>
-        <div class="overlay-container glue-mod-text-center overlay" style="display: flex;">
-            <h1 class="title-text font-bold text-3xl lg:text-5xl leading-snug" style="font-size: calc(3vw + 2vh); color: rgba(0, 0, 50); padding-bottom: 1.5rem; font-family: 'Montserrat'; font-weight: 600; width: 90%;">Making a safer Internet through crowdsourced analysis.</h1>
-            <h2 class="title-text" style="font-size: 22px; font-weight: 400; color: rgba(9, 14, 36, var(--tw-bg-opacity));">CySuite provides you with a convenient dashboard to manage all your targets' data with rich visualization.</h2>
-            <a class="title-button glue-button--medium-emphasis" title="Create an Account" href="/register" style="float: right; color:white;">
-                Create an Account&emsp;<i class="fa fa-chevron-right" style="color: lightgray; z-index: 1;"></i>
-            </a>
+    <div class="hero-area-l1  position-relative background-property" style="background: url(./image/landing-1/hero-bg.png);">
+      <div class="container">
+        <div class="row justify-content-center align-items-center">
+          <div class="col-xxl-5 col-xl-6 col-lg-6 col-md-10 order-lg-1 order-1 aos-init aos-animate" data-aos="fade-right" data-aos-delay="500" data-aos-duration="1000">
+            <div class="content">
+              <h2>Source code analysis using the power of AI.</h2>
+              <p>CySuite provides you with a convenient dashboard to manage all your targets' data with rich visualization.</p>
+                <a class="title-button glue-button--medium-emphasis" title="Create an Account" href="/register" style="color:white;">
+                Create an Account&emsp;<i class="fa fa-chevron-right" style="color: lightgray; z-index: 1;"></i></a>
+            </div>
+          </div>
+          <div class="offset-xxl-2 col-xxl-5 offset-xl-1 col-xl-5 col-lg-6 col-md-8 order-lg-1 order-0 aos-init aos-animate" data-aos="fade-left" data-aos-delay="700" data-aos-duration="1000">
+            <div class="hero-image-group-l1">
+              <div class="image-1">
+                <img class="w-100" src="{% static 'img/illustrations/landing.png' %}" alt="image">
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
     <section class="bg-haiti py-12 lg:py-30">
         <div class="max-w-6xl mx-auto px-6">
@@ -104,7 +95,7 @@
                     <div id="id-1-4" style="" role="tabpanel" tabindex="0" class="home_gridEng__3Mbrn focus:outline-none lg:min-h-[462px]" aria-labelledby="queries-mutations">
                         <div>
                             <h2 class="font-bold text-3xl lg:text-5xl leading-snug text-white">
-                                Access organized information on various web targets using our API
+                                Query the API for structured data
                             </h2>
                             <p class="text-base md:text-lg mt-6 text-whisper">
                                 CySuite has a robust API with a vast corpus of labelled data on web targets for a more convinient integration with automated tools. Try out the API today and be a part of making the data richer while having access to a magnitude of web-related data.
@@ -232,7 +223,7 @@
                             <li class="text-light-haiti text-sm uppercase tracking-wider font-medium mb-3">BLOG</li>
                             <li><a class="text-zodiac font-medium hover:text-cornflower text-sm" style="color: rgba(98, 110, 153, var(--tw-text-opacity));" href="https://medium.com/@cysuiteio" target="_blank">Medium Blog</a></li>
                             <li><a class="text-zodiac font-medium hover:text-cornflower text-sm" style="color: rgba(98, 110, 153, var(--tw-text-opacity));" href="/graphql">Sign up to Newsletter</a></li>
-                            <li><label class="btn text-zodiac hover:text-cornflower text-sm" for="modal-1" style="cursor: pointer; color: rgba(98, 110, 153, var(--tw-text-opacity));">Request API Access</label></li>
+                            <li><label class="text-sm" for="modal-1" style="cursor: pointer; color: rgba(98, 110, 153, var(--tw-text-opacity));">Request API Access</label></li>
                         </ul>
                     </div>
                     <div class="md:w-1/4 px-6">
@@ -309,45 +300,5 @@
         </div>
     </footer>
     </body>
-    <script>
-    var request_selected = true;
-    var request = document.getElementById('gql-query');
-    var response = document.getElementById('response');
-    var request_api = document.getElementById('request-api');
-
-    request.classList.add("bg-light-bunting");
-    request.classList.add("text-white");
-    request.classList.add("mr-2");
-    request.classList.remove("text-light-haiti"); 
-    request_api.innerHTML = 'curl https://cysuite.io/'
-
-    request.addEventListener('click', requestHandler);
-    response.addEventListener('click', responseHandler);
-
-    function requestHandler(){
-        request.classList.add("bg-light-bunting");
-        request.classList.add("text-white");
-        request.classList.add("mr-2");
-        request.classList.remove("text-light-haiti");
-
-        response.classList.remove("bg-light-bunting");
-        response.classList.remove("text-white");
-        response.classList.remove("mr-2");
-        response.classList.add("text-light-haiti");
-        request_api.innerHTML = 'curl https://cysuite.io/'
-    }
-    
-    function responseHandler(){
-        response.classList.add("bg-light-bunting");
-        response.classList.add("text-white");
-        response.classList.add("mr-2");
-        response.classList.remove("text-light-haiti");
-
-        request.classList.remove("bg-light-bunting");
-        request.classList.remove("text-white");
-        request.classList.remove("mr-2");
-        request.classList.add("text-light-haiti");
-        request_api.innerHTML = 'curl https://cysuite.io/test'
-    }
-    </script>
+    <script src="{% static 'js/home.js' %}"></script>
 </html>
