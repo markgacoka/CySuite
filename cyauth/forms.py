@@ -4,19 +4,18 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password, check_password
 
 from cyauth.models import Account
-from cyauth.models import UserProfile
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(max_length=60, widget=forms.EmailInput)
 
     class Meta:
         model = Account
-        fields = ("given_name", "family_name", "email", "username", "password1", "password2")
+        fields = ("first_name", "last_name", "email", "username", "password1", "password2")
         error_messages = {
-            'given_name': {
+            'first_name': {
                 'required': ("First name is a required field."),
             },
-            'family_name': {
+            'last_name': {
                 'required': ("Last name is a required field."),
             },
             'email': {
@@ -65,11 +64,6 @@ class AccountUpdateForm(forms.ModelForm):
             else:
                 return {"email": email, "username": username}
         return None
-
-class ProfileUpdateForm(forms.ModelForm):
-    class Meta:
-        model = UserProfile
-        fields = ['image']
 
 class FeedbackForm(forms.ModelForm):
     class Meta:
