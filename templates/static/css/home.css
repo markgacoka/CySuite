@@ -3830,7 +3830,7 @@ li {
 }
 
 .glue-header__logo>.glue-header__logo-link {
-    width: auto;
+    width: max-content;
 }
 
 .glue-header__logo-link {
