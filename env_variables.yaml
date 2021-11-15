@@ -21,12 +21,16 @@ env_variables:
   CELERY_TASK_TRACK_STARTED: '1'
   CELERY_TIMEZONE: 'Africa/Nairobi'
 
-  ENGINE: 'django.db.backends.postgresql'
+  ENGINE: 'django.db.backends.postgresql_psycopg2'
   DB_NAME: 'dcogfchbrt2oep'
   DB_USER: 'pvrpofaxejueor'
   DB_PASS: '055b2328f84b3b9d205685ff7419fcd7081a0972284b3a2be5119add6f33c686'
   DB_HOST: 'ec2-34-194-123-31.compute-1.amazonaws.com'
   DB_PORT: '5432'
+
+  POSTGRES_DB: 'postgres'
+  POSTGRES_USER: 'postgres'
+  POSTGRES_PASSWORD: 'postgres'
 
   GOOGLE_CLIENT_ID: '171222177646-80l7bgb2jcds6c0o1o7akcsciigiv8hi.apps.googleusercontent.com'
   GOOGLE_SECRET: 'aR3hAa8UvrMWFw370fPr0c5r'
