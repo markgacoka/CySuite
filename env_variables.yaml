@@ -11,15 +11,15 @@ env_variables:
   AWS_SECRET_ACCESS_KEY: 'krgZFK5+OWQjebCGrdK4+BfbkB5P1CBA4rTqfWPG'
   AWS_STORAGE_BUCKET_NAME: 'cysuite-bucket'
 
-  DJANGO_ALLOWED_HOSTS: 'localhost,127.0.0.1,[::1],cysuite.uw.r.appspot.com'
+  DJANGO_ALLOWED_HOSTS: 'localhost,127.0.0.1,[::1],cysuite.uw.r.appspot.com,cysuite.appspot.com'
   CELERY_BROKER_URL: 'redis://localhost:6379/0'
   CELERY_RESULT_BACKEND: 'redis://localhost:6379/0'
   CELERY_TASK_SERIALIZER: 'json'
   CELERY_RESULT_SERIALIZER: 'json'
   CELERY_TASK_TRACK_STARTED: '1'
   CELERY_TIMEZONE: 'Africa/Nairobi'
-  CELERY_TASK_TRACK_STARTED: '1'
 
+  ENGINE: 'django.db.backends.postgresql'
   DB_NAME: 'cysuite-db'
   DB_USER: 'postgres'
   DB_PASS: 'Dodomans@001'
@@ -39,7 +39,6 @@ env_variables:
   TWITTER_SECRET: 'aVGbJTRVJUK2GUKLiSMJZeKJaYFfWK5aHd3e5xGJUkqd3'
 
   PAYPAL_CLIENT_ID: 'Ae4u1UKOFWOgxCt9syz8Qp5_iF3g98NIstoW_xq_vxMy2U4KNht7FbwGsaNBn1AePMDuf317Lb9HAZgl'
-  DJANGO_SECRET_KEY: 'django-insecure-9e_l3(javbb*amm$_jh#etu*vlg)x$*-a$u(94*buu*il#xd1n'
   VT_API_KEY_FREE: '1c8636990364fc0922d77c4d748f5711716aebcc451ce4eca9c50c759374a080'
   VT_API_KEY_PAID: 'efdf4846c4464ed7d07d432774add91f848931f0214c54660177a20cb1003f84'
   CENSYS_UID: 'c4a9c678-dd3b-4b20-af47-610374f2fe89'

@@ -104,7 +104,7 @@ if DEBUG:
     
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
+            'ENGINE': os.environ.get('ENGINE'),
             'HOST': 'localhost',
             'NAME': os.environ.get('DB_NAME'),
             'USER': os.environ.get('DB_USER'),
@@ -120,7 +120,7 @@ else:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
+            'ENGINE': os.environ.get('ENGINE'),
             'HOST': os.environ.get('DB_HOST'),
             'NAME': os.environ.get('DB_NAME'),
             'USER': os.environ.get('DB_USER'),
