@@ -13,9 +13,8 @@ env_variables:
   AWS_STORAGE_BUCKET_NAME: 'cysuite-bucket'
 
   DJANGO_ALLOWED_HOSTS: 'localhost,127.0.0.1,[::1],cysuite.uw.r.appspot.com,cysuite.appspot.com'
-  CELERY_BROKER_URL: 'redis://redistogo:d80853861eaa16a2d246de173fd84c8c@tarpon.redistogo.com:11336/'
-  CELERY_RESULT_BACKEND: 'redis://redistogo:d80853861eaa16a2d246de173fd84c8c@tarpon.redistogo.com:11336/'
-  REDIS_PORT: '6379'
+  REDISTOGO_URL: 'redis://redistogo:d80853861eaa16a2d246de173fd84c8c@tarpon.redistogo.com:11336/'
+  REDIS_URL: 'redis://localhost:6379/0'
   CELERY_TASK_SERIALIZER: 'json'
   CELERY_RESULT_SERIALIZER: 'json'
   CELERY_TASK_TRACK_STARTED: '1'
