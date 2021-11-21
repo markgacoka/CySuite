@@ -3,8 +3,11 @@ import asyncio
 import ast
 
 async def fetch(session, url):
-    async with session.get(url) as response:
-        return response.status, await response.text(), response.headers
+    try:
+        async with session.get(url) as response:
+            return response.status, await response.text(), response.headers
+    except:
+          return '404', None, {}
 
 async def main(url):
     async with aiohttp.ClientSession() as session:
@@ -21,5 +24,5 @@ async def main(url):
 
 def projectsonar_script3(domain):
     loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
+    asyncio.set_event_loop(asyncio.new_event_loop())
     return loop.run_until_complete(main(domain))
