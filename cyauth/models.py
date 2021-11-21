@@ -1,5 +1,6 @@
 import uuid
 from django.db import models
+from rest_framework.authtoken.models import Token
 from django.contrib.postgres.fields import ArrayField
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
@@ -12,6 +13,8 @@ class MyUserManager(UserManager):
         )
         user.set_password(password)
         user.save(using=self._db)
+        user.api_token = Token.objects.get(user_id=user.user_id).key
+        user.save()
         return user
 
     def create_superuser(self, email, username, password):
@@ -27,6 +30,8 @@ class MyUserManager(UserManager):
         user.save(using=self._db)
         return user
 
+def generate_badges():
+    return ['Novice']
 
 class Account(AbstractBaseUser, PermissionsMixin):
     user_id = models.UUIDField(primary_key=True, blank=False, unique=True, default=uuid.uuid4, db_index=True, editable=False)
@@ -44,7 +49,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     feedback = models.CharField(max_length= 1200, default= "", unique=False, null=True, blank=True)
     api_token = models.CharField(max_length=64, unique=False, null=True, blank=True)
     payload_image = models.ImageField(default='https://cysuite-bucket.s3.us-west-2.amazonaws.com/media/default.png', upload_to='payloads/', blank=True, null=True)
-    badges = ArrayField(models.CharField(max_length=3000, blank=True), blank=True, null=True, default=list)
+    badges = ArrayField(models.CharField(max_length=3000, blank=True), blank=True, null=True, default=generate_badges)
 
     objects = MyUserManager()
 
