@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import JsonResponse
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from cyauth.models import Account
 from .serializers import UsersSerializer, UserSerializer 
 
@@ -37,16 +37,23 @@ class UsersView(APIView):
         serializer = UsersSerializer(qs, many=True)
         return JsonResponse(serializer.data, safe=False, json_dumps_params={'indent': 2})
 
-class UserView(APIView):
-    permission_classes = (AllowAny,)
-    def get(self, request, *args, **kwargs):
-        qs = Account.objects.filter(user_id=request.user.user_id)
-        serializer = UserSerializer(qs, many=False)
-        return JsonResponse(serializer.data, safe=False, json_dumps_params={'indent': 2})
+# class UserView(APIView):
+#     permission_classes = (AllowAny,)
+#     def get(self, request, *args, **kwargs):
+#         qs = Account.objects.filter(user_id=request.user.user_id)
+#         serializer = UserSerializer(qs, many=False)
+#         return JsonResponse(serializer.data, safe=False, json_dumps_params={'indent': 2})
     
-    def post(self, request, *args, **kwargs):
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors)
+#     def post(self, request, *args, **kwargs):
+#         serializer = UserSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data)
+#         return Response(serializer.errors)
+
+
+class CurrentUserView(APIView):
+    permission_classes = (IsAuthenticated,)
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return JsonResponse(serializer.data, safe=False, json_dumps_params={'indent': 2})

@@ -1,13 +1,13 @@
 ## Database Models
 
+### Get Current User:
+```
+curl -X GET -H "Authorization: Token 0279607f2c7bd041a51de1484a1694f268a29289" http://localhost:8000/api/user/
+```
+
 ```json
-Auth
-{
-	"name": "John Doe",
-	"username":"johndoe",
-	"email":"johndoe@gmail.com",
-	"password": "a907ac8f85bbece3069a52a39947b287"
-}
+
+ 
 
 Subdomains
 [
