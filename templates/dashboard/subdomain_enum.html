@@ -209,7 +209,9 @@ Sudomain Enumeration | CySuite
                         <h6 class="card-title">Header Infomation</h6>
                     </div>
                     <div style="display: flex; flex-direction: row; height: inherit; min-height: 200px;">
-                    <textarea class="form-control" style="font-family: courier new;font-size: 0.8rem; max-width: -webkit-fill-available;display: table-row;" type="text" readonly>{% if subdomain_info|length > 0 and sub_index > -1 %}{{subdomain_info|index:sub_index|get_item:"header_info"}}{% else %}{% endif %}</textarea>
+                    <textarea class="form-control" style="font-family: courier new;font-size: 0.8rem; max-width: -webkit-fill-available;display: table-row;" type="text" readonly>{% if subdomain_info|length > 0 and sub_index > -1 %}{% for key, value in subdomain_info|index:sub_index|get_header:"header_info" %}
+{{ key }}: {{ value }}{% endfor %}{% else %}{% endif %}
+                    </textarea>
                     </div>
                 </div>
             </div>
