@@ -7,7 +7,7 @@ Sudomain Enumeration | CySuite
 {% block content %}
 {% if messages %}
     {% for message in messages %}
-        {% if 'successfully!' in message.message %}
+        {% if 'successfully' in message.message or 'progress' in message.message %}
             <button style="display: none;" class="alert-popup" id="alert-success" name="{{message}}" value="success"></button>
         {% else %}
             <button style="display: none;" class="alert-popup" id="alert-warning" name="{{message}}" value="warning"></button>

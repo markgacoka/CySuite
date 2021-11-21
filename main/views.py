@@ -5,6 +5,8 @@ import urllib
 import datetime
 import urllib.parse
 from os import path
+
+from main.scanner import subdomain_scanner
 from .tasks import scan_subdomains
 import os, json, base64
 from html import escape, unescape
@@ -161,7 +163,7 @@ def projects(request):
         if 'delete-project' in request.POST.keys():
             try:
                 ProjectModel.objects.filter(project_name__iexact=request.POST.get('delete-project')).filter(project_user=request.user).delete()
-                messages.success(request, 'Project has been deleted successfully!')
+                messages.success(request, 'Project has been successfully deleted!')
                 del request.session['sub_index']
                 del request.session['project']
                 request.session.modified = True
@@ -223,7 +225,7 @@ def projects(request):
 
                         request.session['project'] =  project_form.cleaned_data['project_name']
                         request.session.modified = True
-                        messages.success(request, 'Project has been created successfully!')
+                        messages.success(request, 'Project has been successfully created!')
                         return redirect('projects')
                     else:
                         context['error_message'] = 'An error occurred!'
@@ -284,38 +286,28 @@ def subdomain_enum(request):
     if request.method == 'POST':
         if 'scan' in request.POST.keys():
             user_id = Account.objects.filter(username=request.user.username).values('user_id')[0]['user_id']
-            task = scan_subdomains.delay(user_id, project_session)
-            CeleryTaskModel.objects.filter(task_user=request.user).update_or_create(
-                task_user = request.user,
-                defaults = { 
-                    'subdomain_task': task.task_id
-                }
-            )
-            context['task'] = task
-            context['task_id'] = task.task_id
             request.session['sub_index'] = -1
             request.session.modified = True
             context['sub_index'] = request.session['sub_index']
-            context['subdomain_info'] = [{}]
             messages.success(request, 'Scan in progress. Stand by!')
-            # return render("dashboard/subdomain_enum.html", context, context_instance=RequestContext(request))
-        elif 'cancel' in request.POST.keys():
-            task_ids = []
-            for task_id in CeleryTaskModel.objects.filter(task_user=request.user).values('subdomain_task'):
-                task_ids.append(task_id['subdomain_task'])
-            app.control.revoke(task_ids, terminate=True, signal='SIGKILL')
-            app.control.purge()
-
-            from celery.contrib.abortable import AbortableAsyncResult
-            if len(task_ids) > 0:
-                for task_id in task_ids:
-                    abortable_task = AbortableAsyncResult(task_id)
-                    abortable_task.abort()
-
-            request.session['sub_index'] = -1
-            request.session.modified = True
-            context['subdomain_info'] = [{}]
-            context['sub_index'] = request.session['sub_index']
+            subdomain_scanner(user_id, project_session)
+            
+            user_projects = ProjectModel.objects.get(project_name=request.session['project'])
+            subdomain_model_instance = SubdomainModel.objects.filter(subdomain_user_id=user_id).filter(project=user_projects).order_by('hostname')
+            for model in subdomain_model_instance.values_list():
+                subdomain_info = {}
+                subdomain_info['subdomain'] = model[3]
+                subdomain_info['status_code'] = model[4]
+                subdomain_info['screenshot'] = model[5]
+                subdomain_info['ip_address'] = model[6]
+                subdomain_info['waf'] = model[7]
+                subdomain_info['ports'] = model[8]
+                subdomain_info['ssl_info'] = model[9]
+                subdomain_info['header_info'] = model[10]
+                subdomain_info['directories'] = model[11]
+                info_list.append(subdomain_info)
+            context['subdomain_info'] = info_list
+            return render(request, "dashboard/subdomain_enum.html", context)
         elif 'more' in request.POST.keys():
             info_list = []
             more_num = int(request.POST.get('more'))
@@ -341,20 +333,6 @@ def subdomain_enum(request):
             pass
         return render(request, 'dashboard/subdomain_enum.html', context)
     else:
-        if CeleryTaskModel.objects.filter(task_user=request.user).exists():
-            # STARTED, PROGRESS, SUCCESS, PENDING, FAILURE, -
-            task_id = CeleryTaskModel.objects.filter(task_user=request.user).values('subdomain_task')[0]['subdomain_task']
-            res = AsyncResult(task_id).state
-            task_output = AsyncResult(task_id).result
-            if res == 'STARTED' or res == 'PROGRESS':            
-                context['task'] = True
-                context['task_id'] = task_id
-            elif res == 'SUCCESS':
-                request.session['sub_index'] = 1
-                request.session.modified = True
-                context['sub_index'] = int(request.session.get('sub_index'))
-            else:
-                context['task'] = False
         sub_index = request.session.get('sub_index')
         if not sub_index:
             request.session['sub_index'] = -1
