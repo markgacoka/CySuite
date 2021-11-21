@@ -15,4 +15,4 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProjectModel
-        fields = ['project_name', 'program', 'in_scope_domains', 'progress', 'subdomains']
+        fields = ['project_user_id', 'project_name', 'program', 'in_scope_domains', 'progress', 'subdomains']

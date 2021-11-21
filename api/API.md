@@ -64,6 +64,7 @@ curl -X GET http://localhost:8000/api/user/projects/ -H "Authorization: Token 02
 
 [
   {
+    "project_user_id": "a94fe36c-355c-4156-8cf4-abad477e3280",
     "project_name": "Project 1",
     "program": "HackerOne",
     "in_scope_domains": [
@@ -167,63 +168,82 @@ Domains
 ```
 
 ### User abilities
-[ x ] Get all the available user projects
-[ x ] Get project details with in-scope domains, project name
-- Get subdomains with IP, SSL, DNS, ports
-- Get directories, parameters, protocols of subdomains
-
+[x] Get all the available user projects
+[x] Get project details with in-scope domains, project name
+TODO: Limit requests sent to API per user
+TODO: Get subdomains with IP, SSL, DNS, ports.
+TODO: Get directories, parameters, protocols of subdomains.
 
 ### Functions
-- getUser()
-`Permissions: currentuser`
-`/api/currentuser/`
+getUserToken()
+`Permissions: currentuser, admin`
+`Authentication: True`
+`/api/user/`
+```
+token
+```
+
+getCurrentUser()
+`Permissions: currentuser, admin`
+`Authentication: True`
+`/api/token/`
 ```
 [PK] user_id:
-username:
-email:
-first_name:
-last_name:
-date_joined:
-last_login_date:
-is_admin:
-is_premium:
-feedback:
-profile_image:
-beta:
-dark:
+first_name
+last_name
+username
+occupation
+email
+image
+date_joined
+last_login
+is_admin
+is_premium
+hide_email
+feedback
+api_token
+badges
 ```
 
 - getAllUsers()
 `Permissions: admin`
-`/api/allusers/`
+`Authentication: True`
+`/api/users/`
 ```
-[:]
-[PK] user_id: 
-username:
-email:
-last_login_date:
-is_admin:
-is_premium:
-feedback:
-beta:
+[PK] user_id:
+first_name
+last_name
+username
+occupation
+email
+image
+date_joined
+last_login
+is_admin
+is_premium
+hide_email
+feedback
+api_token
+badges
 ```
 
-- getProjects()
+- getUserProjects()
 `Permissions: currentuser`
-`/api/projects/`
+`Authentication: True`
+`/api/user/projects/`
 ```
 [PK] project_user_id:
-project:
-program:
-in_scope_domains:
-progress:
+project_name
+program
+in_scope_domains
+progress
+subdomains
 ```
 
 - getSubdomains()
 `Permissions: currentuser`
 `/api/subdomains/<in-scope-domain>`
 ```
-"in_scope_domain": "google.com",
 
 ```
 
@@ -231,6 +251,5 @@ progress:
 `Permissions: currentuser`
 `/api/directories/<subdomain>`
 ```
-```
 
-TODO: Limit requests sent to API per user
+```
