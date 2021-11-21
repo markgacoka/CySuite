@@ -1678,7 +1678,6 @@ pre code {
     .col-xxl-3 {
         -ms-flex: 0 0 25%;
         flex: 0 0 25%;
-        max-width: 25%
     }
     .col-xxl-4 {
         -ms-flex: 0 0 33.33333%;
