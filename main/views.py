@@ -725,7 +725,7 @@ def injector(request):
         file_type = request.POST.get('file_type') if request.POST.get('file_type') != None else None
         
         if 'full_hex' in request.POST.keys():
-            payload_file = PayloadModel.objects.get(payload_user=request.user)
+            payload_file = Account.objects.get(user=request.user)
             filename = payload_file.payload_image.url
             relative_filename = filename.rsplit('/', 1)[-1]
 
@@ -753,7 +753,7 @@ def injector(request):
                 context['extension'] = puremagic.magic_file(new_filename)[0].extension
                 context['mime_type'] = puremagic.magic_file(new_filename)[0].mime_type
                 context['byte_match'] = puremagic.magic_file(new_filename)[0].byte_match.decode('UTF-8','ignore').strip()
-                context['download'] = PayloadModel.objects.get(payload_user=request.user).payload_image
+                context['download'] = Account.objects.get(user=request.user).payload_image
                 context['status'] = 'Viewing full hex code'
                 context.update(csrf(request))
                 os.remove('media/payloads/' + relative_filename)
@@ -779,14 +779,14 @@ def injector(request):
 
         if filename != None and dimensions != None:
             new_filename = re.sub(r'^.*?/', '', filename)
-            payload_file = PayloadModel.objects.get(payload_user=request.user)
-            if new_filename != payload_file.payload_image and payload_file.payload_image != 'https://cysuite-bucket.s3.us-west-2.amazonaws.com/media/default.png':
+            payload_user = Account.objects.get(payload_user=request.user)
+            if new_filename != payload_user.payload_image and payload_user.payload_image != 'https://cysuite-bucket.s3.us-west-2.amazonaws.com/media/default.png':
                 try:
-                    os.remove(payload_file.payload_image.path)
+                    os.remove(payload_user.payload_image.path)
                 except:
                     print("Tried to remove a non-existent payload image")
-            payload_file.payload_image = new_filename
-            payload_file.save()
+            payload_user.payload_image = new_filename
+            payload_user.save()
 
             final_filename = re.sub(r'^.*?/', '', new_filename)
             hex_dump = hex_viewer(filename)
@@ -799,7 +799,7 @@ def injector(request):
             context['extension'] = puremagic.magic_file(filename)[0].extension
             context['mime_type'] = puremagic.magic_file(filename)[0].mime_type
             context['byte_match'] = puremagic.magic_file(filename)[0].byte_match.decode('UTF-8','ignore').strip()
-            context['download'] = PayloadModel.objects.filter(payload_user=request.user).values('payload_image')[0]['payload_image']
+            context['download'] = Account.objects.filter(user=request.user).values('payload_image')[0]['payload_image']
             context['status'] = 'Injected successfully'
             context['success_message'] = 'Your payload has been injected successfully!'
             return render(request, 'dashboard/injector.html', context)
