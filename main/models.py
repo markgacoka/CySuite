@@ -1,7 +1,6 @@
 from django.db import models
 from jsonfield import JSONField
 from django.conf import settings
-from cyauth.models import Account
 from django.contrib.postgres.fields import ArrayField
 from django.utils.translation import ugettext_lazy as _
 
@@ -78,8 +77,8 @@ class SubdomainModel(models.Model):
     ip_address = models.CharField(max_length=30, unique=False, null=True, blank=True)
     waf = models.TextField(max_length=30, unique=False, null=True, blank=False)
     ports = ArrayField(models.CharField(max_length=10, blank=True), blank=True, null=True, default=list)
-    ssl_info = JSONField()
-    header_info = models.TextField(max_length=500, unique=False, null=True, blank=True)
+    ssl_info = JSONField(default={})
+    header_info = JSONField(default={})
     directories = ArrayField(models.CharField(max_length=3000, blank=True), blank=True, null=True, default=list)
 
     class Meta():

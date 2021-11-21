@@ -23,7 +23,7 @@ def subdomain_scanner(user_id, project_session):
         if status == None:
             status = 'Not Applicable'
         if len(response_header) > 0:
-            response_header_clean = str(dict(response_header))
+            response_header_clean = dict(response_header)
         else:
             response_header_clean = ''
         SubdomainModel.objects.update_or_create(
