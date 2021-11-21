@@ -1,14 +1,83 @@
 ## Database Models
+### Get all API endpoints:
+```
+curl -X GET http://localhost:8000/api/
 
-### Get Current User:
+{
+  "urls": [
+    "api/",
+    "api/token/",
+    "api/users/",
+    "api/user/",
+    "api/api-auth/login/",
+    "api/api-auth/logout/"
+  ]
+}
 ```
-curl -X GET -H "Authorization: Token 0279607f2c7bd041a51de1484a1694f268a29289" http://localhost:8000/api/user/
+
+### Get all users:
 ```
+curl -X GET http://localhost:8000/api/users/
+
+C:\Users\Gacoka>curl -X GET http://localhost:8000/api/users/
+[
+  {
+    "user_id": "a94fe36c-355c-4156-8cf4-abad477e3280",
+    "first_name": "Admin",
+    "last_name": "Account",
+	...
+    "api_token": "0279607f2c7bd041a51de1484a1694f268a29289",
+    "badges": [
+      "Novice"
+    ]
+  }
+]
+```
+
+### Get User Token:
+```
+curl -X POST http://localhost:8000/api/token/ -d "username=email@example.com&password=foobar"
+
+{"token":"02796...a29289"}
+```
+
+### Get Authenticated User Details:
+```
+curl -X GET http://localhost:8000/api/user/ -H "Authorization: Token 02796...a29289"
+
+{
+  "user_id": "a94fe36c-355c-4156-8cf4-abad477e3280",
+  "first_name": "Admin",
+  "last_name": "Account",
+  "username": "admin",
+	...
+  "api_token": "0279607f2c7bd041a51de1484a1694f268a29289",
+  "badges": [
+    "Novice"
+  ]
+}
+```
+
+### Get Authenticated User Projects:
+```
+curl -X GET http://localhost:8000/api/user/projects/ -H "Authorization: Token 02796...a29289"
+
+[
+  {
+    "project_name": "Project 1",
+    "program": "HackerOne",
+    "in_scope_domains": [
+      "markgacoka.com"
+    ],
+    "progress": 0,
+    "subdomains": []
+  }
+]
+
+```
+
 
 ```json
-
- 
-
 Subdomains
 [
 	{
@@ -68,7 +137,9 @@ Subdomains
 		} 
 	}
 ]
+```
 
+```
 Domains
 [
 	{
@@ -95,30 +166,9 @@ Domains
 ]
 ```
 
-### Example Project
-`getProjects()`
-`/api/projects/1`
-```json
-{
-	"Projects": [
-			{
-				"project": "Google",
-				"program": "HackerOne",
-				"in-scope": ["google.com", "a.google.com"]
-			},
-			{
-				"project": "Starbucks",
-				"program": "Bugcrowd",
-				"in-scope": ["starbucks.com"]
-			}
-	],
-	"_href": [],
-}
-```
-
 ### User abilities
-- Get all the available user projects
-- Get project details with in-scope domains, project name
+[ x ] Get all the available user projects
+[ x ] Get project details with in-scope domains, project name
 - Get subdomains with IP, SSL, DNS, ports
 - Get directories, parameters, protocols of subdomains
 

@@ -1,12 +1,16 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
 from django.http import JsonResponse
-from rest_framework.permissions import AllowAny, IsAuthenticated
+
 from cyauth.models import Account
-from .serializers import UsersSerializer, UserSerializer 
+from main.models import ProjectModel
 
 from django.conf import settings
+from rest_framework.views import APIView
 from django.urls import URLPattern, URLResolver
+from rest_framework.decorators import permission_classes
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.decorators import authentication_classes
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from .serializers import UsersSerializer, UserSerializer, ProjectSerializer
 
 urlconf = __import__(settings.ROOT_URLCONF, {}, {}, [''])
 
@@ -35,25 +39,22 @@ class UsersView(APIView):
     def get(self, request, *args, **kwargs):
         qs = Account.objects.all()
         serializer = UsersSerializer(qs, many=True)
+        print(serializer.data)
         return JsonResponse(serializer.data, safe=False, json_dumps_params={'indent': 2})
 
-# class UserView(APIView):
-#     permission_classes = (AllowAny,)
-#     def get(self, request, *args, **kwargs):
-#         qs = Account.objects.filter(user_id=request.user.user_id)
-#         serializer = UserSerializer(qs, many=False)
-#         return JsonResponse(serializer.data, safe=False, json_dumps_params={'indent': 2})
-    
-#     def post(self, request, *args, **kwargs):
-#         serializer = UserSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data)
-#         return Response(serializer.errors)
-
-
-class CurrentUserView(APIView):
+class UserView(APIView):
     permission_classes = (IsAuthenticated,)
     def get(self, request):
         serializer = UserSerializer(request.user)
+        return JsonResponse(serializer.data, safe=False, json_dumps_params={'indent': 2})
+
+class ProjectView(APIView):
+    @authentication_classes((TokenAuthentication,))
+    @permission_classes((IsAuthenticated,))
+    def get(self, request):
+        try:
+            qs = ProjectModel.objects.filter(project_user_id=request.user.user_id)
+        except ProjectModel.DoesNotExist:
+            qs = ProjectModel.objects.none()
+        serializer = ProjectSerializer(qs, many=True)
         return JsonResponse(serializer.data, safe=False, json_dumps_params={'indent': 2})
