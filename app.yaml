@@ -3,6 +3,9 @@ runtime: custom
 entrypoint: gunicorn -b :$PORT cysuite.wsgi
 env: flex
 
+options:
+  logging: CLOUD_LOGGING_ONLY
+
 includes:
   - env_variables.yaml
   
