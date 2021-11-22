@@ -19,7 +19,6 @@ curl -X GET http://localhost:8000/api/
 ```
 curl -X GET http://localhost:8000/api/users/
 
-C:\Users\Gacoka>curl -X GET http://localhost:8000/api/users/
 [
   {
     "user_id": "a94fe36c-355c-4156-8cf4-abad477e3280",
