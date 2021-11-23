@@ -1,4 +1,4 @@
-runtime: python
+runtime: custom
 entrypoint: gunicorn -b :$PORT cysuite.wsgi
 env: flex
 
