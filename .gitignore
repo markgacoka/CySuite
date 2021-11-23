@@ -2,18 +2,11 @@
 *.log
 *.pot
 *.pyc
+media/
 __pycache__/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
-
-misc/
-media/
-docker/
-gcloud/
-staticfiles
-paypal.json
-subscription_model.txt
 
 # Distribution / packaging
 .Python
