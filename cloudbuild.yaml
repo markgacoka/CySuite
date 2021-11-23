@@ -1,6 +1,6 @@
 steps:
-- name: "gcr.io/cloud-builders/docker"
-  args: ['build', '-t', 'gcr.io/cysuite/cysuite_img', '.']
+- name: "gcr.io/cloud-builders/gcloud"
+  args: ["app", "deploy"]
 timeout: "1600s"
 options:
   logging: CLOUD_LOGGING_ONLY
