@@ -39,8 +39,6 @@ INSTALLED_APPS = [
     'cyauth',
     'api',
     'storages',
-    'django_celery_results',
-    'celery_progress',
     'rest_framework',
     'rest_framework.authtoken',
 ]

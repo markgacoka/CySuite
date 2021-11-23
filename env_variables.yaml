@@ -20,7 +20,7 @@ env_variables:
   CELERY_TASK_TRACK_STARTED: '1'
   CELERY_TIMEZONE: 'Africa/Nairobi'
 
-  ENGINE: 'django.db.backends.postgresql_psycopg2'
+  ENGINE: 'django.db.backends.postgresql'
   DB_NAME: 'dcogfchbrt2oep'
   DB_USER: 'pvrpofaxejueor'
   DB_PASS: '055b2328f84b3b9d205685ff7419fcd7081a0972284b3a2be5119add6f33c686'
