@@ -18,10 +18,6 @@ from .forms import WordlistForm
 from .models import WordlistModel
 from .models import ProjectModel
 from .models import SubdomainModel
-from main.models import CeleryTaskModel
-from cyauth.models import Account
-from celery.result import AsyncResult
-from cysuite.celery import app
 from PIL import Image
 from django.template.context_processors import csrf
 from django.contrib import messages
