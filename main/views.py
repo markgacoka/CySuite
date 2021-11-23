@@ -7,7 +7,6 @@ import urllib.parse
 from os import path
 
 from main.scanner import subdomain_scanner
-from .tasks import scan_subdomains
 import os, json, base64
 from html import escape, unescape
 from django.shortcuts import render, redirect

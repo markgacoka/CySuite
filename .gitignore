@@ -6,9 +6,14 @@ __pycache__/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
-media
-paypal.txt
-subscription_mode.txt
+
+misc/
+media/
+docker/
+gcloud/
+staticfiles
+paypal.json
+subscription_model.txt
 
 # Distribution / packaging
 .Python
