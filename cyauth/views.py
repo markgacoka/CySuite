@@ -3,6 +3,7 @@ import os
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from cyauth.forms import RegistrationForm, AccountAuthenticationForm, AccountUpdateForm, FeedbackForm, PasswordUpdateForm
+from rest_framework.authtoken.models import Token
 from main.forms import NewsletterForm
 from .models import Account
 
@@ -42,6 +43,8 @@ def registration_view(request):
             request.session['project'] = request.session.get('project', None)
             request.session['sub_index'] = request.session.get('sub_index', 0)
             request.session['curr_subdomain'] = request.session.get('curr_subdomain', None)
+            account.api_token = Token.objects.get(user_id=account.user_id).key
+            account.save()
             request.session.modified = True
             login(request, account)
             return redirect('dashboard')
