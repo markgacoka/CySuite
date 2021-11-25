@@ -8,11 +8,21 @@ curl -X GET http://localhost:8000/api/
     "api/",
     "api/token/",
     "api/users/",
+    "api/user/<user_id>/",
+    "api/user/<user_id>/projects/",
     "api/user/",
+    "api/project/",
     "api/api-auth/login/",
     "api/api-auth/logout/"
   ]
 }
+```
+
+### Get User Token:
+```
+curl -X POST http://localhost:8000/api/token/ -d "username=email@example.com&password=foobar"
+
+{"token":"02796...a29289"}
 ```
 
 ### Get all users:
@@ -21,11 +31,27 @@ curl -X GET http://localhost:8000/api/users/
 
 [
   {
-    "user_id": "a94fe36c-355c-4156-8cf4-abad477e3280",
+    "user_id": "6aabf480-a7bc-4f38-9d6f-102b3342f645",
     "first_name": "Admin",
     "last_name": "Account",
+    "username": "admin",
 	...
-    "api_token": "0279607f2c7bd041a51de1484a1694f268a29289",
+    "hide_email": true,
+    "feedback": "",
+    "api_token": "0ce6d626af6450d6eaf87b0d8fb1b2ad96866c76",
+    "badges": [
+      "Novice"
+    ]
+  },
+  {
+    "user_id": "9c2374e0-8649-4289-a98c-b7e5d0a0fc14",
+    "first_name": "Gacoka",
+    "last_name": "Mbui",
+    "username": "markgacoka",
+	...
+    "hide_email": true,
+    "feedback": "",
+    "api_token": "eb2ac4cb0a594b85a1079069a7b1926710b17217",
     "badges": [
       "Novice"
     ]
@@ -33,7 +59,7 @@ curl -X GET http://localhost:8000/api/users/
 ]
 ```
 
-### Get current user:
+### Get specific user by user_id:
 ```
 curl -X GET http://localhost:8000/api/user/6aabf480-a7bc-4f38-9d6f-102b3342f645/
 
@@ -55,14 +81,25 @@ curl -X GET http://localhost:8000/api/user/6aabf480-a7bc-4f38-9d6f-102b3342f645/
 ]
 ```
 
-### Get User Token:
+### Get specific user projects by user_id:
 ```
-curl -X POST http://localhost:8000/api/token/ -d "username=email@example.com&password=foobar"
+curl -X GET http://localhost:8000/api/user/6aabf480-a7bc-4f38-9d6f-102b3342f645/projects/
 
-{"token":"02796...a29289"}
+[
+  {
+    "project_user_id": "9c2374e0-8649-4289-a98c-b7e5d0a0fc14",
+    "project_name": "Project 1 - Gacoka",
+    "program": "HackerOne",
+    "in_scope_domains": [
+      "example.com"
+    ],
+    "progress": 0,
+    "subdomains": []
+  }
+]
 ```
 
-### Get Authenticated User Details:
+### Get User Information using Token Authentication:
 ```
 curl -X GET http://localhost:8000/api/user/ -H "Authorization: Token 02796...a29289"
 
@@ -79,16 +116,8 @@ curl -X GET http://localhost:8000/api/user/ -H "Authorization: Token 02796...a29
 }
 ```
 
-### Delete Specific User
-```
-curl -X DELETE http://localhost:8000/api/user/ea678f14-8df2-4f3b-9ae6-b0c1868337b8
 
-{
-  "success": "true"
-}
-```
-
-### Get Authenticated User Projects:
+### Get Authenticated User Projects using Token Authentication:
 ```
 curl -X GET http://localhost:8000/api/user/projects/ -H "Authorization: Token 02796...a29289"
 
@@ -104,9 +133,16 @@ curl -X GET http://localhost:8000/api/user/projects/ -H "Authorization: Token 02
     "subdomains": []
   }
 ]
-
 ```
 
+### Delete Specific User
+```
+curl -X DELETE http://localhost:8000/api/user/ea678f14-8df2-4f3b-9ae6-b0c1868337b8/
+
+{
+  "success": "true"
+}
+```
 
 ```json
 Subdomains
