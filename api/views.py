@@ -5,11 +5,8 @@ from main.models import ProjectModel
 
 from django.conf import settings
 from rest_framework.views import APIView
-from rest_framework.decorators import action
 from django.urls import URLPattern, URLResolver
-from rest_framework.decorators import permission_classes
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.decorators import authentication_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .serializers import UsersSerializer, UserSerializer, ProjectSerializer
 
@@ -40,13 +37,6 @@ class UsersView(APIView):
     def get(self, request, *args, **kwargs):
         qs = Account.objects.all()
         serializer = UsersSerializer(qs, many=True)
-        print(serializer.data)
-        return JsonResponse(serializer.data, safe=False, json_dumps_params={'indent': 2})
-
-class AuthenticatedUser(APIView):
-    permission_classes = (IsAuthenticated,)
-    def get(self, request):
-        serializer = UserSerializer(request.user)
         return JsonResponse(serializer.data, safe=False, json_dumps_params={'indent': 2})
 
 class UserView(APIView):
@@ -61,12 +51,26 @@ class UserView(APIView):
         return JsonResponse({"success":"true"}, status=202)
 
 class ProjectView(APIView):
-    @authentication_classes((TokenAuthentication,))
-    @permission_classes((IsAuthenticated,))
+    permission_classes = (AllowAny,)
+    def get(self, request, user_id):
+        qs = ProjectModel.objects.filter(project_user_id=user_id)
+        serializer = ProjectSerializer(qs, many=True)
+        return JsonResponse(serializer.data, safe=False, json_dumps_params={'indent': 2})
+
+class AuthenticatedUser(APIView):
+    permission_classes = (IsAuthenticated,)
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return JsonResponse(serializer.data, safe=False, json_dumps_params={'indent': 2})
+
+class AuthenticatedProject(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = (IsAuthenticated,)
     def get(self, request):
         try:
-            qs = ProjectModel.objects.filter(project_user_id=request.user.user_id)
+            qs = ProjectModel.objects.filter(project_user=request.user)
         except ProjectModel.DoesNotExist:
             qs = ProjectModel.objects.none()
         serializer = ProjectSerializer(qs, many=True)
+        print("Serializer: ", qs)
         return JsonResponse(serializer.data, safe=False, json_dumps_params={'indent': 2})
