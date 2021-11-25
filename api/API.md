@@ -8,10 +8,10 @@ curl -X GET http://localhost:8000/api/
     "api/",
     "api/token/",
     "api/users/",
+    "api/user/projects/",
     "api/user/<user_id>/",
     "api/user/<user_id>/projects/",
     "api/user/",
-    "api/project/",
     "api/api-auth/login/",
     "api/api-auth/logout/"
   ]
@@ -144,101 +144,95 @@ curl -X DELETE http://localhost:8000/api/user/ea678f14-8df2-4f3b-9ae6-b0c1868337
 }
 ```
 
+------------------------------------------------------------------------------
+
+### In-scope Domain Scan Information
+```
+curl -X GET http://localhost:8000/api/in-scope/markgacoka.com/
+```
 ```json
-Subdomains
 [
-	{
-		"Starbucks": {
-			"Program": "HackerOne",
-			"Progress": 0,
-			"In-scope domains": {
-				"*.starbucks.com": {
-					"sub.starbucks.com": {
-						"Status": "200",
-						"IP": "102.32.4.3",
-						"Server": "Apache",
-						"WAF": "Cloudflare",
-						"SSL Information": {
-							"Organization": "CloudFlare, Inc.",
-							"Common Name": "sni.cloudflaressl.com",
-							"Serial Number": "04E3283B3...8F2D7049834",
-							"Not After": "Oct 10 00:00:00 2020 GMT",
-							"Not Before": "Oct 10 12:00:00 2021 GMT",
-							"Version": "3",
-							"OCSP": "http://ocsp.digicert.com",
-							"caIssuers": "digicert.com/cert.crt",
-							"Country": "US"
-						},
-						"Screenshot": "starbucks_home.jpg",
-						"Headers": {
-							"Date": "Mon, 19 Jul 2021 18:24:53 GMT",
-							"Content-Type": "text/html",
-							"Transfer-Encoding": "chunked",
-							"Connection": "keep-alive",
-							"Last-Modified": "Fri, 09 Oct 2020",
-							"Vary": "Accept-Encoding",
-							"CF-Cache-Status": "DYNAMIC",
-							"Server": "cloudflare",
-							"CF-RAY": "6715fd3caacf4fbd-JNB",
-							"Content-Encoding": "gzip"
-						},
-						"ASN": "103342",
-						"DNS Records": {
-							"A": "104.21.6.77",
-							"A": "172.67.134.156",
-							"MX": "_dc-mx.e4730ef3a4d3.markgacoka.com",
-							"NS": "karina.ns.cloudflare.com",
-							"NS": "jason.ns.cloudflare.com",
-							"AAAA": "2606:4700:3036::6815:64d",
-							"AAAA": "2606:4700:3036::ac43:869c",
-							"SOA": "jason.ns.cloudflare.com",
-							"TXT": "v=spf1 ip4:145.239.244.59 +a +mx",
-							"TXT": "ca3-8cbd58825b85479ca878b1a357e",
-						},
-						"Ports": ["80", "443"],
-						"Domains": ["www.starbucks.com"] 
-						}
-					}
-				}
-			}
-		} 
-	}
-]
-```
-
-```
-Domains
-[
-	{
-		"www.starbucks.com/login": {
-			"accepts": ["http", "https"],
-			"status": "200",
-			"parameters": ["id", "utm-medium"],
-			"vulnerabilities": {
-				"XSS": {
-					"found": true,
-					"payload": "PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pgo=",
-					"target": "https://www.starbucks.com/login?id="
-				},
-				"SQL": {
-					"found": true,
-					"payload": "JyBBTkQgMT0xCg==",
-					"target": "https://www.starbucks.com/login?id="
-				}
+  {
+	"markgacoka.com": {
+		"sub.starbucks.com": {
+			"Status": "200",
+			"IP": "102.32.4.3",
+			"Server": "Apache",
+			"WAF": "Cloudflare",
+			"SSL Information": {
+				"Organization": "CloudFlare, Inc.",
+				"Common Name": "sni.cloudflaressl.com",
+				"Serial Number": "04E3283B3...8F2D7049834",
+				"Not After": "Oct 10 00:00:00 2020 GMT",
+				"Not Before": "Oct 10 12:00:00 2021 GMT",
+				"Version": "3",
+				"OCSP": "http://ocsp.digicert.com",
+				"caIssuers": "digicert.com/cert.crt",
+				"Country": "US"
 			},
-			"notified": true,
-			"platform": "Telegram",
-		}		
+			"Screenshot": "starbucks_home.jpg",
+			"Headers": {
+				"Date": "Mon, 19 Jul 2021 18:24:53 GMT",
+				"Content-Type": "text/html",
+				"Transfer-Encoding": "chunked",
+				"Connection": "keep-alive",
+				"Last-Modified": "Fri, 09 Oct 2020",
+				"Vary": "Accept-Encoding",
+				"CF-Cache-Status": "DYNAMIC",
+				"Server": "cloudflare",
+				"CF-RAY": "6715fd3caacf4fbd-JNB",
+				"Content-Encoding": "gzip"
+			},
+			"ASN": "103342",
+			"DNS Records": {
+				"A": "104.21.6.77",
+				"A": "172.67.134.156",
+				"MX": "_dc-mx.e4730ef3a4d3.markgacoka.com",
+				"NS": "karina.ns.cloudflare.com",
+				"NS": "jason.ns.cloudflare.com",
+				"AAAA": "2606:4700:3036::6815:64d",
+				"AAAA": "2606:4700:3036::ac43:869c",
+				"SOA": "jason.ns.cloudflare.com",
+				"TXT": "v=spf1 ip4:145.239.244.59 +a +mx",
+				"TXT": "ca3-8cbd58825b85479ca878b1a357e",
+			},
+			"Ports": ["80", "443"],
+			"Domains": ["www.starbucks.com"] 
+		}
 	}
+  }
 ]
 ```
 
-### User abilities
-[x] Get all the available user projects
-[x] Get project details with in-scope domains, project name
-TODO: Limit requests sent to API per user
-TODO: Get subdomains with IP, SSL, DNS, ports.
-TODO: Get directories, parameters, protocols of subdomains.
+### Domain Information
+```
+curl -X GET http://localhost:8000/api/domain/markgacoka.com%2Flogin%2F
+```
+```json
+[
+  {
+	"markgacoka.com/login/": {
+		"accepts": ["http", "https"],
+		"status": "200",
+		"parameters": ["id", "utm-medium"],
+		"vulnerabilities": {
+			"XSS": {
+				"found": true,
+				"payload": "PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pgo=",
+				"target": "https://markgacoka.com/login?id="
+			},
+			"SQL": {
+				"found": true,
+				"payload": "JyBBTkQgMT0xCg==",
+				"target": "https://markgacoka.com/login?id="
+			}
+		},
+		"notified": true,
+		"platform": "Telegram",
+		}
+  }
+]
+```
 
 ### Functions
 getUserToken()
@@ -308,14 +302,42 @@ subdomains
 
 - getSubdomains()
 `Permissions: currentuser`
-`/api/subdomains/<in-scope-domain>`
+`/api/api/in-scope/<in-scope-domain>/`
 ```
-
+[PK] in-scope-domain:
+subdomain
+status
+ip_address
+server
+waf
+ssl_info
+screenshot
+headers
+asn
+dns
+ports
+domains
 ```
 
 - getDirectories()
 `Permissions: currentuser`
 `/api/directories/<subdomain>`
 ```
-
+[PK] domains[i]
+accepts
+status
+parameters
+vulnerabilities:
+	found
+	payload
+	target_url
+notified
+platform
 ```
+
+### User abilities
+[x] Get all the available user projects
+[x] Get project details with in-scope domains, project name
+TODO: Limit requests sent to API per user
+TODO: Get subdomains with IP, SSL, DNS, ports.
+TODO: Get directories, parameters, protocols of subdomains.
