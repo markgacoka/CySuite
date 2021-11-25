@@ -43,13 +43,19 @@ class UsersView(APIView):
         print(serializer.data)
         return JsonResponse(serializer.data, safe=False, json_dumps_params={'indent': 2})
 
-class UserView(APIView):
-    # permission_classes = (IsAuthenticated,)
+class AuthenticatedUser(APIView):
+    permission_classes = (IsAuthenticated,)
     def get(self, request):
         serializer = UserSerializer(request.user)
         return JsonResponse(serializer.data, safe=False, json_dumps_params={'indent': 2})
 
-    # @action(methods=['delete'], detail=False, url_path='api/user/(?P<user_id>\w+)')
+class UserView(APIView):
+    permission_classes = (AllowAny,)
+    def get(self, request, user_id):
+        qs = Account.objects.filter(user_id__iexact=user_id)
+        serializer = UserSerializer(qs, many=True)
+        return JsonResponse(serializer.data, safe=False, json_dumps_params={'indent': 2})
+    
     def delete(self, request, user_id):
         Account.objects.filter(user_id__iexact=user_id).delete()
         return JsonResponse({"success":"true"}, status=202)

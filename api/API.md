@@ -33,6 +33,28 @@ curl -X GET http://localhost:8000/api/users/
 ]
 ```
 
+### Get current user:
+```
+curl -X GET http://localhost:8000/api/user/6aabf480-a7bc-4f38-9d6f-102b3342f645/
+
+[
+  {
+    "user_id": "6aabf480-a7bc-4f38-9d6f-102b3342f645",
+    "first_name": "Admin",
+    "last_name": "Account",
+    "username": "admin",
+	...
+    "is_premium": true,
+    "hide_email": true,
+    "feedback": "",
+    "api_token": "0ce6d626af6450d6eaf87b0d8fb1b2ad96866c76",
+    "badges": [
+      "Novice"
+    ]
+  }
+]
+```
+
 ### Get User Token:
 ```
 curl -X POST http://localhost:8000/api/token/ -d "username=email@example.com&password=foobar"
@@ -54,6 +76,15 @@ curl -X GET http://localhost:8000/api/user/ -H "Authorization: Token 02796...a29
   "badges": [
     "Novice"
   ]
+}
+```
+
+### Delete Specific User
+```
+curl -X DELETE http://localhost:8000/api/user/ea678f14-8df2-4f3b-9ae6-b0c1868337b8
+
+{
+  "success": "true"
 }
 ```
 
