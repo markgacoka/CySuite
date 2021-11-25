@@ -8,6 +8,7 @@ urlpatterns = [
     
     path('users/', UsersView.as_view(), name='users'),
     path('user/', UserView.as_view(), name="currentuser"),
+    path('user/<user_id>/', UserView.as_view(), name='delete_user'),
     path('user/projects/', ProjectView.as_view(), name="project"),
     
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))

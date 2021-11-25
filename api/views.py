@@ -5,6 +5,7 @@ from main.models import ProjectModel
 
 from django.conf import settings
 from rest_framework.views import APIView
+from rest_framework.decorators import action
 from django.urls import URLPattern, URLResolver
 from rest_framework.decorators import permission_classes
 from rest_framework.authentication import TokenAuthentication
@@ -43,10 +44,15 @@ class UsersView(APIView):
         return JsonResponse(serializer.data, safe=False, json_dumps_params={'indent': 2})
 
 class UserView(APIView):
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
     def get(self, request):
         serializer = UserSerializer(request.user)
         return JsonResponse(serializer.data, safe=False, json_dumps_params={'indent': 2})
+
+    # @action(methods=['delete'], detail=False, url_path='api/user/(?P<user_id>\w+)')
+    def delete(self, request, user_id):
+        Account.objects.filter(user_id__iexact=user_id).delete()
+        return JsonResponse({"success":"true"}, status=202)
 
 class ProjectView(APIView):
     @authentication_classes((TokenAuthentication,))
