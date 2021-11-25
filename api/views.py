@@ -72,5 +72,4 @@ class AuthenticatedProject(APIView):
         except ProjectModel.DoesNotExist:
             qs = ProjectModel.objects.none()
         serializer = ProjectSerializer(qs, many=True)
-        print("Serializer: ", qs)
         return JsonResponse(serializer.data, safe=False, json_dumps_params={'indent': 2})
