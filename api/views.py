@@ -98,14 +98,20 @@ class SubdomainView(APIView):
         subdomains = list(set(ast.literal_eval(r.text)))
         if r.status_code == 200:
             for subdomain in subdomains:
-                with requests.head('http://' + subdomain, allow_redirects=True, headers=headers) as response:
-                    sub_status = response.status_code
-                    headers = response.headers
-                    total_time = response.elapsed.total_seconds()
-                self.details['status'] = self.details.get('status', sub_status)
-                self.details['headers'] = self.details.get('headers', headers)
-                self.details['total_time'] = self.details.get('total_time', total_time)
-                self.output[subdomain] = self.details
+                try:
+                    with requests.head('http://' + subdomain, allow_redirects=True, headers=headers) as response:
+                        sub_status = response.status_code
+                        headers = response.headers
+                        total_time = response.elapsed.total_seconds()
+                except requests.ConnectionError or requests.HTTPError or requests.RequetsException or requests.ReadTimeout or requests.Timeout or requests.ConnectTimeout:
+                    sub_status = 404
+                    headers = {}
+                    total_time = 0.0
+                finally:
+                    self.details['status'] = self.details.get('status', sub_status)
+                    self.details['headers'] = self.details.get('headers', headers)
+                    self.details['total_time'] = self.details.get('total_time', total_time)
+                    self.output[subdomain] = self.details
         return json.dumps(self.output, indent=2, sort_keys=True, default=str)
 
     permission_classes = (AllowAny,)
