@@ -33,6 +33,10 @@ from scripts.CodeInjection.injector import Injector
 from scripts.HexViewer.full_hexviewer import full_hex_viewer
 from scripts.WordlistGen.generator import extract_wordlist
 
+def test(request):
+    context = {}
+    return render(request, 'test.html', context)
+
 def dashboard(request):
     if request.user.is_authenticated == True:
         context = {}

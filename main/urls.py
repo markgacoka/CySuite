@@ -25,4 +25,5 @@ urlpatterns = [
     path('wordlist-gen/', views.wordlist_gen, name='wordlist_gen'),
     path('decoder/', views.decoder, name='decoder'),
     path('injector/', views.injector, name='injector'),
+    path('test/', views.test, name='test'),
 ]
