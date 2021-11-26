@@ -1,5 +1,5 @@
 env_variables:
-  DEBUG: '0'
+  DEBUG: '1'
   SITE_ID: '1'
   DJANGO_SECRET_KEY: 'django-insecure-9e_l3(javbb*amm$_jh#etu*vlg)x$*-a$u(94*buu*il#xd1n' 
   STATIC_URL: 'https://cysuite-bucket.s3.us-west-2.amazonaws.com/static/'
