@@ -27,21 +27,6 @@ resources:
     volume_type: tmpfs
     size_gb: 0.5
 
-readiness_check:
-  path: "/readiness_check"
-  check_interval_sec: 5
-  timeout_sec: 4
-  failure_threshold: 2
-  success_threshold: 2
-  app_start_timeout_sec: 300
-
-liveness_check:
-  path: "/liveness_check"
-  check_interval_sec: 30
-  timeout_sec: 4
-  failure_threshold: 2
-  success_threshold: 2
-
 automatic_scaling:
   min_num_instances: 1
   max_num_instances: 5
