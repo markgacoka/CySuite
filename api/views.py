@@ -73,3 +73,43 @@ class AuthenticatedProject(APIView):
             qs = ProjectModel.objects.none()
         serializer = ProjectSerializer(qs, many=True)
         return JsonResponse(serializer.data, safe=False, json_dumps_params={'indent': 2})
+
+from scripts.screenshots.screenshot import upload_screenshot
+import requests
+import json
+import ast
+class SubdomainView(APIView):
+    def __init__(self):
+        self.output = {}
+        self.details = {}
+    def run_script(self, request, in_scope_domain):
+        headers = {
+            'Accept': '*/*',
+            'Content-Type': 'application/octet-stream',
+            'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.5) Gecko/20091102 Firefox/3.5.5 (.NET CLR 3.5.30729)',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Language': 'en-us,en;q=0.5',
+            'Accept-Encoding': 'gzip,deflate',
+            'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.7',
+            'Keep-Alive': '300',
+            'Connection': 'keep-alive'
+        }
+        r = requests.get(url = 'https://sonar.omnisint.io/subdomains/{}'.format(in_scope_domain))
+        subdomains = list(set(ast.literal_eval(r.text)))
+        if r.status_code == 200:
+            for subdomain in subdomains:
+                with requests.head('http://' + subdomain, allow_redirects=True, headers=headers) as response:
+                    sub_status = response.status_code
+                    headers = response.headers
+                    total_time = response.elapsed.total_seconds()
+                self.details['status'] = self.details.get('status', sub_status)
+                self.details['headers'] = self.details.get('headers', headers)
+                self.details['total_time'] = self.details.get('total_time', total_time)
+                self.output[subdomain] = self.details
+        return json.dumps(self.output, indent=2, sort_keys=True, default=str)
+
+    permission_classes = (AllowAny,)
+    def get(self, request, in_scope_domain):
+        output = self.run_script(request, in_scope_domain)
+        output = dict(ast.literal_eval(output))
+        return JsonResponse(output, safe=False, json_dumps_params={'indent': 2})

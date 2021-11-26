@@ -7,7 +7,7 @@ request.classList.add("bg-light-bunting");
 request.classList.add("text-white");
 request.classList.add("mr-2");
 request.classList.remove("text-light-haiti"); 
-request_api.innerHTML = 'curl -X GET http://cysuite.appspot.com/api/users/'
+request_api.innerHTML = 'curl -X GET http://cysuite.appspot.com/api/subdomain/markgacoka.com'
 
 request.addEventListener('click', requestHandler);
 response.addEventListener('click', responseHandler);
@@ -22,7 +22,7 @@ function requestHandler(){
     response.classList.remove("text-white");
     response.classList.remove("mr-2");
     response.classList.add("text-light-haiti");
-    request_api.innerHTML = 'curl -X GET http://cysuite.appspot.com/api/users/'
+    request_api.innerHTML = 'curl -X GET http://cysuite.appspot.com/api/subdomain/<in-scope-domain>'
 }
 
 function responseHandler(){
@@ -36,21 +36,43 @@ function responseHandler(){
     request.classList.remove("mr-2");
     request.classList.add("text-light-haiti");
     request_api.innerHTML = 
-`[
-    {
-        "user_id": "fe0f8512-93d4-4ff0-8664-25b14f1c9de6",
-        "username": "admin",
-        "email": "admin@cysuite.io",
-        "first_name": "Admin",
-        "last_name": "Account",
-        "date_joined": "2021-11-14T04:17:21.900904Z",
-        "last_login": "2021-11-14T04:47:38.779401Z",
-        "is_admin": true,
-        "is_premium": true,
-        "hide_email": true,
-        "feedback": ""
+`{
+    "_dc-mx.e4730ef3a4d3.markgacoka.com": {
+        "headers": "{'Connection': 'Keep-Alive', 'Content-Type': 'text/html', 'Last-Modified': 'Wed, 17 Jun 2020 20:01:33 GMT', 'Accept-Ranges': 'bytes', 'Content-Length': '163', 'Date': 'Fri, 26 Nov 2021 03:35:34 GMT'}",
+        "status": 200,
+        "total_time": 0.076472
+    },
+    "cpanel.markgacoka.com": {
+        "headers": "{'Connection': 'Keep-Alive', 'Content-Type': 'text/html', 'Last-Modified': 'Wed, 17 Jun 2020 20:01:33 GMT', 'Accept-Ranges': 'bytes', 'Content-Length': '163', 'Date': 'Fri, 26 Nov 2021 03:35:34 GMT'}",
+        "status": 200,
+        "total_time": 0.076472
+    },
+    "mail.markgacoka.com": {
+        "headers": "{'Connection': 'Keep-Alive', 'Content-Type': 'text/html', 'Last-Modified': 'Wed, 17 Jun 2020 20:01:33 GMT', 'Accept-Ranges': 'bytes', 'Content-Length': '163', 'Date': 'Fri, 26 Nov 2021 03:35:34 GMT'}",
+        "status": 200,
+        "total_time": 0.076472
+    },
+    "markgacoka.com": {
+        "headers": "{'Connection': 'Keep-Alive', 'Content-Type': 'text/html', 'Last-Modified': 'Wed, 17 Jun 2020 20:01:33 GMT', 'Accept-Ranges': 'bytes', 'Content-Length': '163', 'Date': 'Fri, 26 Nov 2021 03:35:34 GMT'}",
+        "status": 200,
+        "total_time": 0.076472
+    },
+    "webdisk.markgacoka.com": {
+        "headers": "{'Connection': 'Keep-Alive', 'Content-Type': 'text/html', 'Last-Modified': 'Wed, 17 Jun 2020 20:01:33 GMT', 'Accept-Ranges': 'bytes', 'Content-Length': '163', 'Date': 'Fri, 26 Nov 2021 03:35:34 GMT'}",
+        "status": 200,
+        "total_time": 0.076472
+    },
+    "webmail.markgacoka.com": {
+        "headers": "{'Connection': 'Keep-Alive', 'Content-Type': 'text/html', 'Last-Modified': 'Wed, 17 Jun 2020 20:01:33 GMT', 'Accept-Ranges': 'bytes', 'Content-Length': '163', 'Date': 'Fri, 26 Nov 2021 03:35:34 GMT'}",
+        "status": 200,
+        "total_time": 0.076472
+    },
+    "www.markgacoka.com": {
+        "headers": "{'Connection': 'Keep-Alive', 'Content-Type': 'text/html', 'Last-Modified': 'Wed, 17 Jun 2020 20:01:33 GMT', 'Accept-Ranges': 'bytes', 'Content-Length': '163', 'Date': 'Fri, 26 Nov 2021 03:35:34 GMT'}",
+        "status": 200,
+        "total_time": 0.076472
     }
-]`
+}`
 }
 
 window.onscroll = function() {
