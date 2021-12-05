@@ -23,7 +23,7 @@ def subdomain_scanner(user_id, project_session):
         project_model_instance.update(subdomains=subdomains)
         if r.status_code == 200:
             for subdomain in subdomains:
-                with requests.head('http://' + subdomain, allow_redirects=True, headers=headers) as response:
+                with requests.head('http://' + subdomain, allow_redirects=True, headers=headers, timeout=10) as response:
                     ip_address = None
                     sub_status = response.status_code
                     headers = response.headers

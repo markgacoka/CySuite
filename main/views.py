@@ -18,6 +18,7 @@ from .forms import WordlistForm
 from .models import WordlistModel
 from .models import ProjectModel
 from .models import SubdomainModel
+from cyauth.models import Account
 from PIL import Image
 from django.template.context_processors import csrf
 from django.contrib import messages
