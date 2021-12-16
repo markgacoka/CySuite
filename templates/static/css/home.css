@@ -918,7 +918,7 @@ video {
 }
 
 .bg-transparent {
-    background-color: transparent;
+    background-color: rgb(255, 255, 255, 0.1);
 }
 
 .bg-whisper {
@@ -1216,7 +1216,7 @@ video {
 
 .text-rose {
     --tw-text-opacity: 1;
-    color: rgba(245, 72, 127, var(--tw-text-opacity));
+    color: #FFF;
 }
 
 .text-white {
