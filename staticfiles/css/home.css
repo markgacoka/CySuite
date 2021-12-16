@@ -880,7 +880,7 @@ video {
 
 .border-rose {
     --tw-border-opacity: 1;
-    border-color: rgba(245, 72, 127, var(--tw-border-opacity));
+    border-color: #0000AD;
 }
 
 .border-light-bunting {
@@ -1402,7 +1402,7 @@ video {
 
 .hover\:bg-rose:hover {
     --tw-bg-opacity: 1;
-    background-color: rgba(245, 72, 127, var(--tw-bg-opacity));
+    background-color: #0000AD;
 }
 
 .hover\:text-rose:hover {
