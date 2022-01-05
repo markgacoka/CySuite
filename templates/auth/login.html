@@ -5,11 +5,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sign In | CySuite</title>
-    <link rel="icon" href="{% static 'img/icons/favicon.ico' %}" type="image/x-icon" />
+    <link rel="icon" href="{% static 'img/icons/favicon.ico' %}" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="canonical" href="https://cysuite.io/login/" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@CySuite_" />
+    <meta name="twitter:creator" content="@CySuite_" />
+    <meta property="og:url" content="https://cysuite.io/login/" />
+    <meta property="theme-color" content="#373434" />
+    <meta property="msapplication-TileColor" content="#373434" />
+    <meta property="referrer" content="no-referrer-when-downgrade" />
+    <meta property="HandheldFriendly" content="True" />
+    <meta property="MobileOptimized" content="360" />
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1" />
+    <title>
+      CySuite
+    </title>
+    <meta name="robots" content="index,follow" />
+    <meta name="googlebot" content="index,follow" />
+    <meta name="description" content="CySuite is a scalable web security tool for vulnerability assessment and exploitation testing."/>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Scalable web security platform and API" />
+    <meta property="og:description" content="CySuite is a scalable web security tool for vulnerability assessment and exploitation testing."/>
+    <meta property="og:image" content="{% static 'img/logo/og_image.png' %}"/>
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="720" />
+    <meta property="og:site_name" content="CySuite" />
+    <meta property="keywords" content="login cysuite" />
+    <meta name="twitter:title" content="Login - CySuite" />
+    <meta name="twitter:image" content="{% static 'img/logo/logo.png' %}"/>
+    <meta property="og:image:type" content="image/png" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
     <link href="{% static 'css/alert.css' %}" rel="stylesheet">
@@ -37,11 +65,10 @@
                                         </div>
                                         <form method="post" id="login-form">
                                             {% csrf_token %}
-                                            <h4 style="text-align:center">Sign in using Social</h4>
                                             <div class="flex-c-m">
-                                                <a href="{% provider_login_url 'facebook' %}" class="login100-social-item bg1"><i class="fab fa-facebook-f"></i></a>
-                                                <a href="{% provider_login_url 'twitter' %}" class="login100-social-item bg2"><i class="fab fa-twitter"></i></a>
-                                                <a href="{% provider_login_url 'google' %}" class="login100-social-item bg3"><i class="fab fa-google"></i></a>
+                                                <a href="#" class="login100-social-item bg1"><i class="fab fa-github"></i>&nbsp;&nbsp;Github</a>
+                                                <a href="#" class="login100-social-item bg2"><i class="fab fa-gitlab"></i>&nbsp;&nbsp;Gitlab</a>
+                                                <a href="#" class="login100-social-item bg3"><i class="fab fa-bitbucket"></i>&nbsp;&nbsp;Bitbucket</a>
                                             </div>
                                             {% if login_form.non_field_errors %}
                                             {% for error in login_form.non_field_errors %}
@@ -76,7 +103,7 @@
                                                     <button type="button" onclick="toggleInput();" style="padding: 0; background-color: white; width: 10%; border-left: none; float: right; height: 3rem; display: grid; border: 1px solid rgb(206, 212, 218); align-items: center; text-align: center; border-left: hidden;"><i class="show-pass far fa-eye fa-lg" style="color: grey; font-size: 1.5rem;"></i></button>
                                                 </div>
                                             </div>
-                                            <small><a href="/reset-password">Forgot password?</a></small>
+                                            <small style="font-size: 0.8rem;"><a href="/reset-password">Forgot password?</a></small>
                                             <div>
                                             </div>
                                             <div style="padding-top: 1rem;">
