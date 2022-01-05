@@ -66,9 +66,9 @@
                                         <form method="post" id="login-form">
                                             {% csrf_token %}
                                             <div class="flex-c-m">
-                                                <a href="#" class="login100-social-item bg1"><i class="fab fa-github"></i>&nbsp;&nbsp;Github</a>
-                                                <a href="#" class="login100-social-item bg2"><i class="fab fa-gitlab"></i>&nbsp;&nbsp;Gitlab</a>
-                                                <a href="#" class="login100-social-item bg3"><i class="fab fa-bitbucket"></i>&nbsp;&nbsp;Bitbucket</a>
+                                                <a href="#" class="login100-social-item login-margin bg1"><i class="fab fa-github"></i>&nbsp;&nbsp;Github</a>
+                                                <a href="#" class="login100-social-item login-margin bg2"><i class="fab fa-gitlab"></i>&nbsp;&nbsp;Gitlab</a>
+                                                <a href="#" class="login100-social-item login-margin bg3"><i class="fab fa-bitbucket"></i>&nbsp;&nbsp;Bitbucket</a>
                                             </div>
                                             {% if login_form.non_field_errors %}
                                             {% for error in login_form.non_field_errors %}

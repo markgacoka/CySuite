@@ -27,17 +27,16 @@
                             <div class="text-center mt-4">
                                 <h1 class="h2" style="font-size: 2rem;">Get started</h1>
                                 <p class="lead">
-                                    Create an Account and start and start analyzing web targets today and at no cost.
+                                    Create an Account and start and start analyzing your website today and at no cost.
                                 </p>
                             </div>
                             <div class="card" style="height: fit-content;">
                                 <div class="card-body">
                                     <div class="m-sm-4">
-                                    <h4 style="text-align:center">Sign up using Social</h4>
                                     <div class="flex-c-m">
-                                        <a href="{% provider_login_url 'facebook' %}" class="login100-social-item bg1"><i class="fab fa-facebook-f"></i></a>
-                                        <a href="{% provider_login_url 'twitter' %}" class="login100-social-item bg2"><i class="fab fa-twitter"></i></a>
-                                        <a href="{% provider_login_url 'google' %}" class="login100-social-item bg3"><i class="fab fa-google"></i></a>
+                                        <a href="#" class="login100-social-item register-margin bg1"><i class="fab fa-github"></i>&nbsp;&nbsp;Github</a>
+                                        <a href="#" class="login100-social-item register-margin bg2"><i class="fab fa-gitlab"></i>&nbsp;&nbsp;Gitlab</a>
+                                        <a href="#" class="login100-social-item register-margin bg3"><i class="fab fa-bitbucket"></i>&nbsp;&nbsp;Bitbucket</a>
                                     </div>
                                         <form method="post" id="login-form">
                                             {% csrf_token %}
@@ -78,9 +77,23 @@
                                                     <label class="form-label">Email</label>
                                                     <input class="form-control form-control-lg" type="text" name="email" placeholder="Email" />
                                                 </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Username</label>
-                                                    <input class="form-control form-control-lg" type="text" name="username" placeholder="Username" />
+                                                <div class="row" style="display: flex;">
+                                                    <div class="mb-3" style="width: 50%; float: left;">
+                                                        <label class="form-label">Company</label>
+                                                        <input class="form-control form-control-lg" type="text" name="company" placeholder="Company" />
+                                                    </div>
+                                                    <div class="mb-3" style="width: 50%; float: right;">
+                                                        <label class="form-label">Role</label>
+                                                        <select class="form-control form-control-lg dropdown-icon" name="role" id="role" placeholder="Role">
+                                                            <option disabled selected value> -- select an option -- </option>
+                                                            <option value="saab">DevOps</option>
+                                                            <option value="volvo">Security Analyst</option>
+                                                            <option value="mercedes">Software Developer</option>
+                                                            <option value="mercedes">Security Hobbyist/Bug Hunter</option>
+                                                            <option value="audi">Corporate Management</option>
+                                                            <option value="audi">Other</option>
+                                                          </select>
+                                                    </div>
                                                 </div>
                                                 <div style="height: 3rem; margin-bottom: 3rem;">
                                                     <label class="form-label">Password</label>
