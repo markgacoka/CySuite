@@ -7,7 +7,7 @@ request.classList.add("bg-light-bunting");
 request.classList.add("text-white");
 request.classList.add("mr-2");
 request.classList.remove("text-light-haiti"); 
-request_api.innerHTML = 'curl -X GET http://cysuite.appspot.com/api/subdomain/markgacoka.com'
+request_api.innerHTML = 'curl -X GET http://cysuite.herokuapp.com/api/subdomain/markgacoka.com'
 
 request.addEventListener('click', requestHandler);
 response.addEventListener('click', responseHandler);
@@ -22,7 +22,7 @@ function requestHandler(){
     response.classList.remove("text-white");
     response.classList.remove("mr-2");
     response.classList.add("text-light-haiti");
-    request_api.innerHTML = 'curl -X GET http://cysuite.appspot.com/api/subdomain/markgacoka.com'
+    request_api.innerHTML = 'curl -X GET http://cysuite.herokuapp.com/api/subdomain/markgacoka.com'
 }
 
 function responseHandler(){
@@ -45,7 +45,7 @@ function responseHandler(){
             'Accept-Ranges': 'bytes', 
             'Content-Length': '163', 
             'Date': 
-            'Fri, 26 Nov 2021 03:35:34 GMT'
+            'Fri, 26 Nov 2022 03:35:34 GMT'
         }",
         "status": 200,
         "total_time": 0.076472
@@ -58,7 +58,7 @@ function responseHandler(){
             'Accept-Ranges': 'bytes', 
             'Content-Length': '163', 
             'Date': 
-            'Fri, 26 Nov 2021 03:35:34 GMT'
+            'Fri, 26 Nov 2022 03:35:34 GMT'
         }",
         "status": 200,
         "total_time": 0.076472
@@ -71,7 +71,7 @@ function responseHandler(){
             'Accept-Ranges': 'bytes', 
             'Content-Length': '163', 
             'Date': 
-            'Fri, 26 Nov 2021 03:35:34 GMT'
+            'Fri, 26 Nov 2022 03:35:34 GMT'
         }",
         "status": 200,
         "total_time": 0.076472
@@ -84,7 +84,7 @@ function responseHandler(){
             'Accept-Ranges': 'bytes', 
             'Content-Length': '163', 
             'Date': 
-            'Fri, 26 Nov 2021 03:35:34 GMT'
+            'Fri, 26 Nov 2022 03:35:34 GMT'
         }",
         "status": 200,
         "total_time": 0.076472
@@ -97,7 +97,7 @@ function responseHandler(){
             'Accept-Ranges': 'bytes', 
             'Content-Length': '163', 
             'Date': 
-            'Fri, 26 Nov 2021 03:35:34 GMT'
+            'Fri, 26 Nov 2022 03:35:34 GMT'
         }",
         "status": 200,
         "total_time": 0.076472
@@ -110,7 +110,7 @@ function responseHandler(){
             'Accept-Ranges': 'bytes', 
             'Content-Length': '163', 
             'Date': 
-            'Fri, 26 Nov 2021 03:35:34 GMT'
+            'Fri, 26 Nov 2022 03:35:34 GMT'
         }",
         "status": 200,
         "total_time": 0.076472
@@ -123,7 +123,7 @@ function responseHandler(){
             'Accept-Ranges': 'bytes', 
             'Content-Length': '163', 
             'Date': 
-            'Fri, 26 Nov 2021 03:35:34 GMT'
+            'Fri, 26 Nov 2022 03:35:34 GMT'
         }",
         "status": 200,
         "total_time": 0.076472
