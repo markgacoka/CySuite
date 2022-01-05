@@ -10,7 +10,17 @@ api/
 ├─ urls.py
 ├─ views.py
 ├─ __init__.py
-auth/
+codescan_app/
+├─ migrations/
+|   ├─ __init__.py
+├─ admin.py
+├─ forms.py
+├─ models.py
+├─ tests.py
+├─ urls.py
+├─ views.py
+├─ __init__.py
+cyauth/
 ├─ migrations/
 |  ├─ __init__.py
 ├─ adapter.py
@@ -23,16 +33,6 @@ auth/
 ├─ urls.py
 ├─ views.py
 ├─ __init__.py
-codescan_app/
-├─ migrations/
-|   ├─ __init__.py
-├─ admin.py
-├─ forms.py
-├─ models.py
-├─ tests.py
-├─ urls.py
-├─ views.py
-├─ __init__.py
 cysuite/
 ├─ adapter.py
 ├─ asgi.py
@@ -41,7 +41,7 @@ cysuite/
 ├─ urls.py
 ├─ wsgi.py
 ├─ __init__.py
-dashboard_app/
+main/
 ├─ management/
 │  ├─ commands/
 │  │  ├─ wait_for_db.py
