@@ -164,7 +164,7 @@ curl -X GET http://localhost:8000/api/in-scope/markgacoka.com/
 				"Common Name": "sni.cloudflaressl.com",
 				"Serial Number": "04E3283B3...8F2D7049834",
 				"Not After": "Oct 10 00:00:00 2020 GMT",
-				"Not Before": "Oct 10 12:00:00 2021 GMT",
+				"Not Before": "Oct 10 12:00:00 2022 GMT",
 				"Version": "3",
 				"OCSP": "http://ocsp.digicert.com",
 				"caIssuers": "digicert.com/cert.crt",
@@ -172,7 +172,7 @@ curl -X GET http://localhost:8000/api/in-scope/markgacoka.com/
 			},
 			"Screenshot": "starbucks_home.jpg",
 			"Headers": {
-				"Date": "Mon, 19 Jul 2021 18:24:53 GMT",
+				"Date": "Mon, 19 Jul 2022 18:24:53 GMT",
 				"Content-Type": "text/html",
 				"Transfer-Encoding": "chunked",
 				"Connection": "keep-alive",

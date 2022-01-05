@@ -67,8 +67,8 @@
         <div class="row justify-content-center align-items-center">
           <div class="col-xxl-5 col-xl-6 col-lg-6 col-md-10 order-lg-1 order-1 aos-init aos-animate" data-aos="fade-right" data-aos-delay="500" data-aos-duration="1000">
             <div class="content">
-              <h2>Source code analysis using the power of AI.</h2>
-              <p>CySuite provides you with a convenient dashboard to manage all your targets' data with rich visualization.</p>
+              <h2>Deploy secure code using the power of AI.</h2>
+              <p>CySuite provides you with an interactive dashboard to manage and secure all of your company's repositories with rich visualization.</p>
                 <a class="title-button glue-button--medium-emphasis" title="Create an Account" href="/register" style="color:white;">
                 Create an Account&emsp;<i class="fa fa-chevron-right" style="color: lightgray; z-index: 1;"></i></a>
             </div>
@@ -86,8 +86,8 @@
     <section class="saas_features_area_three bg_color sec_pad">
         <div class="container">
             <div class="sec_title text-center mb_70 wow fadeInUp" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
-                <h2 class="font-bold text-3xl lg:text-5xl leading-snug text-white" style="color: #090E24;">How CySuite can help you find bugs</h2>
-                <p>The interactive dashboard is segmented into a three step process consisting of target data<br/> collection, analysis and reporting.</p>
+                <h2 class="font-bold text-3xl lg:text-5xl leading-snug text-white" style="color: #090E24;">How CySuite helps you find your company's weak spots</h2>
+                <p>The features follow a simple three step process consisting of advanced data collection, analysis and reporting.</p>
             </div>
             <div class="row mb_30 new_service">
                 <div class="col-lg-4 col-sm-6">
@@ -96,8 +96,8 @@
                         <div class="separator"></div>
                         <div class="new_service_content">
                             <img src="{% static 'img/illustrations/collect.png' %}" alt="Gather information" style="width: 83%;">
-                            <h4 class="black font-semibold text-2xl lg:text-3xl leading-snug">Target Data Collection</h4>
-                            <p class="black text-base md:text-lg mt-6 text-whisper">The CySuite dashboard allows you to organize all your targets into projects and query our API for up-to-date results.</p>
+                            <h4 class="black font-semibold text-2xl lg:text-3xl leading-snug">Data Collection</h4>
+                            <p class="black text-base md:text-lg mt-6 text-whisper">Our dashboard allows you to organize all your source repositories into projects where all the security information is stored.</p>
                         </div>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                         <div class="new_service_content">
                             <img src="{% static 'img/illustrations/analyze.png' %}" alt="Analyze">
                             <h4 class="black font-semibold text-2xl lg:text-3xl leading-snug">Vulnerability Analysis</h4>
-                            <p class="black text-base md:text-lg mt-6 text-whisper">Using the power of Deep Learning, your source code is scanned for vulnerabilities and suggestions for patching is given.</p>
+                            <p class="black text-base md:text-lg mt-6 text-whisper">Using Machine Learning and EDR, your source code is scanned internally and the deployed version is scanned externally for vulnerabilities.</p>
                         </div>
                     </div>
                 </div>
@@ -119,14 +119,14 @@
                         <div class="new_service_content">
                             <img src="{% static 'img/illustrations/report.png' %}" alt="Report information">
                             <h4 class="black font-semibold text-2xl lg:text-3xl leading-snug">Advanced Reporting</h4>
-                            <p class="black text-base md:text-lg mt-6 text-whisper">A thorough analysis of your website is generated to a report with data visualizations using our advanced tools.</p>
+                            <p class="black text-base md:text-lg mt-6 text-whisper">A thorough report of your website's security score is generated with data visualizations and suggestions for improvement.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <section class="bg-haiti py-12 lg:py-30">
+    <section class="bg-haiti py-12">
         <div class="max-w-6xl mx-auto px-6">
             <div class="home_gridEng__3Mbrn home_gridTabs__1rT4S my-8 md:pt-0 pt-1 md:mt-0">
                 <div id="id-1" role="tablist" class="flex w-full overflow-hidden lg:overflow-hidden relative justify-center items-center h-full col-start-1 lg:col-start-2 text-light-haiti" aria-label="Graphcms For Engineering teams">
@@ -137,11 +137,12 @@
                 <div style="opacity: 1; transform: translateY(0%); pointer-events: auto; z-index: 1;">
                     <div id="id-1-4" style="" role="tabpanel" tabindex="0" class="home_gridEng__3Mbrn focus:outline-none lg:min-h-[462px]" aria-labelledby="queries-mutations">
                         <div>
+                            <span class="caption aos-init aos-animate" style="color: #fff;">COLLECT</span>
                             <h2 class="font-bold text-3xl lg:text-5xl leading-snug text-white">
-                                Query the API for structured data
+                                Query our API for structured data
                             </h2>
                             <p class="text-base md:text-lg mt-6 text-whisper">
-                                CySuite has a robust API with a vast corpus of labelled data on web targets for a more convinient integration with automated tools. Try out the API today and be a part of making the data richer while having access to a magnitude of web-related data.
+                                CySuite has a robust API with a vast corpus of various CVE data, public web data and patches which can be integrated with automation tools. Leverage our state of the art API to scan your site for bugs and get a security health score associated with it.
                             </p>
                         </div>
                         <div class="text-white w-full overflow-auto">
@@ -183,34 +184,53 @@
     <div class="untree_co-section" id="features-section">
         <div class="container">
             <div class="row justify-content-between">
+                <div class="col-lg-7 aos-init aos-animate" data-aos="fade-up" data-aos-delay="400">
+                    <img src="/static/img/showcase/source_analysis.png" alt="Image" class="img-fluid img-shadow" style="width: max-content; height: auto;">
+                </div>
                 <div class="col-lg-4">
-                    <span class="caption aos-init aos-animate" style="color: #000000;">Central Dashboard</span>
-                    <h2 class="font-bold text-3xl lg:text-5xl leading-snug" style="padding-bottom: 1rem;">User Feedback - UI/UX</h2>
+                    <span class="caption aos-init aos-animate" style="color: #000000;">ANALYZE</span>
+                    <h2 class="font-bold text-3xl lg:text-5xl leading-snug" style="padding-bottom: 1rem;">Source Code Analysis</h2>
                     <div class="mb-4 aos-init aos-animate" data-aos="fade-up" data-aos-delay="300">
-                        <div class="untree_co-testimonial d-flex">
-                            <div class="text">
-                                <blockquote>
-                                    “CySuite has <span class="highlight">enabled me to automate my workflow. </span>I am now able to categorize my assets and run recon scans using tools that I otherwise did not think was possible.”
-                                </blockquote>
-                                <div class="author d-flex">
-                                    <div class="pic mr-3">
-                                        <img src="{% static 'img/profile/priya.jpg'%}" alt="Image" class="img-fluid"/>
-                                    </div>
-                                    <div><strong class="d-block">Priya Singh</strong><span class="d-block">Bug Hunter, HackerOne</span></div>
-                                </div>
-                            </div>
-                        </div>
+                        <p class="text-base md:text-lg mt-6">
+                            Catch vulnerabilities in your code before the attacker does. Using Deep Representational Learning, our algorithms identifies, classifies and proposes fixes to potential security vulnerabilities in your application.
+                        </p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <section class="bg-haiti py-12">
+        <div class="untree_co-section" id="features-section">
+            <div class="container">
+                <div class="row justify-content-between">
+                    <div class="col-lg-4">
+                        <span class="caption aos-init aos-animate" style="color: #fff;">REPORT</span>
+                        <h2 class="font-bold text-3xl lg:text-5xl leading-snug text-white">
+                            Health Score and Reporting
+                        </h2>
+                        <p class="text-base md:text-lg mt-6 text-whisper">
+                            Get access to reports about the real-time health of your website with suggestions for improvement. Discovered bugs are sorted by severity so you know what to focus on first.
+                        </p>
+                    </div>
+                    <div class="col-lg-7 aos-init aos-animate" data-aos="fade-up" data-aos-delay="400">
+                        <img src="/static/img/showcase/map_source.png" alt="Image" class="img-fluid img-shadow">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="untree_co-section" id="features-section">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-lg-4">
+                    <span class="caption aos-init aos-animate" style="color: #000000;">TUTORIAL</span>
+                    <h2 class="font-bold text-3xl lg:text-5xl leading-snug">See CySuite in action</h2>
+                    <p class="text-base md:text-lg mt-6">
+                        This step-by-step video showcases the capabilities of CySuite in finding bugs using the Damn Vulnerable Web App (DVWA) as an illustrative example.  If you wish to schedule any demos, feel free to contact us using the information provided below.
+                    </p>
+                </div>
                 <div class="col-lg-7 aos-init aos-animate" data-aos="fade-up" data-aos-delay="400">
-                    <a href="https://www.youtube.com/watch?v=mwtbEGNABWU&amp;t=9s" class="btn-video" data-fancybox="">
-                        <span class="wrap-icon-play">
-                            <svg class="bi bi-play-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"></path>
-                            </svg>
-                        </span>
-                        <img src="{% static 'img/showcase/capture.png'%}" alt="Image" class="img-fluid img-shadow" style="width: 1200px; height: auto;" />
-                    </a>
+                    <iframe width="700" height="400" src="https://www.youtube.com/embed/tgbNymZ7vqY"></iframe> 
                 </div>
             </div>
         </div>
@@ -266,7 +286,7 @@
                             <li class="text-light-haiti text-sm uppercase tracking-wider font-medium mb-3">BLOG</li>
                             <li><a class="text-zodiac font-medium hover:text-cornflower text-sm" style="color: rgba(98, 110, 153, var(--tw-text-opacity));" href="https://medium.com/@cysuiteio" target="_blank">Medium Blog</a></li>
                             <li><a class="text-zodiac font-medium hover:text-cornflower text-sm" style="color: rgba(98, 110, 153, var(--tw-text-opacity));" href="/graphql">Sign up to Newsletter</a></li>
-                            <li><label class="text-sm" for="modal-1" style="cursor: pointer; color: rgba(98, 110, 153, var(--tw-text-opacity));">Request API Access</label></li>
+                            <li><label class="text-sm" for="modal-1" style="cursor: pointer; color: rgba(98, 110, 153, var(--tw-text-opacity));font-weight:600;">Request API Access</label></li>
                         </ul>
                     </div>
                     <div class="md:w-1/4 px-6">
@@ -336,7 +356,7 @@
                         <img src="{% static 'img/logo/logo_footer.png' %}">
                     </div>
                     <div class="md:w-2/5 text-light-haiti text-sm md:text-right">
-                        © <!-- -->2021
+                        © <!-- -->2022
                     </div>
                 </div>
             </div>
