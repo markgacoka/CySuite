@@ -593,7 +593,7 @@ text {
     justify-content: center;
     -ms-align-items: center;
     align-items: center;
-    padding-bottom: 2rem;
+    padding-bottom: 1rem;
 }
 
 .bg1 {
@@ -609,18 +609,13 @@ text {
 }
 
 .login100-social-item {
-    font-size: 25px;
+    font-size: 20px;
     color: #fff;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 60px;
+    width: 150px;
     height: 60px;
-    border-radius: 50%;
     margin: 10px;
 }
 
