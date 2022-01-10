@@ -5,6 +5,7 @@ from django.contrib.auth import login, authenticate, logout
 from cyauth.forms import RegistrationForm, AccountAuthenticationForm, AccountUpdateForm, FeedbackForm, PasswordUpdateForm
 from rest_framework.authtoken.models import Token
 from main.forms import NewsletterForm
+from main.models import Newsletter
 from .models import Account
 
 def index(request):
@@ -140,6 +141,7 @@ def account_view(request):
             context['password_form'] = password_form
         elif 'delete' in request.POST.keys():
             Account.objects.filter(username__iexact=request.user.username).delete()
+            Newsletter.objects.filter(subscriber__iexact=request.user.email).delete()
             return redirect('index')
         elif len(request.FILES.get('image')) != 0:
             extension = str(request.FILES['image'].name.rsplit(".", 1)[-1])

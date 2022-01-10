@@ -1,3 +1,18 @@
+## OAuth Tokens
+```
+Google:
+Client ID: 171222177646-80l7bgb2jcds6c0o1o7akcsciigiv8hi.apps.googleusercontent.com
+Secret Key: aR3hAa8UvrMWFw370fPr0c5r
+
+Github
+Client ID: 1652501d641cc3f66c9d
+Secret Key: 8522743e7aa518fbd292ad538a741db768ae58f5
+
+Gitlab:
+Client ID: 65e790baa6e318f5fc5b3ae375a4e4b2ded5c16262fe5fcad5ea1648d63f673d
+Secret Key: 28c54c23507c8f80602b62a5d7955ec11b3208726747cb69eb0bfd113a6de4ec
+```
+
 ## Database Models
 ### Get all API endpoints:
 ```

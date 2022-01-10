@@ -1,7 +1,7 @@
-from cyauth.models import UserProfile
 from allauth.account.adapter import DefaultAccountAdapter
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from allauth.exceptions import ImmediateHttpResponse
+from rest_framework.authtoken.models import Token
 from allauth.socialaccount.signals import pre_social_login
 from allauth.account.utils import perform_login
 from allauth.utils import get_user_model
@@ -25,7 +25,7 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
     user = get_user_model()
     email_address = sociallogin.account.extra_data['email']
 
-    if sociallogin.account.provider == 'twitter':
+    if sociallogin.account.provider == 'github':
         name = sociallogin.account.extra_data['name'].split()
         username = sociallogin.account.extra_data['screen_name']
         if len(name) == 2:
@@ -50,7 +50,7 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
                 curr_user = user.objects.filter(email=email_address)
                 perform_login(request, curr_user[0], email_verification='optional')
 
-    if sociallogin.account.provider == 'facebook':
+    if sociallogin.account.provider == 'gitlab':
         username = sociallogin.account.extra_data['name']
         if not user.objects.filter(email=email_address).exists() and not user.objects.filter(username=username).exists():
             new_user, created = user.objects.update_or_create(
@@ -94,6 +94,7 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
     request.session.modified = True
 
     if created:
+        new_user.api_token = Token.objects.get(user_id=new_user.user_id).key
         new_user.save()
         if new_user:
             perform_login(request, new_user, email_verification='optional')

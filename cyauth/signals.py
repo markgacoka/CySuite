@@ -10,5 +10,5 @@ from main.models import Newsletter
 def create_profile(sender, instance, created, **kwargs):
     if created:
         WordlistModel.objects.create(wordlist_user=instance)
-        Newsletter.objects.create(subscriber=instance)
+        Newsletter.objects.create(subscriber=instance.email)
         Token.objects.create(user=instance)

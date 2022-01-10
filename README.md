@@ -179,6 +179,7 @@ pip install -r requirements.txt
 python manage.py makemigrations
 python manage.py migrate
 python manage.py createsuperuser
+python manage.py changepassword admin@cysuite.io
 
 # Run redis, celery worker and Django server
 redis-server
@@ -209,9 +210,11 @@ find . -type d -name __pycache__ -exec rm -r {} \+
 [ ] Change social login tokens, domains to production
 [ ] Change Paypal API endpoint to production key
 [ ] Set specific module versions in Pipfile
+
     ```
     pipenv uninstall --all
     rm Pipfile* requirements.txt
     pipenv install [package-name==version]
     ```
+
 [ ] Remove unused CSS lines (make it leaner) + minify
