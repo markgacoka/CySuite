@@ -25,6 +25,8 @@ class MyUserManager(UserManager):
         )
         user.is_admin = True
         user.is_premium = True
+        user.is_staff = True
+        user.is_superuser = True
         user.first_name = 'Admin'
         user.last_name = 'Account'
         user.save(using=self._db)
@@ -45,6 +47,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     last_login = models.DateTimeField(verbose_name="last login", auto_now=True)
     is_admin = models.BooleanField(default=False)
     is_premium = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
     hide_email = models.BooleanField(default=True)
     feedback = models.CharField(max_length= 1200, default= "", unique=False, null=True, blank=True)
     api_token = models.CharField(max_length=64, unique=False, null=True, blank=True)

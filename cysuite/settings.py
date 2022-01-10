@@ -32,9 +32,9 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.twitter',
+    'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.gitlab',
     'main',
     'cyauth',
     'api',
@@ -54,15 +54,24 @@ ACCOUNT_SIGNUP_FORM_CLASS = 'cyauth.forms.RegistrationForm'
 ACCOUNT_ADAPTER = "cysuite.adapter.MyLoginAccountAdapter"
 SOCIALACCOUNT_ADAPTER = "cysuite.adapter.MySocialAccountAdapter"
 SOCIALACCOUNT_PROVIDERS = {
-    'facebook': {
-        'SCOPE': ['email'],
-        'METHOD': 'oauth2',
+    'github': {
+        'SCOPE': [
+            'user',
+            'repo',
+            'read:org',
+        ],
+    },
+    'gitlab': {
+        'SCOPE': [
+            'read_user',
+            'read_repository',
+            'read_registry',
+        ],
     },
     'google':
         { 'SCOPE': ['profile', 'email'],
         'AUTH_PARAMS': { 'access_type': 'online' }
-    },
-    'twitter': {},
+    }
 }
 
 MIDDLEWARE = [
