@@ -3990,26 +3990,31 @@ a:visited {
     width: 100%;
 }
 
-@media (min-width:1024px) {
-    .header__list {
-        background: 0 0;
-        -ms-flex-direction: row;
-        flex-direction: row;
-        height: 80px;
-        max-height: 80px;
-        padding: 0 10px;
-        position: relative;
-        top: 0;
-        -ms-transform: translateX(0);
-        transform: translateX(0);
-        transition: none;
-        width: inherit;
-    }
+.header__list {
+    background: 0 0;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    height: 80px;
+    max-height: 80px;
+    padding: 0 10px;
+    position: relative;
+    top: 0;
+    -ms-transform: translateX(0);
+    transform: translateX(0);
+    transition: none;
+    width: inherit;
 }
 
 .header__list-item {
     width: 100%;
 }
+
+@media (min-width:600px) {
+    .header__list-item {
+        width: 0%;
+    }
+}
+
 
 .header__list-item:last-child {
     padding-bottom: 50px;
@@ -4026,15 +4031,13 @@ a:visited {
     }
 }
 
-@media (min-width:1024px) {
-    .header__list-item {
-        margin-right: 50px;
-    }
+.header__list-item {
+    margin-right: 50px;
+}
 
-    .header__list-item:last-child {
-        margin-right: 0;
-        padding-bottom: 0;
-    }
+.header__list-item:last-child {
+    margin-right: 0;
+    padding-bottom: 0;
 }
 
 .header__list .glue-button.glue-button--medium-emphasis {
@@ -4052,14 +4055,12 @@ a:visited {
     width: 100%;
 }
 
-@media (min-width:1024px) {
-    .header__list .glue-button.glue-button--medium-emphasis {
-        border: .5px solid #373434;
-        -ms-flex-pack: distribute;
-        justify-content: space-around;
-        padding: 6px 10px;
-        width: 7rem;
-    }
+.header__list .glue-button.glue-button--medium-emphasis {
+    border: .5px solid #373434;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+    padding: 6px 10px;
+    width: 7rem;
 }
 
 .header__list .glue-button.glue-button--medium-emphasis:visited {
@@ -4078,10 +4079,8 @@ a:visited {
     color: #373434;
 }
 
-@media (min-width:1024px) {
-    .header__list .glue-button.glue-button--medium-emphasis:focus {
-        border: .5px solid #373434;
-    }
+.header__list .glue-button.glue-button--medium-emphasis:focus {
+    border: .5px solid #373434;
 }
 
 .header__list .glue-button.glue-button--medium-emphasis:focus svg {
