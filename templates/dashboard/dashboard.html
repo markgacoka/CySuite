@@ -9,7 +9,7 @@ Dashboard | CySuite
 {% block content %}
 {% if messages %}
     {% for message in messages %}
-        {% if 'Successfully!' in message.message %}
+        {% if 'Successfully' in message.message %}
             <button style="display: none;" class="alert-popup" id="alert-success" name="{{message}}" value="success"></button>
         {% else %}
             <button style="display: none;" class="alert-popup" id="alert-warning" name="{{message}}" value="warning"></button>
