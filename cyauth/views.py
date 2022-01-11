@@ -141,12 +141,14 @@ def account_view(request):
                 context['error_message'] = 'An error occurred!'
             context['feedback_form'] = feedback_form
 
-        elif 'email' and 'username' in request.POST.keys():
+        elif 'email' and 'username' and 'company' and 'role' in request.POST.keys():
             account_form = AccountUpdateForm(request.POST, instance=request.user)
             if account_form.is_valid():
                 account_form.initial = {
                     "email": request.POST['email'],
-                    "username": request.POST['username']
+                    "username": request.POST['username'],
+                    "company": request.POST['role'],
+                    "role": request.POST['role'],
                 }
                 account_form.save()
                 context['success_message'] = 'Updated'
