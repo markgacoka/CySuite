@@ -8,6 +8,7 @@ from allauth.utils import get_user_model
 from django.dispatch import receiver
 from django.shortcuts import redirect
 from django.conf import settings
+from django.urls import reverse
 
 class MyLoginAccountAdapter(DefaultAccountAdapter):
     def get_login_redirect_url(self, request):
@@ -17,8 +18,7 @@ class MyLoginAccountAdapter(DefaultAccountAdapter):
 
 class MySocialAccountAdapter(DefaultSocialAccountAdapter):
     def pre_social_login(self, request, sociallogin):
-        if sociallogin.is_existing:
-            return
+        pass
 
 @receiver(pre_social_login)
 def link_to_local_user(sender, request, sociallogin, **kwargs):
@@ -50,22 +50,32 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
             new_user, created = user.objects.update_or_create(
                 username = username,
                 email = email_address,
-                social_provider = social_provider,
-                is_admin = False,
-                is_premium = False,
-                is_repo_linked = True,
                 defaults = {
                     'first_name': name[0],
                     'last_name': last_name,
                     'company': company,
-                    'image': image
+                    'image': image,
+                    'social_provider': social_provider,
+                    'is_admin': False,
+                    'is_premium': False,
+                    'is_repo_linked': True,
                 }
             )
             # verified = sociallogin.account.extra_data['verified']
 
     if sociallogin.account.provider == 'gitlab':
-        username = sociallogin.account.extra_data['name']
+        username = sociallogin.account.extra_data['username']
+        name = sociallogin.account.extra_data['name'].split()
+        company = sociallogin.account.extra_data['organization']
         social_provider = 'Gitlab'
+
+        if len(name) == 2:
+            last_name = name[1]
+        elif len(name) > 2:
+            last_name = name[-1]
+        else:
+            last_name = ''
+
         if user.objects.filter(email=email_address).exists() and user.objects.filter(email=email_address).values_list('social_provider')[0][0] == 'Gitlab':
             curr_user = user.objects.filter(email=email_address)
             perform_login(request, curr_user[0], email_verification='optional')
@@ -77,13 +87,14 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
             new_user, created = user.objects.update_or_create(
                 email = email_address,
                 username = username,
-                social_provider = social_provider,
-                is_admin = False,
-                is_premium = False,
-                is_repo_linked = True,
                 defaults = {
-                    'first_name': sociallogin.account.extra_data['first_name'],
-                    'last_name': sociallogin.account.extra_data['last_name']
+                    'first_name': name[0],
+                    'last_name': last_name,
+                    'social_provider': social_provider,
+                    'company': company,
+                    'is_admin': False,
+                    'is_premium': False,
+                    'is_repo_linked': True,
                 }
             )
             # verified = sociallogin.account.extra_data['verified']
@@ -102,18 +113,17 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
             new_user, created = user.objects.update_or_create(
                 email = email_address,
                 username = username,
-                social_provider = social_provider,
-                is_superuser = False,
-                is_premium = False,
-                is_repo_linked = False,
                 defaults = {
                     'first_name': sociallogin.account.extra_data['given_name'],
-                    'last_name': sociallogin.account.extra_data['family_name']
+                    'last_name': sociallogin.account.extra_data['family_name'],
+                    'social_provider': social_provider,
+                    'is_superuser': False,
+                    'is_premium': False,
+                    'is_repo_linked': False,
                 }
             )
             # verified = sociallogin.account.extra_data['verified_email']
 
-    redirect('set-password')
     request.session['project'] = request.session.get('project', None)
     request.session['sub_index'] = request.session.get('sub_index', 0)
     request.session['curr_subdomain'] = request.session.get('curr_subdomain', None)
@@ -122,8 +132,8 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
     if created:
         new_user.api_token = Token.objects.get(user_id=new_user.user_id).key
         new_user.save()
-        if new_user:
-            pass
+        request.session['temp_user'] = str(new_user.user_id)
+        raise ImmediateHttpResponse(redirect('set-password'))
     else:
         raise ImmediateHttpResponse(
             redirect('login')   

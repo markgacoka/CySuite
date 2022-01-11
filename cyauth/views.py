@@ -2,14 +2,11 @@ import os
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from cyauth.forms import RegistrationForm, AccountAuthenticationForm, AdditionalInfoForm, AccountUpdateForm, FeedbackForm, PasswordUpdateForm
-from allauth.account.utils import perform_login
-from allauth.exceptions import ImmediateHttpResponse
+from cyauth.forms import AdditionalInfoForm, RegistrationForm, AccountAuthenticationForm, AccountUpdateForm, FeedbackForm, PasswordUpdateForm
 from rest_framework.authtoken.models import Token
 from main.forms import NewsletterForm
 from main.models import Newsletter
 from .models import Account
-from django.conf import settings
 
 def index(request):
     if request.user.is_authenticated == True:
@@ -28,14 +25,24 @@ def index(request):
 
 def additional_info_view(request):
     context = {}
-    form = AdditionalInfoForm(request.POST or None)
+
+    additional_form = AdditionalInfoForm(request.POST or None)
     if request.method == "POST":
-        if form.is_valid():
-            form.save()
-            new_user = authenticate(email=request.user.email, password=request.user.password)
-            perform_login(request, new_user, email_verification='optional')
-            raise ImmediateHttpResponse(redirect(settings.LOGIN_REDIRECT_URL.format(id=request.user.user_id)))
-            # return redirect('dashboard')
+        if additional_form.is_valid():
+            curr_user_id = request.session['temp_user']
+            curr_user = Account.objects.get(user_id=curr_user_id)
+            company = additional_form.cleaned_data.get('company')
+            role = additional_form.cleaned_data.get('role')
+            password = additional_form.cleaned_data.get('password')
+            curr_user.set_password(password)
+            curr_user.company = company
+            curr_user.role = role
+            curr_user.save()
+            curr_user.backend = 'django.contrib.auth.backends.ModelBackend'
+            login(request, curr_user)
+            if 'temp_user' in request.session:
+                del request.session['temp_user']
+        return redirect('dashboard')
     return render(request, 'auth/set_password.html', context)
 
 def thank_you(request):
@@ -111,12 +118,7 @@ def login_view(request):
 
 def logout_view(request):
     if 'project' in request.session:
-        if request.session.get('project'):
-            del request.session['project']
-        if request.session.get('sub_index'):
-            del request.session['sub_index']
-        if request.session.get('curr_subdomain'):
-            del request.session['curr_subdomain']
+        request.session.clear()
         request.session.modified = True
     logout(request)
     return redirect("index")
@@ -164,6 +166,7 @@ def account_view(request):
         elif 'delete' in request.POST.keys():
             Account.objects.filter(username__iexact=request.user.username).delete()
             Newsletter.objects.filter(subscriber__iexact=request.user.email).delete()
+            request.session.clear()
             return redirect('index')
         elif len(request.FILES.get('image')) != 0:
             extension = str(request.FILES['image'].name.rsplit(".", 1)[-1])
