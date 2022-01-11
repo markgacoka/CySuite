@@ -34,6 +34,7 @@ def reset_password(request):
 
 def registration_view(request):
     context = {}
+    previous_input = {'first_name':'', 'last_name': '', 'email': '', 'username': '', 'company': '', 'role': ''}
     form = RegistrationForm(request.POST or None)
     if request.method == "POST":
         if form.is_valid():
@@ -50,10 +51,12 @@ def registration_view(request):
             login(request, account)
             return redirect('dashboard')
         else:
+            previous_input = {'first_name': request.POST.get('first_name'), 'last_name': request.POST.get('last_name'), 'email': request.POST.get('email'), 'username': request.POST.get('username'), 'company': request.POST.get('company'), 'role': request.POST.get('role')}
             context['registration_form'] = form
     else:
         form = RegistrationForm()
     context['registration_form'] = form
+    context['previous_input'] = previous_input
     return render(request, 'auth/register.html', context)
 
 def login_view(request):

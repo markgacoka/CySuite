@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
-from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.hashers import make_password
 
 from cyauth.models import Account
 
@@ -10,7 +10,7 @@ class RegistrationForm(UserCreationForm):
 
     class Meta:
         model = Account
-        fields = ("first_name", "last_name", "email", "username", "password1", "password2")
+        fields = ("first_name", "last_name", "email", "company", "role", "username", "password1", "password2")
         error_messages = {
             'first_name': {
                 'required': ("First name is a required field."),

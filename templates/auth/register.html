@@ -33,11 +33,11 @@
                             <div class="card" style="height: fit-content;">
                                 <div class="card-body">
                                     <div class="m-sm-4">
-                                    <div class="flex-c-m">
-                                        <a href="#" class="login100-social-item register-margin bg1"><i class="fab fa-github"></i>&nbsp;&nbsp;Github</a>
-                                        <a href="#" class="login100-social-item register-margin bg2"><i class="fab fa-gitlab"></i>&nbsp;&nbsp;Gitlab</a>
-                                        <a href="#" class="login100-social-item register-margin bg3"><i class="fab fa-bitbucket"></i>&nbsp;&nbsp;Bitbucket</a>
-                                    </div>
+                                        <div class="flex-c-m">
+                                            <a href="{% provider_login_url 'google' %}" class="login100-social-item login-margin bg3"><i class="fab fa-google"></i>&nbsp;&nbsp;Google</a>
+                                            <a href="{% provider_login_url 'github' %}" class="login100-social-item login-margin bg1"><i class="fab fa-github"></i>&nbsp;&nbsp;Github</a>
+                                            <a href="{% provider_login_url 'gitlab' %}" class="login100-social-item login-margin bg2"><i class="fab fa-gitlab"></i>&nbsp;&nbsp;Gitlab</a>
+                                        </div>
                                         <form method="post" id="login-form">
                                             {% csrf_token %}
                                             {% if registration_form.non_field_errors %}
@@ -66,32 +66,36 @@
                                                 <div class="row" style="display: flex;">
                                                     <div class="mb-3" style="width: 50%; float: left;">
                                                         <label class="form-label">First Name</label>
-                                                        <input class="form-control form-control-lg" type="text" name="first_name" placeholder="First Name" />
+                                                        <input class="form-control form-control-lg" type="text" name="first_name" placeholder="First Name" value="{{previous_input.first_name}}" />
                                                     </div>
                                                     <div class="mb-3" style="width: 50%; float: right;">
                                                         <label class="form-label">Last Name</label>
-                                                        <input class="form-control form-control-lg" type="text" name="last_name" placeholder="Last Name" />
+                                                        <input class="form-control form-control-lg" type="text" name="last_name" placeholder="Last Name" value="{{previous_input.last_name}}" />
                                                     </div>
                                                 </div>
                                                 <div class="mb-3">
+                                                    <label class="form-label">Username</label>
+                                                    <input class="form-control form-control-lg" type="text" name="username" placeholder="Username" value="{{previous_input.username}}" />
+                                                </div>
+                                                <div class="mb-3">
                                                     <label class="form-label">Email</label>
-                                                    <input class="form-control form-control-lg" type="text" name="email" placeholder="Email" />
+                                                    <input class="form-control form-control-lg" type="text" name="email" placeholder="Email" value="{{previous_input.email}}" />
                                                 </div>
                                                 <div class="row" style="display: flex;">
                                                     <div class="mb-3" style="width: 50%; float: left;">
                                                         <label class="form-label">Company</label>
-                                                        <input class="form-control form-control-lg" type="text" name="company" placeholder="Company" />
+                                                        <input class="form-control form-control-lg" type="text" name="company" placeholder="Company" value="{{previous_input.company}}" />
                                                     </div>
                                                     <div class="mb-3" style="width: 50%; float: right;">
                                                         <label class="form-label">Role</label>
-                                                        <select class="form-control form-control-lg dropdown-icon" name="role" id="role" placeholder="Role">
+                                                        <select class="form-control form-control-lg dropdown-icon" name="role" id="role" placeholder="Role" value="{{previous_input.role}}">
                                                             <option disabled selected value> -- select an option -- </option>
-                                                            <option value="saab">DevOps</option>
-                                                            <option value="volvo">Security Analyst</option>
-                                                            <option value="mercedes">Software Developer</option>
-                                                            <option value="mercedes">Security Hobbyist/Bug Hunter</option>
-                                                            <option value="audi">Corporate Management</option>
-                                                            <option value="audi">Other</option>
+                                                            <option value="DevOps">DevOps</option>
+                                                            <option value="Security Analyst">Security Analyst</option>
+                                                            <option value="Software Developer">Software Developer</option>
+                                                            <option value="Security Hobbyist/Bug Hunter">Security Hobbyist/Bug Hunter</option>
+                                                            <option value="Corporate Management">Corporate Management</option>
+                                                            <option value="Other">Other</option>
                                                           </select>
                                                     </div>
                                                 </div>
