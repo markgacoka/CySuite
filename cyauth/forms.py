@@ -69,12 +69,14 @@ class AdditionalInfoForm(forms.ModelForm):
 class AccountUpdateForm(forms.ModelForm):
     class Meta:
         model = Account
-        fields = ['email', 'username']
+        fields = ['email', 'username', 'company', 'role']
 
     def clean(self):
         if self.is_valid():
             email = self.cleaned_data['email']
             username = self.cleaned_data['username']
+            company = self.cleaned_data['company']
+            role = self.cleaned_data['role']
             qs_username = Account.objects.filter(username__iexact=username).exclude(pk=self.instance.pk)
             qs_email = Account.objects.filter(email__iexact=email).exclude(pk=self.instance.pk)
             if qs_username.exists():
@@ -82,7 +84,7 @@ class AccountUpdateForm(forms.ModelForm):
             elif qs_email.exists():
                 raise forms.ValidationError('Email is already in use')
             else:
-                return {"email": email, "username": username}
+                return {"email": email, "username": username, 'company': company, 'role': role}
         return None
 
 class FeedbackForm(forms.ModelForm):

@@ -220,6 +220,32 @@ Profile | CySuite
                                     </div>
                                 </div>
                             </div>
+                            <div style="width: 100%;">
+                                <div style="width: 50%; float: left;">
+                                    <h6>Change company</h6>
+                                    <div class="row" style="margin: 0 1.25rem 1rem 0;">
+                                        <div class="input-resizer">
+                                            <input class="form-control" type="text" name="company" placeholder="Company" value="{{request.user.company}}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="width: 50%; float: right;">
+                                    <h6>Change role</h6>
+                                    <div class="row" style="margin: 0 1.25rem 1rem 0;">
+                                        <div class="input-resizer">
+                                            <select class="form-control form-control-lg dropdown-icon" name="role" id="role" placeholder="Role">
+                                                <option disabled selected value>{{request.user.role}}</option>
+                                                <option value="DevOps">DevOps</option>
+                                                <option value="Security Analyst">Security Analyst</option>
+                                                <option value="Software Developer">Software Developer</option>
+                                                <option value="Security Hobbyist/Bug Hunter">Security Hobbyist/Bug Hunter</option>
+                                                <option value="Corporate Management">Corporate Management</option>
+                                                <option value="Other">Other</option>
+                                              </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             {% if success_message %}
                                 <button style="display: none;" class="alert-popup" id="alert-success" name="{{success_message}}" value="success"></button>
                             {% endif %}
