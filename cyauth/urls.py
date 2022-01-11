@@ -8,7 +8,8 @@ from cyauth.views import (
     registration_view,
     login_view,
     logout_view,
-    account_view
+    account_view,
+    additional_info_view
 )
 
 urlpatterns = [
@@ -20,6 +21,7 @@ urlpatterns = [
     path('account/', account_view, name="account"),
     path('profile/', account_view, name="profile"),
 
+    path('set-password/', additional_info_view, name="set-password"),
     path('reset-password/', auth_views.PasswordResetView.as_view(template_name='auth/forgot-password.html'), name='password_reset'),
     path('password-reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='auth/password_reset_done.html'), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='auth/password_reset.html'), name='password_reset_confirm'),

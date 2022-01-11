@@ -2,11 +2,14 @@ import os
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from cyauth.forms import RegistrationForm, AccountAuthenticationForm, AccountUpdateForm, FeedbackForm, PasswordUpdateForm
+from cyauth.forms import RegistrationForm, AccountAuthenticationForm, AdditionalInfoForm, AccountUpdateForm, FeedbackForm, PasswordUpdateForm
+from allauth.account.utils import perform_login
+from allauth.exceptions import ImmediateHttpResponse
 from rest_framework.authtoken.models import Token
 from main.forms import NewsletterForm
 from main.models import Newsletter
 from .models import Account
+from django.conf import settings
 
 def index(request):
     if request.user.is_authenticated == True:
@@ -22,6 +25,18 @@ def index(request):
                     newsletter_form.save()
                 return redirect('thank_you')
     return render(request, 'index.html', context)
+
+def additional_info_view(request):
+    context = {}
+    form = AdditionalInfoForm(request.POST or None)
+    if request.method == "POST":
+        if form.is_valid():
+            form.save()
+            new_user = authenticate(email=request.user.email, password=request.user.password)
+            perform_login(request, new_user, email_verification='optional')
+            raise ImmediateHttpResponse(redirect(settings.LOGIN_REDIRECT_URL.format(id=request.user.user_id)))
+            # return redirect('dashboard')
+    return render(request, 'auth/set_password.html', context)
 
 def thank_you(request):
     if request.user.is_authenticated == True:
@@ -45,6 +60,8 @@ def registration_view(request):
             request.session['project'] = request.session.get('project', None)
             request.session['sub_index'] = request.session.get('sub_index', 0)
             request.session['curr_subdomain'] = request.session.get('curr_subdomain', None)
+            account.social_provider = 'Email'
+            account.is_repo_linked = False
             account.api_token = Token.objects.get(user_id=account.user_id).key
             account.save()
             request.session.modified = True
@@ -72,7 +89,9 @@ def login_view(request):
             email = request.POST['email']
             password = request.POST['password']
             user = authenticate(email=email, password=password)
-        
+
+            if (user.social_provider == 'Google' or user.social_provider == 'Github' or user.social_provider == 'Gitlab') and user.has_usable_password() == False:
+                return render(request, 'auth/set_password.html', context)
             if user:
                 request.session['project'] = request.session.get('project', None)
                 request.session['sub_index'] = request.session.get('sub_index', 0)

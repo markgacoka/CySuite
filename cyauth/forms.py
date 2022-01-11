@@ -55,6 +55,27 @@ class AccountAuthenticationForm(forms.ModelForm):
             password = self.cleaned_data['password']
             if not authenticate(email=email, password=password):
                 raise forms.ValidationError('Email or password is incorrect')
+
+class AdditionalInfoForm(forms.ModelForm):
+    class Meta:
+        model = Account
+        fields = ['company', 'role', 'password']
+        error_messages = {
+            'password1': {
+                'required': ("The password field is a required field."),
+            },
+            'password2': {
+                'required': ("The password field is a required field."),
+            },
+        }
+
+
+    def clean(self):
+        if self.is_valid():
+            company = self.cleaned_data['company']
+            role = self.cleaned_data['role']
+            password = self.cleaned_data['password']
+            
             
 class AccountUpdateForm(forms.ModelForm):
     class Meta:
