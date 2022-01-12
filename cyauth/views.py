@@ -29,20 +29,27 @@ def additional_info_view(request):
     additional_form = AdditionalInfoForm(request.POST or None)
     if request.method == "POST":
         if additional_form.is_valid():
-            curr_user_id = request.session['temp_user']
-            curr_user = Account.objects.get(user_id=curr_user_id)
-            company = additional_form.cleaned_data.get('company')
-            role = additional_form.cleaned_data.get('role')
-            password = additional_form.cleaned_data.get('password')
-            curr_user.set_password(password)
-            curr_user.company = company
-            curr_user.role = role
-            curr_user.save()
-            curr_user.backend = 'django.contrib.auth.backends.ModelBackend'
-            login(request, curr_user)
             if 'temp_user' in request.session:
+                curr_user_id = request.session['temp_user']
+                curr_user = Account.objects.get(user_id=curr_user_id)
+                company = additional_form.cleaned_data.get('company')
+                role = additional_form.cleaned_data.get('role')
+                password = additional_form.cleaned_data.get('password')
+                curr_user.set_password(password)
+                curr_user.company = company
+                curr_user.role = role
+                curr_user.save()
+                curr_user.backend = 'django.contrib.auth.backends.ModelBackend'
+                login(request, curr_user)
                 del request.session['temp_user']
+            else:
+                context['additional_form'] = additional_form
+                return render(request, 'auth/set_password.html', context)
+        else:
+            context['additional_form'] = additional_form
+            return render(request, 'auth/set_password.html', context)
         return redirect('dashboard')
+    context['additional_form'] = additional_form
     return render(request, 'auth/set_password.html', context)
 
 def thank_you(request):
