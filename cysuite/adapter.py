@@ -45,6 +45,7 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
         elif user.objects.filter(email=email_address).exists() and user.objects.filter(email=email_address).values_list('social_provider')[0][0] != 'Github':
             curr_user = user.objects.filter(email=email_address)
             sociallogin.connect(request, curr_user[0])
+            curr_user.update(social_provider="Github")
             perform_login(request, curr_user[0], email_verification='optional')
         else:
             new_user, created = user.objects.update_or_create(
@@ -82,6 +83,7 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
         elif user.objects.filter(email=email_address).exists() and user.objects.filter(email=email_address).values_list('social_provider')[0][0] != 'Gitlab':
             curr_user = user.objects.filter(email=email_address)
             sociallogin.connect(request, curr_user[0])
+            curr_user.update(social_provider="Gitlab")
             perform_login(request, curr_user[0], email_verification='optional')
         else:
             new_user, created = user.objects.update_or_create(
