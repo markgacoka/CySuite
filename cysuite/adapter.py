@@ -112,7 +112,7 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
             curr_user = user.objects.filter(email=email_address)
             sociallogin.connect(request, curr_user[0])
             perform_login(request, curr_user[0], email_verification='optional')
-        elif user.objects.filter(email=email_address).exists() and (curr_social_provider != 'Github' or curr_social_provider != 'Gitlab'):
+        elif user.objects.filter(email=email_address).exists() and (curr_social_provider == 'Github' or curr_social_provider == 'Gitlab'):
             curr_user = user.objects.filter(email=email_address)
             perform_login(request, curr_user[0], email_verification='optional')
         else:
