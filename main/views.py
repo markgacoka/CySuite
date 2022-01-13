@@ -829,6 +829,3 @@ def injector(request):
         context['byte_match'] = 'None'
         context['status'] = 'Not injected'
     return render(request, 'dashboard/injector.html', context)
-
-def post(request):
-    return render(request, 'posts/post1.html')
