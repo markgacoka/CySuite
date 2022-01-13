@@ -104,15 +104,21 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
     if sociallogin.account.provider == 'google':
         username = sociallogin.account.extra_data['name']
         social_provider = 'Google'
-        curr_social_provider = user.objects.filter(email=email_address).values_list('social_provider')[0][0]
-        if user.objects.filter(email=email_address).exists() and user.objects.filter(email=email_address).values_list('social_provider')[0][0] == 'Google':
+        if user.objects.filter(email=email_address).exists() and user.objects.filter(email=email_address).values_list('social_provider')[0][0] == 'Google' and not user.objects.filter(email=email_address).values_list('password')[0][0]:
+            request.session['project'] = request.session.get('project', None)
+            request.session['sub_index'] = request.session.get('sub_index', 0)
+            request.session['curr_subdomain'] = request.session.get('curr_subdomain', None)
+            request.session.modified = True
+            request.session['temp_user'] = str(user.objects.filter(email=email_address).values_list('user_id')[0][0])
+            raise ImmediateHttpResponse(redirect('set-password'))
+        elif user.objects.filter(email=email_address).exists() and user.objects.filter(email=email_address).values_list('social_provider')[0][0] == 'Google':
             curr_user = user.objects.filter(email=email_address)
             perform_login(request, curr_user[0], email_verification='optional')
-        elif user.objects.filter(email=email_address).exists() and curr_social_provider != 'Google':
+        elif user.objects.filter(email=email_address).exists() and user.objects.filter(email=email_address).values_list('social_provider')[0][0] != 'Google':
             curr_user = user.objects.filter(email=email_address)
             sociallogin.connect(request, curr_user[0])
             perform_login(request, curr_user[0], email_verification='optional')
-        elif user.objects.filter(email=email_address).exists() and (curr_social_provider == 'Github' or curr_social_provider == 'Gitlab'):
+        elif user.objects.filter(email=email_address).exists() and (user.objects.filter(email=email_address).values_list('social_provider')[0][0] == 'Github' or user.objects.filter(email=email_address).values_list('social_provider')[0][0] == 'Gitlab'):
             curr_user = user.objects.filter(email=email_address)
             perform_login(request, curr_user[0], email_verification='optional')
         else:
