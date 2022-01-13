@@ -5761,17 +5761,15 @@ fieldset:disabled .btn {
 }
 
 .badge {
+    display: inline-block;
     padding: .5em .4em;
+    font-size: 90%;
     font-weight: 500;
     line-height: 1;
     text-align: center;
     white-space: nowrap;
     vertical-align: baseline;
-    border-radius: .2rem;
-    display: grid;
-    align-items: center;
-    text-align: center;
-    font-size: 13px;
+    border-radius: .2rem
 }
 
 .badge:empty {
@@ -5782,6 +5780,59 @@ fieldset:disabled .btn {
     position: relative;
     top: -1px
 }
+
+.grey-back {
+    background: lightgrey;
+    border-radius: 10px;
+    border-width:0px;
+    border:none;
+    outline:none!important;
+  }
+  
+  .grey-back:active {
+    background: lightgrey;
+    border-width:0px;
+    border:none;
+    outline:none!important;
+  }
+  
+  .tooltip-api {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .tooltip-api .tooltiptext-api {
+    visibility: hidden;
+    width: 140px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -75px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .tooltip-api .tooltiptext-api::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+  }
+  
+  .tooltip-api:hover .tooltiptext-api {
+    visibility: visible;
+    opacity: 1;
+  }
 
 .alert {
     position: relative;
