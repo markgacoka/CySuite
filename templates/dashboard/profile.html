@@ -110,13 +110,22 @@ Profile | CySuite
                 <hr class="my-0" />
                 <div class="card-body">
                     <h5 class="h6 card-title">API Credentials</h5>
-                    <li class="mb-1" style="font-size: 0.8rem; list-style-type: none;">
-                        <div style="width: 100%;">
-                            <span data-feather="key" class="feather-sm me-1"></span>
-                            <b>API Key:</b>
-                            <span>{{request.user.api_token}}</span>
-                        </div>
-                    </li>
+                    <div style="width: 100%; height: auto; display: flex; margin-bottom: 0.2rem;">
+                        <li class="mb-1" style="font-size: 0.8rem; list-style-type: none;">
+                            <div style="width: 40%; float: left;">
+                                <span data-feather="key" class="feather-sm me-1"></span>
+                                <b>API Key:</b>
+                            </div>
+                            <div style="width: 100%; float: right;">
+                                <div class="tooltip-api" style="width: 100%;">
+                                    <button style="width: -webkit-fill-available;" class="grey-back" onclick="myFunction()">
+                                        <input class="grey-back" style="width: -webkit-fill-available;" value="{{request.user.api_token}}" id="myInput" readonly>
+                                        <span class="tooltiptext-api" id="myTooltip">Copy to clipboard</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+                    </div>
                 </div>
             </div>
         </div>
@@ -393,6 +402,21 @@ Profile | CySuite
     </div>
 </div>
 <script>
+    function myFunction() {
+        var copyText = document.getElementById("myInput");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(copyText.value);
+
+        var tooltip = document.getElementById("myTooltip");
+        tooltip.innerHTML = "Copied!"
+    }
+
+    function outFunc() {
+        var tooltip = document.getElementById("myTooltip");
+        tooltip.innerHTML = "Copy to clipboard";
+    }
+
     function deleteAccount(){
 		var token = '{{csrf_token}}';
 		$.ajax({
