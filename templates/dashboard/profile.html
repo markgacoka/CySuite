@@ -1,218 +1,183 @@
-{% extends '../base.html' %}
 {% load static %}
 {% load account %}
 
-
-{% block title%}
-Profile | CySuite
-{% endblock %}
-{% block content %}
-<div class="container-fluid p-0">
-    <div class="row">
-        <div class="col-md-4 col-xl-3">
-            <div class="card mb-3">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Profile Details</h5>
-                </div>
-                <div class="card-body text-center">
-                    {% if success_message %}
-                        <button style="display: none;" class="alert-popup" id="alert-success" name="{{success_message}}" value="success"></button>
-                    {% endif %}
-                    {% if error_message %}
-                        <button style="display: none;" class="alert-popup" id="alert-danger" name="{{error_message}}" value="danger"></button>
-                    {% endif %}
-                    <form method="POST" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <img src="https://cysuite-bucket.s3.us-west-2.amazonaws.com/media/profiles/{{user.image}}" alt="Profile image" class="img-fluid rounded-circle mb-2" width="128" height="128" style="border-radius:50% !important; width: 128px; height: 128px; object-fit: cover;"/>
-                        <h5 class="card-title mb-2">{{user.first_name}}&nbsp;{{user.last_name}}</h5>
-                        <label class="btn btn-primary btn-sm" style="width: 100%; position: relative; color: rgba(233, 236, 239); padding: 0.5rem; cursor: pointer;">
-                            <input type="file" name="image" accept="image/*" onchange="form.submit()" hidden />
-                            <i class="fa fa-upload" style="font-size: 0.8rem;"></i>&nbsp;Choose File
-                        </label>
-                    </form>
-                </div>
-                <hr class="my-0" />
-                <div class="card-body">
-                    <h5 class="h6 card-title">About</h5>
-                    <div style="width: 100%; height: auto; display: flex; margin-bottom: 0.2rem;">
-                        <div style="width: 40%; float: left;">
-                            <b>Username:</b>
-                        </div>
-                        <div style="width: 60%; float: right;">
-                            <span>{{request.user.username}}</span>
-                        </div>
-                    </div>
-                    <div style="width: 100%; height: auto; display: flex; margin-bottom: 0.2rem;">
-                        <div style="width: 40%; float: left;">
-                            <b>Email:</b>
-                        </div>
-                        <div style="width: 60%; float: right;">
-                            <span>{{request.user.email}}</span>
-                        </div>
-                    </div>
-                    {% if request.user.social_provider == "Github" %}
-                    <div style="width: 100%; height: auto; display: flex; margin-bottom: 0.2rem;">
-                        <div style="width: 40%; float: left;">
-                            <i class="fab fa-github fa-3x" style="color: darkgrey;"></i>
-                        </div>
-                        <div style="width: 60%; float: right;">
-                            <p style="margin:0;display:inline;float:left">Github&nbsp;</p><p style="color: lightgreen; margin:0;display:inline:float:right">Linked</p>
-                        </div>
-                    </div>
-                    {% elif request.user.social_provider == "Gitlab" %}
-                    <div style="width: 100%; height: auto; display: flex; margin-bottom: 0.2rem;">
-                        <div style="width: 40%; float: left;">
-                            <i class="fab fa-gitlab fa-2x" style="color: orange;"></i>
-                        </div>
-                        <div style="width: 60%; float: right;">
-                            <p style="margin:0;display:inline;float:left">Gitlab&nbsp;</p><p style="color: lightgreen; margin:0;display:inline:float:right">Linked</p>
-                        </div>
-                    </div>
-                    {% else %}
-                    <div style="width: 100%; height: auto; display: flex; margin-bottom: 0.2rem;">
-                        <div style="width: 40%; float: left;">
-                        <i class="fas fa-folder-minus fa-2x" style="color: grey;"></i>
-                        </div>
-                        <div style="width: 60%; float: right;">
-                            No Repository Linked
-                        </div>
-                    </div>
-                    {% endif %}
-                    <div style="width: 100%; height: auto; display: flex; margin-bottom: 0.2rem;">
-                        <div style="width: 40%; float: left;">
-                            <b>Subscription:</b>
-                        </div>
-                        <div style="width: 60%; float: right;">
-                            {% if request.user.is_premium %}
-                            <span>Pro</span>
-                            {% else %}
-                            <span>Free</span>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-                <hr class="my-0" />
-                <div class="card-body">
-                    <h5 class="h6 card-title">Badges</h5>
-                    <button class="w3-btn w3-black" style="margin-top: 0.5rem;">Start Badge<span class="w3-badge w3-margin-left w3-white"><i class="fa fa-trophy" style="color: rgba(9, 14, 36, 0.9);"></i></span></button>
-                    <button class="w3-btn w3-black" style="margin-top: 0.5rem;">Hunter<span class="w3-badge w3-margin-left w3-white"><i class="fa fa-trophy" style="color: rgba(9, 14, 36, 0.9);"></i></span></button>
-                </div>
-                <hr class="my-0" />
-                <div class="card-body">
-                    <h5 class="h6 card-title">Follow us on social media</h5>
-                    <ul class="list-unstyled mb-0">
-                        <li class="mb-1"><span class="fas fa-globe fa-fw me-1"></span> <a href="https://cysuite.io">cysuite.io</a></li>
-                        <li class="mb-1"><span class="fab fa-twitter fa-fw me-1"></span> <a href="https://twitter.com/CySuite_">Twitter</a></li>
-                        <li class="mb-1"><span class="fab fa-medium fa-fw me-1"></span> <a href="https://cysuite.medium.com/">Medium</a></li>
-                        <li class="mb-1"><span class="fab fa-github fa-fw me-1"></span> <a href="https://github.com/markgacoka">Github</a></li>
-                    </ul>
-                </div>
-                <hr class="my-0" />
-                <div class="card-body">
-                    <h5 class="h6 card-title">API Credentials</h5>
-                    <div style="width: 100%; height: auto; display: flex; margin-bottom: 0.2rem;">
-                        <li class="mb-1" style="font-size: 0.8rem; list-style-type: none;">
-                            <div style="width: 40%; float: left;">
-                                <span data-feather="key" class="feather-sm me-1"></span>
-                                <b>API Key:</b>
-                            </div>
-                            <div style="width: 100%; float: right;">
-                                <div class="tooltip-api" style="width: 100%;">
-                                    <button style="width: -webkit-fill-available;" class="grey-back" onclick="myFunction()">
-                                        <input class="grey-back" style="width: -webkit-fill-available;" value="{{request.user.api_token}}" id="myInput" readonly>
-                                        <span class="tooltiptext-api" id="myTooltip">Copy to clipboard</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </li>
-                    </div>
-                </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="{% static 'img/icons/favicon.ico' %}" type="image/x-icon" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.css">
+    <link href="{% static 'css/theme.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/light.css' %}" rel="stylesheet">
+</head>
+<body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-behavior="sticky">
+    <nav class="navbar navbar-expand navbar-light navbar-bg">
+        <img src="{% static 'img/logo/logo_footer.png' %}" alt="CySuite" style="height: 30px; width: auto;">
+        <form class="d-none d-sm-inline-block">
+            <div class="input-group input-group-navbar">
+                <input type="text" class="form-control" placeholder="Search projects…" aria-label="Search">
+                <button class="btn" type="button">
+                    <i class="align-middle" data-feather="search"></i>
+                </button>
             </div>
+        </form>
+        <div class="navbar-collapse collapse">
+            <ul class="navbar-nav navbar-align">
+                <li class="nav-item dropdown">
+                    <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#"
+                        data-bs-toggle="dropdown">
+                        <i class="align-middle" data-feather="settings"></i>
+                    </a>
+                    <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#"
+                        data-bs-toggle="dropdown">
+                        <img src="https://cysuite-bucket.s3.us-west-2.amazonaws.com/media/profiles/{{user.image}}" class="avatar img-fluid rounded-circle me-1"
+                            alt="Profile name" style="border-radius: 100% !important; width: 45px; height: 45px; object-fit: cover;"/> <span class="text-dark">{% if user.first_name == None and user.first_name %}You{% else %}{{user.first_name}}&nbsp;{{user.last_name}}{% endif %}</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item" href="/profile">Profile</a>
+                        <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+                    </div>
+                </li>
+            </ul>
         </div>
-        <div class="col-md-8 col-xl-9">
-            <div class="card">
-                <div class="card-body" style="padding: 2rem;">
-                <h5 class="card-title" style="padding-bottom: 1rem;">Change Password</h6>
-                    <form method="post">
-                    {% csrf_token %}
-                        {% if password_form.errors %}
-                        {% for field in password_form %}
-                            {% for error in field.errors %}
-                            <div class="row" style="margin: 0 1.25rem 1rem 0;">
-                                <div class="input-resizer">
-                                    <div class="alert alert-danger alert-dismissible" role="alert">
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                        <div class="alert-message">
-                                            <strong>{{error}}</strong>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        {% endfor%}
+    </nav>
+    <div class="wrapper">
+    <main class="content">
+    <div class="container-fluid p-0">
+        <div class="row">
+            <div class="col-md-4 col-xl-3">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Profile Details</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        {% if success_message %}
+                            <button style="display: none;" class="alert-popup" id="alert-success" name="{{success_message}}" value="success"></button>
                         {% endif %}
-                        {% if password_form.non_field_errors %}
-                        <div class="row" style="margin: 0 1.25rem 1rem 0;">
-                            <div class="input-resizer">
-                                <div class="alert alert-danger alert-dismissible" role="alert" style="height: 3rem;">
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                    <div class="alert-message">
-                                        <strong>{{password_form.non_field_errors}}</strong>
-                                    </div>
-                                </div>
+                        {% if error_message %}
+                            <button style="display: none;" class="alert-popup" id="alert-danger" name="{{error_message}}" value="danger"></button>
+                        {% endif %}
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <img src="https://cysuite-bucket.s3.us-west-2.amazonaws.com/media/profiles/{{user.image}}" alt="Profile image" class="img-fluid rounded-circle mb-2" width="128" height="128" style="border-radius:50% !important; width: 128px; height: 128px; object-fit: cover;"/>
+                            <h5 class="card-title mb-2">{{user.first_name}}&nbsp;{{user.last_name}}</h5>
+                            <label class="btn btn-primary btn-sm" style="width: 100%; position: relative; color: rgba(233, 236, 239); padding: 0.5rem; cursor: pointer;">
+                                <input type="file" name="image" accept="image/*" onchange="form.submit()" hidden />
+                                <i class="fa fa-upload" style="font-size: 0.8rem;"></i>&nbsp;Choose File
+                            </label>
+                        </form>
+                    </div>
+                    <hr class="my-0" />
+                    <div class="card-body">
+                        <h5 class="h6 card-title">About</h5>
+                        <div style="width: 100%; height: auto; display: flex; margin-bottom: 0.2rem;">
+                            <div style="width: 40%; float: left;">
+                                <b>Username:</b>
+                            </div>
+                            <div style="width: 60%; float: right;">
+                                <span>{{request.user.username}}</span>
+                            </div>
+                        </div>
+                        <div style="width: 100%; height: auto; display: flex; margin-bottom: 0.2rem;">
+                            <div style="width: 40%; float: left;">
+                                <b>Email:</b>
+                            </div>
+                            <div style="width: 60%; float: right;">
+                                <span>{{request.user.email}}</span>
+                            </div>
+                        </div>
+                        {% if request.user.social_provider == "Github" %}
+                        <div style="width: 100%; height: auto; display: flex; margin-bottom: 0.2rem;">
+                            <div style="width: 40%; float: left;">
+                                <i class="fab fa-github fa-3x" style="color: darkgrey;"></i>
+                            </div>
+                            <div style="width: 60%; float: right;">
+                                <p style="margin:0;display:inline;float:left">Github&nbsp;</p><p style="color: lightgreen; margin:0;display:inline:float:right">Linked</p>
+                            </div>
+                        </div>
+                        {% elif request.user.social_provider == "Gitlab" %}
+                        <div style="width: 100%; height: auto; display: flex; margin-bottom: 0.2rem;">
+                            <div style="width: 40%; float: left;">
+                                <i class="fab fa-gitlab fa-2x" style="color: orange;"></i>
+                            </div>
+                            <div style="width: 60%; float: right;">
+                                <p style="margin:0;display:inline;float:left">Gitlab&nbsp;</p><p style="color: lightgreen; margin:0;display:inline:float:right">Linked</p>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div style="width: 100%; height: auto; display: flex; margin-bottom: 0.2rem;">
+                            <div style="width: 40%; float: left;">
+                            <i class="fas fa-folder-minus fa-2x" style="color: grey;"></i>
+                            </div>
+                            <div style="width: 60%; float: right;">
+                                No Repository Linked
                             </div>
                         </div>
                         {% endif %}
-                        <div>
-                            <h6>Old Password</h6>
-                            <div class="row" style="margin: 0 1.25rem 1rem 0;">
-                                <div class="input-resizer">
-                                    <input type="password" class="form-control" name="old_password" placeholder="Old password">
-                                </div>
+                        <div style="width: 100%; height: auto; display: flex; margin-bottom: 0.2rem;">
+                            <div style="width: 40%; float: left;">
+                                <b>Subscription:</b>
                             </div>
-                            <div style="width: 100%;">
-                                <div style="width: 50%; float: left;">
-                                    <h6>New Password</h6>
-                                    <div class="row" style="margin: 0 1.25rem 1rem 0;">
-                                        <div class="input-resizer">
-                                            <input type="password" class="form-control" name="password" placeholder="New password">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="width: 50%; float: right;">
-                                    <h6>Confirm Password</h6>
-                                    <div class="row" style="margin: 0 1.25rem 1rem 0;">
-                                        <div class="input-resizer">
-                                            <input type="password" class="form-control" name="password_confirmation" placeholder="Confirm password">
-                                        </div>
-                                    </div> 
-                                </div>
+                            <div style="width: 60%; float: right;">
+                                {% if request.user.is_premium %}
+                                <span>Pro</span>
+                                {% else %}
+                                <span>Free</span>
+                                {% endif %}
                             </div>
-                            {% if success_message %}
-                                <button style="display: none;" class="alert-popup" id="alert-success" name="{{success_message}}" value="success"></button>
-                            {% endif %}
-                            {% if error_message %}
-                                <button style="display: none;" class="alert-popup" id="alert-danger" name="{{error_message}}" value="danger"></button>
-                            {% endif %}
-                            <div style="margin: 0 1.25rem 0 1.25rem;">
-                                <div class="input-resizer">
-                                    <div style="float: right;">
-                                        <button type="submit" class="btn btn-primary" style="min-height: 40px; width: 10rem;">Change Password</button>
-                                    </div>
-                                </div>
-                            </div>  
                         </div>
-                    </form>
+                    </div>
+                    <hr class="my-0" />
+                    <div class="card-body">
+                        <h5 class="h6 card-title">Badges</h5>
+                        {% for badge in request.user.badges %}
+                            {% if badge %}
+                            <button class="w3-btn w3-black" style="margin-top: 0.5rem;">{{ badge }}<span class="w3-badge w3-margin-left w3-white"><i class="fa fa-trophy" style="color: rgba(9, 14, 36, 0.9);"></i></span></button>
+                            {% else %}
+                            <p>No badges awarded yet</p>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <hr class="my-0" />
+                    <div class="card-body">
+                        <h5 class="h6 card-title">Follow us on social media</h5>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-1"><span class="fas fa-globe fa-fw me-1"></span> <a href="https://cysuite.io">cysuite.io</a></li>
+                            <li class="mb-1"><span class="fab fa-twitter fa-fw me-1"></span> <a href="https://twitter.com/CySuite_">Twitter</a></li>
+                            <li class="mb-1"><span class="fab fa-medium fa-fw me-1"></span> <a href="https://cysuite.medium.com/">Medium</a></li>
+                            <li class="mb-1"><span class="fab fa-github fa-fw me-1"></span> <a href="https://github.com/markgacoka">Github</a></li>
+                        </ul>
+                    </div>
+                    <hr class="my-0" />
+                    <div class="card-body">
+                        <h5 class="h6 card-title">API Credentials</h5>
+                        <div style="width: 100%; height: auto; display: flex; margin-bottom: 0.2rem;">
+                            <li class="mb-1" style="font-size: 0.8rem; list-style-type: none; width: 100%;">
+                                <div style="width: 40%; float: left;">
+                                    <span data-feather="key" class="feather-sm me-1"></span>
+                                    <b>API Key:</b>
+                                </div>
+                                <div style="width: 100%; float: right;">
+                                    <div class="tooltip-api" style="width: 100%;">
+                                        <button style="width: -webkit-fill-available;" class="grey-back" onclick="myFunction()">
+                                            <input class="grey-back" style="width: -webkit-fill-available; font-size: 11px; text-align: center;" value="{{request.user.api_token}}" id="myInput" readonly>
+                                            <span class="tooltiptext-api" id="myTooltip">Copy to clipboard</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-body" style="padding: 2rem;">
-                    <h5 class="card-title" style="padding-bottom: 1rem;">Change Details</h5>
-                    <div class="h-100">
+            <div class="col-md-8 col-xl-9">
+                <div class="card">
+                    <div class="card-body" style="padding: 2rem;">
+                    <h5 class="card-title" style="padding-bottom: 1rem;">Change Password</h6>
                         <form method="post">
                         {% csrf_token %}
-                            {% if account_form.errors %}
-                            {% for field in account_form %}
+                            {% if password_form.errors %}
+                            {% for field in password_form %}
                                 {% for error in field.errors %}
                                 <div class="row" style="margin: 0 1.25rem 1rem 0;">
                                     <div class="input-resizer">
@@ -227,208 +192,327 @@ Profile | CySuite
                                 {% endfor %}
                             {% endfor%}
                             {% endif %}
-                            {% if account_form.non_field_errors %}
+                            {% if password_form.non_field_errors %}
                             <div class="row" style="margin: 0 1.25rem 1rem 0;">
                                 <div class="input-resizer">
                                     <div class="alert alert-danger alert-dismissible" role="alert" style="height: 3rem;">
                                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                         <div class="alert-message">
-                                            <strong>{{account_form.non_field_errors}}</strong>
+                                            <strong>{{password_form.non_field_errors}}</strong>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             {% endif %}
-                            <div style="width: 100%;">
-                                <div style="width: 50%; float: left;">
-                                    <h6>Change email</h6>
-                                    <div class="row" style="margin: 0 1.25rem 1rem 0;">
-                                        <div class="input-resizer">
-                                            <input class="form-control" type="text" name="email" placeholder="Email" value="{{request.user.email}}">
-                                        </div>
+                            <div>
+                                <h6>Old Password</h6>
+                                <div class="row" style="margin: 0 1.25rem 1rem 0;">
+                                    <div class="input-resizer">
+                                        <input type="password" class="form-control" name="old_password" placeholder="Old password">
                                     </div>
                                 </div>
-                                <div style="width: 50%; float: right;">
-                                    <h6>Change username</h6>
-                                    <div class="row" style="margin: 0 1.25rem 1rem 0;">
-                                        <div class="input-resizer">
-                                            <input class="form-control" type="text" name="username" placeholder="Username" value="{{request.user.username}}">
+                                <div style="width: 100%;">
+                                    <div style="width: 50%; float: left;">
+                                        <h6>New Password</h6>
+                                        <div class="row" style="margin: 0 1.25rem 1rem 0;">
+                                            <div class="input-resizer">
+                                                <input type="password" class="form-control" name="password" placeholder="New password">
+                                            </div>
                                         </div>
                                     </div>
+                                    <div style="width: 50%; float: right;">
+                                        <h6>Confirm Password</h6>
+                                        <div class="row" style="margin: 0 1.25rem 1rem 0;">
+                                            <div class="input-resizer">
+                                                <input type="password" class="form-control" name="password_confirmation" placeholder="Confirm password">
+                                            </div>
+                                        </div> 
+                                    </div>
                                 </div>
+                                {% if success_message %}
+                                    <button style="display: none;" class="alert-popup" id="alert-success" name="{{success_message}}" value="success"></button>
+                                {% endif %}
+                                {% if error_message %}
+                                    <button style="display: none;" class="alert-popup" id="alert-danger" name="{{error_message}}" value="danger"></button>
+                                {% endif %}
+                                <div style="margin: 0 1.25rem 0 1.25rem;">
+                                    <div class="input-resizer">
+                                        <div style="float: right;">
+                                            <button type="submit" class="btn btn-primary" style="min-height: 40px; width: 10rem;">Change Password</button>
+                                        </div>
+                                    </div>
+                                </div>  
                             </div>
-                            <div style="width: 100%;">
-                                <div style="width: 50%; float: left;">
-                                    <h6>Change company</h6>
-                                    <div class="row" style="margin: 0 1.25rem 1rem 0;">
-                                        <div class="input-resizer">
-                                            <input class="form-control" type="text" name="company" placeholder="Company" value="{{request.user.company}}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="width: 50%; float: right;">
-                                    <h6>Change role</h6>
-                                    <div class="row" style="margin: 0 1.25rem 1rem 0;">
-                                        <div class="input-resizer">
-                                            <select class="form-control form-control-lg dropdown-icon" name="role" id="role" placeholder="Role">
-                                                <option disabled selected value>{{request.user.role}}</option>
-                                                <option value="DevOps">DevOps</option>
-                                                <option value="Security Analyst">Security Analyst</option>
-                                                <option value="Software Developer">Software Developer</option>
-                                                <option value="Security Hobbyist/Bug Hunter">Security Hobbyist/Bug Hunter</option>
-                                                <option value="Corporate Management">Corporate Management</option>
-                                                <option value="Other">Other</option>
-                                              </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {% if success_message %}
-                                <button style="display: none;" class="alert-popup" id="alert-success" name="{{success_message}}" value="success"></button>
-                            {% endif %}
-                            {% if error_message %}
-                                <button style="display: none;" class="alert-popup" id="alert-danger" name="{{error_message}}" value="danger"></button>
-                            {% endif %}
-                            <div style="margin: 0 1.25rem 0 1.25rem;">
-                                <div class="input-resizer">
-                                    <div style="float: right;">
-                                        <button type="submit" class="btn btn-primary" style="min-height: 40px; width: 10rem;">Submit</button>
-                                    </div>
-                                </div>
-                            </div>  
                         </form>
                     </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-body" style="padding: 2rem;">
-                    <h3>Account Actions</h5>
-                    <hr style="width: 95%;">
-                    <form method="post">
-                    {% csrf_token %}
-                    <div style="padding-top: 1.25rem !important;">
-                        <div style="float: left;">
-                            {% if not request.user.is_premium %}
-                            <a href="/checkout" class="data-card">
-                            <h3>Upgrade</h3>
-                            <h4>UPGRADE ACCOUNT</h4>
-                            <p>Step up your security analysis by going Pro.</p>
-                            {% else %}
-                            <a href="/checkout" class="data-card">
-                            <h3>Cancel</h3>
-                            <h4>CANCEL SUBSCRIPTION</h4>
-                            <p>You will not be billed again after pausing.</p>
-                            {% endif %}
-                            <span class="link-text">Select
-                                <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z" fill="#753BBD"></path>
-                                </svg>
-                            </span></a>
-                        </div>
-                        <div style="float: left;">
-                            <a onclick="deleteAccount();" class="data-card">
-                            <h3>Delete</h3>
-                            <h4>REMOVE ACCOUNT</h4>
-                            <p>Purge all your data from our records.</p>
-                            <span class="link-text">Select
-                                <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z" fill="#753BBD"></path>
-                                </svg>
-                            </span></a>
-                        </div>
-                    </div>
-                    </form>
-                </div>
                 </div>
                 <div class="card">
-                <div class="card-body" style="padding: 2rem;">
-                    <h3>Feedback</h3>
-                    <hr style="width: 95%;">
-                    <h5>Tell us what you like about CySuite or what you think could be improved.</h5>
-                    <div style="padding-top: 1.25rem">
-                        <form method="post">
+                    <div class="card-body" style="padding: 2rem;">
+                        <h5 class="card-title" style="padding-bottom: 1rem;">Change Details</h5>
+                        <div class="h-100">
+                            <form method="post">
                             {% csrf_token %}
-                            {% if feedback_form.errors %}
-                            {% for field in feedback_form %}
-                                {% for error in field.errors %}
+                                {% if account_form.errors %}
+                                {% for field in account_form %}
+                                    {% for error in field.errors %}
+                                    <div class="row" style="margin: 0 1.25rem 1rem 0;">
+                                        <div class="input-resizer">
+                                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                <div class="alert-message">
+                                                    <strong>{{error}}</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                {% endfor%}
+                                {% endif %}
+                                {% if account_form.non_field_errors %}
                                 <div class="row" style="margin: 0 1.25rem 1rem 0;">
                                     <div class="input-resizer">
-                                        <div class="alert alert-danger alert-dismissible" role="alert">
+                                        <div class="alert alert-danger alert-dismissible" role="alert" style="height: 3rem;">
                                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                             <div class="alert-message">
-                                                <strong>{{error}}</strong>
+                                                <strong>{{account_form.non_field_errors}}</strong>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                {% endfor %}
-                            {% endfor%}
-                            {% endif %}
-                            {% if feedback_form.non_field_errors %}
-                            <div class="row" style="margin: 0 1.25rem 1rem 0;">
-                                <div class="input-resizer">
-                                    <div class="alert alert-danger alert-dismissible" role="alert" style="height: 3rem;">
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                        <div class="alert-message">
-                                            <strong>{{feedback_form.non_field_errors}}</strong>
+                                {% endif %}
+                                <div style="width: 100%;">
+                                    <div style="width: 50%; float: left;">
+                                        <h6>Change email</h6>
+                                        <div class="row" style="margin: 0 1.25rem 1rem 0;">
+                                            <div class="input-resizer">
+                                                <input class="form-control" type="text" name="email" placeholder="Email" value="{{request.user.email}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="width: 50%; float: right;">
+                                        <h6>Change username</h6>
+                                        <div class="row" style="margin: 0 1.25rem 1rem 0;">
+                                            <div class="input-resizer">
+                                                <input class="form-control" type="text" name="username" placeholder="Username" value="{{request.user.username}}">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            {% endif %}
-                            <div class="row" style="margin: 0 1.25rem 1rem 0;">
-                                <div class="input-resizer">
-                                    <textarea class="feedback" type="text" name="feedback" placeholder="Enter your feedback here..." style="width: 100%; min-height: 200px; border: 1px solid #ced4da; border-radius: .2rem; font-size: 16px; padding: 10px;"></textarea>
-                                </div>
-                            </div>
-                            {% if success_message %}
-                                <button style="display: none;" class="alert-popup" id="alert-success" name="{{success_message}}" value="success"></button>
-                            {% endif %}
-                            {% if error_message %}
-                                <button style="display: none;" class="alert-popup" id="alert-danger" name="{{error_message}}" value="danger"></button>
-                            {% endif %}
-                            <div class="row" style="margin: 0 1.25rem 0 1.25rem;">
-                                <div class="input-resizer">
-                                    <div style="float: right;">
-                                        <button type="submit" class="btn btn-primary" style="min-height: 40px; width: 10rem;">Submit</button>
+                                <div style="width: 100%;">
+                                    <div style="width: 50%; float: left;">
+                                        <h6>Change company</h6>
+                                        <div class="row" style="margin: 0 1.25rem 1rem 0;">
+                                            <div class="input-resizer">
+                                                <input class="form-control" type="text" name="company" placeholder="Company" value="{{request.user.company}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="width: 50%; float: right;">
+                                        <h6>Change role</h6>
+                                        <div class="row" style="margin: 0 1.25rem 1rem 0;">
+                                            <div class="input-resizer">
+                                                <select class="form-control form-control-lg dropdown-icon" name="role" id="role" placeholder="Role">
+                                                    <option disabled selected value>{{request.user.role}}</option>
+                                                    <option value="DevOps">DevOps</option>
+                                                    <option value="Security Analyst">Security Analyst</option>
+                                                    <option value="Software Developer">Software Developer</option>
+                                                    <option value="Security Hobbyist/Bug Hunter">Security Hobbyist/Bug Hunter</option>
+                                                    <option value="Corporate Management">Corporate Management</option>
+                                                    <option value="Other">Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>  
+                                {% if success_message %}
+                                    <button style="display: none;" class="alert-popup" id="alert-success" name="{{success_message}}" value="success"></button>
+                                {% endif %}
+                                {% if error_message %}
+                                    <button style="display: none;" class="alert-popup" id="alert-danger" name="{{error_message}}" value="danger"></button>
+                                {% endif %}
+                                <div style="margin: 0 1.25rem 0 1.25rem;">
+                                    <div class="input-resizer">
+                                        <div style="float: right;">
+                                            <button type="submit" class="btn btn-primary" style="min-height: 40px; width: 10rem;">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>  
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body" style="padding: 2rem;">
+                        <h3>Account Actions</h5>
+                        <hr style="width: 95%;">
+                        <form method="post">
+                        {% csrf_token %}
+                        <div style="padding-top: 1.25rem !important;">
+                            <div style="float: left;">
+                                {% if not request.user.is_premium %}
+                                <a href="/checkout" class="data-card">
+                                <h3>Upgrade</h3>
+                                <h4>UPGRADE ACCOUNT</h4>
+                                <p>Step up your security analysis by going Pro.</p>
+                                {% else %}
+                                <a href="/checkout" class="data-card">
+                                <h3>Cancel</h3>
+                                <h4>CANCEL SUBSCRIPTION</h4>
+                                <p>You will not be billed again after pausing.</p>
+                                {% endif %}
+                                <span class="link-text">Select
+                                    <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z" fill="#753BBD"></path>
+                                    </svg>
+                                </span></a>
+                            </div>
+                            <div style="float: left;">
+                                <a onclick="deleteAccount();" class="data-card">
+                                <h3>Delete</h3>
+                                <h4>REMOVE ACCOUNT</h4>
+                                <p>Purge all your data from our records.</p>
+                                <span class="link-text">Select
+                                    <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z" fill="#753BBD"></path>
+                                    </svg>
+                                </span></a>
+                            </div>
+                        </div>
                         </form>
+                    </div>
+                    </div>
+                    <div class="card">
+                    <div class="card-body" style="padding: 2rem;">
+                        <h3>Feedback</h3>
+                        <hr style="width: 95%;">
+                        <h5>Tell us what you like about CySuite or what you think could be improved.</h5>
+                        <div style="padding-top: 1.25rem">
+                            <form method="post">
+                                {% csrf_token %}
+                                {% if feedback_form.errors %}
+                                {% for field in feedback_form %}
+                                    {% for error in field.errors %}
+                                    <div class="row" style="margin: 0 1.25rem 1rem 0;">
+                                        <div class="input-resizer">
+                                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                <div class="alert-message">
+                                                    <strong>{{error}}</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                {% endfor%}
+                                {% endif %}
+                                {% if feedback_form.non_field_errors %}
+                                <div class="row" style="margin: 0 1.25rem 1rem 0;">
+                                    <div class="input-resizer">
+                                        <div class="alert alert-danger alert-dismissible" role="alert" style="height: 3rem;">
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            <div class="alert-message">
+                                                <strong>{{feedback_form.non_field_errors}}</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <div class="row" style="margin: 0 1.25rem 1rem 0;">
+                                    <div class="input-resizer">
+                                        <textarea class="feedback" type="text" name="feedback" placeholder="Enter your feedback here..." style="width: 100%; min-height: 200px; border: 1px solid #ced4da; border-radius: .2rem; font-size: 16px; padding: 10px;"></textarea>
+                                    </div>
+                                </div>
+                                {% if success_message %}
+                                    <button style="display: none;" class="alert-popup" id="alert-success" name="{{success_message}}" value="success"></button>
+                                {% endif %}
+                                {% if error_message %}
+                                    <button style="display: none;" class="alert-popup" id="alert-danger" name="{{error_message}}" value="danger"></button>
+                                {% endif %}
+                                <div class="row" style="margin: 0 1.25rem 0 1.25rem;">
+                                    <div class="input-resizer">
+                                        <div style="float: right;">
+                                            <button type="submit" class="btn btn-primary" style="min-height: 40px; width: 10rem;">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>  
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<script>
-    function myFunction() {
-        var copyText = document.getElementById("myInput");
-        copyText.select();
-        copyText.setSelectionRange(0, 99999);
-        navigator.clipboard.writeText(copyText.value);
+    </main>
+    </div>
+    {% include 'partials/_footer.html' %}
+    <script>
+        function myFunction() {
+            var copyText = document.getElementById("myInput");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(copyText.value);
 
-        var tooltip = document.getElementById("myTooltip");
-        tooltip.innerHTML = "Copied!"
-    }
+            var tooltip = document.getElementById("myTooltip");
+            tooltip.innerHTML = "Copied!"
+        }
 
-    function outFunc() {
-        var tooltip = document.getElementById("myTooltip");
-        tooltip.innerHTML = "Copy to clipboard";
-    }
+        function outFunc() {
+            var tooltip = document.getElementById("myTooltip");
+            tooltip.innerHTML = "Copy to clipboard";
+        }
 
-    function deleteAccount(){
-		var token = '{{csrf_token}}';
-		$.ajax({
-			url: '{% url 'profile' %}',
-			headers: { "X-CSRFToken": token },
-			type: 'POST',
-			data: {"delete": "true"},
-			success: function(){
-				console.log("Account successfully deleted!")
-                window.location.href = "/";
-			}
-		});
-	}
-</script>
-{% endblock %}
+        function deleteAccount(){
+            var token = '{{csrf_token}}';
+            $.ajax({
+                url: '{% url 'profile' %}',
+                headers: { "X-CSRFToken": token },
+                type: 'POST',
+                data: {"delete": "true"},
+                success: function(){
+                    console.log("Account successfully deleted!")
+                    window.location.href = "/";
+                }
+            });
+        }
+    </script>
+    <script src="{% static 'js/app.js' %}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            $("#datatables-dashboard-projects").DataTable({
+                pageLength: 10,
+                responsive: true
+            });
+            });
+
+        document.addEventListener("DOMContentLoaded", function (m) {
+            var message = document.querySelector(".alert-popup").name;
+            var type = document.querySelector("#alert-success").value;
+            var duration = 5000;
+            var ripple = true;
+            var dismissible = true;
+            var positionY = "top";
+            window.notyf.open({type, message, duration, ripple, dismissible, positionY});
+            });
+
+        document.addEventListener("DOMContentLoaded", function (m) {
+            var message = document.querySelector(".alert-popup").name;
+            var type = document.querySelector("#alert-danger").value;
+            var duration = 5000;
+            var ripple = true;
+            var dismissible = true;
+            var positionY = "top";
+            window.notyf.open({type, message, duration, ripple, dismissible, positionY});
+            });
+
+        document.addEventListener("DOMContentLoaded", function (m) {
+            var message = document.querySelector(".alert-popup").name;
+            var type = document.querySelector("#alert-warning").value;
+            var duration = 5000;
+            var ripple = true;
+            var dismissible = true;
+            var positionY = "top";
+            window.notyf.open({type, message, duration, ripple, dismissible, positionY});
+            });
+    </script>
+</body>
+</html>
