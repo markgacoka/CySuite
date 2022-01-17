@@ -52,7 +52,6 @@ class Account(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_repo_linked = models.BooleanField(default=False)
     hide_email = models.BooleanField(default=True)
-    feedback = models.CharField(max_length= 1200, default= "", unique=False, null=True, blank=True)
     api_token = models.CharField(max_length=64, unique=False, null=True, blank=True)
     payload_image = models.ImageField(default='https://cysuite-bucket.s3.us-west-2.amazonaws.com/media/default.png', upload_to='payloads/', blank=True, null=True)
     badges = ArrayField(models.CharField(max_length=3000, blank=True), blank=True, null=True, default=generate_badges)

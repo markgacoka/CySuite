@@ -2,7 +2,6 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password
-
 from cyauth.models import Account
 
 class RegistrationForm(UserCreationForm):
@@ -86,16 +85,6 @@ class AccountUpdateForm(forms.ModelForm):
             else:
                 return {"email": email, "username": username, 'company': company, 'role': role}
         return None
-
-class FeedbackForm(forms.ModelForm):
-    class Meta:
-        model = Account
-        fields = ['feedback']
-
-    def clean(self):
-        if self.is_valid():
-            feedback = self.cleaned_data['feedback']
-            return {"feedback": feedback}
 
 class PasswordUpdateForm(forms.ModelForm):
     old_password = forms.CharField(widget=forms.PasswordInput)

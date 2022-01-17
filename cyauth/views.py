@@ -2,10 +2,10 @@ import os
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from cyauth.forms import AdditionalInfoForm, RegistrationForm, AccountAuthenticationForm, AccountUpdateForm, FeedbackForm, PasswordUpdateForm
+from cyauth.forms import AdditionalInfoForm, RegistrationForm, AccountAuthenticationForm, AccountUpdateForm, PasswordUpdateForm
 from rest_framework.authtoken.models import Token
-from main.forms import NewsletterForm
-from main.models import Newsletter
+from main.forms import NewsletterForm, FeedbackForm
+from main.models import FeedbackModel, Newsletter
 from .models import Account
 
 def index(request):
@@ -136,11 +136,11 @@ def account_view(request):
     
     context = {}
     if request.method == 'POST':
-        if 'feedback' in request.POST.keys():
+        if 'user_feedback' in request.POST.keys():
             feedback_form = FeedbackForm(request.POST, instance=request.user)
             if feedback_form.is_valid():
                 feedback_form.initial = {
-                    "feedback": request.POST['feedback']
+                    "user_feedback": request.POST['user_feedback']
                 }
                 feedback_form.save()
                 context['success_message'] = 'Feedback has been received!'
