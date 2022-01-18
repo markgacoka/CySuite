@@ -1,0 +1,89 @@
+{% load static %}
+{% load account %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="icon" href="{% static 'img/icons/favicon.ico' %}" type="image/x-icon" />
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.css">
+        <link href="{% static 'css/theme.min.css' %}" rel="stylesheet">
+        <link href="{% static 'css/light.css' %}" rel="stylesheet">
+    </head>
+    <body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-behavior="sticky">
+        <nav class="navbar navbar-expand navbar-light navbar-bg">
+            <a href="/"><img src="{% static 'img/logo/logo_footer.png' %}" alt="CySuite" style="height: 30px; width: auto;"></a>
+            <form class="d-none d-sm-inline-block">
+                <div class="input-group input-group-navbar">
+                    <input type="text" class="form-control" placeholder="Search projects…" aria-label="Search">
+                    <button class="btn" type="button">
+                        <i class="align-middle" data-feather="search"></i>
+                    </button>
+                </div>
+            </form>
+            <div class="navbar-collapse collapse">
+                <ul class="navbar-nav navbar-align">
+                    <li class="nav-item dropdown">
+                        <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#"
+                            data-bs-toggle="dropdown">
+                            <i class="align-middle" data-feather="settings"></i>
+                        </a>
+                        <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#"
+                            data-bs-toggle="dropdown">
+                            <img src="https://cysuite-bucket.s3.us-west-2.amazonaws.com/media/profiles/{{user.image}}" class="avatar img-fluid rounded-circle me-1"
+                                alt="Profile name" style="border-radius: 100% !important; width: 45px; height: 45px; object-fit: cover;"/> <span class="text-dark">{% if user.first_name == None and user.first_name %}You{% else %}{{user.first_name}}&nbsp;{{user.last_name}}{% endif %}</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a class="dropdown-item" href="/profile">Profile</a>
+                            <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="wrapper">
+            <main class="content">
+            </main>
+        </div>
+        {% include 'partials/_footer.html' %}
+        <script src="{% static 'js/app.js' %}"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                $("#datatables-dashboard-projects").DataTable({
+                    pageLength: 10,
+                    responsive: true
+                });
+                });
+
+            document.addEventListener("DOMContentLoaded", function (m) {
+                var message = document.querySelector(".alert-popup").name;
+                var type = document.querySelector("#alert-success").value;
+                var duration = 5000;
+                var ripple = true;
+                var dismissible = true;
+                var positionY = "top";
+                window.notyf.open({type, message, duration, ripple, dismissible, positionY});
+                });
+
+            document.addEventListener("DOMContentLoaded", function (m) {
+                var message = document.querySelector(".alert-popup").name;
+                var type = document.querySelector("#alert-danger").value;
+                var duration = 5000;
+                var ripple = true;
+                var dismissible = true;
+                var positionY = "top";
+                window.notyf.open({type, message, duration, ripple, dismissible, positionY});
+                });
+
+            document.addEventListener("DOMContentLoaded", function (m) {
+                var message = document.querySelector(".alert-popup").name;
+                var type = document.querySelector("#alert-warning").value;
+                var duration = 5000;
+                var ripple = true;
+                var dismissible = true;
+                var positionY = "top";
+                window.notyf.open({type, message, duration, ripple, dismissible, positionY});
+                });
+        </script>
+    </body>
+</html>

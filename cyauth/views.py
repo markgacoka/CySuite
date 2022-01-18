@@ -122,13 +122,9 @@ def login_view(request):
     context['login_form'] = form
     return render(request, 'auth/login.html', context)
 
-
-def logout_view(request):
-    if 'project' in request.session:
-        request.session.clear()
-        request.session.modified = True
-    logout(request)
-    return redirect("index")
+def link_repo_view(request):
+    context = {}
+    return render(request, 'dashboard/link_repo.html', context)
 
 def account_view(request):
     if not request.user.is_authenticated:
@@ -205,3 +201,10 @@ def account_view(request):
         )
         context['account_form'] = account_form
     return render(request, 'dashboard/profile.html', context)
+
+def logout_view(request):
+    if 'project' in request.session:
+        request.session.clear()
+        request.session.modified = True
+    logout(request)
+    return redirect("index")
