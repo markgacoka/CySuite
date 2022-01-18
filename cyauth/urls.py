@@ -1,14 +1,15 @@
 from django.urls import path
 from . import views
-from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 
 from cyauth.views import (
     registration_view,
     login_view,
     logout_view,
     account_view,
+    link_repo_view,
     additional_info_view
 )
 
@@ -20,6 +21,7 @@ urlpatterns = [
     path('register/', registration_view, name="register"),
     path('account/', account_view, name="account"),
     path('profile/', account_view, name="profile"),
+    path('link-repository/', link_repo_view, name="link_repo"),
 
     path('set-password/', additional_info_view, name="set-password"),
     path('reset-password/', auth_views.PasswordResetView.as_view(template_name='auth/forgot-password.html'), name='password_reset'),
