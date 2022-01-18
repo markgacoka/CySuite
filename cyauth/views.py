@@ -5,12 +5,17 @@ from django.contrib.auth import login, authenticate, logout
 from cyauth.forms import AdditionalInfoForm, RegistrationForm, AccountAuthenticationForm, AccountUpdateForm, PasswordUpdateForm
 from rest_framework.authtoken.models import Token
 from main.forms import NewsletterForm, FeedbackForm
-from main.models import FeedbackModel, Newsletter
+from main.models import Newsletter
 from .models import Account
 
 def index(request):
     if request.user.is_authenticated == True:
-        return redirect('dashboard')
+        if request.user.social_provider == 'Github':
+            return redirect('dashboard')
+        elif request.user.social_provider == 'Gitlab':
+            return redirect('dashboard')
+        else:
+            return redirect('link_repo')
     else:
         context = {}
         if request.POST:
