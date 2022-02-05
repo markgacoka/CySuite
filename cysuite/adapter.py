@@ -8,7 +8,6 @@ from allauth.utils import get_user_model
 from django.dispatch import receiver
 from django.shortcuts import redirect
 from django.conf import settings
-from django.urls import reverse
 
 class MyLoginAccountAdapter(DefaultAccountAdapter):
     def get_login_redirect_url(self, request):
@@ -46,8 +45,10 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
             curr_user = user.objects.filter(email=email_address)
             sociallogin.connect(request, curr_user[0])
             curr_user.update(social_provider="Github")
+            curr_user.update(is_repo_linked=True)
             curr_user.update(repo_username=username)
-            perform_login(request, curr_user[0], redirect_url='/link-repository',email_verification='optional')
+            curr_user.update(repo_project_chosen=False)
+            perform_login(request, curr_user[0], email_verification='optional')
         else:
             new_user, created = user.objects.update_or_create(
                 username = username,
@@ -86,7 +87,9 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
             curr_user = user.objects.filter(email=email_address)
             sociallogin.connect(request, curr_user[0])
             curr_user.update(social_provider="Gitlab")
+            curr_user.update(is_repo_linked=True)
             curr_user.update(repo_username=username)
+            curr_user.update(repo_project_chosen=False)
             perform_login(request, curr_user[0], email_verification='optional')
         else:
             new_user, created = user.objects.update_or_create(

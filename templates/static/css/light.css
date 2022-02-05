@@ -6993,6 +6993,19 @@ fieldset:disabled .btn {
     }
 }
 
+.scroller::-webkit-scrollbar {
+    display: none;
+}
+
+.scroller {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    max-height: 430px;
+    overflow: scroll;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+}
+
 .offcanvas {
     position: fixed;
     bottom: 0;

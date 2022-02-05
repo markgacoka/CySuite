@@ -71,7 +71,11 @@
                                                             <div class="text-gray-600 ml-2 text-sm md:text-base mt-1">* Feature only available to Pro members</div>
                                                         </div>
                                                     </div>
+                                                    {% if repo_linked and social_provider == 'Github' %}
+                                                    <button class="btn btn-primary" style="min-height: 40px; width: 8rem; background-color: grey; border: none;">Linked</button>
+                                                    {% else %}
                                                     <a href="{% provider_login_url 'github' %}"><button class="btn btn-primary" style="min-height: 40px; width: 8rem;">Link</button></a>
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         </div>
@@ -96,45 +100,40 @@
                                                             <div class="text-gray-600 ml-2 text-sm md:text-base mt-1">* Feature only available to Pro members</div>
                                                         </div>
                                                     </div>
+                                                    {% if repo_linked and social_provider == 'Gitlab' %}
+                                                    <button class="btn btn-primary" style="min-height: 40px; width: 8rem; background-color: grey; border: none;">Linked</button>
+                                                    {% else %}
                                                     <a href="{% provider_login_url 'gitlab' %}"><button class="btn btn-primary" style="min-height: 40px; width: 8rem;">Link</button></a>
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div style="float: right; width: 50%;">
+                            <div style="float: right; width: 50%; padding-top: 20px; border-radius: 30px;">
                                 {% if repo_linked %}
-                                <ul class="cards">
-                                <li><a href="" class="repo_card">
-                                    <img src="https://github.githubassets.com/images/modules/open_graph/github-logo.png" class="repo_card_image" alt=""/>
-                                    <div class="repo_card_overlay">        
-                                    <div class="repo_card_header">
-                                        <svg class="repo_card_arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>                 
-                                        <img class="repo_card_thumb" src="{{profile_img}}" alt="" />
-                                        <div class="repo_card_header-text">
-                                        <h3 class="repo_card_title">{{repo_username}}</h3>
-                                        <span class="repo_card_status">Followers: {{followers}}</span>
+                                <div class="scroller">
+                                    <ul class="cards">
+                                    {% for repo_item in repo_items %}
+                                    <li><a href="" class="repo_card">
+                                        <img src="https://github.githubassets.com/images/modules/open_graph/github-logo.png" class="repo_card_image" alt=""/>
+                                        <div class="repo_card_overlay">        
+                                        <div class="repo_card_header">
+                                            <svg class="repo_card_arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>                 
+                                            <img class="repo_card_thumb" src="{{profile_img}}" alt="" />
+                                            <div class="repo_card_header-text">
+                                            <span class="text-gray-900 font-bold">{{repo_item.name}}</span><br/>
+                                            <span class="text-gray-900 font-bold">Owner: {{repo_item.owner}}</span><br/>
+                                            <span class="text-gray-900 font-bold">Stars: {{repo_item.stars}}</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <p class="repo_card_description">{{description}}</p>
-                                    </div>
-                                </a></li>
-                                <li><a href="" class="repo_card">
-                                    <img src="https://github.githubassets.com/images/modules/open_graph/github-logo.png" class="repo_card_image" alt=""/>
-                                    <div class="repo_card_overlay">        
-                                    <div class="repo_card_header">
-                                        <svg class="repo_card_arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>                 
-                                        <img class="repo_card_thumb" src="{{profile_img}}" alt="" />
-                                        <div class="repo_card_header-text">
-                                        <h3 class="repo_card_title">{{repo_username}}</h3>
-                                        <span class="repo_card_status">Followers: {{followers}}</span>
+                                        <p class="text-gray-900 font-bold">{{repo_item.description}}</p>
                                         </div>
-                                    </div>
-                                    <p class="repo_card_description">{{description}}</p>
-                                    </div>
-                                </a></li>
-                                </ul>
+                                    </a></li>
+                                    {% endfor %}
+                                    </ul>
+                                </div>
                                 {% endif %}
                             </div>
                         </div>

@@ -130,17 +130,32 @@ def login_view(request):
 
 def link_repo_view(request):
     context = {}
+    repo_list = []
     if request.user.is_repo_linked:
         context['repo_linked'] = True
-    if request.user.repo_username:
-        r = requests.get("https://api.github.com/users/{}".format(request.user.repo_username))
-        github_response = r.json()
-        context['repo_username'] = github_response['login']
-        context['profile_img'] = github_response['avatar_url']
-        context['github_profile'] = github_response['url']
-        context['followers'] = github_response['followers_url']
-        context['repos'] = github_response['repos_url']
-        context['description'] = github_response['description']  
+        if request.user.repo_username:
+            user_details = requests.get("https://api.github.com/users/{}".format(request.user.repo_username))
+            repos = requests.get("https://api.github.com/users/{}/repos".format(request.user.repo_username))
+            github_response = user_details.json()
+            repos_response = repos.json()
+            context['repo_username'] = github_response['login']
+            context['profile_img'] = github_response['avatar_url']
+            context['github_profile'] = github_response['url']
+            context['followers'] = github_response['followers_url']
+            context['repos'] = github_response['repos_url']
+            context['social_provider'] = request.user.social_provider
+
+            for response in repos_response:
+                repo_dict = {
+                    'name': response['name'],
+                    'description': response['description'],
+                    'owner': response['owner']['login'],
+                    'stars': response['stargazers_count']
+                }
+                repo_list.append(repo_dict)
+            context['repo_items'] = repo_list
+    else:
+        context['repo_linked'] = False
     return render(request, 'dashboard/link_repo.html', context)
 
 def account_view(request):
