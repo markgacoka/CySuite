@@ -44,6 +44,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     role = models.CharField(default='N/A', max_length=64, unique=False, blank=True)
     social_provider = models.CharField(default='N/A', max_length=64, unique=False)
     repo_username = models.CharField(max_length=64, unique=False, blank=True)
+    repo_project_chosen = models.BooleanField(default=False)
     email = models.EmailField(verbose_name='email', max_length=60, unique=True)
     image = models.TextField(default='default.jpeg', max_length=250, unique=False, null=False, blank=False)
     date_joined = models.DateTimeField(verbose_name="date joined", auto_now_add=True)
