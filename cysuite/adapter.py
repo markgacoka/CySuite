@@ -46,7 +46,8 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
             curr_user = user.objects.filter(email=email_address)
             sociallogin.connect(request, curr_user[0])
             curr_user.update(social_provider="Github")
-            perform_login(request, curr_user[0], email_verification='optional')
+            curr_user.update(repo_username=username)
+            perform_login(request, curr_user[0], redirect_url='/link-repository',email_verification='optional')
         else:
             new_user, created = user.objects.update_or_create(
                 username = username,
@@ -57,6 +58,7 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
                     'company': company,
                     'image': image,
                     'social_provider': social_provider,
+                    'repo_username': username,
                     'is_admin': False,
                     'is_premium': False,
                     'is_repo_linked': True,
@@ -84,6 +86,7 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
             curr_user = user.objects.filter(email=email_address)
             sociallogin.connect(request, curr_user[0])
             curr_user.update(social_provider="Gitlab")
+            curr_user.update(repo_username=username)
             perform_login(request, curr_user[0], email_verification='optional')
         else:
             new_user, created = user.objects.update_or_create(
@@ -93,6 +96,7 @@ def link_to_local_user(sender, request, sociallogin, **kwargs):
                     'first_name': name[0],
                     'last_name': last_name,
                     'social_provider': social_provider,
+                    'repo_username': username,
                     'company': company,
                     'is_admin': False,
                     'is_premium': False,

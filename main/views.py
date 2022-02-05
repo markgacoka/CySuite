@@ -39,8 +39,12 @@ def test(request):
     return render(request, 'test.html', context)
 
 def dashboard(request):
+    context = {}
+    social_set = {'Github', 'Gitlab'}
+    if request.user.social_provider not in social_set:
+        return render(request, 'dashboard/link_repo.html', context)
+    
     if request.user.is_authenticated == True:
-        context = {}
         project_arr = []
         project_model_instance = ProjectModel.objects.filter(project_user=request.user)
         subdomain_num = 0

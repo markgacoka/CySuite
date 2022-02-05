@@ -1,10 +1,11 @@
 import os
+import requests
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from cyauth.forms import AdditionalInfoForm, RegistrationForm, AccountAuthenticationForm, AccountUpdateForm, PasswordUpdateForm
+from cyauth.forms import AdditionalInfoForm, RegistrationForm, AccountAuthenticationForm, AccountUpdateForm, PasswordUpdateForm, FeedbackForm
 from rest_framework.authtoken.models import Token
-from main.forms import NewsletterForm, FeedbackForm
+from main.forms import NewsletterForm
 from main.models import Newsletter
 from .models import Account
 
@@ -129,6 +130,17 @@ def login_view(request):
 
 def link_repo_view(request):
     context = {}
+    if request.user.is_repo_linked:
+        context['repo_linked'] = True
+    if request.user.repo_username:
+        r = requests.get("https://api.github.com/users/{}".format(request.user.repo_username))
+        github_response = r.json()
+        context['repo_username'] = github_response['login']
+        context['profile_img'] = github_response['avatar_url']
+        context['github_profile'] = github_response['url']
+        context['followers'] = github_response['followers_url']
+        context['repos'] = github_response['repos_url']
+        context['description'] = github_response['description']  
     return render(request, 'dashboard/link_repo.html', context)
 
 def account_view(request):
@@ -137,12 +149,9 @@ def account_view(request):
     
     context = {}
     if request.method == 'POST':
-        if 'user_feedback' in request.POST.keys():
+        if 'feedback' in request.POST.keys():
             feedback_form = FeedbackForm(request.POST, instance=request.user)
             if feedback_form.is_valid():
-                feedback_form.initial = {
-                    "user_feedback": request.POST['user_feedback']
-                }
                 feedback_form.save()
                 context['success_message'] = 'Feedback has been received!'
             else:

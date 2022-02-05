@@ -92,7 +92,7 @@
                                 <i class="fab fa-github fa-3x" style="color: darkgrey;"></i>
                             </div>
                             <div style="width: 60%; float: right;">
-                                <p style="margin:0;display:inline;float:left">Github&nbsp;</p><p style="color: lightgreen; margin:0;display:inline:float:right">Linked</p>
+                                <p style="margin:0;display:inline;float:left"></p><p style="color: lightgreen; margin:0;display:inline:float:right">Linked</p>
                             </div>
                         </div>
                         {% elif request.user.social_provider == "Gitlab" %}
@@ -101,7 +101,7 @@
                                 <i class="fab fa-gitlab fa-2x" style="color: orange;"></i>
                             </div>
                             <div style="width: 60%; float: right;">
-                                <p style="margin:0;display:inline;float:left">Gitlab&nbsp;</p><p style="color: lightgreen; margin:0;display:inline:float:right">Linked</p>
+                                <p style="margin:0;display:inline;float:left"></p><p style="color: lightgreen; margin:0;display:inline:float:right">Linked</p>
                             </div>
                         </div>
                         {% else %}
@@ -419,7 +419,7 @@
                                 {% endif %}
                                 <div class="row" style="margin: 0 1.25rem 1rem 0;">
                                     <div class="input-resizer">
-                                        <textarea class="feedback" type="text" name="user_feedback" placeholder="Enter your feedback here..." style="width: 100%; min-height: 200px; border: 1px solid #ced4da; border-radius: .2rem; font-size: 16px; padding: 10px;"></textarea>
+                                        <textarea class="feedback" type="text" name="feedback" placeholder="Enter your feedback here..." style="width: 100%; min-height: 200px; border: 1px solid #ced4da; border-radius: .2rem; font-size: 16px; padding: 10px;"></textarea>
                                     </div>
                                 </div>
                                 {% if success_message %}
