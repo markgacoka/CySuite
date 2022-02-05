@@ -106,4 +106,9 @@ class PasswordUpdateForm(forms.ModelForm):
                 raise forms.ValidationError('The previous password entered is incorrect!')
             else:
                 return {"password": make_password(password)}
+
+class FeedbackForm(forms.ModelForm):
+    class Meta:
+        model = Account
+        fields = ['feedback']
             

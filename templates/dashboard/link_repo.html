@@ -1,5 +1,7 @@
 {% load static %}
 {% load account %}
+{% load account socialaccount %}
+{% get_providers as socialaccount_providers %}
 
 <!DOCTYPE html>
 <html>
@@ -45,79 +47,95 @@
             <main class="content">
                 <div class="container-fluid p-0">
                     <div class="card" style="min-height: 500px">
-                        <div class="card-header" style="display: block;">
+                        <div class="card-header" style="display: block; padding: 40px 40px 20px 40px;">
                             <h2 class="mb-0">Link a Repository</h2>
                         </div>
-                        <div class="row">
-                            <div style="float: left; width: 33.33%;">
+                        <div class="row" style="padding: 0 30px 30px 30px;;">
+                            <div style="float:left; width: 50%;">
+                                <div class="max-w-md md:max-w-2xl px-2" style="float:left;padding: 10px 0 10px 0;border: 1px solid grey;border-radius: 10px;margin: 20px;">
+                                    <div class="bg-white rounded-lg overflow-hidden md:flex">
+                                        <div class="bg-cover bg-bottom h-56 md:h-auto md:w-56" style="background-image: url(https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png); object-fit: fill;zoom: 0.8;">
+                                        </div>
+                                        <div>
+                                            <div class="md:p-5" style="padding: 0.2rem;">
+                                                <p class="font-bold text-xl md:text-2xl">Github</p>
+                                                <p class="text-gray-700">Link your GitHub account to access your repositories for scanning.</p>
+                                            </div>
+                                            <div class="md:p-5 bg-gray-100" style="padding: 0.8rem;">
+                                                <div class="sm:flex sm:justify-between sm:items-center">
+                                                    <div>
+                                                        <div class="text-lg text-gray-700"><span class="text-gray-900 font-bold">Add a Github action to your project</span> *</div>
+                                                        <div class="flex items-center">
+                                                            <div class="flex inline-flex -mx-px">                                   
+                                                            </div>
+                                                            <div class="text-gray-600 ml-2 text-sm md:text-base mt-1">* Feature only available to Pro members</div>
+                                                        </div>
+                                                    </div>
+                                                    <a href="{% provider_login_url 'github' %}"><button class="btn btn-primary" style="min-height: 40px; width: 8rem;">Link</button></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="max-w-md md:max-w-2xl px-2" style="float:left;padding: 10px 0 10px 0;border: 1px solid grey;border-radius: 10px;margin: 20px;">
+                                    <div class="bg-white rounded-lg overflow-hidden md:flex">
+                                        <div class="bg-cover bg-bottom h-56 md:h-auto md:w-56" style="background-image: url(https://about.gitlab.com/images/press/logo/png/gitlab-icon-rgb.png); object-fit: fill;zoom: 0.8;">
+                                        </div>
+                                        <div>
+                                            <div class="md:p-5" style="padding: 0.2rem;">
+                                                <p class="font-bold text-xl md:text-2xl">Gitlab</p>
+                                                <p class="text-gray-700">Link your GitLab account to access your repositories for scanning.</p>
+                                            </div>
+                                            <div class="md:p-5 bg-gray-100" style="padding: 0.8rem;">
+                                                <div class="sm:flex sm:justify-between sm:items-center">
+                                                    <div>
+                                                        <div class="text-lg text-gray-700"><span class="text-gray-900 font-bold">Add a GitLab action to your project</span> *</div>
+                                                        <div class="flex items-center">
+                                                            <div class="flex inline-flex -mx-px">                                   
+                                                            </div>
+                                                            <div class="text-gray-600 ml-2 text-sm md:text-base mt-1">* Feature only available to Pro members</div>
+                                                        </div>
+                                                    </div>
+                                                    <a href="{% provider_login_url 'gitlab' %}"><button class="btn btn-primary" style="min-height: 40px; width: 8rem;">Link</button></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div style="float: left;width: 33.33%; position: relative;">
-                            {% if messages %}
-                                {% for message in messages %}
-                                    {% if 'successfully!' in message.message %}
-                                        <button style="display: none;" class="alert-popup" id="alert-success" name="{{message}}" value="success"></button>
-                                    {% else %}
-                                        <button style="display: none;" class="alert-popup" id="alert-warning" name="{{message}}" value="warning"></button>
-                                    {% endif %}
-                                {% endfor %}
-                            {% endif %}
-                            <form method="POST" enctype="multipart/form-data">
-                            {% csrf_token %}
-                                <label class="btn btn-primary btn-sm" style="font-size: 0.9rem; max-height: 3rem; width: 100%; position: absolute; bottom: 0; margin-bottom: 0;">
-                                <input type="file" accept="text/plain" name="wordlist" onchange="form.submit()" hidden />
-                                    <i class="fa fa-upload"></i>&nbsp;Upload
-                                </label>
-                            </form>
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th style="width:40%;">Name</th>
-                                        <th style="width:25%">Source</th>
-                                        <th class="d-none d-md-table-cell" style="width:25%">Function</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                {% if success_message %}
-                                    <button style="display: none;" class="alert-popup" id="alert-success" name="{{success_message}}" value="success"></button>
+                            <div style="float: right; width: 50%;">
+                                {% if repo_linked %}
+                                <ul class="cards">
+                                <li><a href="" class="repo_card">
+                                    <img src="https://github.githubassets.com/images/modules/open_graph/github-logo.png" class="repo_card_image" alt=""/>
+                                    <div class="repo_card_overlay">        
+                                    <div class="repo_card_header">
+                                        <svg class="repo_card_arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>                 
+                                        <img class="repo_card_thumb" src="{{profile_img}}" alt="" />
+                                        <div class="repo_card_header-text">
+                                        <h3 class="repo_card_title">{{repo_username}}</h3>
+                                        <span class="repo_card_status">Followers: {{followers}}</span>
+                                        </div>
+                                    </div>
+                                    <p class="repo_card_description">{{description}}</p>
+                                    </div>
+                                </a></li>
+                                <li><a href="" class="repo_card">
+                                    <img src="https://github.githubassets.com/images/modules/open_graph/github-logo.png" class="repo_card_image" alt=""/>
+                                    <div class="repo_card_overlay">        
+                                    <div class="repo_card_header">
+                                        <svg class="repo_card_arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>                 
+                                        <img class="repo_card_thumb" src="{{profile_img}}" alt="" />
+                                        <div class="repo_card_header-text">
+                                        <h3 class="repo_card_title">{{repo_username}}</h3>
+                                        <span class="repo_card_status">Followers: {{followers}}</span>
+                                        </div>
+                                    </div>
+                                    <p class="repo_card_description">{{description}}</p>
+                                    </div>
+                                </a></li>
+                                </ul>
                                 {% endif %}
-                                    <tr>
-                                        <td><a href="/media/rockyou.txt" target="_blank">rockyou.txt</a></td>
-                                        <td>Kaggle</td>
-                                        <td class="d-none d-md-table-cell">Password list</td>
-                                        <td class="table-action" style="text-align:center">
-                                        <form method="post" id="rockyou_txt">
-                                        {% csrf_token %}
-                                            <input type="text" name="preview" value="/media/rockyou.txt" hidden />
-                                            <a href="javascript:$('#rockyou_txt').submit();"><i class="align-middle" data-feather="eye"></i></a>
-                                        </form>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="/media/all.txt" target="_blank">all.txt</a></td>
-                                        <td>JHaddix</td>
-                                        <td class="d-none d-md-table-cell">Directory list</td>
-                                        <td class="table-action" style="text-align:center">
-                                        <form method="post" id="all_txt">
-                                        {% csrf_token %}
-                                            <input type="text" name="preview" value="/media/all.txt" hidden />
-                                            <a href="javascript:$('#all_txt').submit();"><i class="align-middle" data-feather="eye"></i></a>
-                                        </form>
-                                        </td>
-                                    </tr>
-                                    {% for key, value in wordlist_list.items %}
-                                    <tr>
-                                        <td><a href="{{value}}" target="_blank">{{key}}</td>
-                                        <td>Custom</td>
-                                        <td class="d-none d-md-table-cell">Wordlist</td>
-                                        <td class="table-action" style="text-align:center;">
-                                            <a href="#" onclick="previewWordlist({{forloop.counter}}); return false;"><i class="align-middle" data-feather="eye"></i></a>
-                                            <a href="" onclick="deleteWordlist({{forloop.counter}});"><i class="align-middle" data-feather="trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
                             </div>
                         </div>
                     </div>

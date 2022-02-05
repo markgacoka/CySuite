@@ -1,5 +1,5 @@
 from django import forms
-from .models import FeedbackModel, Transaction
+from .models import Transaction
 from .models import Newsletter
 from .models import ProjectModel
 from .models import WordlistModel
@@ -44,13 +44,3 @@ class WordlistForm(forms.ModelForm):
     class Meta:
         model = WordlistModel
         fields = ['wordlist_file_3', 'wordlist_file_4', 'wordlist_file_5']
-
-class FeedbackForm(forms.ModelForm):
-    class Meta:
-        model = FeedbackModel
-        fields = ['user_feedback']
-
-        def clean(self):
-            if self.is_valid():
-                user_feedback = self.cleaned_data['user_feedback']
-                return {'user_feedback': user_feedback}

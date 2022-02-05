@@ -29,15 +29,6 @@ class Newsletter(models.Model):
     def __str__(self):
         return self.subscriber + 'Newsletter'
 
-class FeedbackModel(models.Model):
-    feedback_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="feedback", on_delete=models.CASCADE) 
-    user_feedback = models.CharField(max_length=1200, default= "", unique=False, null=True, blank=True)
-
-    class Meta():
-        db_table = 'feedback'
-        verbose_name = _('feedback')
-        verbose_name_plural = _('feedback')
-
 class ProjectModel(models.Model):
     project_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="projects", on_delete=models.CASCADE)
     project_name = models.CharField(max_length=30, unique=False, null=False, blank=True)

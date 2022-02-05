@@ -43,6 +43,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     company = models.CharField(default='N/A', max_length=128, unique=False, blank=True)
     role = models.CharField(default='N/A', max_length=64, unique=False, blank=True)
     social_provider = models.CharField(default='N/A', max_length=64, unique=False)
+    repo_username = models.CharField(max_length=64, unique=False, blank=True)
     email = models.EmailField(verbose_name='email', max_length=60, unique=True)
     image = models.TextField(default='default.jpeg', max_length=250, unique=False, null=False, blank=False)
     date_joined = models.DateTimeField(verbose_name="date joined", auto_now_add=True)
@@ -55,6 +56,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     api_token = models.CharField(max_length=64, unique=False, null=True, blank=True)
     payload_image = models.ImageField(default='https://cysuite-bucket.s3.us-west-2.amazonaws.com/media/default.png', upload_to='payloads/', blank=True, null=True)
     badges = ArrayField(models.CharField(max_length=3000, blank=True), blank=True, null=True, default=generate_badges)
+    feedback = models.CharField(max_length=1200, default= "", unique=False, null=True, blank=True)
 
     objects = MyUserManager()
 
