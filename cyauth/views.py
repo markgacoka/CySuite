@@ -11,12 +11,13 @@ from .models import Account
 
 def index(request):
     if request.user.is_authenticated == True:
-        if request.user.social_provider == 'Github':
-            return redirect('dashboard')
-        elif request.user.social_provider == 'Gitlab':
-            return redirect('dashboard')
-        else:
-            return redirect('link_repo')
+        # if request.user.social_provider == 'Github':
+        #     return redirect('dashboard')
+        # elif request.user.social_provider == 'Gitlab':
+        #     return redirect('dashboard')
+        # else:
+        #     return redirect('link_repo')
+        return redirect('dashboard')
     else:
         context = {}
         if request.POST:
