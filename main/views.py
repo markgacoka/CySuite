@@ -41,8 +41,8 @@ def test(request):
 def dashboard(request):
     context = {}
     social_set = {'Github', 'Gitlab'}
-    if request.user.social_provider not in social_set or request.user.repo_project_chosen == False:
-        return redirect('link_repo')
+    # if request.user.social_provider not in social_set or request.user.repo_project_chosen == False:
+    #     return redirect('link_repo')
     
     if request.user.is_authenticated == True:
         project_arr = []

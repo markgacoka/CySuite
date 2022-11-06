@@ -105,36 +105,49 @@ TEMPLATES = [
     },
 ]
 
-if DEBUG:
-    ALLOWED_HOSTS = ['*',]
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# if DEBUG:
+#     ALLOWED_HOSTS = ['*',]
+#     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
     
-    DATABASES = {
-        'default': {
-            'ENGINE': os.environ.get('ENGINE'),
-            'HOST': 'localhost',
-            'NAME': os.environ.get('DB_NAME'),
-            'USER': os.environ.get('DB_USER'),
-            'PASSWORD': os.environ.get('DB_PASS'),
-            'PORT': os.environ.get('DB_PORT'),
-        }
-    }
-else:
-    ALLOWED_HOSTS_ENV = os.environ.get('DJANGO_ALLOWED_HOSTS')
-    if ALLOWED_HOSTS_ENV:
-        ALLOWED_HOSTS.extend(ALLOWED_HOSTS_ENV.split(','))
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': os.environ.get('ENGINE'),
+#             'HOST': 'localhost',
+#             'NAME': os.environ.get('DB_NAME'),
+#             'USER': os.environ.get('DB_USER'),
+#             'PASSWORD': os.environ.get('DB_PASS'),
+#             'PORT': os.environ.get('DB_PORT'),
+#         }
+#     }
+# else:
+#     ALLOWED_HOSTS_ENV = os.environ.get('DJANGO_ALLOWED_HOSTS')
+#     if ALLOWED_HOSTS_ENV:
+#         ALLOWED_HOSTS.extend(ALLOWED_HOSTS_ENV.split(','))
     
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-    DATABASES = {
-        'default': {
-            'ENGINE': os.environ.get('ENGINE'),
-            'HOST': os.environ.get('DB_HOST'),
-            'NAME': os.environ.get('DB_NAME'),
-            'USER': os.environ.get('DB_USER'),
-            'PASSWORD': os.environ.get('DB_PASS'),
-            'PORT': os.environ.get('DB_PORT'),
-        }
+#     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': os.environ.get('ENGINE'),
+#             'HOST': os.environ.get('DB_HOST'),
+#             'NAME': os.environ.get('DB_NAME'),
+#             'USER': os.environ.get('DB_USER'),
+#             'PASSWORD': os.environ.get('DB_PASS'),
+#             'PORT': os.environ.get('DB_PORT'),
+#         }
+#     }
+
+ALLOWED_HOSTS = ['*',]
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DATABASES = {
+    'default': {
+        'ENGINE': os.environ.get('ENGINE'),
+        'HOST': os.environ.get('DB_HOST'),
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASS'),
+        'PORT': os.environ.get('DB_PORT'),
     }
+}
 
 db_from_env = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(db_from_env)
