@@ -191,30 +191,3 @@ python manage.py runserver
 ```
 find . -type d -name __pycache__ -exec rm -r {} \+
 ```
-
-### Before launch (production configs)
-{https://www.youtube.com/watch?v=mAeK4Ia4fk8}
-[ ] Generate a requirements.txt file
-    `pipenv lock -r > requirements.txt`
-[ ] Hide secret key in `secret.txt` or `.env`
-[ ] Install SSL certificate in Django
-  - HSTS settings
-  - Add SESSION_COOKIE, CSRF and SECURE_SSL settings
-[ ] Flush database and make migrations afresh
-[ ] Allowed Hosts (add the real domain name)
-[ ] Copy static files to root directory
-  - `python manage.py collectstatic`
-[ ] Change settings.py from `DEBUG=True` to `DEBUG=FALSE`
-[ ] `python manage.py check --deploy`
-[ ] Change admin URL
-[ ] Change social login tokens, domains to production
-[ ] Change Paypal API endpoint to production key
-[ ] Set specific module versions in Pipfile
-
-    ```
-    pipenv uninstall --all
-    rm Pipfile* requirements.txt
-    pipenv install [package-name==version]
-    ```
-
-[ ] Remove unused CSS lines (make it leaner) + minify
